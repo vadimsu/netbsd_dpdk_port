@@ -101,39 +101,39 @@ __KERNEL_RCSID(0, "$NetBSD: in.c,v 1.142.2.1 2012/06/13 19:12:23 riz Exp $");
 #include <sys/param.h>
 #include <sys/ioctl.h>
 #include <sys/errno.h>
-#include <sys/malloc.h>
+//#include <sys/malloc.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
-#include <sys/sysctl.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
+//#include <sys/sysctl.h>
+//#include <sys/systm.h>
+//#include <sys/proc.h>
 #include <sys/syslog.h>
-#include <sys/kauth.h>
+//#include <sys/kauth.h>
 
-#include <sys/cprng.h>
+//#include <sys/cprng.h>
+#include <sys/sockio.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if_ether.h>
 
-#include <net/if_ether.h>
-
-#include <netinet/in_systm.h>
-#include <netinet/in.h>
-#include <netinet/in_var.h>
-#include <netinet/ip.h>
-#include <netinet/ip_var.h>
-#include <netinet/in_ifattach.h>
-#include <netinet/in_pcb.h>
-#include <netinet/if_inarp.h>
-#include <netinet/ip_mroute.h>
-#include <netinet/igmp_var.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/in_ifattach.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/if_inarp.h>
+#include <netbsd/netinet/ip_mroute.h>
+#include <netbsd/netinet/igmp_var.h>
 
 #ifdef IPSELSRC
-#include <netinet/in_selsrc.h>
+#include <netbsd/netinet/in_selsrc.h>
 #endif
 
 #ifdef PFIL_HOOKS
-#include <net/pfil.h>
+#include <netbsd/net/pfil.h>
 #endif
 
 static u_int in_mask2len(struct in_addr *);

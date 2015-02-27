@@ -38,16 +38,16 @@
 #ifndef _NET_IF_GRE_H_
 #define _NET_IF_GRE_H_
 
-#include <sys/evcnt.h>
+//#include <sys/evcnt.h>
 #include <sys/queue.h>
-#include <sys/mutex.h>
-#include <sys/condvar.h>
-#include <sys/malloc.h>
-#include <sys/mallocvar.h>
+//#include <sys/mutex.h>
+//#include <sys/condvar.h>
+//#include <sys/malloc.h>
+//#include <sys/mallocvar.h>
 
 #ifdef _KERNEL
 
-#include <sys/pcq.h>
+//#include <sys/pcq.h>
 
 struct gre_soparm {
 	struct socket		*sp_so;
@@ -67,7 +67,7 @@ enum gre_state {
 };
 
 struct gre_bufq {
-	pcq_t		*bq_q;
+	//pcq_t		*bq_q;
 	volatile int	bq_drops;
 };
 
@@ -79,7 +79,7 @@ enum gre_msg {
 	, GRE_M_OK
 	, GRE_M_ERR
 };
-
+#if 0 
 struct gre_softc {
 	struct ifnet		sc_if;
 	kmutex_t		sc_mtx;
@@ -104,7 +104,7 @@ struct gre_softc {
 	volatile enum gre_msg	sc_msg;
 	int			sc_fd;
 };
-
+#endif
 struct gre_h {
 	uint16_t flags;		/* GRE flags */
 	uint16_t ptype;		/* protocol type of payload typically

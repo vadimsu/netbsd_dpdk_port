@@ -78,42 +78,42 @@ __KERNEL_RCSID(0, "$NetBSD: if_arp.c,v 1.154.2.1 2014/06/03 15:34:00 msaitoh Exp
 #include "bridge.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
+//#include <sys/systm.h>
 #include <sys/callout.h>
-#include <sys/malloc.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/time.h>
 #include <sys/timetc.h>
-#include <sys/kernel.h>
+//#include <sys/kernel.h>
 #include <sys/errno.h>
 #include <sys/ioctl.h>
 #include <sys/syslog.h>
-#include <sys/proc.h>
+//#include <sys/proc.h>
 #include <sys/protosw.h>
 #include <sys/domain.h>
 #include <sys/sysctl.h>
 #include <sys/socketvar.h>
 #include <sys/percpu.h>
 
-#include <net/ethertypes.h>
-#include <net/if.h>
-#include <net/if_dl.h>
-#include <net/if_token.h>
-#include <net/if_types.h>
-#include <net/if_ether.h>
-#include <net/route.h>
-#include <net/net_stats.h>
+#include <netbsd/net/ethertypes.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/if_dl.h>
+#include <netbsd/net/if_token.h>
+#include <netbsd/net/if_types.h>
+#include <netbsd/net/if_ether.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/net_stats.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/in_var.h>
-#include <netinet/ip.h>
-#include <netinet/if_inarp.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/if_inarp.h>
 
 #include "arcnet.h"
 #if NARCNET > 0
-#include <net/if_arc.h>
+#include <netbsd/net/if_arc.h>
 #endif
 #include "fddi.h"
 #if NFDDI > 0
@@ -122,7 +122,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_arp.c,v 1.154.2.1 2014/06/03 15:34:00 msaitoh Exp
 #include "token.h"
 #include "carp.h"
 #if NCARP > 0
-#include <netinet/ip_carp.h>
+#include <netbsd/netinet/ip_carp.h>
 #endif
 
 #define SIN(s) ((struct sockaddr_in *)s)

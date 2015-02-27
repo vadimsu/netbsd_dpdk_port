@@ -77,82 +77,82 @@ __KERNEL_RCSID(0, "$NetBSD: in_proto.c,v 1.102 2011/12/19 11:59:56 drochner Exp 
 #include <sys/domain.h>
 #include <sys/mbuf.h>
 
-#include <net/if.h>
-#include <net/radix.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/radix.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/ip_var.h>
-#include <netinet/ip_icmp.h>
-#include <netinet/in_ifattach.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_proto.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/ip_icmp.h>
+#include <netbsd/netinet/in_ifattach.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_proto.h>
 
 #ifdef INET6
 #ifndef INET
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 #endif
-#include <netinet/ip6.h>
+#include <netbsd/netinet/ip6.h>
 #endif
 
-#include <netinet/igmp_var.h>
+#include <netbsd/netinet/igmp_var.h>
 #ifdef PIM
-#include <netinet/pim_var.h>
+#include <netbsd/netinet/pim_var.h>
 #endif
-#include <netinet/tcp.h>
-#include <netinet/tcp_fsm.h>
-#include <netinet/tcp_seq.h>
-#include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
-#include <netinet/tcpip.h>
-#include <netinet/tcp_debug.h>
-#include <netinet/udp.h>
-#include <netinet/udp_var.h>
-#include <netinet/ip_encap.h>
+#include <netbsd/netinet/tcp.h>
+#include <netbsd/netinet/tcp_fsm.h>
+#include <netbsd/netinet/tcp_seq.h>
+#include <netbsd/netinet/tcp_timer.h>
+#include <netbsd/netinet/tcp_var.h>
+#include <netbsd/netinet/tcpip.h>
+#include <netbsd/netinet/tcp_debug.h>
+#include <netbsd/netinet/udp.h>
+#include <netbsd/netinet/udp_var.h>
+#include <netbsd/netinet/ip_encap.h>
 
 /*
  * TCP/IP protocol family: IP, ICMP, UDP, TCP.
  */
 
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
-#include <netinet6/ah.h>
+#include <netbsd/netinet6/ipsec.h>
+#include <netbsd/netinet6/ah.h>
 #ifdef IPSEC_ESP
-#include <netinet6/esp.h>
+#include <netbsd/netinet6/esp.h>
 #endif
-#include <netinet6/ipcomp.h>
+#include <netbsd/netinet6/ipcomp.h>
 #endif /* KAME_IPSEC */
 
 #ifdef FAST_IPSEC
-#include <netipsec/ipsec.h>
-#include <netipsec/key.h>
+#include <netbsd/netipsec/ipsec.h>
+#include <netbsd/netipsec/key.h>
 #endif	/* FAST_IPSEC */
 
 #ifdef TPIP
-#include <netiso/tp_param.h>
-#include <netiso/tp_var.h>
+#include <netbsd/netiso/tp_param.h>
+#include <netbsd/netiso/tp_var.h>
 #endif /* TPIP */
 
 #ifdef EON
-#include <netiso/eonvar.h>
+#include <netbsd/netiso/eonvar.h>
 #endif /* EON */
 
 #include "carp.h"
 #if NCARP > 0
-#include <netinet/ip_carp.h>
+#include <netbsd/netinet/ip_carp.h>
 #endif
 
 #include "pfsync.h"
 #if NPFSYNC > 0
-#include <net/pfvar.h>
-#include <net/if_pfsync.h>
+#include <netbsd/net/pfvar.h>
+#include <netbsd/net/if_pfsync.h>
 #endif
 
 #include "etherip.h"
 #if NETHERIP > 0
-#include <netinet/ip_etherip.h>
+#include <netbsd/netinet/ip_etherip.h>
 #endif
 
 DOMAIN_DEFINE(inetdomain);	/* forward declare and add to link set */

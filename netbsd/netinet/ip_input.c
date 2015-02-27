@@ -103,7 +103,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp 
 #include "opt_inet_csum.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
+//#include <sys/systm.h>
 #include <sys/mbuf.h>
 #include <sys/domain.h>
 #include <sys/protosw.h>
@@ -111,43 +111,43 @@ __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp 
 #include <sys/socketvar.h>
 #include <sys/errno.h>
 #include <sys/time.h>
-#include <sys/kernel.h>
-#include <sys/pool.h>
-#include <sys/sysctl.h>
-#include <sys/kauth.h>
+//#include <sys/kernel.h>
+//#include <sys/pool.h>
+//#include <sys/sysctl.h>
+//#include <sys/kauth.h>
 
-#include <net/if.h>
-#include <net/if_dl.h>
-#include <net/route.h>
-#include <net/pfil.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/if_dl.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/pfil.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_proto.h>
-#include <netinet/in_var.h>
-#include <netinet/ip_var.h>
-#include <netinet/ip_private.h>
-#include <netinet/ip_icmp.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_proto.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/ip_private.h>
+#include <netbsd/netinet/ip_icmp.h>
 /* just for gif_ttl */
-#include <netinet/in_gif.h>
+#include <netbsd/netinet/in_gif.h>
 #include "gif.h"
-#include <net/if_gre.h>
+#include <netbsd/net/if_gre.h>
 #include "gre.h"
 
 #ifdef MROUTING
-#include <netinet/ip_mroute.h>
+#include <netbsd/netinet/ip_mroute.h>
 #endif
 
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
-#include <netinet6/ipsec_private.h>
-#include <netkey/key.h>
+#include <netbsd/netinet6/ipsec.h>
+#include <netbsd/netinet6/ipsec_private.h>
+#include <netbsd/netkey/key.h>
 #endif
 #ifdef FAST_IPSEC
-#include <netipsec/ipsec.h>
-#include <netipsec/key.h>
+#include <netbsd/netipsec/ipsec.h>
+#include <netbsd/netipsec/key.h>
 #endif	/* FAST_IPSEC*/
 
 #ifndef	IPFORWARDING
@@ -239,7 +239,7 @@ percpu_t *ipstat_percpu;
 struct pfil_head inet_pfil_hook;
 #endif
 
-struct pool inmulti_pool;
+//struct pool inmulti_pool;
 
 #ifdef INET_CSUM_COUNTERS
 #include <sys/device.h>
@@ -300,10 +300,10 @@ ip_init(void)
 	int i;
 
 	sysctl_net_inet_ip_setup(NULL);
-
+#if 0 /* VADIM */
 	pool_init(&inmulti_pool, sizeof(struct in_multi), 0, 0, 0, "inmltpl",
 	    NULL, IPL_SOFTNET);
-
+#endif
 	pr = pffindproto(PF_INET, IPPROTO_RAW, SOCK_RAW);
 	if (pr == 0)
 		panic("ip_init");
@@ -1598,7 +1598,7 @@ ip_savecontrol(struct inpcb *inp, struct mbuf **mp, struct ip *ip,
 			mp = &(*mp)->m_next;
 	}
 }
-
+#if 0 
 /*
  * sysctl helper routine for net.inet.ip.forwsrcrt.
  */
@@ -1921,7 +1921,7 @@ sysctl_net_inet_ip_setup(struct sysctllog **clog)
 		       CTL_NET, PF_INET, IPPROTO_IP, IPCTL_STATS,
 		       CTL_EOL);
 }
-
+#endif
 void
 ip_statinc(u_int stat)
 {
