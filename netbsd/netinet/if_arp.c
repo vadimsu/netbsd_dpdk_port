@@ -92,7 +92,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_arp.c,v 1.154.2.1 2014/06/03 15:34:00 msaitoh Exp
 //#include <sys/proc.h>
 #include <sys/protosw.h>
 #include <sys/domain.h>
-#include <sys/sysctl.h>
+//#include <sys/sysctl.h>
 #include <sys/socketvar.h>
 #include <sys/percpu.h>
 
@@ -1620,7 +1620,7 @@ db_show_arptab(db_expr_t addr, bool have_addr,
 	rt_walktree(AF_INET, db_show_rtentry, NULL);
 }
 #endif
-
+#if 0
 static int
 sysctl_net_inet_arp_stats(SYSCTLFN_ARGS)
 {
@@ -1709,5 +1709,5 @@ sysctl_net_inet_arp_setup(struct sysctllog **clog)
 			NULL, 0, &log_wrong_iface, 0,
 			CTL_NET,PF_INET, node->sysctl_num, CTL_CREATE, CTL_EOL);
 }
-
+#endif
 #endif /* INET */

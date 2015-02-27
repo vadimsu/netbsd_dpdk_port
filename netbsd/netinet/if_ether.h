@@ -50,14 +50,14 @@
 
 /* pull in Ethernet-specific definitions and packet structures */
 
-#include <net/if_ether.h>
+#include <netbsd/net/if_ether.h>
 
 /* pull in ARP-specific definitions and packet structures */
 
-#include <net/if_arp.h>
+#include <netbsd/net/if_arp.h>
 
 /* pull in ARP-over-Ethernet-specific definitions and packet structures */
-#include <netinet/if_inarp.h>
+#include <netbsd/netinet/if_inarp.h>
 
 /* ... and define some more which we don't need anymore: */
 

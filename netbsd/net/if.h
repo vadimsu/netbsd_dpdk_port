@@ -692,7 +692,7 @@ struct if_addrprefreq {
 	struct sockaddr_storage	ifap_addr;		/* in/out */
 };
 
-#include <net/if_arp.h>
+#include <netbsd/net/if_arp.h>
 
 #endif /* _NETBSD_SOURCE */
 
