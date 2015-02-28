@@ -266,11 +266,11 @@ void pfctlinput2(int, const struct sockaddr *, void *);
 #define	PR_WRAP_USRREQ(name)				\
 static int						\
 name##_wrapper(struct socket *a, int b, struct mbuf *c,	\
-     struct mbuf *d, struct mbuf *e, struct lwp *f)	\
+     struct mbuf *d, struct mbuf *e)	\
 {							\
 	int rv;						\
 	KERNEL_LOCK(1, NULL);				\
-	rv = name(a, b, c, d, e, f);			\
+	rv = name(a, b, c, d, e);			\
 	KERNEL_UNLOCK_ONE(NULL);			\
 	return rv;					\
 }

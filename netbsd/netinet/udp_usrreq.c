@@ -71,47 +71,47 @@ __KERNEL_RCSID(0, "$NetBSD: udp_usrreq.c,v 1.185 2012/01/09 22:26:44 liamjfoy Ex
 #include "opt_mbuftrace.h"
 
 #include <sys/param.h>
-#include <sys/malloc.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/errno.h>
 #include <sys/stat.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
+//#include <sys/systm.h>
+//#include <sys/proc.h>
 #include <sys/domain.h>
-#include <sys/sysctl.h>
+//#include <sys/sysctl.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/in_var.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/ip_var.h>
-#include <netinet/ip_icmp.h>
-#include <netinet/udp.h>
-#include <netinet/udp_var.h>
-#include <netinet/udp_private.h>
-#include <netinet/rfc6056.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/ip_icmp.h>
+#include <netbsd/netinet/udp.h>
+#include <netbsd/netinet/udp_var.h>
+#include <netbsd/netinet/udp_private.h>
+#include <netbsd/netinet/rfc6056.h>
 
 #ifdef INET6
-#include <netinet/ip6.h>
-#include <netinet/icmp6.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/ip6_private.h>
-#include <netinet6/in6_pcb.h>
-#include <netinet6/udp6_var.h>
-#include <netinet6/udp6_private.h>
-#include <netinet6/scope6_var.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet/icmp6.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/ip6_private.h>
+#include <netbsd/netinet6/in6_pcb.h>
+#include <netbsd/netinet6/udp6_var.h>
+#include <netbsd/netinet6/udp6_private.h>
+#include <netbsd/netinet6/scope6_var.h>
 #endif
 
 #ifndef INET6
 /* always need ip6.h for IP6_EXTHDR_GET */
-#include <netinet/ip6.h>
+#include <netbsd/netinet/ip6.h>
 #endif
 
 #include "faith.h"
@@ -120,20 +120,20 @@ __KERNEL_RCSID(0, "$NetBSD: udp_usrreq.c,v 1.185 2012/01/09 22:26:44 liamjfoy Ex
 #endif
 
 #ifdef FAST_IPSEC
-#include <netipsec/ipsec.h>
-#include <netipsec/ipsec_var.h>
-#include <netipsec/ipsec_private.h>
-#include <netipsec/esp.h>
+#include <netbsd/netipsec/ipsec.h>
+#include <netbsd/netipsec/ipsec_var.h>
+#include <netbsd/netipsec/ipsec_private.h>
+#include <netbsd/netipsec/esp.h>
 #ifdef INET6
-#include <netipsec/ipsec6.h>
+#include <netbsd/netipsec/ipsec6.h>
 #endif
 #endif	/* FAST_IPSEC */
 
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
-#include <netinet6/ipsec_private.h>
-#include <netinet6/esp.h>
-#include <netkey/key.h>
+#include <netbsd/netbsd/netinet6/ipsec.h>
+#include <netbsd/netinet6/ipsec_private.h>
+#include <netbsd/netinet6/esp.h>
+#include <netbsd/netkey/key.h>
 #endif /* KAME_IPSEC */
 
 #ifdef COMPAT_50
@@ -230,15 +230,15 @@ EVCNT_ATTACH_STATIC(udp6_swcsum);
 #define	UDP_CSUM_COUNTER_INCR(ev)	/* nothing */
 
 #endif /* UDP_CSUM_COUNTERS */
-
+#if 0
 static void sysctl_net_inet_udp_setup(struct sysctllog **);
-
+#endif
 void
 udp_init(void)
 {
-
+#if 0
 	sysctl_net_inet_udp_setup(NULL);
-
+#endif
 	in_pcbinit(&udbtable, udbhashsize, udbhashsize);
 
 	MOWNER_ATTACH(&udp_tx_mowner);
@@ -1197,7 +1197,7 @@ int	udp_recvspace = 40 * (1024 + sizeof(struct sockaddr_in));
 /*ARGSUSED*/
 int
 udp_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
-	struct mbuf *control, struct lwp *l)
+	struct mbuf *control)
 {
 	struct inpcb *inp;
 	int s;
@@ -1205,7 +1205,7 @@ udp_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
 
 	if (req == PRU_CONTROL)
 		return (in_control(so, (long)m, (void *)nam,
-		    (struct ifnet *)control, l));
+		    (struct ifnet *)control));
 
 	s = splsoftnet();
 
@@ -1264,7 +1264,7 @@ udp_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
 		break;
 
 	case PRU_BIND:
-		error = in_pcbbind(inp, nam, l);
+		error = in_pcbbind(inp, nam);
 		break;
 
 	case PRU_LISTEN:
@@ -1272,7 +1272,7 @@ udp_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
 		break;
 
 	case PRU_CONNECT:
-		error = in_pcbconnect(inp, nam, l);
+		error = in_pcbconnect(inp, nam);
 		if (error)
 			break;
 		soisconnected(so);
@@ -1315,7 +1315,7 @@ udp_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
 				error = EISCONN;
 				goto die;
 			}
-			error = in_pcbconnect(inp, nam, l);
+			error = in_pcbconnect(inp, nam);
 			if (error)
 				goto die;
 		} else {
@@ -1370,7 +1370,7 @@ release:
 	splx(s);
 	return (error);
 }
-
+#if 0
 static int
 sysctl_net_inet_udp_stats(SYSCTLFN_ARGS)
 {
@@ -1466,7 +1466,7 @@ sysctl_net_inet_udp_setup(struct sysctllog **clog)
 		       CTL_CREATE, CTL_EOL);
 }
 #endif
-
+#endif
 void
 udp_statinc(u_int stat)
 {

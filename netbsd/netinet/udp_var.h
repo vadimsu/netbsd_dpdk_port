@@ -98,7 +98,7 @@ void	 udp_input(struct mbuf *, ...);
 int	 udp_output(struct mbuf *, ...);
 int	 udp_sysctl(int *, u_int, void *, size_t *, void *, size_t);
 int	 udp_usrreq(struct socket *,
-	    int, struct mbuf *, struct mbuf *, struct mbuf *, struct lwp *);
+	    int, struct mbuf *, struct mbuf *, struct mbuf *);
 
 int	udp_input_checksum(int af, struct mbuf *, const struct udphdr *, int,
 	    int);

@@ -35,46 +35,46 @@
 #include "opt_tcp_debug.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/kmem.h>
+//#include <sys/systm.h>
+//#include <sys/malloc.h>
+//#include <sys/kmem.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/errno.h>
 #include <sys/syslog.h>
-#include <sys/pool.h>
+//#include <sys/pool.h>
 #include <sys/domain.h>
-#include <sys/kernel.h>
-#include <net/if.h>
-#include <net/route.h>
-#include <net/if_types.h>
+//#include <sys/kernel.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/if_types.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_var.h>
-#include <netinet/ip_var.h>
-#include <netinet/in_offload.h>
-#include <netinet/ip6.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_pcb.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_var.h>
-#include <netinet/icmp6.h>
-#include <netinet6/nd6.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/in_offload.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_pcb.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_var.h>
+#include <netbsd/netinet/icmp6.h>
+#include <netbsd/netinet6/nd6.h>
 
-#include <netinet/tcp.h>
-#include <netinet/tcp_fsm.h>
-#include <netinet/tcp_seq.h>
-#include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
-#include <netinet/tcp_private.h>
-#include <netinet/tcpip.h>
+#include <netbsd/netinet/tcp.h>
+#include <netbsd/netinet/tcp_fsm.h>
+#include <netbsd/netinet/tcp_seq.h>
+#include <netbsd/netinet/tcp_timer.h>
+#include <netbsd/netinet/tcp_var.h>
+#include <netbsd/netinet/tcp_private.h>
+#include <netbsd/netinet/tcpip.h>
 
-#include <netinet/tcp_vtw.h>
+#include <netbsd/netinet/tcp_vtw.h>
 
 __KERNEL_RCSID(0, "$NetBSD: tcp_vtw.c,v 1.8 2011/07/17 20:54:53 joerg Exp $");
 
@@ -627,7 +627,7 @@ vtw_unhash(vtw_ctl_t *ctl, vtw_t *vtw)
 void
 vtw_del(vtw_ctl_t *ctl, vtw_t *vtw)
 {
-	KASSERT(mutex_owned(softnet_lock));
+//	KASSERT(mutex_owned(softnet_lock));
 
 	if (vtw->hashed) {
 		++vtw_stats.del;
@@ -660,7 +660,7 @@ vtw_inshash_v4(vtw_ctl_t *ctl, vtw_t *vtw)
 	uint32_t	tag;
 	vtw_v4_t	*v4 = (void*)vtw;
 
-	KASSERT(mutex_owned(softnet_lock));
+//	KASSERT(mutex_owned(softnet_lock));
 	KASSERT(!vtw->hashed);
 	KASSERT(ctl->clidx == vtw->msl_class);
 
@@ -699,7 +699,7 @@ vtw_inshash_v6(vtw_ctl_t *ctl, vtw_t *vtw)
 	uint32_t	tag;
 	vtw_v6_t	*v6	= (void*)vtw;
 
-	KASSERT(mutex_owned(softnet_lock));
+//	KASSERT(mutex_owned(softnet_lock));
 	KASSERT(!vtw->hashed);
 	KASSERT(ctl->clidx == vtw->msl_class);
 
@@ -1332,7 +1332,7 @@ vtw_alloc(vtw_ctl_t *ctl)
 	int	avail	= ctl ? (ctl->nalloc + ctl->nfree) : 0;
 	int	msl;
 
-	KASSERT(mutex_owned(softnet_lock));
+//	KASSERT(mutex_owned(softnet_lock));
 
 	/* If no resources, we will not get far.
 	 */
@@ -1857,7 +1857,7 @@ vtw_add(int af, struct tcpcb *tp)
 	vtw_ctl_t	*ctl;
 	vtw_t		*vtw;
 
-	KASSERT(mutex_owned(softnet_lock));
+//	KASSERT(mutex_owned(softnet_lock));
 
 	ctl = vtw_control(af, tp->t_msl);
 	if (!ctl)
@@ -1886,8 +1886,9 @@ vtw_add(int af, struct tcpcb *tp)
 			vtw->reuse_addr = !!(inp->inp_socket->so_options
 					     & SO_REUSEADDR);
 			vtw->v6only	= 0;
+#if 0 /* VADIM */
 			vtw->uid	= inp->inp_socket->so_uidinfo->ui_uid;
-
+#endif
 			vtw_inshash_v4(ctl, vtw);
 
 
@@ -1959,8 +1960,9 @@ vtw_add(int af, struct tcpcb *tp)
 					     & SO_REUSEADDR);
 			vtw->v6only	= !!(inp->in6p_flags
 					     & IN6P_IPV6_V6ONLY);
+#if 0 /* VADIM */
 			vtw->uid	= inp->in6p_socket->so_uidinfo->ui_uid;
-
+#endif
 			vtw_inshash_v6(ctl, vtw);
 #ifdef VTW_DEBUG
 			/* Immediate lookup (connected and port) to
@@ -2034,7 +2036,7 @@ vtw_restart_v4(vestigial_inpcb_t *vp)
 	vtw_t		*cp  = &copy.common;
 	vtw_ctl_t	*ctl;
 
-	KASSERT(mutex_owned(softnet_lock));
+//	KASSERT(mutex_owned(softnet_lock));
 
 	db_trace(KTR_VTW
 		 , (vp->vtw, "vtw: restart %A:%P %A:%P"
@@ -2082,7 +2084,7 @@ vtw_restart_v6(vestigial_inpcb_t *vp)
 	vtw_t		*cp  = &copy.common;
 	vtw_ctl_t	*ctl;
 
-	KASSERT(mutex_owned(softnet_lock));
+//	KASSERT(mutex_owned(softnet_lock));
 
 	db_trace(KTR_VTW
 		 , (vp->vtw, "vtw: restart %6A:%P %6A:%P"
@@ -2135,7 +2137,7 @@ vtw_restart(vestigial_inpcb_t *vp)
 	else
 		vtw_restart_v6(vp);
 }
-
+#if 0
 int
 sysctl_tcp_vtw_enable(SYSCTLFN_ARGS)
 {  
@@ -2165,7 +2167,7 @@ sysctl_tcp_vtw_enable(SYSCTLFN_ARGS)
 
 	return rc;
 }
-
+#endif
 int
 vtw_earlyinit(void)
 {
@@ -2390,7 +2392,7 @@ vtw_sanity_check(void)
 		KASSERT(n == ctl->nfree);
 	}
 }
-		
+#if 0		
 /*!\brief	Initialise debug support.
  */
 static void
@@ -2449,6 +2451,7 @@ vtw_debug_init(void)
 		sysctl_root.sysctl_flags = flags;
 	}
 }
+#endif
 #else /* !VTW_DEBUG */
 static void
 vtw_debug_init(void)

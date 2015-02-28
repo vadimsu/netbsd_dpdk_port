@@ -100,64 +100,64 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $
 #include "opt_mbuftrace.h"
 
 #include <sys/param.h>
-#include <sys/proc.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
+//#include <sys/proc.h>
+//#include <sys/systm.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/protosw.h>
 #include <sys/errno.h>
-#include <sys/kernel.h>
-#include <sys/pool.h>
+//#include <sys/kernel.h>
+//#include <sys/pool.h>
 #include <sys/md5.h>
-#include <sys/cprng.h>
+//#include <sys/cprng.h>
 
-#include <net/route.h>
-#include <net/if.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/if.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/ip_var.h>
-#include <netinet/ip_icmp.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/ip_icmp.h>
 
 #ifdef INET6
 #ifndef INET
-#include <netinet/in.h>
+#include <netbsd/netbsd/netinet/in.h>
 #endif
-#include <netinet/ip6.h>
-#include <netinet6/in6_pcb.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_var.h>
-#include <netinet6/ip6protosw.h>
-#include <netinet/icmp6.h>
-#include <netinet6/nd6.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/in6_pcb.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_var.h>
+#include <netbsd/netinet6/ip6protosw.h>
+#include <netbsd/netinet/icmp6.h>
+#include <netbsd/netinet6/nd6.h>
 #endif
 
-#include <netinet/tcp.h>
-#include <netinet/tcp_fsm.h>
-#include <netinet/tcp_seq.h>
-#include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
-#include <netinet/tcp_vtw.h>
-#include <netinet/tcp_private.h>
-#include <netinet/tcp_congctl.h>
-#include <netinet/tcpip.h>
+#include <netbsd/netinet/tcp.h>
+#include <netbsd/netinet/tcp_fsm.h>
+#include <netbsd/netinet/tcp_seq.h>
+#include <netbsd/netinet/tcp_timer.h>
+#include <netbsd/netinet/tcp_var.h>
+#include <netbsd/netinet/tcp_vtw.h>
+#include <netbsd/netinet/tcp_private.h>
+#include <netbsd/netinet/tcp_congctl.h>
+#include <netbsd/netinet/tcpip.h>
 
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
-#include <netkey/key.h>
+#include <netbsd/netinet6/ipsec.h>
+#include <netbsd/netkey/key.h>
 #endif /*KAME_IPSEC*/
 
 #ifdef FAST_IPSEC
-#include <netipsec/ipsec.h>
-#include <netipsec/xform.h>
+#include <netbsd/netipsec/ipsec.h>
+#include <netbsd/netipsec/xform.h>
 #ifdef INET6
-#include <netipsec/ipsec6.h>
+#include <netbsd/netipsec/ipsec6.h>
 #endif
- #include <netipsec/key.h>
+ #include <netbsd/netipsec/key.h>
 #endif	/* FAST_IPSEC*/
 
 
@@ -239,7 +239,7 @@ void	tcp6_mtudisc_callback(struct in6_addr *);
 void	tcp6_mtudisc(struct in6pcb *, int);
 #endif
 
-static struct pool tcpcb_pool;
+//static struct pool tcpcb_pool;
 
 static int tcp_drainwanted;
 
@@ -384,9 +384,10 @@ tcp_init(void)
 	int hlen;
 
 	in_pcbinit(&tcbtable, tcbhashsize, tcbhashsize);
+#if 0 /* VADIM */
 	pool_init(&tcpcb_pool, sizeof(struct tcpcb), 0, 0, 0, "tcpcbpl",
 	    NULL, IPL_SOFTNET);
-
+#endif
 	hlen = sizeof(struct ip) + sizeof(struct tcphdr);
 #ifdef INET6
 	if (sizeof(struct ip) < sizeof(struct ip6_hdr))
@@ -1013,7 +1014,9 @@ tcp_newtcpcb(int family, void *aux)
 	int i;
 
 	/* XXX Consider using a pool_cache for speed. */
+#if 0 /* VADIM */
 	tp = pool_get(&tcpcb_pool, PR_NOWAIT);	/* splsoftnet via tcp_usrreq */
+#endif
 	if (tp == NULL)
 		return (NULL);
 	memcpy(tp, &tcpcb_template, sizeof(*tp));
@@ -1063,7 +1066,9 @@ tcp_newtcpcb(int family, void *aux)
 		for (i = 0; i < TCPT_NTIMERS; i++)
 			callout_destroy(&tp->t_timer[i]);
 		callout_destroy(&tp->t_delack_ch);
+#if 0 /* VADIM */
 		pool_put(&tcpcb_pool, tp);	/* splsoftnet via tcp_usrreq */
+#endif
 		return (NULL);
 	}
 
@@ -1267,13 +1272,14 @@ tcp_close(struct tcpcb *tp)
 	 */
 	TCP_STATINC(TCP_STAT_CLOSED);
 	for (j = 0; j < TCPT_NTIMERS; j++) {
-		callout_halt(&tp->t_timer[j], softnet_lock);
+		callout_halt(&tp->t_timer[j]);
 		callout_destroy(&tp->t_timer[j]);
 	}
-	callout_halt(&tp->t_delack_ch, softnet_lock);
+	callout_halt(&tp->t_delack_ch);
 	callout_destroy(&tp->t_delack_ch);
+#if 0 /* VADIM */
 	pool_put(&tcpcb_pool, tp);
-
+#endif
 	return NULL;
 }
 
@@ -1395,7 +1401,9 @@ tcp_notify(struct inpcb *inp, int error)
 		so->so_error = error;
 	else
 		tp->t_softerror = error;
+#if 0 /* VADIM */
 	cv_broadcast(&so->so_cv);
+#endif
 	sorwakeup(so);
 	sowwakeup(so);
 }
@@ -2218,9 +2226,11 @@ tcp_new_iss1(void *laddr, void *faddr, u_int16_t lport, u_int16_t fport,
 	 * hash secret.
 	 */
 	if (tcp_iss_gotten_secret == false) {
+#if 0 /* VADIM - replace with random */
 		cprng_strong(kern_cprng,
 			     tcp_iss_secret, sizeof(tcp_iss_secret), FASYNC);
 		tcp_iss_gotten_secret = true;
+#endif
 	}
 
 	if (tcp_do_rfc1948) {

@@ -296,8 +296,7 @@ void	in_delmulti(struct in_multi *);
 void	in_ifscrub(struct ifnet *, struct in_ifaddr *);
 void	in_setmaxmtu(void);
 const char *in_fmtaddr(struct in_addr);
-int	in_control(struct socket *, u_long, void *, struct ifnet *,
-	    struct lwp *);
+int	in_control(struct socket *, u_long, void *, struct ifnet *);
 void	in_purgeaddr(struct ifaddr *);
 void	in_purgeif(struct ifnet *);
 void	ip_input(struct mbuf *);

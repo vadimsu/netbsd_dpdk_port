@@ -4,7 +4,9 @@ include $(RTE_SDK)/mk/rte.extvars.mk
 SRC_ROOT=$(CURRENT_DIR)
 SRCS-y := netbsd/net/if.c netbsd/net/if_ethersubr.c netbsd/net/if_etherip.c netbsd/net/radix.c netbsd/net/route.c \
 netbsd/net/raw_cb.c netbsd/net/raw_usrreq.c netbsd/netinet/if_arp.c netbsd/netinet/in.c netbsd/netinet/in_proto.c \
-netbsd/netinet/ip_input.c
+netbsd/netinet/ip_input.c netbsd/netinet/ip_output.c netbsd/netinet/in4_cksum.c netbsd/netinet/tcp_input.c netbsd/netinet/tcp_output.c \
+netbsd/netinet/tcp_sack.c netbsd/netinet/tcp_timer.c netbsd/netinet/tcp_subr.c netbsd/netinet/tcp_vtw.c netbsd/netinet/tcp_usrreq.c \
+netbsd/netinet/udp_usrreq.c
 
 CFLAGS += -Ofast
 CFLAGS += $(WERROR_FLAGS)

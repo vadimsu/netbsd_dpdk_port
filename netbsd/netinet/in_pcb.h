@@ -128,8 +128,8 @@ struct inpcb {
 #ifdef _KERNEL
 void	in_losing(struct inpcb *);
 int	in_pcballoc(struct socket *, void *);
-int	in_pcbbind(void *, struct mbuf *, struct lwp *);
-int	in_pcbconnect(void *, struct mbuf *, struct lwp *);
+int	in_pcbbind(void *, struct mbuf *);
+int	in_pcbconnect(void *, struct mbuf *);
 void	in_pcbdetach(void *);
 void	in_pcbdisconnect(void *);
 void	in_pcbinit(struct inpcbtable *, int, int);

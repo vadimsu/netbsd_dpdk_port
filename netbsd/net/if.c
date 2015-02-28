@@ -1643,8 +1643,7 @@ ifioctl_common(struct ifnet *ifp, u_long cmd, void *data)
 }
 
 int
-ifaddrpref_ioctl(struct socket *so, u_long cmd, void *data, struct ifnet *ifp,
-    lwp_t *l)
+ifaddrpref_ioctl(struct socket *so, u_long cmd, void *data, struct ifnet *ifp)
 {
 	struct if_addrprefreq *ifap = (struct if_addrprefreq *)data;
 	struct ifaddr *ifa;

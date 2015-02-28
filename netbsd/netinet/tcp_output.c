@@ -142,65 +142,65 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_output.c,v 1.173.2.1 2014/11/03 23:05:45 msaitoh
 #include "opt_tcp_debug.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
+//#include <sys/systm.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/errno.h>
 #include <sys/domain.h>
-#include <sys/kernel.h>
+//#include <sys/kernel.h>
 #ifdef TCP_SIGNATURE
 #include <sys/md5.h>
 #endif
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/ip_var.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/ip_var.h>
 
 #ifdef INET6
 #ifndef INET
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 #endif
-#include <netinet/ip6.h>
-#include <netinet6/in6_var.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_pcb.h>
-#include <netinet6/nd6.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/in6_var.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_pcb.h>
+#include <netbsd/netinet6/nd6.h>
 #endif
 
 #ifdef FAST_IPSEC
-#include <netipsec/ipsec.h>
-#include <netipsec/key.h>
+#include <netbsd/netipsec/ipsec.h>
+#include <netbsd/netipsec/key.h>
 #ifdef INET6
-#include <netipsec/ipsec6.h>
+#include <netbsd/netipsec/ipsec6.h>
 #endif
 #endif	/* FAST_IPSEC*/
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
+#include <netbsd/netinet6/ipsec.h>
 #endif
 
-#include <netinet/tcp.h>
+#include <netbsd/netinet/tcp.h>
 #define	TCPOUTFLAGS
-#include <netinet/tcp_fsm.h>
-#include <netinet/tcp_seq.h>
-#include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
-#include <netinet/tcp_private.h>
-#include <netinet/tcp_congctl.h>
-#include <netinet/tcpip.h>
-#include <netinet/tcp_debug.h>
-#include <netinet/in_offload.h>
-#include <netinet6/in6_offload.h>
+#include <netbsd/netinet/tcp_fsm.h>
+#include <netbsd/netinet/tcp_seq.h>
+#include <netbsd/netinet/tcp_timer.h>
+#include <netbsd/netinet/tcp_var.h>
+#include <netbsd/netinet/tcp_private.h>
+#include <netbsd/netinet/tcp_congctl.h>
+#include <netbsd/netinet/tcpip.h>
+#include <netbsd/netinet/tcp_debug.h>
+#include <netbsd/netinet/in_offload.h>
+#include <netbsd/netinet6/in6_offload.h>
 
 #ifdef KAME_IPSEC
-#include <netkey/key.h>
+#include <netbsd/netkey/key.h>
 #endif
 
 #ifdef notyet

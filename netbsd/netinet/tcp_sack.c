@@ -111,64 +111,65 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_sack.c,v 1.28 2012/01/30 23:31:27 matt Exp $");
 #include "opt_ddb.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
+//#include <sys/systm.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/errno.h>
 #include <sys/syslog.h>
-#include <sys/pool.h>
+//#include <sys/pool.h>
 #include <sys/domain.h>
-#include <sys/kernel.h>
+//#include <sys/kernel.h>
 
-#include <net/if.h>
-#include <net/route.h>
-#include <net/if_types.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/if_types.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_var.h>
-#include <netinet/ip_var.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip_var.h>
 
 #ifdef INET6
 #ifndef INET
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 #endif
-#include <netinet/ip6.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_pcb.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_var.h>
-#include <netinet/icmp6.h>
-#include <netinet6/nd6.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_pcb.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_var.h>
+#include <netbsd/netinet/icmp6.h>
+#include <netbsd/netinet6/nd6.h>
 #endif
 
 #ifndef INET6
 /* always need ip6.h for IP6_EXTHDR_GET */
-#include <netinet/ip6.h>
+#include <netbsd/netinet/ip6.h>
 #endif
 
-#include <netinet/tcp.h>
-#include <netinet/tcp_fsm.h>
-#include <netinet/tcp_seq.h>
-#include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
-#include <netinet/tcpip.h>
-#include <netinet/tcp_debug.h>
+#include <netbsd/netinet/tcp.h>
+#include <netbsd/netinet/tcp_fsm.h>
+#include <netbsd/netinet/tcp_seq.h>
+#include <netbsd/netinet/tcp_timer.h>
+#include <netbsd/netinet/tcp_var.h>
+#include <netbsd/netinet/tcpip.h>
+#include <netbsd/netinet/tcp_debug.h>
 
 /* SACK block pool. */
-static struct pool sackhole_pool;
+//static struct pool sackhole_pool;
 
 void
 tcp_sack_init(void)
 {
-
+#if 0 /* VADIM */
 	pool_init(&sackhole_pool, sizeof(struct sackhole), 0, 0, 0,
 	    "sackholepl", NULL, IPL_SOFTNET);
+#endif
 }
 
 static struct sackhole *
@@ -180,7 +181,9 @@ sack_allochole(struct tcpcb *tp)
 	    tcp_sack_globalholes >= tcp_sack_globalmaxholes) {
 		return NULL;
 	}
+#if 0 /* VADIM */
 	hole = pool_get(&sackhole_pool, PR_NOWAIT);
+#endif
 	if (hole == NULL) {
 		return NULL;
 	}
@@ -219,8 +222,9 @@ sack_removehole(struct tcpcb *tp, struct sackhole *hole)
 	tp->snd_numholes--;
 	tcp_sack_globalholes--;
 	TAILQ_REMOVE(&tp->snd_holes, hole, sackhole_q);
+#if 0 /* VADIM */
 	pool_put(&sackhole_pool, hole);
-
+#endif
 	return next;
 }
 

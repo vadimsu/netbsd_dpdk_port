@@ -18,5 +18,6 @@ typedef unsigned long u_long;*/
 #define kauth_authorize_network(a,b,c,d,e,f) 0
 #define kmem_alloc(a,b) 0
 #define PR_NOWAIT 0
+#define KM_NOSLEEP 0
 extern unsigned long hz;
 #endif

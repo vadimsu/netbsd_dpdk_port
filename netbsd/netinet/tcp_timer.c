@@ -99,43 +99,43 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_timer.c,v 1.86 2011/08/31 18:31:03 plunky Exp $"
 #include "opt_tcp_debug.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
+//#include <sys/systm.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/protosw.h>
 #include <sys/errno.h>
-#include <sys/kernel.h>
+//#include <sys/kernel.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/ip_var.h>
-#include <netinet/ip_icmp.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/ip_icmp.h>
 
 #ifdef INET6
 #ifndef INET
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 #endif
-#include <netinet/ip6.h>
-#include <netinet6/in6_pcb.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/in6_pcb.h>
 #endif
 
-#include <netinet/tcp.h>
-#include <netinet/tcp_fsm.h>
-#include <netinet/tcp_seq.h>
-#include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
-#include <netinet/tcp_private.h>
-#include <netinet/tcp_congctl.h>
-#include <netinet/tcpip.h>
+#include <netbsd/netinet/tcp.h>
+#include <netbsd/netinet/tcp_fsm.h>
+#include <netbsd/netinet/tcp_seq.h>
+#include <netbsd/netinet/tcp_timer.h>
+#include <netbsd/netinet/tcp_var.h>
+#include <netbsd/netinet/tcp_private.h>
+#include <netbsd/netinet/tcp_congctl.h>
+#include <netbsd/netinet/tcpip.h>
 #ifdef TCP_DEBUG
-#include <netinet/tcp_debug.h>
+#include <netbsd/netinet/tcp_debug.h>
 #endif
 
 /*

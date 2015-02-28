@@ -219,7 +219,7 @@ void	 rip_init(void);
 void	 rip_input(struct mbuf *, ...);
 int	 rip_output(struct mbuf *, ...);
 int	 rip_usrreq(struct socket *,
-	    int, struct mbuf *, struct mbuf *, struct mbuf *, struct lwp *);
+	    int, struct mbuf *, struct mbuf *, struct mbuf *);
 int	ipflow_init(int);
 void	ipflow_poolinit(void);
 void	ipflow_prune(void);

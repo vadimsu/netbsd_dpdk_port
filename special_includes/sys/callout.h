@@ -107,7 +107,7 @@ void	callout_setfunc(callout_t *, void (*)(void *), void *);
 void	callout_reset(callout_t *, int, void (*)(void *), void *);
 void	callout_schedule(callout_t *, int);
 bool	callout_stop(callout_t *);
-bool	callout_halt(callout_t *, void *);
+bool	callout_halt(callout_t *);
 bool	callout_pending(callout_t *);
 bool	callout_expired(callout_t *);
 bool	callout_active(callout_t *);

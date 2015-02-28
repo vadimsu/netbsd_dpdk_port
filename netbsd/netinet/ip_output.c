@@ -99,51 +99,51 @@ __KERNEL_RCSID(0, "$NetBSD: ip_output.c,v 1.213 2012/02/15 16:11:23 drochner Exp
 #include "opt_mrouting.h"
 
 #include <sys/param.h>
-#include <sys/malloc.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/errno.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
-#include <sys/kauth.h>
+//#include <sys/kauth.h>
 #ifdef FAST_IPSEC
 #include <sys/domain.h>
 #endif
-#include <sys/systm.h>
-#include <sys/proc.h>
+//#include <sys/systm.h>
+//#include <sys/proc.h>
 
-#include <net/if.h>
-#include <net/route.h>
-#include <net/pfil.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/pfil.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_var.h>
-#include <netinet/ip_var.h>
-#include <netinet/ip_private.h>
-#include <netinet/in_offload.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/ip_private.h>
+#include <netbsd/netinet/in_offload.h>
 
 #ifdef MROUTING
-#include <netinet/ip_mroute.h>
+#include <netbsd/netinet/ip_mroute.h>
 #endif
 
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
-#include <netinet6/ipsec_private.h>
-#include <netkey/key.h>
-#include <netkey/key_debug.h>
+#include <netbsd/netinet6/ipsec.h>
+#include <netbsd/netinet6/ipsec_private.h>
+#include <netbsd/netkey/key.h>
+#include <netbsd/netkey/key_debug.h>
 #endif /*KAME_IPSEC*/
 
 #ifdef FAST_IPSEC
-#include <netipsec/ipsec.h>
-#include <netipsec/key.h>
-#include <netipsec/xform.h>
+#include <netbsd/netipsec/ipsec.h>
+#include <netbsd/netipsec/key.h>
+#include <netbsd/netipsec/xform.h>
 #endif	/* FAST_IPSEC*/
 
 #ifdef IPSEC_NAT_T
-#include <netinet/udp.h>
+#include <netbsd/netinet/udp.h>
 #endif
 
 static struct mbuf *ip_insertoptions(struct mbuf *, struct mbuf *, int *);

@@ -31,12 +31,12 @@
 #define _NETINET_RFC6056_H_
 
 #ifdef _KERNEL
-#include <sys/sysctl.h>
+//#include <sys/sysctl.h>
 
 int rfc6056_randport(uint16_t *, struct inpcb_hdr *, kauth_cred_t);
-int sysctl_rfc6056_selected(SYSCTLFN_ARGS);
-int sysctl_rfc6056_selected6(SYSCTLFN_ARGS);
-int sysctl_rfc6056_available(SYSCTLFN_ARGS);
+//int sysctl_rfc6056_selected(SYSCTLFN_ARGS);
+//int sysctl_rfc6056_selected6(SYSCTLFN_ARGS);
+//int sysctl_rfc6056_available(SYSCTLFN_ARGS);
 int rfc6056_algo_index_select(struct inpcb_hdr *, int);
 
 #define	RFC6056_MAXLEN       16

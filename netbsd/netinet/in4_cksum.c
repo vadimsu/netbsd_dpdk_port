@@ -34,9 +34,9 @@ __KERNEL_RCSID(0, "$NetBSD: in4_cksum.c,v 1.18 2011/04/25 22:04:32 yamt Exp $");
 
 #include <sys/param.h>
 #include <sys/mbuf.h>
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
 
 /*
  * Checksum of the IPv4 pseudo header.

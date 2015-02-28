@@ -104,57 +104,57 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_usrreq.c,v 1.162.2.3 2013/12/14 19:29:29 bouyer 
 
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
-#include <sys/malloc.h>
+//#include <sys/systm.h>
+//#include <sys/kernel.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/protosw.h>
 #include <sys/errno.h>
 #include <sys/stat.h>
-#include <sys/proc.h>
+//#include <sys/proc.h>
 #include <sys/domain.h>
-#include <sys/sysctl.h>
-#include <sys/kauth.h>
-#include <sys/uidinfo.h>
+//#include <sys/sysctl.h>
+//#include <sys/kauth.h>
+//#include <sys/uidinfo.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/in_var.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/ip_var.h>
-#include <netinet/in_offload.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/in_offload.h>
 
 #ifdef INET6
 #ifndef INET
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 #endif
-#include <netinet/ip6.h>
-#include <netinet6/in6_pcb.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/scope6_var.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/in6_pcb.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/scope6_var.h>
 #endif
 
-#include <netinet/tcp.h>
-#include <netinet/tcp_fsm.h>
-#include <netinet/tcp_seq.h>
-#include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
-#include <netinet/tcp_private.h>
-#include <netinet/tcp_congctl.h>
-#include <netinet/tcpip.h>
-#include <netinet/tcp_debug.h>
-#include <netinet/tcp_vtw.h>
+#include <netbsd/netinet/tcp.h>
+#include <netbsd/netinet/tcp_fsm.h>
+#include <netbsd/netinet/tcp_seq.h>
+#include <netbsd/netinet/tcp_timer.h>
+#include <netbsd/netinet/tcp_var.h>
+#include <netbsd/netinet/tcp_private.h>
+#include <netbsd/netinet/tcp_congctl.h>
+#include <netbsd/netinet/tcpip.h>
+#include <netbsd/netinet/tcp_debug.h>
+#include <netbsd/netinet/tcp_vtw.h>
 
 #include "opt_tcp_space.h"
 
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
+#include <netbsd/netinet6/ipsec.h>
 #endif /*KAME_IPSEC*/
 
 /*
@@ -169,7 +169,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_usrreq.c,v 1.162.2.3 2013/12/14 19:29:29 bouyer 
 /*ARGSUSED*/
 int
 tcp_usrreq(struct socket *so, int req,
-    struct mbuf *m, struct mbuf *nam, struct mbuf *control, struct lwp *l)
+    struct mbuf *m, struct mbuf *nam, struct mbuf *control)
 {
 	struct inpcb *inp;
 #ifdef INET6
@@ -190,7 +190,7 @@ tcp_usrreq(struct socket *so, int req,
 #ifdef INET
 		case PF_INET:
 			return (in_control(so, (long)m, (void *)nam,
-			    (struct ifnet *)control, l));
+			    (struct ifnet *)control));
 #endif
 #ifdef INET6
 		case PF_INET6:
@@ -339,7 +339,7 @@ tcp_usrreq(struct socket *so, int req,
 		switch (family) {
 #ifdef INET
 		case PF_INET:
-			error = in_pcbbind(inp, nam, l);
+			error = in_pcbbind(inp, nam);
 			break;
 #endif
 #ifdef INET6
@@ -363,7 +363,7 @@ tcp_usrreq(struct socket *so, int req,
 	case PRU_LISTEN:
 #ifdef INET
 		if (inp && inp->inp_lport == 0) {
-			error = in_pcbbind(inp, NULL, l);
+			error = in_pcbbind(inp, NULL);
 			if (error)
 				break;
 		}
@@ -389,11 +389,11 @@ tcp_usrreq(struct socket *so, int req,
 #ifdef INET
 		if (inp) {
 			if (inp->inp_lport == 0) {
-				error = in_pcbbind(inp, NULL, l);
+				error = in_pcbbind(inp, NULL);
 				if (error)
 					break;
 			}
-			error = in_pcbconnect(inp, nam, l);
+			error = in_pcbconnect(inp, nam);
 		}
 #endif
 #ifdef INET6
@@ -1026,7 +1026,7 @@ tcp_usrclosed(struct tcpcb *tp)
 	}
 	return (tp);
 }
-
+#if 0
 /*
  * sysctl helper routine for net.inet.ip.mssdflt.  it can't be less
  * than 32.
@@ -1217,7 +1217,7 @@ copyout_uid(struct socket *sockp, void *oldp, size_t *oldlenp)
 	*oldlenp = sizeof(uid_t);
 	return 0;
 }
-
+#endif
 static inline int
 inet4_ident_core(struct in_addr raddr, u_int rport,
     struct in_addr laddr, u_int lport,
@@ -1287,7 +1287,7 @@ inet6_ident_core(struct in6_addr *raddr, u_int rport,
 		return copyout_uid(sockp, oldp, oldlenp);
 }
 #endif
-
+#if 0
 /*
  * sysctl helper routine for the net.inet.tcp.drop and
  * net.inet6.tcp6.drop nodes.
@@ -2135,15 +2135,15 @@ sysctl_net_inet_tcp_setup2(struct sysctllog **clog, int pf, const char *pfname,
 		       SYSCTL_DESCR("Maximum number of vestigial TIME_WAIT entries"),
 		       NULL, 0, &tcp_vtw_entries, 0, CTL_CREATE, CTL_EOL);
 }
-
+#endif
 void
 tcp_usrreq_init(void)
 {
 
 #ifdef INET
-	sysctl_net_inet_tcp_setup2(NULL, PF_INET, "inet", "tcp");
+//	sysctl_net_inet_tcp_setup2(NULL, PF_INET, "inet", "tcp");
 #endif
 #ifdef INET6
-	sysctl_net_inet_tcp_setup2(NULL, PF_INET6, "inet6", "tcp6");
+//	sysctl_net_inet_tcp_setup2(NULL, PF_INET6, "inet6", "tcp6");
 #endif
 }
