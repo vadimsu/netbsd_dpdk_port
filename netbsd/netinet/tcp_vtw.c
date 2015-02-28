@@ -44,7 +44,7 @@
 #include <sys/socketvar.h>
 #include <sys/errno.h>
 #include <sys/syslog.h>
-//#include <sys/pool.h>
+#include <sys/pool.h>
 #include <sys/domain.h>
 //#include <sys/kernel.h>
 #include <netbsd/net/if.h>

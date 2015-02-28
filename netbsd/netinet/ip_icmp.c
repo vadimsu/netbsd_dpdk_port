@@ -99,38 +99,38 @@ __KERNEL_RCSID(0, "$NetBSD: ip_icmp.c,v 1.128.2.1 2013/03/31 20:52:29 riz Exp $"
 #include "opt_ipsec.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
+//#include <sys/systm.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>
 #include <sys/time.h>
-#include <sys/kernel.h>
+//#include <sys/kernel.h>
 #include <sys/syslog.h>
-#include <sys/sysctl.h>
+//#include <sys/sysctl.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/in_var.h>
-#include <netinet/ip.h>
-#include <netinet/ip_icmp.h>
-#include <netinet/ip_var.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_proto.h>
-#include <netinet/icmp_var.h>
-#include <netinet/icmp_private.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/ip_icmp.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_proto.h>
+#include <netbsd/netinet/icmp_var.h>
+#include <netbsd/netinet/icmp_private.h>
 
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
-#include <netkey/key.h>
+#include <netbsd/netinet6/ipsec.h>
+#include <netbsd/netkey/key.h>
 #endif
 
 #ifdef FAST_IPSEC
-#include <netipsec/ipsec.h>
-#include <netipsec/key.h>
+#include <netbsd/netipsec/ipsec.h>
+#include <netbsd/netipsec/key.h>
 #endif	/* FAST_IPSEC*/
 
 /*
@@ -175,13 +175,13 @@ static struct rttimer_queue *icmp_redirect_timeout_q = NULL;
 static void icmp_mtudisc_timeout(struct rtentry *, struct rttimer *);
 static void icmp_redirect_timeout(struct rtentry *, struct rttimer *);
 
-static void sysctl_netinet_icmp_setup(struct sysctllog **);
+//static void sysctl_netinet_icmp_setup(struct sysctllog **);
 
 void
 icmp_init(void)
 {
 
-	sysctl_netinet_icmp_setup(NULL);
+	//sysctl_netinet_icmp_setup(NULL);
 
 	/*
 	 * This is only useful if the user initializes redirtimeout to
@@ -922,7 +922,7 @@ iptime(void)
 	t = (atv.tv_sec % (24*60*60)) * 1000 + atv.tv_usec / 1000;
 	return (htonl(t));
 }
-
+#if 0
 /*
  * sysctl helper routine for net.inet.icmp.returndatabytes.  ensures
  * that the new value is in the correct range.
@@ -1073,7 +1073,7 @@ sysctl_netinet_icmp_setup(struct sysctllog **clog)
 		       CTL_NET, PF_INET, IPPROTO_ICMP, ICMPCTL_BMCASTECHO,
 		       CTL_EOL);
 }
-
+#endif
 void
 icmp_statinc(u_int stat)
 {

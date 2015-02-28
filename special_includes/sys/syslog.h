@@ -33,7 +33,7 @@
 
 #ifndef _SYS_SYSLOG_H_
 #define _SYS_SYSLOG_H_
-
+//#include<stdarg.h>
 #define	_PATH_LOG	"/var/run/log"
 
 /*
@@ -217,7 +217,21 @@ __END_DECLS
 #else /* !_KERNEL */
 
 void	logpri(int);
-void	log(int, const char *, ...) __printflike(2, 3);
+static inline void log(int level, const char *fmt, ...) __printflike(2, 3);
+static inline void log(int level, const char *fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    printf(fmt, args);
+}
+static inline void panic(const char *, ...) __printflike(1, 2);
+static inline void panic(const char *fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    printf(fmt, args);
+    exit(1);
+}
 void	vlog(int, const char *, __va_list) __printflike(2, 0);
 void	addlog(const char *, ...) __printflike(1, 2);
 void	logwakeup(void);

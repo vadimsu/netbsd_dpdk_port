@@ -49,30 +49,30 @@
 __KERNEL_RCSID(0, "$NetBSD: ip_reass.c,v 1.8 2011/06/27 00:45:50 enami Exp $");
 
 #include <sys/param.h>
-#include <sys/types.h>
+//#include <sys/types.h>
 
-#include <sys/malloc.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
-#include <sys/mutex.h>
+//#include <sys/mutex.h>
 #include <sys/domain.h>
 #include <sys/protosw.h>
 #include <sys/pool.h>
 #include <sys/queue.h>
-#include <sys/sysctl.h>
-#include <sys/systm.h>
+//#include <sys/sysctl.h>
+//#include <sys/systm.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/ip_var.h>
-#include <netinet/in_proto.h>
-#include <netinet/ip_private.h>
-#include <netinet/in_var.h>
-
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/in_proto.h>
+#include <netbsd/netinet/ip_private.h>
+#include <netbsd/netinet/in_var.h>
+#include "missing_types.h"
 /*
  * IP reassembly queue structures.  Each fragment being reassembled is
  * attached to one of these structures.  They are timed out after TTL
@@ -111,7 +111,7 @@ typedef struct ipfr_queue {
 
 static LIST_HEAD(, ipfr_queue)	ip_frags[IPREASS_HASH_SIZE];
 static pool_cache_t	ipfren_cache;
-static kmutex_t		ipfr_lock;
+//static kmutex_t		ipfr_lock;
 
 /* Number of packets in reassembly queue and total number of fragments. */
 static int		ip_nfragpackets;
@@ -163,9 +163,9 @@ ip_reass_init(void)
 	ip_maxfrags = 0;
 	ip_nmbclusters_changed();
 
-	sysctl_ip_reass_setup();
+//	sysctl_ip_reass_setup();
 }
-
+#if 0
 void
 sysctl_ip_reass_setup(void)
 {
@@ -196,7 +196,7 @@ sysctl_ip_reass_setup(void)
 		NULL, 0, &ip_maxfragpackets, 0,
 		CTL_NET, PF_INET, IPPROTO_IP, IPCTL_MAXFRAGPACKETS, CTL_EOL);
 }
-
+#endif
 #define CHECK_NMBCLUSTER_PARAMS()				\
 do {								\
 	if (__predict_false(ip_nmbclusters != nmbclusters))	\
@@ -229,7 +229,7 @@ ip_reass(ipfr_qent_t *ipqe, ipfr_queue_t *fp, const u_int hash)
 	ipfr_qent_t *nq, *p, *q;
 	int i, next;
 
-	KASSERT(mutex_owned(&ipfr_lock));
+//	KASSERT(mutex_owned(&ipfr_lock));
 
 	/*
 	 * Presence of header sizes in mbufs would confuse code below.
@@ -448,7 +448,7 @@ ip_freef(ipfr_queue_t *fp)
 {
 	ipfr_qent_t *q;
 
-	KASSERT(mutex_owned(&ipfr_lock));
+//	KASSERT(mutex_owned(&ipfr_lock));
 
 	LIST_REMOVE(fp, ipq_q);
 	ip_nfrags -= fp->ipq_nfrags;
@@ -516,7 +516,7 @@ ip_reass_drophalf(void)
 {
 	u_int median_ticks;
 
-	KASSERT(mutex_owned(&ipfr_lock));
+//	KASSERT(mutex_owned(&ipfr_lock));
 
 	/*
 	 * Compute median TTL of all fragments, and count frags
@@ -540,13 +540,13 @@ ip_reass_drain(void)
 	 * We may be called from a device's interrupt context.  If
 	 * the ipq is already busy, just bail out now.
 	 */
-	if (mutex_tryenter(&ipfr_lock)) {
+	if (/*mutex_tryenter(&ipfr_lock)*/1) {
 		/*
 		 * Drop half the total fragments now. If more mbufs are
 		 * needed, we will be called again soon.
 		 */
 		ip_reass_drophalf();
-		mutex_exit(&ipfr_lock);
+//		mutex_exit(&ipfr_lock);
 	}
 }
 
@@ -561,7 +561,7 @@ ip_reass_slowtimo(void)
 	static u_int dropscanidx = 0;
 	u_int i, median_ttl;
 
-	mutex_enter(&ipfr_lock);
+//	mutex_enter(&ipfr_lock);
 
 	/* Age TTL of all fragments by 1 tick .*/
 	median_ttl = ip_reass_ttl_decr(1);
@@ -603,7 +603,7 @@ ip_reass_slowtimo(void)
 		}
 		dropscanidx = i;
 	}
-	mutex_exit(&ipfr_lock);
+//	mutex_exit(&ipfr_lock);
 }
 
 /*
@@ -657,7 +657,7 @@ ip_reass_packet(struct mbuf **m0, struct ip *ip)
 	ip->ip_off = htons(off);
 
 	/* Look for queue of fragments of this datagram. */
-	mutex_enter(&ipfr_lock);
+//	mutex_enter(&ipfr_lock);
 	hash = IPREASS_HASH(ip->ip_src.s_addr, ip->ip_id);
 	LIST_FOREACH(fp, &ip_frags[hash], ipq_q) {
 		if (ip->ip_id != fp->ipq_id)

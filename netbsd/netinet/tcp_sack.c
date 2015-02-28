@@ -119,7 +119,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_sack.c,v 1.28 2012/01/30 23:31:27 matt Exp $");
 #include <sys/socketvar.h>
 #include <sys/errno.h>
 #include <sys/syslog.h>
-//#include <sys/pool.h>
+#include <sys/pool.h>
 #include <sys/domain.h>
 //#include <sys/kernel.h>
 
@@ -161,15 +161,14 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_sack.c,v 1.28 2012/01/30 23:31:27 matt Exp $");
 #include <netbsd/netinet/tcp_debug.h>
 
 /* SACK block pool. */
-//static struct pool sackhole_pool;
+static struct pool sackhole_pool;
 
 void
 tcp_sack_init(void)
 {
-#if 0 /* VADIM */
+
 	pool_init(&sackhole_pool, sizeof(struct sackhole), 0, 0, 0,
 	    "sackholepl", NULL, IPL_SOFTNET);
-#endif
 }
 
 static struct sackhole *
@@ -181,9 +180,7 @@ sack_allochole(struct tcpcb *tp)
 	    tcp_sack_globalholes >= tcp_sack_globalmaxholes) {
 		return NULL;
 	}
-#if 0 /* VADIM */
 	hole = pool_get(&sackhole_pool, PR_NOWAIT);
-#endif
 	if (hole == NULL) {
 		return NULL;
 	}
@@ -222,9 +219,8 @@ sack_removehole(struct tcpcb *tp, struct sackhole *hole)
 	tp->snd_numholes--;
 	tcp_sack_globalholes--;
 	TAILQ_REMOVE(&tp->snd_holes, hole, sackhole_q);
-#if 0 /* VADIM */
 	pool_put(&sackhole_pool, hole);
-#endif
+
 	return next;
 }
 

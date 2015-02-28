@@ -108,7 +108,7 @@ __KERNEL_RCSID(0, "$NetBSD: route.c,v 1.126.2.1 2013/07/29 05:43:13 msaitoh Exp 
 #include <sys/protosw.h>
 //#include <sys/kernel.h>
 #include <sys/ioctl.h>
-//#include <sys/pool.h>
+#include <sys/pool.h>
 //#include <sys/kauth.h>
 
 #include <netbsd/net/if.h>
@@ -129,8 +129,8 @@ struct	rtstat	rtstat;
 
 int	rttrash;		/* routes not in table but not freed */
 
-//struct pool rtentry_pool;
-//struct pool rttimer_pool;
+struct pool rtentry_pool;
+struct pool rttimer_pool;
 
 struct callout rt_timer_ch; /* callout for rt_timer_timer() */
 
@@ -278,12 +278,12 @@ rt_init(void)
 #ifdef RTFLUSH_DEBUG
 	sysctl_net_rtcache_setup(NULL);
 #endif
-#if 0 /* VADIM */
+
 	pool_init(&rtentry_pool, sizeof(struct rtentry), 0, 0, 0, "rtentpl",
 	    NULL, IPL_SOFTNET);
 	pool_init(&rttimer_pool, sizeof(struct rttimer), 0, 0, 0, "rttmrpl",
 	    NULL, IPL_SOFTNET);
-#endif
+
 	rn_init();	/* initialize all zeroes, all ones, mask table */
 	rtbl_init();
 #if 0 /* VADIM */
@@ -396,9 +396,7 @@ rtfree(struct rtentry *rt)
 		IFAFREE(ifa);
 		rt->rt_ifp = NULL;
 		rt_destroy(rt);
-#if 0
 		pool_put(&rtentry_pool, rt);
-#endif
 	}
 }
 
@@ -764,9 +762,7 @@ rtrequest1(int req, struct rt_addrinfo *info, struct rtentry **ret_nrt)
 		ifa = info->rti_ifa;
 	makeroute:
 		/* Already at splsoftnet() so pool_get/pool_put are safe */
-#if 0 /* VADIM */
 		rt = pool_get(&rtentry_pool, PR_NOWAIT);
-#endif
 		if (rt == NULL)
 			senderr(ENOBUFS);
 		memset(rt, 0, sizeof(*rt));
@@ -775,9 +771,7 @@ rtrequest1(int req, struct rt_addrinfo *info, struct rtentry **ret_nrt)
 		RT_DPRINTF("rt->_rt_key = %p\n", (void *)rt->_rt_key);
 		if (rt_setkey(rt, dst, M_NOWAIT) == NULL ||
 		    rt_setgate(rt, gateway) != 0) {
-#if 0 /* VADIM */
 			pool_put(&rtentry_pool, rt);
-#endif
 			senderr(ENOBUFS);
 		}
 		RT_DPRINTF("rt->_rt_key = %p\n", (void *)rt->_rt_key);
@@ -825,9 +819,7 @@ rtrequest1(int req, struct rt_addrinfo *info, struct rtentry **ret_nrt)
 			if (rt->rt_gwroute)
 				rtfree(rt->rt_gwroute);
 			rt_destroy(rt);
-#if 0
 			pool_put(&rtentry_pool, rt);
-#endif
 			senderr(rc);
 		}
 		RT_DPRINTF("rt->_rt_key = %p\n", (void *)rt->_rt_key);
@@ -1104,9 +1096,7 @@ rt_timer_queue_remove_all(struct rttimer_queue *rtq, int destroy)
 		if (destroy)
 			RTTIMER_CALLOUT(r);
 		/* we are already at splsoftnet */
-#if 0 /* VADIM */
 		pool_put(&rttimer_pool, r);
-#endif
 		if (rtq->rtq_count > 0)
 			rtq->rtq_count--;
 		else
@@ -1149,9 +1139,7 @@ rt_timer_remove_all(struct rtentry *rt, int destroy)
 		else
 			printf("rt_timer_remove_all: rtq_count reached 0\n");
 		/* we are already at splsoftnet */
-#if 0 /* VADIM */
 		pool_put(&rttimer_pool, r);
-#endif
 	}
 }
 
@@ -1180,9 +1168,7 @@ rt_timer_add(struct rtentry *rt,
 			printf("rt_timer_add: rtq_count reached 0\n");
 	} else {
 		s = splsoftnet();
-#if 0 /* VADIM */
 		r = pool_get(&rttimer_pool, PR_NOWAIT);
-#endif
 		splx(s);
 		if (r == NULL)
 			return ENOBUFS;
@@ -1216,9 +1202,7 @@ rt_timer_timer(void *arg)
 			LIST_REMOVE(r, rtt_link);
 			TAILQ_REMOVE(&rtq->rtq_head, r, rtt_next);
 			RTTIMER_CALLOUT(r);
-#if 0 /* VADIM */
 			pool_put(&rttimer_pool, r);
-#endif
 			if (rtq->rtq_count > 0)
 				rtq->rtq_count--;
 			else

@@ -164,7 +164,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_input.c,v 1.321 2012/01/11 14:39:08 drochner Exp
 #include <sys/socketvar.h>
 #include <sys/errno.h>
 #include <sys/syslog.h>
-//#include <sys/pool.h>
+#include <sys/pool.h>
 #include <sys/domain.h>
 //#include <sys/kernel.h>
 #ifdef TCP_SIGNATURE
@@ -408,16 +408,15 @@ static void tcp6_log_refused(const struct ip6_hdr *, const struct tcphdr *);
 #if defined(MBUFTRACE)
 struct mowner tcp_reass_mowner = MOWNER_INIT("tcp", "reass");
 #endif /* defined(MBUFTRACE) */
-#if 0 /* VADIM */
+
 static struct pool tcpipqent_pool;
-#endif
+
 void
 tcpipqent_init(void)
 {
-#if 0 /* VADIM */
+
 	pool_init(&tcpipqent_pool, sizeof(struct ipqent), 0, 0, 0, "tcpipqepl",
 	    NULL, IPL_VM);
-#endif
 }
 
 struct ipqent *
@@ -427,10 +426,9 @@ tcpipqent_alloc(void)
 	int s;
 
 	s = splvm();
-#if 0 /* VADIM */
 	ipqe = pool_get(&tcpipqent_pool, PR_NOWAIT);
 	splx(s);
-#endif
+
 	return ipqe;
 }
 
@@ -438,11 +436,10 @@ void
 tcpipqent_free(struct ipqent *ipqe)
 {
 	int s;
-#if 0 /* VADIM */
+
 	s = splvm();
 	pool_put(&tcpipqent_pool, ipqe);
 	splx(s);
-#endif
 }
 
 static int
@@ -3648,9 +3645,9 @@ do {									\
 	}								\
 } while (/*CONSTCOND*/0)
 #endif /* INET6 */
-#if 0 /* VADIM */
+
 static struct pool syn_cache_pool;
-#endif
+
 /*
  * We don't estimate RTT with SYNs, so each packet starts with the default
  * RTT and each timer step has a fixed timeout value.
@@ -3693,10 +3690,10 @@ void
 syn_cache_init(void)
 {
 	int i;
-#if 0 /* VADIM */
+
 	pool_init(&syn_cache_pool, sizeof(struct syn_cache), 0, 0, 0,
 	    "synpl", NULL, IPL_SOFTNET);
-#endif
+
 	/* Initialize the hash buckets. */
 	for (i = 0; i < tcp_syn_cache_size; i++)
 		TAILQ_INIT(&tcp_syn_cache[i].sch_bucket);
@@ -3816,9 +3813,7 @@ syn_cache_timer(void *arg)
 	if (__predict_false(sc->sc_flags & SCF_DEAD)) {
 		TCP_STATINC(TCP_STAT_SC_DELAYED_FREE);
 		callout_destroy(&sc->sc_timer);
-#if 0 /* VADIM */
 		pool_put(&syn_cache_pool, sc);
-#endif
 		KERNEL_UNLOCK_ONE(NULL);
 		mutex_exit(softnet_lock);
 		return;
@@ -3856,9 +3851,7 @@ syn_cache_timer(void *arg)
 		(void) m_free(sc->sc_ipopts);
 	rtcache_free(&sc->sc_route);
 	callout_destroy(&sc->sc_timer);
-#if 0 /* VADIM */
 	pool_put(&syn_cache_pool, sc);
-#endif
 	KERNEL_UNLOCK_ONE(NULL);
 	mutex_exit(softnet_lock);
 }
@@ -4423,9 +4416,7 @@ syn_cache_add(struct sockaddr *src, struct sockaddr *dst, struct tcphdr *th,
 	}
 
 	s = splsoftnet();
-#if 0 /* VADIM */
 	sc = pool_get(&syn_cache_pool, PR_NOWAIT);
-#endif
 	splx(s);
 	if (sc == NULL) {
 		if (ipopts)

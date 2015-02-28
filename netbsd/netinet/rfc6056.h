@@ -33,7 +33,7 @@
 #ifdef _KERNEL
 //#include <sys/sysctl.h>
 
-int rfc6056_randport(uint16_t *, struct inpcb_hdr *, kauth_cred_t);
+int rfc6056_randport(uint16_t *, struct inpcb_hdr *);
 //int sysctl_rfc6056_selected(SYSCTLFN_ARGS);
 //int sysctl_rfc6056_selected6(SYSCTLFN_ARGS);
 //int sysctl_rfc6056_available(SYSCTLFN_ARGS);

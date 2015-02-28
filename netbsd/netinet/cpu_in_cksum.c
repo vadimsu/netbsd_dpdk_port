@@ -35,7 +35,7 @@ __KERNEL_RCSID(0, "$NetBSD: cpu_in_cksum.c,v 1.1 2008/01/25 21:12:14 joerg Exp $
 #include <sys/endian.h>
 #include <sys/mbuf.h>
 #ifdef _KERNEL
-#include <sys/systm.h>
+//#include <sys/systm.h>
 #else
 #include <assert.h>
 #include <stdbool.h>
@@ -46,7 +46,7 @@ __KERNEL_RCSID(0, "$NetBSD: cpu_in_cksum.c,v 1.1 2008/01/25 21:12:14 joerg Exp $
 
 #include <machine/limits.h>
 
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 
 #ifndef _KERNEL
 int	cpu_in_cksum(struct mbuf*, int, int, uint32_t);

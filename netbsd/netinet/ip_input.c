@@ -112,7 +112,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp 
 #include <sys/errno.h>
 #include <sys/time.h>
 //#include <sys/kernel.h>
-//#include <sys/pool.h>
+#include <sys/pool.h>
 //#include <sys/sysctl.h>
 //#include <sys/kauth.h>
 
@@ -239,7 +239,7 @@ percpu_t *ipstat_percpu;
 struct pfil_head inet_pfil_hook;
 #endif
 
-//struct pool inmulti_pool;
+struct pool inmulti_pool;
 
 #ifdef INET_CSUM_COUNTERS
 #include <sys/device.h>
@@ -300,10 +300,10 @@ ip_init(void)
 	int i;
 
 	sysctl_net_inet_ip_setup(NULL);
-#if 0 /* VADIM */
+
 	pool_init(&inmulti_pool, sizeof(struct in_multi), 0, 0, 0, "inmltpl",
 	    NULL, IPL_SOFTNET);
-#endif
+
 	pr = pffindproto(PF_INET, IPPROTO_RAW, SOCK_RAW);
 	if (pr == 0)
 		panic("ip_init");

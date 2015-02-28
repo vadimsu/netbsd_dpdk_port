@@ -109,7 +109,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $
 #include <sys/protosw.h>
 #include <sys/errno.h>
 //#include <sys/kernel.h>
-//#include <sys/pool.h>
+#include <sys/pool.h>
 #include <sys/md5.h>
 //#include <sys/cprng.h>
 
@@ -239,7 +239,7 @@ void	tcp6_mtudisc_callback(struct in6_addr *);
 void	tcp6_mtudisc(struct in6pcb *, int);
 #endif
 
-//static struct pool tcpcb_pool;
+static struct pool tcpcb_pool;
 
 static int tcp_drainwanted;
 
@@ -384,10 +384,9 @@ tcp_init(void)
 	int hlen;
 
 	in_pcbinit(&tcbtable, tcbhashsize, tcbhashsize);
-#if 0 /* VADIM */
 	pool_init(&tcpcb_pool, sizeof(struct tcpcb), 0, 0, 0, "tcpcbpl",
 	    NULL, IPL_SOFTNET);
-#endif
+
 	hlen = sizeof(struct ip) + sizeof(struct tcphdr);
 #ifdef INET6
 	if (sizeof(struct ip) < sizeof(struct ip6_hdr))
@@ -1014,9 +1013,7 @@ tcp_newtcpcb(int family, void *aux)
 	int i;
 
 	/* XXX Consider using a pool_cache for speed. */
-#if 0 /* VADIM */
 	tp = pool_get(&tcpcb_pool, PR_NOWAIT);	/* splsoftnet via tcp_usrreq */
-#endif
 	if (tp == NULL)
 		return (NULL);
 	memcpy(tp, &tcpcb_template, sizeof(*tp));
@@ -1066,9 +1063,7 @@ tcp_newtcpcb(int family, void *aux)
 		for (i = 0; i < TCPT_NTIMERS; i++)
 			callout_destroy(&tp->t_timer[i]);
 		callout_destroy(&tp->t_delack_ch);
-#if 0 /* VADIM */
 		pool_put(&tcpcb_pool, tp);	/* splsoftnet via tcp_usrreq */
-#endif
 		return (NULL);
 	}
 
@@ -1277,9 +1272,8 @@ tcp_close(struct tcpcb *tp)
 	}
 	callout_halt(&tp->t_delack_ch);
 	callout_destroy(&tp->t_delack_ch);
-#if 0 /* VADIM */
 	pool_put(&tcpcb_pool, tp);
-#endif
+
 	return NULL;
 }
 

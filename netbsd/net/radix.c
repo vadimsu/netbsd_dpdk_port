@@ -55,6 +55,7 @@ __KERNEL_RCSID(0, "$NetBSD: radix.c,v 1.44 2011/07/17 20:54:52 joerg Exp $");
 #include <sys/syslog.h>
 #include <netbsd/net/radix.h>
 #endif
+#include <netbsd/lib/libkern/libkern.h>
 
 typedef void (*rn_printer_t)(void *, const char *fmt, ...);
 

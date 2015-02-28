@@ -99,8 +99,8 @@ __KERNEL_RCSID(0, "$NetBSD: in_pcb.c,v 1.140 2011/12/19 11:59:56 drochner Exp $"
 #include "opt_ipsec.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
+//#include <sys/systm.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>
@@ -110,37 +110,37 @@ __KERNEL_RCSID(0, "$NetBSD: in_pcb.c,v 1.140 2011/12/19 11:59:56 drochner Exp $"
 #include <sys/time.h>
 #include <sys/once.h>
 #include <sys/pool.h>
-#include <sys/proc.h>
-#include <sys/kauth.h>
-#include <sys/uidinfo.h>
+//#include <sys/proc.h>
+//#include <sys/kauth.h>
+//#include <sys/uidinfo.h>
 #include <sys/domain.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 #include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_var.h>
-#include <netinet/ip_var.h>
-#include <netinet/rfc6056.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/rfc6056.h>
 
 #ifdef INET6
-#include <netinet/ip6.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_pcb.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_pcb.h>
 #endif
 
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
-#include <netkey/key.h>
+#include <netbsd/netinet6/ipsec.h>
+#include <netbsd/netkey/key.h>
 #elif FAST_IPSEC
-#include <netipsec/ipsec.h>
-#include <netipsec/key.h>
+#include <netbsd/netipsec/ipsec.h>
+#include <netbsd/netipsec/key.h>
 #endif /* IPSEC */
 
-#include <netinet/tcp_vtw.h>
+#include <netbsd/netinet/tcp_vtw.h>
 
 struct	in_addr zeroin_addr;
 
@@ -231,39 +231,39 @@ in_pcballoc(struct socket *so, void *v)
 }
 
 static int
-in_pcbsetport(struct sockaddr_in *sin, struct inpcb *inp, kauth_cred_t cred)
+in_pcbsetport(struct sockaddr_in *sin, struct inpcb *inp)
 {
 	struct inpcbtable *table = inp->inp_table;
 	struct socket *so = inp->inp_socket;
 	u_int16_t *lastport;
 	u_int16_t lport = 0;
-	enum kauth_network_req req;
+	//enum kauth_network_req req;
 	int error;
 
 	if (inp->inp_flags & INP_LOWPORT) {
 #ifndef IPNOPRIVPORTS
-		req = KAUTH_REQ_NETWORK_BIND_PRIVPORT;
+//		req = KAUTH_REQ_NETWORK_BIND_PRIVPORT;
 #else
-		req = KAUTH_REQ_NETWORK_BIND_PORT;
+//		req = KAUTH_REQ_NETWORK_BIND_PORT;
 #endif
 
 		lastport = &table->inpt_lastlow;
 	} else {
-		req = KAUTH_REQ_NETWORK_BIND_PORT;
+//		req = KAUTH_REQ_NETWORK_BIND_PORT;
 
 		lastport = &table->inpt_lastport;
 	}
 
 	/* XXX-kauth: KAUTH_REQ_NETWORK_BIND_AUTOASSIGN_{,PRIV}PORT */
-	error = kauth_authorize_network(cred, KAUTH_NETWORK_BIND, req, so, sin,
-	    NULL);
-	if (error)
-		return (EACCES);
+//	error = kauth_authorize_network(cred, KAUTH_NETWORK_BIND, req, so, sin,
+//	    NULL);
+//	if (error)
+//		return (EACCES);
 
        /*
         * Use RFC6056 randomized port selection
         */
-	error = rfc6056_randport(&lport, &inp->inp_head, cred);
+	error = rfc6056_randport(&lport, &inp->inp_head);
 	if (error)
 		return error;
 
@@ -277,7 +277,7 @@ in_pcbsetport(struct sockaddr_in *sin, struct inpcb *inp, kauth_cred_t cred)
 }
 
 static int
-in_pcbbind_addr(struct inpcb *inp, struct sockaddr_in *sin, kauth_cred_t cred)
+in_pcbbind_addr(struct inpcb *inp, struct sockaddr_in *sin)
 {
 	if (sin->sin_family != AF_INET)
 		return (EAFNOSUPPORT);
@@ -301,7 +301,7 @@ in_pcbbind_addr(struct inpcb *inp, struct sockaddr_in *sin, kauth_cred_t cred)
 }
 
 static int
-in_pcbbind_port(struct inpcb *inp, struct sockaddr_in *sin, kauth_cred_t cred)
+in_pcbbind_port(struct inpcb *inp, struct sockaddr_in *sin)
 {
 	struct inpcbtable *table = inp->inp_table;
 	struct socket *so = inp->inp_socket;
@@ -321,7 +321,7 @@ in_pcbbind_port(struct inpcb *inp, struct sockaddr_in *sin, kauth_cred_t cred)
 	} 
 
 	if (sin->sin_port == 0) {
-		error = in_pcbsetport(sin, inp, cred);
+		error = in_pcbsetport(sin, inp);
 		if (error)
 			return (error);
 	} else {
@@ -331,22 +331,22 @@ in_pcbbind_port(struct inpcb *inp, struct sockaddr_in *sin, kauth_cred_t cred)
 		struct in6pcb *t6;
 		struct in6_addr mapped;
 #endif
-		enum kauth_network_req req;
+		//enum kauth_network_req req;
 
 		if ((so->so_options & (SO_REUSEADDR|SO_REUSEPORT)) == 0)
 			wild = 1;
 
 #ifndef IPNOPRIVPORTS
-		if (ntohs(sin->sin_port) < IPPORT_RESERVED)
-			req = KAUTH_REQ_NETWORK_BIND_PRIVPORT;
-		else
+//		if (ntohs(sin->sin_port) < IPPORT_RESERVED)
+//			req = KAUTH_REQ_NETWORK_BIND_PRIVPORT;
+//		else
 #endif /* !IPNOPRIVPORTS */
-			req = KAUTH_REQ_NETWORK_BIND_PORT;
+//			req = KAUTH_REQ_NETWORK_BIND_PORT;
 
-		error = kauth_authorize_network(cred, KAUTH_NETWORK_BIND, req,
-		    so, sin, NULL);
-		if (error)
-			return (EACCES);
+//		error = kauth_authorize_network(cred, KAUTH_NETWORK_BIND, req,
+//		    so, sin, NULL);
+//		if (error)
+//			return (EACCES);
 
 #ifdef INET6
 		memset(&mapped, 0, sizeof(mapped));
@@ -362,7 +362,7 @@ in_pcbbind_port(struct inpcb *inp, struct sockaddr_in *sin, kauth_cred_t cred)
 		    }
 		}
 #endif
-
+#if 0 /* VADIM - disabled*/
 		/* XXX-kauth */
 		if (so->so_uidinfo->ui_uid && !IN_MULTICAST(sin->sin_addr.s_addr)) {
 			t = in_pcblookup_port(table, sin->sin_addr, sin->sin_port, 1, &vestige);
@@ -378,6 +378,7 @@ in_pcbbind_port(struct inpcb *inp, struct sockaddr_in *sin, kauth_cred_t cred)
 			    && (so->so_uidinfo->ui_uid != t->inp_socket->so_uidinfo->ui_uid)) {
 				return (EADDRINUSE);
 			}
+
 			if (!t && vestige.valid) {
 				if ((!in_nullhost(sin->sin_addr)
 				     || !in_nullhost(vestige.laddr.v4)
@@ -386,7 +387,9 @@ in_pcbbind_port(struct inpcb *inp, struct sockaddr_in *sin, kauth_cred_t cred)
 					return EADDRINUSE;
 				}
 			}
+
 		}
+#endif
 		t = in_pcblookup_port(table, sin->sin_addr, sin->sin_port, wild, &vestige);
 		if (t && (reuseport & t->inp_socket->so_options) == 0)
 			return (EADDRINUSE);
@@ -407,7 +410,7 @@ in_pcbbind_port(struct inpcb *inp, struct sockaddr_in *sin, kauth_cred_t cred)
 }
 
 int
-in_pcbbind(void *v, struct mbuf *nam, struct lwp *l)
+in_pcbbind(void *v, struct mbuf *nam)
 {
 	struct inpcb *inp = v;
 	struct sockaddr_in *sin = NULL; /* XXXGCC */
@@ -433,12 +436,12 @@ in_pcbbind(void *v, struct mbuf *nam, struct lwp *l)
 	}
 
 	/* Bind address. */
-	error = in_pcbbind_addr(inp, sin, l->l_cred);
+	error = in_pcbbind_addr(inp, sin);
 	if (error)
 		return (error);
 
 	/* Bind port. */
-	error = in_pcbbind_port(inp, sin, l->l_cred);
+	error = in_pcbbind_port(inp, sin);
 	if (error) {
 		inp->inp_laddr.s_addr = INADDR_ANY;
 
@@ -455,7 +458,7 @@ in_pcbbind(void *v, struct mbuf *nam, struct lwp *l)
  * then pick one.
  */
 int
-in_pcbconnect(void *v, struct mbuf *nam, struct lwp *l)
+in_pcbconnect(void *v, struct mbuf *nam)
 {
 	struct inpcb *inp = v;
 	struct in_ifaddr *ia = NULL;
@@ -527,7 +530,7 @@ in_pcbconnect(void *v, struct mbuf *nam, struct lwp *l)
 		return (EADDRINUSE);
 	if (in_nullhost(inp->inp_laddr)) {
 		if (inp->inp_lport == 0) {
-			error = in_pcbbind(inp, NULL, l);
+			error = in_pcbbind(inp, NULL);
 			/*
 			 * This used to ignore the return value
 			 * completely, but we need to check for
@@ -549,7 +552,7 @@ in_pcbconnect(void *v, struct mbuf *nam, struct lwp *l)
 		lsin.sin_addr = inp->inp_laddr;
 		lsin.sin_port = 0;
 
-               if ((error = in_pcbbind_port(inp, &lsin, l->l_cred)) != 0)
+               if ((error = in_pcbbind_port(inp, &lsin)) != 0)
                        return error;
 	}
 

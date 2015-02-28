@@ -1,0 +1,8 @@
+/Makefile.inc/1.11/Tue Sep 22 09:57:16 2009//Tnetbsd-6
+/bcopy.S/1.14/Mon Jan 31 12:10:58 2011//Tnetbsd-6
+/memcpy.S/1.1/Thu Jun  6 20:03:38 2002//Tnetbsd-6
+/memmove.S/1.1/Thu Jun  6 20:03:38 2002//Tnetbsd-6
+/milli.S/1.1/Thu Jun  6 20:03:39 2002//Tnetbsd-6
+/prefix.h/1.1/Thu Jun  6 20:03:39 2002//Tnetbsd-6
+/spcopy.S/1.1/Thu Jun  6 20:03:39 2002//Tnetbsd-6
+D
