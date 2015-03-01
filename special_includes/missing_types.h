@@ -16,6 +16,9 @@ typedef unsigned long u_long;*/
 #define mutex_enter(a)
 #define mutex_exit(a)
 #define mutex_destroy(a)
+#define mutex_obj_hold(a)
+#define mutex_obj_free(a)
+#define mutex_owned(a) 1
 #define kauth_authorize_network(a,b,c,d,e,f) 0
 #define kmem_alloc(a,b) 0
 #define PR_NOWAIT 0

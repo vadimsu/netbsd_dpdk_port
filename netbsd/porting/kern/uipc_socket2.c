@@ -71,14 +71,14 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket2.c,v 1.110 2011/12/20 23:56:28 christos 
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/domain.h>
-//#include <sys/poll.h>
+#include <sys/poll.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 //#include <sys/signalvar.h>
 //#include <sys/kauth.h>
-//#include <sys/pool.h>
+#include <sys/pool.h>
 //#include <sys/uidinfo.h>
-
+#include "missing_types.h"
 /*
  * Primitive routines for operating on sockets and socket buffers.
  *
@@ -182,7 +182,9 @@ soisconnected(struct socket *so)
 			soqremque(so, 0);
 			soqinsque(head, so, 1);
 			sorwakeup(head);
+#if 0 /* VADIM */
 			cv_broadcast(&head->so_cv);
+#endif
 		} else {
 			so->so_upcall =
 			    head->so_accf->so_accept_filter->accf_callback;
@@ -193,7 +195,9 @@ soisconnected(struct socket *so)
 					 POLLIN|POLLRDNORM, M_DONTWAIT);
 		}
 	} else {
+#if 0
 		cv_broadcast(&so->so_cv);
+#endif
 		sorwakeup(so);
 		sowwakeup(so);
 	}
@@ -207,7 +211,9 @@ soisdisconnecting(struct socket *so)
 
 	so->so_state &= ~SS_ISCONNECTING;
 	so->so_state |= (SS_ISDISCONNECTING|SS_CANTRCVMORE|SS_CANTSENDMORE);
+#if 0
 	cv_broadcast(&so->so_cv);
+#endif
 	sowwakeup(so);
 	sorwakeup(so);
 }
@@ -220,7 +226,9 @@ soisdisconnected(struct socket *so)
 
 	so->so_state &= ~(SS_ISCONNECTING|SS_ISCONNECTED|SS_ISDISCONNECTING);
 	so->so_state |= (SS_CANTRCVMORE|SS_CANTSENDMORE|SS_ISDISCONNECTED);
+#if 0 /* VADIM */
 	cv_broadcast(&so->so_cv);
+#endif
 	sowwakeup(so);
 	sorwakeup(so);
 }
@@ -260,7 +268,7 @@ sonewconn(struct socket *head, int connstatus)
 	if (so == NULL)
 		return NULL;
 	mutex_obj_hold(head->so_lock);
-	so->so_lock = head->so_lock;
+//	so->so_lock = head->so_lock;
 	so->so_type = head->so_type;
 	so->so_options = head->so_options &~ SO_ACCEPTCONN;
 	so->so_linger = head->so_linger;
@@ -303,7 +311,9 @@ out:
 	}
 	if (connstatus) {
 		sorwakeup(head);
+#if 0
 		cv_broadcast(&head->so_cv);
+#endif
 		so->so_state |= connstatus;
 	}
 	return so;
@@ -320,9 +330,11 @@ soget(bool waitok)
 	memset(so, 0, sizeof(*so));
 	TAILQ_INIT(&so->so_q0);
 	TAILQ_INIT(&so->so_q);
+#if 0
 	cv_init(&so->so_cv, "socket");
 	cv_init(&so->so_rcv.sb_cv, "netio");
 	cv_init(&so->so_snd.sb_cv, "netio");
+#endif
 	selinit(&so->so_rcv.sb_sel);
 	selinit(&so->so_snd.sb_sel);
 	so->so_rcv.sb_so = so;
@@ -333,16 +345,19 @@ soget(bool waitok)
 void
 soput(struct socket *so)
 {
-
+#if 0
 	KASSERT(!cv_has_waiters(&so->so_cv));
 	KASSERT(!cv_has_waiters(&so->so_rcv.sb_cv));
 	KASSERT(!cv_has_waiters(&so->so_snd.sb_cv));
+#endif
 	seldestroy(&so->so_rcv.sb_sel);
 	seldestroy(&so->so_snd.sb_sel);
 	mutex_obj_free(so->so_lock);
+#if 0
 	cv_destroy(&so->so_cv);
 	cv_destroy(&so->so_rcv.sb_cv);
 	cv_destroy(&so->so_snd.sb_cv);
+#endif
 	pool_cache_put(socket_cache, so);
 }
 
@@ -429,21 +444,23 @@ int
 sbwait(struct sockbuf *sb)
 {
 	struct socket *so;
-	kmutex_t *lock;
-	int error;
+//	kmutex_t *lock;
+	int error = 0;
 
 	so = sb->sb_so;
 
 	KASSERT(solocked(so));
 
 	sb->sb_flags |= SB_NOTIFY;
-	lock = so->so_lock;
+//	lock = so->so_lock;
+#if 0 /* VADIM */
 	if ((sb->sb_flags & SB_NOINTR) != 0)
 		error = cv_timedwait(&sb->sb_cv, lock, sb->sb_timeo);
 	else
 		error = cv_timedwait_sig(&sb->sb_cv, lock, sb->sb_timeo);
 	if (__predict_false(lock != so->so_lock))
 		solockretry(so, lock);
+#endif
 	return error;
 }
 
@@ -465,14 +482,16 @@ sowakeup(struct socket *so, struct sockbuf *sb, int code)
 	else
 		band = POLLOUT|POLLWRNORM;
 	sb->sb_flags &= ~SB_NOTIFY;
+#if 0 /* VADIM */
 	selnotify(&sb->sb_sel, band, NOTE_SUBMIT);
 	cv_broadcast(&sb->sb_cv);
+#endif
 	if (sb->sb_flags & SB_ASYNC)
 		fownsignal(so->so_pgid, SIGIO, code, band, so);
 	if (sb->sb_flags & SB_UPCALL)
 		(*so->so_upcall)(so, so->so_upcallarg, band, M_DONTWAIT);
 }
-
+#if 0
 /*
  * Reset a socket's lock pointer.  Wake all threads waiting on the
  * socket's condition variables so that they can restart their waits
@@ -484,12 +503,12 @@ solockreset(struct socket *so, kmutex_t *lock)
 
 	KASSERT(solocked(so));
 
-	so->so_lock = lock;
+//	so->so_lock = lock;
 	cv_broadcast(&so->so_snd.sb_cv);
 	cv_broadcast(&so->so_rcv.sb_cv);
 	cv_broadcast(&so->so_cv);
 }
-
+#endif
 /*
  * Socket buffer (struct sockbuf) utility routines.
  *
@@ -542,7 +561,7 @@ int
 soreserve(struct socket *so, u_long sndcc, u_long rcvcc)
 {
 
-	KASSERT(so->so_lock == NULL || solocked(so));
+	//KASSERT(so->so_lock == NULL || solocked(so));
 
 	/*
 	 * there's at least one application (a configure script of screen)
@@ -583,8 +602,9 @@ soreserve(struct socket *so, u_long sndcc, u_long rcvcc)
 int
 sbreserve(struct sockbuf *sb, u_long cc, struct socket *so)
 {
-	struct lwp *l = curlwp; /* XXX */
-	rlim_t maxcc;
+#if 0
+//	struct lwp *l = curlwp; /* XXX */
+//	rlim_t maxcc;
 	struct uidinfo *uidinfo;
 
 	KASSERT(so->so_lock == NULL || solocked(so));
@@ -602,6 +622,7 @@ sbreserve(struct sockbuf *sb, u_long cc, struct socket *so)
 	sb->sb_mbmax = min(cc * 2, sb_max);
 	if (sb->sb_lowat > sb->sb_hiwat)
 		sb->sb_lowat = sb->sb_hiwat;
+#endif
 	return (1);
 }
 
@@ -1328,34 +1349,25 @@ sbcreatecontrol(void *p, int size, int type, int level)
 	cp->cmsg_type = type;
 	return (m);
 }
-
+#if 0
 void
 solockretry(struct socket *so, kmutex_t *lock)
 {
+
 
 	while (lock != so->so_lock) {
 		mutex_exit(lock);
 		lock = so->so_lock;
 		mutex_enter(lock);
 	}
-}
 
+}
+#endif
 bool
 solocked(struct socket *so)
 {
 
 	return mutex_owned(so->so_lock);
-}
-
-bool
-solocked2(struct socket *so1, struct socket *so2)
-{
-	kmutex_t *lock;
-
-	lock = so1->so_lock;
-	if (lock != so2->so_lock)
-		return false;
-	return mutex_owned(lock);
 }
 
 /*
@@ -1365,6 +1377,7 @@ solocked2(struct socket *so1, struct socket *so2)
 void
 sosetlock(struct socket *so)
 {
+#if 0
 	kmutex_t *lock;
 
 	if (so->so_lock == NULL) {
@@ -1376,6 +1389,7 @@ sosetlock(struct socket *so)
 
 	/* In all cases, lock must be held on return from PRU_ATTACH. */
 	KASSERT(solocked(so));
+#endif
 }
 
 /*
@@ -1386,6 +1400,7 @@ sosetlock(struct socket *so)
 int
 sblock(struct sockbuf *sb, int wf)
 {
+#if 0
 	struct socket *so;
 	kmutex_t *lock;
 	int error;
@@ -1411,11 +1426,14 @@ sblock(struct sockbuf *sb, int wf)
 		if (error != 0)
 			return error;
 	}
+#endif
+    return 0;
 }
 
 void
 sbunlock(struct sockbuf *sb)
 {
+#if 0
 	struct socket *so;
 
 	so = sb->sb_so;
@@ -1425,23 +1443,25 @@ sbunlock(struct sockbuf *sb)
 
 	sb->sb_flags &= ~SB_LOCK;
 	cv_broadcast(&so->so_cv);
+#endif
 }
 
 int
 sowait(struct socket *so, bool catch, int timo)
 {
-	kmutex_t *lock;
-	int error;
+//	kmutex_t *lock;
+	int error = 0;
 
 	KASSERT(solocked(so));
 	KASSERT(catch || timo != 0);
-
-	lock = so->so_lock;
+#if 0 /* VADIM */
+//	lock = so->so_lock;
 	if (catch)
-		error = cv_timedwait_sig(&so->so_cv, lock, timo);
+		error = cv_timedwait_sig(&so->so_cv, timo);
 	else
-		error = cv_timedwait(&so->so_cv, lock, timo);
+		error = cv_timedwait(&so->so_cv, timo);
 	if (__predict_false(lock != so->so_lock))
 		solockretry(so, lock);
+#endif
 	return error;
 }
