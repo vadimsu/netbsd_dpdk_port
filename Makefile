@@ -9,14 +9,14 @@ netbsd/netinet/tcp_sack.c netbsd/netinet/tcp_timer.c netbsd/netinet/tcp_subr.c n
 netbsd/netinet/udp_usrreq.c netbsd/netinet/ip_icmp.c netbsd/netinet/ip_reass.c netbsd/netinet/cpu_in_cksum.c \
 netbsd/netinet/in_pcb.c netbsd/netinet/in_cksum.c netbsd/netinet/ip_id.c \
 netbsd/porting/callout/callout.c \
-netbsd/porting/kern/subr_percpu.c netbsd/porting/kern/subr_hash.c 
+netbsd/porting/kern/subr_percpu.c netbsd/porting/kern/subr_hash.c netbsd/porting/mbuf/uipc_mbuf.c
 #netbsd/porting/kern/uipc_mbuf.c
 CFLAGS += -Ofast
 CFLAGS += $(WERROR_FLAGS)
 NETBSD_HEADERS=-I$(SRC_ROOT)/special_includes -I$(SRC_ROOT)
 DPDK_HEADERS=$(SRC_ROOT)/dpdk-1.8.0/x86_64-native-linuxapp-gcc/include
 ALL_HEADERS = $(NETBSD_HEADERS) -I$(DPDK_HEADERS)
-CFLAGS += $(ALL_HEADERS) -D_KERNEL -D__NetBSD__ -DINET -D_NETBSD_SOURCE
+CFLAGS += $(ALL_HEADERS) -D_KERNEL -D__NetBSD__ -DINET -D_NETBSD_SOURCE -DSTACK_MBUFS_COUNT=16384
 #-DGSO
 #-DMSIZE=256
 LIB = libnetinet.a

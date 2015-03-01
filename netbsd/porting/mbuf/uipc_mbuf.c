@@ -62,11 +62,7 @@
  */
 
 #include <sys/cdefs.h>
-__KERNEL_RCSID(0, "$NetBSD: uipc_mbuf.c,v 1.145.2.1 2013/02/08 19:18:12 riz Exp $");
-
-#include "opt_mbuftrace.h"
-#include "opt_nmbclusters.h"
-#include "opt_ddb.h"
+//__KERNEL_RCSID(0, "$NetBSD: uipc_mbuf.c,v 1.145.2.1 2013/02/08 19:18:12 riz Exp $");
 
 #include <sys/param.h>
 //#include <sys/systm.h>
@@ -78,8 +74,8 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_mbuf.c,v 1.145.2.1 2013/02/08 19:18:12 riz Exp 
 #include <sys/percpu.h>
 #include <sys/pool.h>
 #include <sys/socket.h>
-#include <sys/sysctl.h>
-#include <rte_mbuf.h>
+//#include <sys/sysctl.h>
+//#include <rte_mbuf.h>
 #include <netbsd/net/if.h>
 
 pool_cache_t mb_cache;	/* mbuf cache */
@@ -111,7 +107,7 @@ static int m_copyback0(struct mbuf **, int, int, const void *, int, int);
 static const char mclpool_warnmsg[] =
     "WARNING: mclpool limit reached; increase kern.mbuf.nmbclusters";
 
-MALLOC_DEFINE(M_MBUF, "mbuf", "mbuf");
+//MALLOC_DEFINE(M_MBUF, "mbuf", "mbuf");
 
 static percpu_t *mbstat_percpu;
 
@@ -151,10 +147,10 @@ nmbclusters_limit(void)
 	/* direct mapping, doesn't use space in kmem_map */
 	vsize_t max_size = physmem / 4;
 #else
-	vsize_t max_size = MIN(physmem / 4, nkmempages / 4);
+//	vsize_t max_size = MIN(physmem / 4, nkmempages / 4);
 #endif
 
-	max_size = max_size * PAGE_SIZE / MCLBYTES;
+//	max_size = max_size * PAGE_SIZE / MCLBYTES;
 #ifdef NMBCLUSTERS_MAX
 	max_size = MIN(max_size, NMBCLUSTERS_MAX);
 #endif
@@ -162,7 +158,7 @@ nmbclusters_limit(void)
 #ifdef NMBCLUSTERS
 	return MIN(max_size, NMBCLUSTERS);
 #else
-	return max_size;
+	return /*max_size*/0;
 #endif
 }
 
@@ -175,7 +171,7 @@ mbinit(void)
 
 	CTASSERT(sizeof(struct _m_ext) <= MHLEN);
 	CTASSERT(sizeof(struct mbuf) == MSIZE);
-
+#if 0
 //	sysctl_kern_mbuf_setup();
         mb_data = rte_mempool_create("MBUF_DATA",
                                      STACK_MBUFS_COUNT,
@@ -185,7 +181,7 @@ mbinit(void)
                                      rte_pktmbuf_pool_init, NULL,
                                      rte_pktmbuf_init, NULL,
                                      rte_socket_id(), 0);
-
+#endif
 	mb_cache = pool_cache_init(msize, STACK_MBUFS_COUNT, 0, 0, "mbpl",
 	    NULL, IPL_VM, mb_ctor, NULL, mb_data);
 	KASSERT(mb_cache != NULL);
@@ -203,9 +199,11 @@ mbinit(void)
 #ifdef NMBCLUSTERS
 	nmbclusters = nmbclusters_limit();
 #else
+#if 0
 	nmbclusters = MAX(1024,
 	    (vsize_t)physmem * PAGE_SIZE / MCLBYTES / 16);
 	nmbclusters = MIN(nmbclusters, nmbclusters_limit());
+#endif
 #endif
 
 	/*
@@ -456,10 +454,10 @@ mb_ctor(void *arg, void *object, int flags)
 {
 	struct mbuf *m = object;
         pool_cache_t mb_data_pool = (pool_cache_t)arg;
-        struct rte_mbuf *data_buf;
+//        struct rte_mbuf *data_buf;
 
-        data_buf = rte_pktmbuf_alloc(mb_data_pool);
-	m->m_paddr = M_PADDR_INVALID;
+  //      data_buf = rte_pktmbuf_alloc(mb_data_pool);
+//	m->m_paddr = data_buf;
 
 	return (0);
 }

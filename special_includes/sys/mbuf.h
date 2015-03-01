@@ -907,6 +907,13 @@ void m_print(const struct mbuf *, const char *, void (*)(const char *, ...)
 
 #ifdef _KERNEL
 #ifdef MBTYPES
+
+#define M_FREE MT_FREE
+#define M_MBUF MT_DATA
+#define M_SONAME MT_SONAME
+#define M_SOOPTS MT_SOOPTS
+#define M_FTABLE MT_FTABLE
+
 struct malloc_type *mbtypes[] = {		/* XXX */
 	M_FREE,		/* MT_FREE	0	should be on free list */
 	M_MBUF,		/* MT_DATA	1	dynamic (data) allocation */
