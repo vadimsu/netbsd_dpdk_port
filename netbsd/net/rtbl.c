@@ -99,24 +99,24 @@ __KERNEL_RCSID(0, "$NetBSD: rtbl.c,v 1.1 2011/03/31 19:40:52 dyoung Exp $");
 
 #include <sys/param.h>
 #include <sys/kmem.h>
-#include <sys/sysctl.h>
-#include <sys/systm.h>
+//#include <sys/sysctl.h>
+//#include <sys/systm.h>
 #include <sys/callout.h>
-#include <sys/proc.h>
+//#include <sys/proc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/domain.h>
 #include <sys/protosw.h>
-#include <sys/kernel.h>
+//#include <sys/kernel.h>
 #include <sys/ioctl.h>
 #include <sys/pool.h>
-#include <sys/kauth.h>
+//#include <sys/kauth.h>
 
-#include <net/if.h>
-#include <net/if_dl.h>
-#include <net/route.h>
-#include <net/raw_cb.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/if_dl.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/raw_cb.h>
 
 static rtbl_t *rt_tables[AF_MAX+1];
 
