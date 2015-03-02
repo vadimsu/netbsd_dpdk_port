@@ -49,7 +49,7 @@
 #include <netbsd/net/route.h>
 #include <netbsd/net/netisr.h>
 #include <netbsd/net/raw_cb.h>
-
+#include <sys/syslog.h>
 /*
  * Initialize raw connection block q.
  */

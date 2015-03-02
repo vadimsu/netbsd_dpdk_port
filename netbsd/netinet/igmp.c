@@ -49,21 +49,21 @@ __KERNEL_RCSID(0, "$NetBSD: igmp.c,v 1.53 2012/01/09 14:31:21 liamjfoy Exp $");
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/protosw.h>
-#include <sys/systm.h>
-#include <sys/sysctl.h>
+//#include <sys/systm.h>
+//#include <sys/sysctl.h>
 
-#include <net/if.h>
-#include <net/route.h>
-#include <net/net_stats.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/net_stats.h>
 
-#include <netinet/in.h>
-#include <netinet/in_var.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/ip_var.h>
-#include <netinet/igmp.h>
-#include <netinet/igmp_var.h>
-
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/igmp.h>
+#include <netbsd/netinet/igmp_var.h>
+#include <sys/pool.h>
 #define IP_MULTICASTOPTS	0
 
 static struct pool igmp_rti_pool;
@@ -149,7 +149,7 @@ void
 igmp_init(void)
 {
 
-	sysctl_net_inet_igmp_setup(NULL);
+	//sysctl_net_inet_igmp_setup(NULL);
 	pool_init(&igmp_rti_pool, sizeof(struct router_info), 0, 0, 0,
 	    "igmppl", NULL, IPL_SOFTNET);
 	igmpstat_percpu = percpu_alloc(sizeof(uint64_t) * IGMP_NSTATS);
@@ -601,7 +601,7 @@ igmp_purgeif(struct ifnet *ifp)	/* MUST be called at splsoftnet() */
 {
 	rti_delete(ifp);	/* manipulates pools */
 }
-
+#if 0
 static int
 sysctl_net_inet_igmp_stats(SYSCTLFN_ARGS)
 {
@@ -637,3 +637,4 @@ sysctl_net_inet_igmp_setup(struct sysctllog **clog)
 			sysctl_net_inet_igmp_stats, 0, NULL, 0,
 			CTL_NET, PF_INET, IPPROTO_IGMP, CTL_CREATE, CTL_EOL);
 }
+#endif
