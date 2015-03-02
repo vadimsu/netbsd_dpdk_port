@@ -112,7 +112,7 @@
 //#include <sys/sysctl.h>
 #include <sys/syslog.h>
 //#include <sys/kauth.h>
-//#include <sys/kmem.h>
+#include <sys/kmem.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/if_dl.h>

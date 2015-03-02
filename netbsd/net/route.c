@@ -96,7 +96,7 @@
 __KERNEL_RCSID(0, "$NetBSD: route.c,v 1.126.2.1 2013/07/29 05:43:13 msaitoh Exp $");
 
 #include <sys/param.h>
-//#include <sys/kmem.h>
+#include <sys/kmem.h>
 //#include <sys/sysctl.h>
 //#include <sys/systm.h>
 #include <sys/callout.h>

@@ -41,7 +41,7 @@ __KERNEL_RCSID(0, "$NetBSD: radix.c,v 1.44 2011/07/17 20:54:52 joerg Exp $");
 #ifndef _NET_RADIX_H_
 #include <sys/param.h>
 #include <sys/queue.h>
-//#include <sys/kmem.h>
+#include <sys/kmem.h>
 #ifdef	_KERNEL
 #include "opt_inet.h"
 
