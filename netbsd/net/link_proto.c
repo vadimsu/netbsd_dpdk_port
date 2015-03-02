@@ -39,13 +39,13 @@ __KERNEL_RCSID(0, "$NetBSD: link_proto.c,v 1.7.8.1 2014/08/07 09:39:55 msaitoh E
 #include <sys/protosw.h>
 #include <sys/domain.h>
 #include <sys/mbuf.h>
-#include <sys/un.h>
+//#include <sys/un.h>
 #include <sys/socketvar.h>
-
-#include <net/if.h>
-#include <net/if_dl.h>
-#include <net/raw_cb.h>
-#include <net/route.h>
+#include <sys/sockio.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/if_dl.h>
+#include <netbsd/net/raw_cb.h>
+#include <netbsd/net/route.h>
 
 static int sockaddr_dl_cmp(const struct sockaddr *, const struct sockaddr *);
 static int link_usrreq(struct socket *, int, struct mbuf *, struct mbuf *,

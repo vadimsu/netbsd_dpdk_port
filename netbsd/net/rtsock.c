@@ -70,25 +70,25 @@ __KERNEL_RCSID(0, "$NetBSD: rtsock.c,v 1.140 2012/01/30 20:02:55 christos Exp $"
 #endif
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
+//#include <sys/systm.h>
+//#include <sys/proc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/domain.h>
 #include <sys/protosw.h>
-#include <sys/sysctl.h>
-#include <sys/kauth.h>
-#include <sys/intr.h>
+//#include <sys/sysctl.h>
+//#include <sys/kauth.h>
+//#include <sys/intr.h>
 #ifdef RTSOCK_DEBUG
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 #endif /* RTSOCK_DEBUG */
 
-#include <net/if.h>
-#include <net/route.h>
-#include <net/raw_cb.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/raw_cb.h>
 
-#include <netmpls/mpls.h>
+//#include <netbsd/netmpls/mpls.h>
 
 #if defined(COMPAT_14) || defined(COMPAT_50)
 #include <compat/net/if.h>
@@ -118,7 +118,7 @@ DOMAIN_DEFINE(compat_50_routedomain); /* forward declare and add to link set */
 #define	if_xannouncemsghdr	if_announcemsghdr
 #define	COMPATNAME(x)	x
 #define	DOMAINNAME	"route"
-CTASSERT(sizeof(struct ifa_xmsghdr) == 24);
+//CTASSERT(sizeof(struct ifa_xmsghdr) == 24);
 #ifdef COMPAT_50
 #define	COMPATCALL(name, args)	compat_50_ ## name args
 #endif
@@ -142,7 +142,7 @@ struct route_info COMPATNAME(route_info) = {
 static void COMPATNAME(route_init)(void);
 static int COMPATNAME(route_output)(struct mbuf *, ...);
 static int COMPATNAME(route_usrreq)(struct socket *,
-	    int, struct mbuf *, struct mbuf *, struct mbuf *, struct lwp *);
+	    int, struct mbuf *, struct mbuf *, struct mbuf *);
 
 static int rt_msg2(int, struct rt_addrinfo *, void *, struct rt_walkarg *, int *);
 static int rt_xaddrs(u_char, const char *, const char *, struct rt_addrinfo *);
@@ -150,10 +150,10 @@ static struct mbuf *rt_makeifannouncemsg(struct ifnet *, int, int,
     struct rt_addrinfo *);
 static void rt_setmetrics(int, const struct rt_xmsghdr *, struct rtentry *);
 static void rtm_setmetrics(const struct rtentry *, struct rt_xmsghdr *);
-static void sysctl_net_route_setup(struct sysctllog **);
-static int sysctl_dumpentry(struct rtentry *, void *);
-static int sysctl_iflist(int, struct rt_walkarg *, int);
-static int sysctl_rtable(SYSCTLFN_PROTO);
+//static void sysctl_net_route_setup(struct sysctllog **);
+//static int sysctl_dumpentry(struct rtentry *, void *);
+//static int sysctl_iflist(int, struct rt_walkarg *, int);
+//static int sysctl_rtable(SYSCTLFN_PROTO);
 static void rt_adjustcount(int, int);
 
 static void
@@ -184,8 +184,9 @@ rt_adjustcount(int af, int cnt)
 /*ARGSUSED*/
 int
 COMPATNAME(route_usrreq)(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
-	struct mbuf *control, struct lwp *l)
+	struct mbuf *control)
 {
+#if 0
 	int error = 0;
 	struct rawcb *rp = sotorawcb(so);
 	int s;
@@ -210,7 +211,7 @@ COMPATNAME(route_usrreq)(struct socket *so, int req, struct mbuf *m, struct mbuf
 		else
 			error = raw_attach(so, (int)(long)nam);
 	} else
-		error = raw_usrreq(so, req, m, nam, control, l);
+		error = raw_usrreq(so, req, m, nam, control);
 
 	rp = sotorawcb(so);
 	if (req == PRU_ATTACH && rp) {
@@ -227,12 +228,16 @@ COMPATNAME(route_usrreq)(struct socket *so, int req, struct mbuf *m, struct mbuf
 	}
 	splx(s);
 	return error;
+#else
+    return 0;
+#endif
 }
 
 /*ARGSUSED*/
 int
 COMPATNAME(route_output)(struct mbuf *m, ...)
 {
+#if 0
 	struct sockproto proto = { .sp_family = PF_XROUTE, };
 	struct rt_xmsghdr *rtm = NULL;
 	struct rt_xmsghdr *old_rtm = NULL;
@@ -522,11 +527,15 @@ flush:
 		rp->rcb_proto.sp_family = PF_XROUTE;
     }
 	return error;
+#else
+    return 0;
+#endif
 }
 
 static void
 rt_setmetrics(int which, const struct rt_xmsghdr *in, struct rtentry *out)
 {
+#if 0
 #define metric(f, e) if (which & (f)) out->rt_rmx.e = in->rtm_rmx.e;
 	metric(RTV_RPIPE, rmx_recvpipe);
 	metric(RTV_SPIPE, rmx_sendpipe);
@@ -537,11 +546,13 @@ rt_setmetrics(int which, const struct rt_xmsghdr *in, struct rtentry *out)
 	metric(RTV_MTU, rmx_mtu);
 	metric(RTV_EXPIRE, rmx_expire);
 #undef metric
+#endif
 }
 
 static void
 rtm_setmetrics(const struct rtentry *in, struct rt_xmsghdr *out)
 {
+#if 0
 #define metric(e) out->rtm_rmx.e = in->rt_rmx.e;
 	metric(rmx_recvpipe);
 	metric(rmx_sendpipe);
@@ -552,12 +563,14 @@ rtm_setmetrics(const struct rtentry *in, struct rt_xmsghdr *out)
 	metric(rmx_mtu);
 	metric(rmx_expire);
 #undef metric
+#endif
 }
 
 static int
 rt_xaddrs(u_char rtmtype, const char *cp, const char *cplim,
     struct rt_addrinfo *rtinfo)
 {
+#if 0
 	const struct sockaddr *sa = NULL;	/* Quell compiler warning */
 	int i;
 
@@ -565,7 +578,7 @@ rt_xaddrs(u_char rtmtype, const char *cp, const char *cplim,
 		if ((rtinfo->rti_addrs & (1 << i)) == 0)
 			continue;
 		rtinfo->rti_info[i] = sa = (const struct sockaddr *)cp;
-		RT_XADVANCE(cp, sa);
+			RT_XADVANCE(cp, sa);
 	}
 
 	/*
@@ -591,6 +604,7 @@ rt_xaddrs(u_char rtmtype, const char *cp, const char *cplim,
 		else
 			return 1;
 	}
+#endif
 	return 0;
 }
 
@@ -645,6 +659,7 @@ rt_getlen(int type)
 struct mbuf *
 COMPATNAME(rt_msg1)(int type, struct rt_addrinfo *rtinfo, void *data, int datalen)
 {
+#if 0
 	struct rt_xmsghdr *rtm;
 	struct mbuf *m;
 	int i;
@@ -700,6 +715,7 @@ COMPATNAME(rt_msg1)(int type, struct rt_addrinfo *rtinfo, void *data, int datale
 	return m;
 out:
 	m_freem(m);
+#endif
 	return NULL;
 }
 
@@ -720,6 +736,7 @@ static int
 rt_msg2(int type, struct rt_addrinfo *rtinfo, void *cpv, struct rt_walkarg *w,
 	int *lenp)
 {
+#if 0
 	int i;
 	int len, dlen, second_time = 0;
 	char *cp0, *cp = cpv;
@@ -782,6 +799,7 @@ again:
 	}
 	if (lenp)
 		*lenp = len;
+#endif
 	return 0;
 }
 
@@ -795,6 +813,7 @@ void
 COMPATNAME(rt_missmsg)(int type, const struct rt_addrinfo *rtinfo, int flags,
     int error)
 {
+#if 0
 	struct rt_xmsghdr rtm;
 	struct mbuf *m;
 	const struct sockaddr *sa = rtinfo->rti_info[RTAX_DST];
@@ -811,6 +830,7 @@ COMPATNAME(rt_missmsg)(int type, const struct rt_addrinfo *rtinfo, int flags,
 		return;
 	mtod(m, struct rt_xmsghdr *)->rtm_addrs = info.rti_addrs;
 	COMPATNAME(route_enqueue)(m, sa ? sa->sa_family : 0);
+#endif
 }
 
 /*
@@ -820,6 +840,7 @@ COMPATNAME(rt_missmsg)(int type, const struct rt_addrinfo *rtinfo, int flags,
 void
 COMPATNAME(rt_ifmsg)(struct ifnet *ifp)
 {
+#if 0
 	struct if_xmsghdr ifm;
 	struct mbuf *m;
 	struct rt_addrinfo info;
@@ -843,6 +864,7 @@ COMPATNAME(rt_ifmsg)(struct ifnet *ifp)
 #ifdef COMPAT_50
 	compat_50_rt_oifmsg(ifp);
 #endif
+#endif
 }
 
 
@@ -858,6 +880,7 @@ void
 COMPATNAME(rt_newaddrmsg)(int cmd, struct ifaddr *ifa, int error,
     struct rtentry *rt)
 {
+#if 0
 #define	cmdpass(__cmd, __pass)	(((__cmd) << 2) | (__pass))
 	struct rt_addrinfo info;
 	const struct sockaddr *sa;
@@ -937,12 +960,14 @@ COMPATNAME(rt_newaddrmsg)(int cmd, struct ifaddr *ifa, int error,
 		COMPATNAME(route_enqueue)(m, sa ? sa->sa_family : 0);
 	}
 #undef cmdpass
+#endif
 }
 
 static struct mbuf *
 rt_makeifannouncemsg(struct ifnet *ifp, int type, int what,
     struct rt_addrinfo *info)
 {
+#if 0
 	struct if_xannouncemsghdr ifan;
 
 	memset(info, 0, sizeof(*info));
@@ -951,6 +976,7 @@ rt_makeifannouncemsg(struct ifnet *ifp, int type, int what,
 	strlcpy(ifan.ifan_name, ifp->if_xname, sizeof(ifan.ifan_name));
 	ifan.ifan_what = what;
 	return COMPATNAME(rt_msg1)(type, info, &ifan, sizeof(ifan));
+#endif
 }
 
 /*
@@ -960,6 +986,7 @@ rt_makeifannouncemsg(struct ifnet *ifp, int type, int what,
 void
 COMPATNAME(rt_ifannouncemsg)(struct ifnet *ifp, int what)
 {
+#if 0
 	struct mbuf *m;
 	struct rt_addrinfo info;
 
@@ -970,6 +997,7 @@ COMPATNAME(rt_ifannouncemsg)(struct ifnet *ifp, int what)
 	if (m == NULL)
 		return;
 	COMPATNAME(route_enqueue)(m, 0);
+#endif
 }
 
 /*
@@ -981,6 +1009,7 @@ void
 COMPATNAME(rt_ieee80211msg)(struct ifnet *ifp, int what, void *data,
 	size_t data_len)
 {
+#if 0
 	struct mbuf *m;
 	struct rt_addrinfo info;
 
@@ -1014,8 +1043,9 @@ COMPATNAME(rt_ieee80211msg)(struct ifnet *ifp, int what, void *data,
 		m->m_pkthdr.len += data_len;
 	mtod(m, struct if_xannouncemsghdr *)->ifan_msglen += data_len;
 	COMPATNAME(route_enqueue)(m, 0);
+#endif
 }
-
+#if 0
 /*
  * This is used in dumping the kernel table via sysctl().
  */
@@ -1312,7 +1342,7 @@ PR_WRAP_USRREQ(route_usrreq);
 #else
 PR_WRAP_USRREQ(compat_50_route_usrreq);
 #endif
-
+#endif
 static const struct protosw COMPATNAME(route_protosw)[] = {
 	{
 		.pr_type = SOCK_RAW,
@@ -1321,7 +1351,7 @@ static const struct protosw COMPATNAME(route_protosw)[] = {
 		.pr_input = raw_input,
 		.pr_output = COMPATNAME(route_output),
 		.pr_ctlinput = raw_ctlinput,
-		.pr_usrreq = COMPATNAME(route_usrreq_wrapper),
+		.pr_usrreq = /*COMPATNAME(route_usrreq_wrapper)*/NULL,
 		.pr_init = raw_init,
 	},
 };
@@ -1334,7 +1364,7 @@ struct domain COMPATNAME(routedomain) = {
 	.dom_protoswNPROTOSW =
 	    &COMPATNAME(route_protosw)[__arraycount(COMPATNAME(route_protosw))],
 };
-
+#if 0
 static void
 sysctl_net_route_setup(struct sysctllog **clog)
 {
@@ -1367,3 +1397,4 @@ sysctl_net_route_setup(struct sysctllog **clog)
 		       NULL, 0, &rtstat, sizeof(rtstat),
 		       CTL_CREATE, CTL_EOL);
 }
+#endif

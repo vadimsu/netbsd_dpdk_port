@@ -29,6 +29,7 @@ extern void exit(int);
 #define splx(a)
 #define splsoftnet() 0
 #define splvm() 0
+//#define rt_newaddrmsg(a,b,c,d)
 extern unsigned long hz;
 extern unsigned long tick;
 #endif

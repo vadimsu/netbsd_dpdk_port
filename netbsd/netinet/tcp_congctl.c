@@ -142,8 +142,9 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_congctl.c,v 1.16 2011/04/08 11:15:11 yamt Exp $"
 #include "opt_tcp_congctl.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
+#include <netbsd/lib/libkern/libkern.h>
+//#include <sys/systm.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>
@@ -152,43 +153,43 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_congctl.c,v 1.16 2011/04/08 11:15:11 yamt Exp $"
 #include <sys/syslog.h>
 #include <sys/pool.h>
 #include <sys/domain.h>
-#include <sys/kernel.h>
-#include <sys/mutex.h>
+//#include <sys/kernel.h>
+//#include <sys/mutex.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_var.h>
-#include <netinet/ip_var.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip_var.h>
 
 #ifdef INET6
 #ifndef INET
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 #endif
-#include <netinet/ip6.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_pcb.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_var.h>
-#include <netinet/icmp6.h>
-#include <netinet6/nd6.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_pcb.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_var.h>
+#include <netbsd/netinet/icmp6.h>
+#include <netbsd/netinet6/nd6.h>
 #endif
 
-#include <netinet/tcp.h>
-#include <netinet/tcp_fsm.h>
-#include <netinet/tcp_seq.h>
-#include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
-#include <netinet/tcpip.h>
-#include <netinet/tcp_congctl.h>
+#include <netbsd/netinet/tcp.h>
+#include <netbsd/netinet/tcp_fsm.h>
+#include <netbsd/netinet/tcp_seq.h>
+#include <netbsd/netinet/tcp_timer.h>
+#include <netbsd/netinet/tcp_var.h>
+#include <netbsd/netinet/tcpip.h>
+#include <netbsd/netinet/tcp_congctl.h>
 #ifdef TCP_DEBUG
-#include <netinet/tcp_debug.h>
+#include <netbsd/netinet/tcp_debug.h>
 #endif
-
+#include "missing_types.h"
 /*
  * TODO:
  *   consider separating the actual implementations in another file.
@@ -227,7 +228,7 @@ TAILQ_HEAD(, tcp_congctlent) tcp_congctlhd =
 
 static struct tcp_congctlent * tcp_congctl_global;
 
-static kmutex_t tcp_congctl_mtx;
+//static kmutex_t tcp_congctl_mtx;
 
 void
 tcp_congctl_init(void)

@@ -36,7 +36,7 @@ __KERNEL_RCSID(0, "$NetBSD: in_cksum.c,v 1.22 2008/01/25 21:12:15 joerg Exp $");
 
 #include <sys/param.h>
 #include <netbsd/netinet/in.h>
-
+#include "missing_types.h"
 int
 in_cksum(struct mbuf *m, int len)
 {

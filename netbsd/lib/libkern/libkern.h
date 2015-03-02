@@ -328,8 +328,14 @@ uint32_t mtprng_random(struct mtprng_state *);
 int	 scanc(u_int, const u_char *, const u_char *, int);
 int	 skpc(int, size_t, u_char *);
 int	 strcasecmp(const char *, const char *);
-size_t	 strlcpy(char *, const char *, size_t);
-size_t	 strlcat(char *, const char *, size_t);
+static inline size_t	 strlcpy(char *dst, const char *src, size_t sz)
+{
+    return strncpy(dst,src,sz);
+}
+static inline size_t strlcat(char *dst, const char *src, size_t sz)
+{
+    return strncat(dst,src,sz);
+}
 int	 strncasecmp(const char *, const char *, size_t);
 u_long	 strtoul(const char *, char **, int);
 long long strtoll(const char *, char **, int);

@@ -211,6 +211,7 @@ if_listener_cb(kauth_cred_t cred, kauth_action_t action, void *cookie,
 void
 ifinit(void)
 {
+#if 0
 #ifdef INET
 	{extern struct ifqueue ipintrq;
 	sysctl_net_ifq_setup(NULL, PF_INET, "inet", IPPROTO_IP, "ip",
@@ -221,7 +222,7 @@ ifinit(void)
 	sysctl_net_ifq_setup(NULL, PF_INET6, "inet6", IPPROTO_IPV6, "ip6",
 			     IPV6CTL_IFQ, &ip6intrq);}
 #endif /* INET6 */
-
+#endif
 	callout_init(&if_slowtimo_ch, 0);
 	if_slowtimo(NULL);
 #if 0 /* VADIM */
@@ -593,7 +594,7 @@ if_attach(struct ifnet *ifp)
 	if (ifp->if_snd.ifq_maxlen == 0)
 		ifp->if_snd.ifq_maxlen = ifqmaxlen;
 
-	sysctl_sndq_setup(&ifp->if_sysctl_log, ifp->if_xname, &ifp->if_snd);
+	//sysctl_sndq_setup(&ifp->if_sysctl_log, ifp->if_xname, &ifp->if_snd);
 
 	ifp->if_broadcastaddr = 0; /* reliably crash if used uninitialized */
 

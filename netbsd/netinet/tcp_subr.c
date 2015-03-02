@@ -160,7 +160,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $
 #endif
  #include <netbsd/netipsec/key.h>
 #endif	/* FAST_IPSEC*/
-
+#include <sys/syslog.h>
 
 struct	inpcbtable tcbtable;	/* head of queue of active tcpcb's */
 u_int32_t tcp_now;		/* slow ticks, for RFC 1323 timestamps */

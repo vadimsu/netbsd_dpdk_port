@@ -52,7 +52,7 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_domain.c,v 1.87 2011/10/27 21:10:55 seanb Exp $
 //#include <sys/file.h>
 //#include <sys/filedesc.h>
 //#include <sys/kauth.h>
-
+#include <sys/syslog.h>
 //MALLOC_DECLARE(M_SOCKADDR);
 
 //MALLOC_DEFINE(M_SOCKADDR, "sockaddr", "socket endpoints");

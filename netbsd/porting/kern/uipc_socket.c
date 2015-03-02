@@ -73,6 +73,7 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket.c,v 1.209.2.4 2013/11/25 08:26:33 bouyer
 #include "opt_multiprocessor.h"	/* XXX */
 
 #include <sys/param.h>
+#include <netbsd/lib/libkern/libkern.h>
 //#include <sys/systm.h>
 //#include <sys/proc.h>
 //#include <sys/file.h>
@@ -102,10 +103,10 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket.c,v 1.209.2.4 2013/11/25 08:26:33 bouyer
 //#include <uvm/uvm_extern.h>
 //#include <uvm/uvm_loan.h>
 //#include <uvm/uvm_page.h>
-
+#include <sys/syslog.h>
 //MALLOC_DEFINE(M_SOOPTS, "soopts", "socket options");
 //MALLOC_DEFINE(M_SONAME, "soname", "socket name");
-
+#define solocked2(a,b) 1
 extern const struct fileops socketops;
 
 extern int	somaxconn;			/* patchable (XXX sysctl) */

@@ -80,6 +80,8 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket2.c,v 1.110 2011/12/20 23:56:28 christos 
 #include <sys/pool.h>
 //#include <sys/uidinfo.h>
 #include "missing_types.h"
+#include <sys/syslog.h>
+#define solocked2(a,b) 1
 /*
  * Primitive routines for operating on sockets and socket buffers.
  *
@@ -336,8 +338,10 @@ soget(bool waitok)
 	cv_init(&so->so_rcv.sb_cv, "netio");
 	cv_init(&so->so_snd.sb_cv, "netio");
 #endif
+#if 0 /* VADIM */
 	selinit(&so->so_rcv.sb_sel);
 	selinit(&so->so_snd.sb_sel);
+#endif
 	so->so_rcv.sb_so = so;
 	so->so_snd.sb_so = so;
 	return so;
@@ -350,11 +354,11 @@ soput(struct socket *so)
 	KASSERT(!cv_has_waiters(&so->so_cv));
 	KASSERT(!cv_has_waiters(&so->so_rcv.sb_cv));
 	KASSERT(!cv_has_waiters(&so->so_snd.sb_cv));
-#endif
+
 	seldestroy(&so->so_rcv.sb_sel);
 	seldestroy(&so->so_snd.sb_sel);
 	mutex_obj_free(so->so_lock);
-#if 0
+
 	cv_destroy(&so->so_cv);
 	cv_destroy(&so->so_rcv.sb_cv);
 	cv_destroy(&so->so_snd.sb_cv);
@@ -486,11 +490,12 @@ sowakeup(struct socket *so, struct sockbuf *sb, int code)
 #if 0 /* VADIM */
 	selnotify(&sb->sb_sel, band, NOTE_SUBMIT);
 	cv_broadcast(&sb->sb_cv);
-#endif
+
 	if (sb->sb_flags & SB_ASYNC)
 		fownsignal(so->so_pgid, SIGIO, code, band, so);
 	if (sb->sb_flags & SB_UPCALL)
 		(*so->so_upcall)(so, so->so_upcallarg, band, M_DONTWAIT);
+#endif
 }
 #if 0
 /*

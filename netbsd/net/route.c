@@ -118,7 +118,7 @@ __KERNEL_RCSID(0, "$NetBSD: route.c,v 1.126.2.1 2013/07/29 05:43:13 msaitoh Exp 
 
 #include <netbsd/netinet/in.h>
 #include <netbsd/netinet/in_var.h>
-
+#include <sys/syslog.h>
 #ifdef RTFLUSH_DEBUG
 #define	rtcache_debug() __predict_false(_rtcache_debug)
 #else /* RTFLUSH_DEBUG */
