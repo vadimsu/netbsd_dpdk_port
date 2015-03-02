@@ -240,7 +240,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_input.c,v 1.321 2012/01/11 14:39:08 drochner Exp
 #endif	/* FAST_IPSEC*/
 
 #include <netbsd/netinet/tcp_vtw.h>
-
+#include <sys/cprng.h>
 int	tcprexmtthresh = 3;
 int	tcp_log_refused;
 

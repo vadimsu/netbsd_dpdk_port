@@ -143,7 +143,7 @@ __KERNEL_RCSID(0, "$NetBSD: udp_usrreq.c,v 1.185 2012/01/09 22:26:44 liamjfoy Ex
 #ifdef IPKDB
 #include <ipkdb/ipkdb.h>
 #endif
-
+#include <sys/syslog.h>
 /*
  * UDP protocol implementation.
  * Per RFC 768, August, 1980.

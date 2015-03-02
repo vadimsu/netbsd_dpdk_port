@@ -150,7 +150,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp 
 #include <netbsd/netipsec/ipsec.h>
 #include <netbsd/netipsec/key.h>
 #endif	/* FAST_IPSEC*/
-
+#include <sys/syslog.h>
 #ifndef	IPFORWARDING
 #ifdef GATEWAY
 #define	IPFORWARDING	1	/* forward IP packets not for us */

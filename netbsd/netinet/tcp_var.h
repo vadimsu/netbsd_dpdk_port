@@ -146,7 +146,9 @@
  */
 
 #include <sys/callout.h>
-
+#ifdef TCP_SIGNATURE
+#undef TCP_SIGNATURE
+#endif
 #ifdef TCP_SIGNATURE
 /*
  * Defines which are needed by the xform_tcp module and tcp_[in|out]put

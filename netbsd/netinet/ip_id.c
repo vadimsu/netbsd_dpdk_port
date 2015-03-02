@@ -42,7 +42,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_id.c,v 1.15 2011/11/19 22:51:25 tls Exp $");
 #include <netbsd/netinet/in_var.h>
 
 #include <netbsd/lib/libkern/libkern.h>
-
+#include <sys/cprng.h>
 #define	IPID_MAXID	65535
 #define	IPID_NUMIDS	32768
 

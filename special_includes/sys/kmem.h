@@ -29,22 +29,13 @@
 #ifndef _SYS_KMEM_H_
 #define	_SYS_KMEM_H_
 
-#include <sys/types.h>
+//#include <sys/types.h>
 
 typedef unsigned int km_flag_t;
-
-void	kmem_init(void);
-size_t	kmem_roundup_size(size_t);
 
 void *	kmem_alloc(size_t, km_flag_t);
 void *	kmem_zalloc(size_t, km_flag_t);
 void	kmem_free(void *, size_t);
-
-void *	kmem_intr_alloc(size_t, km_flag_t);
-void *	kmem_intr_zalloc(size_t, km_flag_t);
-void	kmem_intr_free(void *, size_t);
-
-char *	kmem_asprintf(const char *, ...) __printflike(1, 2);
 
 /*
  * km_flag_t values:

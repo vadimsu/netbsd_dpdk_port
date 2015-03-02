@@ -2227,7 +2227,7 @@ tcp_new_iss1(void *laddr, void *faddr, u_int16_t lport, u_int16_t fport,
 		tcp_iss_gotten_secret = true;
 #endif
 	}
-
+#ifdef TCP_SIGNATURE /* VADIM */
 	if (tcp_do_rfc1948) {
 		MD5_CTX ctx;
 		u_int8_t hash[16];	/* XXX MD5 knowledge */
@@ -2299,7 +2299,7 @@ tcp_new_iss1(void *laddr, void *faddr, u_int16_t lport, u_int16_t fport,
 #endif
 		}
 	}
-
+#endif /* VADIM */
 	if (tcp_compat_42) {
 		/*
 		 * Limit it to the positive range for really old TCP

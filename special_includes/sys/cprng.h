@@ -30,7 +30,7 @@
  */
 #ifndef _CPRNG_H
 #define _CPRNG_H
-
+#if 0
 #include <sys/types.h>
 #include <sys/fcntl.h>
 #include <lib/libkern/libkern.h>
@@ -147,5 +147,11 @@ cprng_strong_strength(cprng_strong_t *c)
 void cprng_init(void);
 int cprng_strong_getflags(cprng_strong_t *const);
 void cprng_strong_setflags(cprng_strong_t *const, int);
-
+#else
+static inline uint32_t
+cprng_fast32(void)
+{
+	return rand();
+}
+#endif
 #endif

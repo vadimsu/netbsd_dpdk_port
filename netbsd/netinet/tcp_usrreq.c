@@ -157,7 +157,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_usrreq.c,v 1.162.2.3 2013/12/14 19:29:29 bouyer 
 #ifdef KAME_IPSEC
 #include <netbsd/netinet6/ipsec.h>
 #endif /*KAME_IPSEC*/
-
+#include <sys/syslog.h>
 /*
  * TCP protocol interface to socket abstraction.
  */
