@@ -33,7 +33,6 @@
 
 #ifndef _SYS_SYSLOG_H_
 #define _SYS_SYSLOG_H_
-//#include<stdarg.h>
 #define	_PATH_LOG	"/var/run/log"
 
 /*
@@ -215,7 +214,7 @@ void vsyslogp_r(int, struct syslog_data *, const char *, const char *,
 __END_DECLS
 
 #else /* !_KERNEL */
-
+extern void exit(int);
 void	logpri(int);
 static inline void log(int level, const char *fmt, ...) __printflike(2, 3);
 static inline void log(int level, const char *fmt, ...)

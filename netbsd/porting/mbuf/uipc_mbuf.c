@@ -66,6 +66,7 @@
 
 #include <sys/param.h>
 //#include <sys/systm.h>
+#include <lib/libkern/libkern.h>
 #define MBTYPES
 #include <sys/mbuf.h>
 #include <sys/syslog.h>

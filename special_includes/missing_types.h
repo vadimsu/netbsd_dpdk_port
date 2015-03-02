@@ -1,6 +1,5 @@
 #ifndef __MISSING_TYPES_H_
 #define __MISSING_TYPES_H_
-
 /*typedef unsigned char bool;
 typedef unsigned short u_short;
 typedef unsigned int u_int;
@@ -25,8 +24,12 @@ typedef unsigned long u_long;*/
 #define KM_NOSLEEP 0
 #define KM_SLEEP 0
 #define IPL_NET 0
+extern void exit(int);
 #define KASSERT(a) if(!(a)) { printf("ASSERT FAILED HERE %s %d\n",__FILE__,__LINE__);exit(0); }
+#define CTASSERT(a) KASSERT(a)
 #define splnet() 0
 #define splx(a)
+#define splsoftnet() 0
+#define splvm() 0
 extern unsigned long hz;
 #endif

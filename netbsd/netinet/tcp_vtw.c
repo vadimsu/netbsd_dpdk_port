@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-
+#include "missing_types.h"
 #include "opt_ddb.h"
 #include "opt_inet.h"
 #include "opt_ipsec.h"

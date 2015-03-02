@@ -89,7 +89,7 @@
  *
  *	@(#)tcp_subr.c	8.2 (Berkeley) 5/24/95
  */
-
+#include "missing_types.h"
 #include <sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $");
 
@@ -103,6 +103,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $
 //#include <sys/proc.h>
 //#include <sys/systm.h>
 //#include <sys/malloc.h>
+#include <lib/libkern/libkern.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>

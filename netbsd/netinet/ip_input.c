@@ -104,6 +104,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp 
 
 #include <sys/param.h>
 //#include <sys/systm.h>
+#include <lib/libkern/libkern.h>
 #include <sys/mbuf.h>
 #include <sys/domain.h>
 #include <sys/protosw.h>
@@ -287,7 +288,7 @@ struct mowner ip_rx_mowner = MOWNER_INIT("internet", "rx");
 struct mowner ip_tx_mowner = MOWNER_INIT("internet", "tx");
 #endif
 
-static void sysctl_net_inet_ip_setup(struct sysctllog **);
+//static void sysctl_net_inet_ip_setup(struct sysctllog **);
 
 /*
  * IP initialization: fill in IP protocol switch table.
@@ -299,7 +300,7 @@ ip_init(void)
 	const struct protosw *pr;
 	int i;
 
-	sysctl_net_inet_ip_setup(NULL);
+	//sysctl_net_inet_ip_setup(NULL);
 
 	pool_init(&inmulti_pool, sizeof(struct in_multi), 0, 0, 0, "inmltpl",
 	    NULL, IPL_SOFTNET);

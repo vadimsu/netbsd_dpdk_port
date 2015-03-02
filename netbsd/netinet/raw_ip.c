@@ -69,40 +69,40 @@ __KERNEL_RCSID(0, "$NetBSD: raw_ip.c,v 1.113 2011/12/19 11:59:57 drochner Exp $"
 #include "opt_mrouting.h"
 
 #include <sys/param.h>
-#include <sys/sysctl.h>
-#include <sys/malloc.h>
+//#include <sys/sysctl.h>
+//#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/protosw.h>
 #include <sys/socketvar.h>
 #include <sys/errno.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/kauth.h>
+//#include <sys/systm.h>
+//#include <sys/proc.h>
+//#include <sys/kauth.h>
+#include <sys/syslog.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <net/if.h>
-#include <net/route.h>
-
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/ip_var.h>
-#include <netinet/ip_private.h>
-#include <netinet/ip_mroute.h>
-#include <netinet/ip_icmp.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_proto.h>
-#include <netinet/in_var.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/ip_private.h>
+#include <netbsd/netinet/ip_mroute.h>
+#include <netbsd/netinet/ip_icmp.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_proto.h>
+#include <netbsd/netinet/in_var.h>
 
 #ifdef KAME_IPSEC
-#include <netinet6/ipsec.h>
-#include <netinet6/ipsec_private.h>
+#include <netbsd/netinet6/ipsec.h>
+#include <netbsd/netinet6/ipsec_private.h>
 #endif /* KAME_IPSEC */
 
 #ifdef FAST_IPSEC
-#include <netipsec/ipsec.h>
-#include <netipsec/ipsec_var.h>
-#include <netipsec/ipsec_private.h>
+#include <netbsd/netipsec/ipsec.h>
+#include <netbsd/netipsec/ipsec_var.h>
+#include <netbsd/netipsec/ipsec_private.h>
 #endif	/* FAST_IPSEC */
 
 #ifdef COMPAT_50
@@ -117,7 +117,7 @@ int	 rip_bind(struct inpcb *, struct mbuf *);
 int	 rip_connect(struct inpcb *, struct mbuf *);
 void	 rip_disconnect(struct inpcb *);
 
-static void sysctl_net_inet_raw_setup(struct sysctllog **);
+//static void sysctl_net_inet_raw_setup(struct sysctllog **);
 
 /*
  * Nominal space allocated to a raw ip socket.
@@ -136,7 +136,7 @@ void
 rip_init(void)
 {
 
-	sysctl_net_inet_raw_setup(NULL);
+	//sysctl_net_inet_raw_setup(NULL);
 	in_pcbinit(&rawcbtable, 1, 1);
 }
 
@@ -522,7 +522,7 @@ u_long	rip_recvspace = RIPRCVQ;
 /*ARGSUSED*/
 int
 rip_usrreq(struct socket *so, int req,
-    struct mbuf *m, struct mbuf *nam, struct mbuf *control, struct lwp *l)
+    struct mbuf *m, struct mbuf *nam, struct mbuf *control)
 {
 	struct inpcb *inp;
 	int s;
@@ -532,7 +532,7 @@ rip_usrreq(struct socket *so, int req,
 #endif
 
 	if (req == PRU_CONTROL)
-		return in_control(so, (long)m, nam, (struct ifnet *)control, l);
+		return in_control(so, (long)m, nam, (struct ifnet *)control);
 
 	s = splsoftnet();
 
@@ -565,10 +565,10 @@ rip_usrreq(struct socket *so, int req,
 			break;
 		}
 
-		if (l == NULL) {
-			error = EACCES;
-			break;
-		}
+//		if (l == NULL) {
+//			error = EACCES;
+//			break;
+//		}
 
 		/* XXX: raw socket permissions are checked in socreate() */
 
@@ -695,7 +695,7 @@ release:
 	splx(s);
 	return (error);
 }
-
+#if 0
 static void
 sysctl_net_inet_raw_setup(struct sysctllog **clog)
 {
@@ -725,3 +725,4 @@ sysctl_net_inet_raw_setup(struct sysctllog **clog)
 		       CTL_NET, PF_INET, IPPROTO_RAW,
 		       CTL_CREATE, CTL_EOL);
 }
+#endif
