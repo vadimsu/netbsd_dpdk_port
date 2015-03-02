@@ -286,15 +286,14 @@ void	soinit2(void);
 int	soabort(struct socket *);
 int	soaccept(struct socket *, struct mbuf *);
 int	sofamily(const struct socket *);
-int	sobind(struct socket *, struct mbuf *, struct lwp *);
+int	sobind(struct socket *, struct mbuf *);
 void	socantrcvmore(struct socket *);
 void	socantsendmore(struct socket *);
 int	soclose(struct socket *);
-int	soconnect(struct socket *, struct mbuf *, struct lwp *);
+int	soconnect(struct socket *, struct mbuf *);
 int	soconnect2(struct socket *, struct socket *);
-int	socreate(int, struct socket **, int, int, struct lwp *,
+int	socreate(int, struct socket **, int, int,
 		 struct socket *);
-int	fsocreate(int, struct socket **, int, int, struct lwp *, int *);
 int	sodisconnect(struct socket *);
 void	sofree(struct socket *);
 int	sogetopt(struct socket *, struct sockopt *);
@@ -303,19 +302,19 @@ void	soisconnected(struct socket *);
 void	soisconnecting(struct socket *);
 void	soisdisconnected(struct socket *);
 void	soisdisconnecting(struct socket *);
-int	solisten(struct socket *, int, struct lwp *);
+int	solisten(struct socket *, int);
 struct socket *
 	sonewconn(struct socket *, int);
 void	soqinsque(struct socket *, struct socket *, int);
 int	soqremque(struct socket *, int);
-int	soreceive(struct socket *, struct mbuf **, struct uio *,
+int	soreceive(struct socket *, struct mbuf **,
 	    struct mbuf **, struct mbuf **, int *);
 int	soreserve(struct socket *, u_long, u_long);
 void	sorflush(struct socket *);
-int	sosend(struct socket *, struct mbuf *, struct uio *,
-	    struct mbuf *, struct mbuf *, int, struct lwp *);
+int	sosend(struct socket *, struct mbuf *,
+	    struct mbuf *, struct mbuf *, int);
 int	sosetopt(struct socket *, struct sockopt *);
-int	so_setsockopt(struct lwp *, struct socket *, int, int, const void *, size_t);
+int	so_setsockopt(struct socket *, int, int, const void *, size_t);
 int	soshutdown(struct socket *, int);
 void	sorestart(struct socket *);
 void	sowakeup(struct socket *, struct sockbuf *, int);
@@ -344,16 +343,6 @@ struct mbuf *sockopt_getmbuf(const struct sockopt *);
 int	copyout_sockname(struct sockaddr *, unsigned int *, int, struct mbuf *);
 int	copyout_msg_control(struct lwp *, struct msghdr *, struct mbuf *);
 void	free_control_mbuf(struct lwp *, struct mbuf *, struct mbuf *);
-
-int	do_sys_getsockname(struct lwp *, int, int, struct mbuf **);
-int	do_sys_sendmsg(struct lwp *, int, struct msghdr *, int, register_t *);
-int	do_sys_recvmsg(struct lwp *, int, struct msghdr *, struct mbuf **,
-	    struct mbuf **, register_t *);
-
-int	do_sys_bind(struct lwp *, int, struct mbuf *);
-int	do_sys_connect(struct lwp *, int, struct mbuf *);
-int	do_sys_accept(struct lwp *, int, struct mbuf **, register_t *,
-	    const sigset_t *, int, int);
 
 /*
  * Inline functions for sockets and socket buffering.

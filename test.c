@@ -1,5 +1,6 @@
 #include<stdio.h>
 unsigned long hz=0;
+unsigned long tick=0;
 int main(int argc,char **argv)
 {
     tcp_init();

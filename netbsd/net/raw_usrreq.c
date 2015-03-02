@@ -161,7 +161,7 @@ raw_setpeeraddr(struct rawcb *rp, struct mbuf *nam)
 /*ARGSUSED*/
 int
 raw_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
-    struct mbuf *control, struct lwp *l)
+    struct mbuf *control)
 {
 	struct rawcb *rp;
 	int s;
@@ -191,8 +191,8 @@ raw_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
 	 */
 	case PRU_ATTACH:
 		sosetlock(so);
-		if (l == NULL)
-			break;
+//		if (l == NULL)
+//			break;
 
 		/* XXX: raw socket permissions are checked in socreate() */
 
@@ -253,7 +253,7 @@ raw_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
 				goto die;
 			}
 			error = (*so->so_proto->pr_usrreq)(so, PRU_CONNECT,
-			    NULL, nam, NULL, l);
+			    NULL, nam, NULL);
 			if (error) {
 			die:
 				m_freem(m);

@@ -84,7 +84,7 @@ struct protosw {
 /* user-protocol hook */
 	int	(*pr_usrreq)		/* user request: see list below */
 			(struct socket *, int, struct mbuf *,
-			     struct mbuf *, struct mbuf *, struct lwp *);
+			     struct mbuf *, struct mbuf *);
 
 /* utility hooks */
 	void	(*pr_init)		/* initialization hook */

@@ -737,7 +737,7 @@ if_detach(struct ifnet *ifp)
 		altq_detach(&ifp->if_snd);
 #endif
 
-	sysctl_teardown(&ifp->if_sysctl_log);
+//	sysctl_teardown(&ifp->if_sysctl_log);
 
 #if NCARP > 0
 	/* Remove the interface from any carp group it is a part of.  */
@@ -790,7 +790,7 @@ again:
 			if (pr->pr_usrreq != NULL) {
 				(void) (*pr->pr_usrreq)(&so,
 				    PRU_PURGEIF, NULL, NULL,
-				    (struct mbuf *) ifp, curlwp);
+				    (struct mbuf *) ifp);
 				purged = 1;
 			}
 		}
@@ -841,7 +841,7 @@ again:
 			so.so_proto = pr;
 			if (pr->pr_usrreq != NULL && pr->pr_flags & PR_PURGEIF)
 				(void)(*pr->pr_usrreq)(&so, PRU_PURGEIF, NULL,
-				    NULL, (struct mbuf *)ifp, curlwp);
+				    NULL, (struct mbuf *)ifp);
 		}
 	}
 
@@ -1735,7 +1735,7 @@ ifnet_lock_exit(struct ifnet_lock *il)
  * Interface ioctls.
  */
 int
-ifioctl(struct socket *so, u_long cmd, void *data, struct lwp *l)
+ifioctl(struct socket *so, u_long cmd, void *data)
 {
 	struct ifnet *ifp;
 	struct ifreq *ifr;
@@ -1781,14 +1781,14 @@ ifioctl(struct socket *so, u_long cmd, void *data, struct lwp *l)
 	switch (cmd) {
 	case SIOCIFCREATE:
 	case SIOCIFDESTROY:
-		if (l != NULL) {
-			error = kauth_authorize_network(l->l_cred,
-			    KAUTH_NETWORK_INTERFACE,
-			    KAUTH_REQ_NETWORK_INTERFACE_SETPRIV, ifp,
-			    (void *)cmd, NULL);
-			if (error != 0)
-				return error;
-		}
+//		if (l != NULL) {
+//			error = kauth_authorize_network(l->l_cred,
+//			    KAUTH_NETWORK_INTERFACE,
+//			    KAUTH_REQ_NETWORK_INTERFACE_SETPRIV, ifp,
+//			    (void *)cmd, NULL);
+//			if (error != 0)
+//				return error;
+//		}
 		return (cmd == SIOCIFCREATE) ?
 			if_clone_create(ifr->ifr_name) :
 			if_clone_destroy(ifr->ifr_name);
@@ -1827,14 +1827,15 @@ ifioctl(struct socket *so, u_long cmd, void *data, struct lwp *l)
 	case SIOCS80211BSSID:
 	case SIOCS80211CHANNEL:
 	case SIOCSLINKSTR:
-		if (l != NULL) {
-			error = kauth_authorize_network(l->l_cred,
-			    KAUTH_NETWORK_INTERFACE,
-			    KAUTH_REQ_NETWORK_INTERFACE_SETPRIV, ifp,
-			    (void *)cmd, NULL);
-			if (error != 0)
-				return error;
-		}
+//		if (l != NULL) {
+//			error = kauth_authorize_network(l->l_cred,
+//			    KAUTH_NETWORK_INTERFACE,
+//			    KAUTH_REQ_NETWORK_INTERFACE_SETPRIV, ifp,
+//			    (void *)cmd, NULL);
+//			if (error != 0)
+//				return error;
+//		}
+            break;
 	}
 
 	oif_flags = ifp->if_flags;
@@ -1847,11 +1848,11 @@ ifioctl(struct socket *so, u_long cmd, void *data, struct lwp *l)
 		error = EOPNOTSUPP;
 	else {
 #ifdef COMPAT_OSOCK
-		error = compat_ifioctl(so, ocmd, cmd, data, l);
+		error = compat_ifioctl(so, ocmd, cmd, data);
 #else
 		error = (*so->so_proto->pr_usrreq)(so, PRU_CONTROL,
 		    (struct mbuf *)cmd, (struct mbuf *)data,
-		    (struct mbuf *)ifp, l);
+		    (struct mbuf *)ifp);
 #endif
 	}
 

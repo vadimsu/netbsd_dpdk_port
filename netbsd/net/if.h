@@ -879,7 +879,7 @@ int	ifconf(u_long, void *);
 void	ifinit(void);
 void	ifinit1(void);
 int	ifaddrpref_ioctl(struct socket *, u_long, void *, struct ifnet *);
-int	ifioctl(struct socket *, u_long, void *, struct lwp *);
+int	ifioctl(struct socket *, u_long, void *);
 int	ifioctl_common(struct ifnet *, u_long, void *);
 int	ifpromisc(struct ifnet *, int);
 struct	ifnet *ifunit(const char *);

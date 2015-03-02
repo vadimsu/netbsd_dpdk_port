@@ -296,7 +296,7 @@ sonewconn(struct socket *head, int connstatus)
 	so->so_snd.sb_flags |= head->so_snd.sb_flags & (SB_AUTOSIZE | SB_ASYNC);
 	soqinsque(head, so, soqueue);
 	error = (*so->so_proto->pr_usrreq)(so, PRU_ATTACH, NULL, NULL,
-	    NULL, NULL);
+	    NULL);
 	KASSERT(solocked(so));
 	if (error != 0) {
 		(void) soqremque(so, soqueue);

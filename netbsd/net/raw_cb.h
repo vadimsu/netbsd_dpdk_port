@@ -65,7 +65,7 @@ void	raw_disconnect(struct rawcb *);
 void	raw_init(void);
 void	raw_input(struct mbuf *, ...);
 int	raw_usrreq(struct socket *,
-	    int, struct mbuf *, struct mbuf *, struct mbuf *, struct lwp *);
+	    int, struct mbuf *, struct mbuf *, struct mbuf *);
 void	raw_setsockaddr(struct rawcb *, struct mbuf *);
 void	raw_setpeeraddr(struct rawcb *, struct mbuf *);
 

@@ -33,4 +33,5 @@ extern void exit(int);
 #define splsoftnet() 0
 #define splvm() 0
 extern unsigned long hz;
+extern unsigned long tick;
 #endif
