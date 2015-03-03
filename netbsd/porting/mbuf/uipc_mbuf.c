@@ -82,7 +82,9 @@
 pool_cache_t mb_cache;	/* mbuf cache */
 pool_cache_t mcl_cache;	/* mbuf cluster cache */
 pool_cache_t mb_data;
-
+const   int msize = MSIZE;
+const   int mclbytes = MCLBYTES;
+int     nmbclusters = 0;
 struct mbstat mbstat;
 int	max_linkhdr;
 int	max_protohdr;
