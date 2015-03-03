@@ -11,7 +11,7 @@ netbsd/netinet/in_pcb.c netbsd/netinet/in_cksum.c netbsd/netinet/ip_id.c netbsd/
 netbsd/porting/callout/callout.c \
 netbsd/porting/kern/subr_percpu.c netbsd/porting/kern/subr_hash.c netbsd/porting/mbuf/uipc_mbuf.c netbsd/porting/kern/uipc_mbuf2.c \
 netbsd/porting/kern/uipc_socket2.c netbsd/porting/kern/uipc_socket.c netbsd/porting/kern/uipc_domain.c \
-netbsd/net/rtsock.c netbsd/net/link_proto.c netbsd/lib/libkern/intoa.c netbsd/porting/kern/kern_tc.c
+netbsd/net/rtsock.c netbsd/net/link_proto.c netbsd/lib/libkern/intoa.c netbsd/porting/kern/kern_tc.c netbsd/porting/kern/subr_once.c
 #netbsd/opencrypto/cryptosoft_xform.c
 #netbsd/porting/kern/uipc_mbuf.c
 CFLAGS += -Ofast
