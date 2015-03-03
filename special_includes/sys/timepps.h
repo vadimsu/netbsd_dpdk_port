@@ -131,9 +131,9 @@ typedef struct {
 
 #ifdef _KERNEL
 
-#include <sys/mutex.h>
+//#include <sys/mutex.h>
 
-extern kmutex_t timecounter_lock;
+//extern kmutex_t timecounter_lock;
 
 struct pps_state {
 	/* Capture information. */

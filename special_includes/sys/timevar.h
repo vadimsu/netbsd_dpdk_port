@@ -161,7 +161,7 @@ int	tvhzto(const struct timeval *);
 void	inittimecounter(void);
 int	itimerfix(struct timeval *);
 int	itimespecfix(struct timespec *);
-int	ppsratecheck(struct timeval *, int *, int);
+//int	ppsratecheck(struct timeval *, int *, int);
 int	ratecheck(struct timeval *, const struct timeval *);
 void	realtimerexpire(void *);
 int	settime(struct proc *p, struct timespec *);

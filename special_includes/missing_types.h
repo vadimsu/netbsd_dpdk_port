@@ -32,4 +32,5 @@ extern void exit(int);
 //#define rt_newaddrmsg(a,b,c,d)
 extern unsigned long hz;
 extern unsigned long tick;
+#define ppsratecheck(a,b,c) 1
 #endif

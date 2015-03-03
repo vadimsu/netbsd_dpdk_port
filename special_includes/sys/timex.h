@@ -100,7 +100,7 @@
 #define _SYS_TIMEX_H_ 1
 #define NTP_API		4	/* NTP API version */
 
-#include <sys/syscall.h>
+//#include <sys/syscall.h>
 
 /*
  * The following defines establish the performance envelope of the
@@ -238,14 +238,14 @@ struct timex {
 };
 
 #ifdef _KERNEL
-#include <sys/mutex.h>
+//#include <sys/mutex.h>
 
 void	ntp_update_second(int64_t *adjustment, time_t *newsec);
 void	ntp_adjtime1(struct timex *);
 void	ntp_gettime(struct ntptimeval *);
 int ntp_timestatus(void);
 
-extern kmutex_t timecounter_lock;
+//extern kmutex_t timecounter_lock;
 #else /* !_KERNEL */
 
 __BEGIN_DECLS
