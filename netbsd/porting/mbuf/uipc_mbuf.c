@@ -78,7 +78,7 @@
 //#include <sys/sysctl.h>
 //#include <rte_mbuf.h>
 #include <netbsd/net/if.h>
-
+#include "missing_types.h"
 pool_cache_t mb_cache;	/* mbuf cache */
 pool_cache_t mcl_cache;	/* mbuf cluster cache */
 pool_cache_t mb_data;
