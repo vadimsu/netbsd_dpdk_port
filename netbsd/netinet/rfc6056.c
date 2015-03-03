@@ -35,29 +35,29 @@ __KERNEL_RCSID(0, "$NetBSD: rfc6056.c,v 1.4.4.1 2012/03/17 17:53:01 bouyer Exp $
 
 #include <sys/param.h>
 #include <sys/errno.h>
-#include <sys/kauth.h>
-#include <sys/uidinfo.h>
+//#include <sys/kauth.h>
+//#include <sys/uidinfo.h>
 #include <sys/domain.h>
 #include <sys/md5.h>
 #include <sys/cprng.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_var.h>
-#include <netinet/ip_var.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip_var.h>
 
 #ifdef INET6
-#include <netinet/ip6.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/in6_pcb.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_pcb.h>
 #endif
 
-#include <netinet/tcp_vtw.h>
+#include <netbsd/netinet/tcp_vtw.h>
 
 #include "rfc6056.h"
 
@@ -89,15 +89,15 @@ static int inet6_rfc6056algo = RFC6056_ALGO_BSD;
 
 typedef struct {
 	const char *name;
-	int (*func)(int, uint16_t *, struct inpcb_hdr *, kauth_cred_t);
+	int (*func)(int, uint16_t *, struct inpcb_hdr *);
 } rfc6056_algorithm_t;
 
-static int algo_bsd(int, uint16_t *, struct inpcb_hdr *, kauth_cred_t);
-static int algo_random_start(int, uint16_t *, struct inpcb_hdr *, kauth_cred_t);
-static int algo_random_pick(int, uint16_t *, struct inpcb_hdr *, kauth_cred_t);
-static int algo_hash(int, uint16_t *, struct inpcb_hdr *, kauth_cred_t);
-static int algo_doublehash(int, uint16_t *, struct inpcb_hdr *, kauth_cred_t);
-static int algo_randinc(int, uint16_t *, struct inpcb_hdr *, kauth_cred_t);
+static int algo_bsd(int, uint16_t *, struct inpcb_hdr *);
+static int algo_random_start(int, uint16_t *, struct inpcb_hdr *);
+static int algo_random_pick(int, uint16_t *, struct inpcb_hdr *);
+static int algo_hash(int, uint16_t *, struct inpcb_hdr *);
+static int algo_doublehash(int, uint16_t *, struct inpcb_hdr *);
+static int algo_randinc(int, uint16_t *, struct inpcb_hdr *);
 
 static const rfc6056_algorithm_t algos[] = {
 	{
@@ -112,6 +112,7 @@ static const rfc6056_algorithm_t algos[] = {
 		.name = "random_pick",
 		.func = algo_random_pick
 	},
+#if 0 /* VADIM until MD5 is integrated */
 	{
 		.name = "hash",
 		.func = algo_hash
@@ -120,6 +121,7 @@ static const rfc6056_algorithm_t algos[] = {
 		.name = "doublehash",
 		.func = algo_doublehash
 	},
+#endif
 	{
 		.name = "randinc",
 		.func = algo_randinc
@@ -228,8 +230,7 @@ pcb_getports(struct inpcb_hdr *inp_hdr, uint16_t *lastport,
  * shamelessly copied from in_pcb.c.
  */
 static bool
-check_suitable_port(uint16_t port, struct inpcb_hdr *inp_hdr,
-kauth_cred_t cred)
+check_suitable_port(uint16_t port, struct inpcb_hdr *inp_hdr)
 {
 	struct inpcbtable *table;
 #ifdef INET
@@ -250,6 +251,7 @@ kauth_cred_t cred)
 		struct inpcb *inp = (struct inpcb *)(void *)inp_hdr;
 		struct inpcb *pcb;
 		struct sockaddr_in sin;
+#if 0
 		enum kauth_network_req req;
 
 		if (inp->inp_flags & INP_LOWPORT) {
@@ -260,7 +262,7 @@ kauth_cred_t cred)
 #endif
 		} else
 			req = KAUTH_REQ_NETWORK_BIND_PORT;
-
+#endif
 		table = inp->inp_table;
 
 		sin.sin_addr = inp->inp_laddr;
@@ -274,6 +276,7 @@ kauth_cred_t cred)
 
 		if ((!pcb) && (!vestigial.valid)) {
 			sin.sin_port = port;
+#if 0
 			error = kauth_authorize_network(cred,
 			    KAUTH_NETWORK_BIND,
 			    req, inp->inp_socket, &sin, NULL);
@@ -284,6 +287,7 @@ kauth_cred_t cred)
 				DPRINTF("%s port approved\n", __func__);
 				return true;	/* KAUTH agrees */
 			}
+#endif
 		}
 		break;
 	}
@@ -293,9 +297,9 @@ kauth_cred_t cred)
 		struct in6pcb *in6p = (struct in6pcb *)(void *)inp_hdr;
 		table = in6p->in6p_table;
 		struct sockaddr_in6 sin6;
-		enum kauth_network_req req;
+//		enum kauth_network_req req;
 		void *t;
-
+#if 0
 		if (in6p->in6p_flags & IN6P_LOWPORT) {
 #ifndef IPNOPRIVPORTS
 			req = KAUTH_REQ_NETWORK_BIND_PRIVPORT;
@@ -305,7 +309,7 @@ kauth_cred_t cred)
 		} else {
 			req = KAUTH_REQ_NETWORK_BIND_PORT;
 		}
-
+#endif
 		sin6.sin6_addr = in6p->in6p_laddr;
 		so = in6p->in6p_socket;
 
@@ -339,6 +343,7 @@ kauth_cred_t cred)
 		if (t == 0) {
 			/* We have a free port. Check with the secmodel. */
 			sin6.sin6_port = port;
+#if 0
 			error = kauth_authorize_network(cred,
 			    KAUTH_NETWORK_BIND, req, so, &sin6, NULL);
 			if (error) {
@@ -346,6 +351,7 @@ kauth_cred_t cred)
 				DPRINTF("%s secmodel says no\n", __func__);
 				return false;
 			}
+#endif
 			DPRINTF("%s port approved\n", __func__);
 			return true;
 		}
@@ -361,8 +367,7 @@ kauth_cred_t cred)
 
 /* This is the default BSD algorithm, as described in RFC 6056 */
 static int
-algo_bsd(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
-kauth_cred_t cred)
+algo_bsd(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr)
 {
 	uint16_t count, num_ephemeral;
 	uint16_t mymin, mymax, lastport;
@@ -390,7 +395,7 @@ kauth_cred_t cred)
 		else
 			(*next_ephemeral)--;
 
-		if (check_suitable_port(myport, inp_hdr, cred)) {
+		if (check_suitable_port(myport, inp_hdr)) {
 			*port = myport;
 			DPRINTF("%s returning port %d\n", __func__, *port);
 			return 0;
@@ -409,8 +414,7 @@ kauth_cred_t cred)
  * compute the increment to the next port number.
  */
 static int
-algo_random_start(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
-    kauth_cred_t cred)
+algo_random_start(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr)
 {
 	uint16_t count, num_ephemeral;
 	uint16_t mymin, mymax, lastport;
@@ -435,7 +439,7 @@ algo_random_start(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
 	count = num_ephemeral;
 
 	do {
-		if (check_suitable_port(*next_ephemeral, inp_hdr, cred)) {
+		if (check_suitable_port(*next_ephemeral, inp_hdr)) {
 			*port = *next_ephemeral;
 			DPRINTF("%s returning port %d\n", __func__, *port);
 			return 0;
@@ -463,8 +467,7 @@ algo_random_start(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
  * give up before exhausting the free ports.
  */
 static int
-algo_random_pick(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
-    kauth_cred_t cred)
+algo_random_pick(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr)
 {
 	uint16_t count, num_ephemeral;
 	uint16_t mymin, mymax, lastport;
@@ -488,7 +491,7 @@ algo_random_pick(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
 	count = num_ephemeral;
 
 	do {
-		if (check_suitable_port(*next_ephemeral, inp_hdr, cred)) {
+		if (check_suitable_port(*next_ephemeral, inp_hdr)) {
 			*port = *next_ephemeral;
 			DPRINTF("%s returning port %d\n", __func__, *port);
 			return 0;
@@ -506,7 +509,7 @@ algo_random_pick(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
 
 	return EINVAL;
 }
-
+#if 0 /* VADIM - until MD5 is integrated */
 /* This is the implementation from FreeBSD, with tweaks */
 static uint16_t
 Fhash(const struct inpcb_hdr *inp_hdr)
@@ -559,7 +562,7 @@ Fhash(const struct inpcb_hdr *inp_hdr)
 
 	return soffset[0] ^ soffset[1];
 }
-
+#endif
 /*
  * Checks whether the tuple is complete. If not, marks the pcb for
  * late binding.
@@ -608,7 +611,7 @@ iscompletetuple(struct inpcb_hdr *inp_hdr)
 
 	return true;
 }
-
+#if 0 /* VADIM - until MD5 is integrated */
 static int
 algo_hash(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
     kauth_cred_t cred)
@@ -710,10 +713,9 @@ algo_doublehash(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
 
 	return EINVAL;
 }
-
+#endif
 static int
-algo_randinc(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
-    kauth_cred_t cred)
+algo_randinc(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr)
 {
 
 	static const uint16_t N = 500;	/* Determines the trade-off */
@@ -743,7 +745,7 @@ algo_randinc(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
 		myport = mymin +
 		    (*next_ephemeral % num_ephemeral);
 
-		if (check_suitable_port(myport, inp_hdr, cred)) {
+		if (check_suitable_port(myport, inp_hdr)) {
 			*port = myport;
 			DPRINTF("%s returning port %d\n", __func__, *port);
 			return 0;
@@ -756,7 +758,7 @@ algo_randinc(int algo, uint16_t *port, struct inpcb_hdr *inp_hdr,
 
 /* The generic function called in order to pick a port. */
 int
-rfc6056_randport(uint16_t *port, struct inpcb_hdr *inp_hdr, kauth_cred_t cred)
+rfc6056_randport(uint16_t *port, struct inpcb_hdr *inp_hdr)
 {
 	int algo, error;
 	uint16_t lport;
@@ -820,7 +822,7 @@ rfc6056_randport(uint16_t *port, struct inpcb_hdr *inp_hdr, kauth_cred_t cred)
 	DPRINTF("%s rfc6056algo = %d\n", __func__, algo);
 
 
-	error = (*algos[algo].func)(algo, &lport, inp_hdr, cred);
+	error = (*algos[algo].func)(algo, &lport, inp_hdr);
 	if (error == 0)
 		*port = lport;
 	else {
@@ -865,7 +867,7 @@ rfc6056_algo_index_select(struct inpcb_hdr *inp, int algo)
 	inp->inph_rfc6056algo = algo;
 	return 0;
 }
-
+#if 0
 /*
  * The sysctl hook that is supposed to check that we are picking one
  * of the valid algorithms. IPv4.
@@ -953,3 +955,4 @@ sysctl_rfc6056_available(SYSCTLFN_ARGS)
 
 	return sysctl_lookup(SYSCTLFN_CALL(&node));
 }
+#endif
