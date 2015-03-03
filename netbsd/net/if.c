@@ -143,9 +143,9 @@
 #include <sys/sockio.h>
 //#include <compat/sys/sockio.h>
 //#include <compat/sys/socket.h>
-
-MALLOC_DEFINE(M_IFADDR, "ifaddr", "interface address");
-MALLOC_DEFINE(M_IFMADDR, "ether_multi", "link-level multicast address");
+#define copyout memcpy
+//MALLOC_DEFINE(M_IFADDR, "ifaddr", "interface address");
+//MALLOC_DEFINE(M_IFMADDR, "ether_multi", "link-level multicast address");
 
 int	ifqmaxlen = IFQ_MAXLEN;
 callout_t if_slowtimo_ch;

@@ -317,12 +317,14 @@ sofree(struct socket *so)
 			return;
 		}
 	}
+#if 0
 	if (so->so_rcv.sb_hiwat)
 		(void)chgsbsize(so->so_uidinfo, &so->so_rcv.sb_hiwat, 0,
 		    RLIM_INFINITY);
 	if (so->so_snd.sb_hiwat)
 		(void)chgsbsize(so->so_uidinfo, &so->so_snd.sb_hiwat, 0,
 		    RLIM_INFINITY);
+#endif
 	sbrelease(&so->so_snd, so);
 #if 0
 	KASSERT(!cv_has_waiters(&so->so_cv));
@@ -332,8 +334,10 @@ sofree(struct socket *so)
 	sorflush(so);
 	refs = so->so_aborting;	/* XXX */
 	/* Remove acccept filter if one is present. */
+#if 0 /* VADIM */
 	if (so->so_accf != NULL)
 		(void)accept_filt_clear(so);
+#endif
 	sounlock(so);
 	if (refs == 0)		/* XXX */
 		soput(so);

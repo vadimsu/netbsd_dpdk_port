@@ -307,8 +307,10 @@ out:
 		 * Remove acccept filter if one is present.
 		 * XXX Is this really needed?
 		 */
+#if 0 /*VADIM*/
 		if (so->so_accf != NULL)
 			(void)accept_filt_clear(so);
+#endif
 		soput(so);
 		return NULL;
 	}
@@ -643,7 +645,7 @@ sbrelease(struct sockbuf *sb, struct socket *so)
 	KASSERT(sb->sb_so == so);
 
 	sbflush(sb);
-	(void)chgsbsize(so->so_uidinfo, &sb->sb_hiwat, 0, RLIM_INFINITY);
+//	(void)chgsbsize(so->so_uidinfo, &sb->sb_hiwat, 0, RLIM_INFINITY);
 	sb->sb_mbmax = 0;
 }
 
