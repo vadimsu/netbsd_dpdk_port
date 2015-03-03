@@ -9,7 +9,7 @@ netbsd/netinet/tcp_sack.c netbsd/netinet/tcp_timer.c netbsd/netinet/tcp_subr.c n
 netbsd/netinet/udp_usrreq.c netbsd/netinet/ip_icmp.c netbsd/netinet/ip_reass.c netbsd/netinet/cpu_in_cksum.c \
 netbsd/netinet/in_pcb.c netbsd/netinet/in_cksum.c netbsd/netinet/ip_id.c netbsd/netinet/tcp_congctl.c netbsd/netinet/igmp.c \
 netbsd/porting/callout/callout.c \
-netbsd/porting/kern/subr_percpu.c netbsd/porting/kern/subr_hash.c netbsd/porting/mbuf/uipc_mbuf.c \
+netbsd/porting/kern/subr_percpu.c netbsd/porting/kern/subr_hash.c netbsd/porting/mbuf/uipc_mbuf.c netbsd/porting/kern/uipc_mbuf2.c \
 netbsd/porting/kern/uipc_socket2.c netbsd/porting/kern/uipc_socket.c netbsd/porting/kern/uipc_domain.c \
 netbsd/net/rtsock.c netbsd/net/link_proto.c netbsd/lib/libkern/intoa.c
 #netbsd/opencrypto/cryptosoft_xform.c
