@@ -33,7 +33,7 @@ __KERNEL_RCSID(0, "$NetBSD: bpf_stub.c,v 1.6 2012/01/30 23:31:27 matt Exp $");
 #include <sys/kmem.h>
 #include <sys/mbuf.h>
 
-#include <net/bpf.h>
+#include <netbsd/net/bpf.h>
 
 struct laglist {
 	struct ifnet *lag_ifp;
@@ -52,8 +52,8 @@ static void bpf_stub_detach(struct ifnet *);
 static void bpf_stub_null(void);
 static void bpf_stub_warn(void);
 
-static kmutex_t handovermtx;
-static kcondvar_t handovercv;
+//static kmutex_t handovermtx;
+//static kcondvar_t handovercv;
 static bool handover;
 
 struct bpf_ops bpf_ops_stub = {
@@ -89,7 +89,7 @@ bpf_stub_attach(struct ifnet *ifp, u_int dlt, u_int hlen, struct bpf_if **drvp)
 	 */
 	while (handover) {
 		storeattach = false;
-		cv_wait(&handovercv, &handovermtx);
+		//cv_wait(&handovercv, &handovermtx);
 	}
 
 	if (storeattach == false) {
@@ -117,7 +117,7 @@ bpf_stub_detach(struct ifnet *ifp)
 	mutex_enter(&handovermtx);
 	while (handover) {
 		didhand = true;
-		cv_wait(&handovercv, &handovermtx);
+		//cv_wait(&handovercv, &handovermtx);
 	}
 
 	if (didhand == false) {
@@ -164,7 +164,7 @@ bpf_setops(void)
 {
 
 	mutex_init(&handovermtx, MUTEX_DEFAULT, IPL_NONE);
-	cv_init(&handovercv, "bpfops");
+	//cv_init(&handovercv, "bpfops");
 	bpf_ops = &bpf_ops_stub;
 }
 
@@ -202,6 +202,6 @@ bpf_ops_handover_exit(void)
 
 	mutex_enter(&handovermtx);
 	handover = false;
-	cv_broadcast(&handovercv);
+	//cv_broadcast(&handovercv);
 	mutex_exit(&handovermtx);
 }

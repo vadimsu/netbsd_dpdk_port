@@ -76,60 +76,61 @@ __KERNEL_RCSID(0, "$NetBSD: if_loop.c,v 1.75.8.1 2014/06/03 15:34:00 msaitoh Exp
 
 
 #include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
+//#include <sys/systm.h>
+//#include <sys/kernel.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/errno.h>
 #include <sys/ioctl.h>
 #include <sys/time.h>
 
-#include <sys/cpu.h>
+//#include <sys/cpu.h>
 
-#include <net/if.h>
-#include <net/if_types.h>
-#include <net/netisr.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/if_types.h>
+#include <netbsd/net/netisr.h>
+#include <netbsd/net/route.h>
 
 #ifdef	INET
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/in_var.h>
-#include <netinet/in_offload.h>
-#include <netinet/ip.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/in_offload.h>
+#include <netbsd/netinet/ip.h>
 #endif
 
 #ifdef INET6
 #ifndef INET
-#include <netinet/in.h>
+#include <netbsd/netinet/in.h>
 #endif
-#include <netinet6/in6_var.h>
-#include <netinet6/in6_offload.h>
-#include <netinet/ip6.h>
+#include <netbsd/netinet6/in6_var.h>
+#include <netbsd/netinet6/in6_offload.h>
+#include <netbsd/netinet/ip6.h>
 #endif
 
 #ifdef IPX
-#include <netipx/ipx.h>
-#include <netipx/ipx_if.h>
+#include <netbsd/netipx/ipx.h>
+#include <netbsd/netipx/ipx_if.h>
 #endif
 
 #ifdef ISO
-#include <netiso/iso.h>
-#include <netiso/iso_var.h>
+#include <netbsd/netiso/iso.h>
+#include <netbsd/netiso/iso_var.h>
 #endif
 
 #ifdef MPLS
-#include <netmpls/mpls.h>
-#include <netmpls/mpls_var.h>
+#include <netbsd/netmpls/mpls.h>
+#include <netbsd/netmpls/mpls_var.h>
 #endif
 
 #ifdef NETATALK
-#include <netatalk/at.h>
-#include <netatalk/at_var.h>
+#include <netbsd/netatalk/at.h>
+#include <netbsd/netatalk/at_var.h>
 #endif
 
-#include <net/bpf.h>
-
+#include <netbsd/net/bpf.h>
+#include <sys/sockio.h>
+#include <sys/syslog.h>
 #if defined(LARGE_LOMTU)
 #define LOMTU	(131072 +  MHLEN + MLEN)
 #define LOMTU_MAX LOMTU
@@ -343,7 +344,9 @@ looutput(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 		return (ENOBUFS);
 	}
 	IF_ENQUEUE(ifq, m);
+#if 0 /* VADIM - replace with direct call */
 	schednetisr(isr);
+#endif
 	ifp->if_ipackets++;
 	ifp->if_ibytes += m->m_pkthdr.len;
 	splx(s);

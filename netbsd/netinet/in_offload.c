@@ -32,13 +32,13 @@ __KERNEL_RCSID(0, "$NetBSD: in_offload.c,v 1.5 2011/04/25 22:11:31 yamt Exp $");
 #include <sys/param.h>
 #include <sys/mbuf.h>
 
-#include <net/if.h>
+#include <netbsd/net/if.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/tcp.h>
-#include <netinet/in_offload.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/tcp.h>
+#include <netbsd/netinet/in_offload.h>
 
 struct ip_tso_output_args {
 	struct ifnet *ifp;
