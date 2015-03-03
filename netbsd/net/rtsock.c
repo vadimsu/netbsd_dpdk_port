@@ -1318,7 +1318,7 @@ COMPATNAME(route_enqueue)(struct mbuf *m, int family)
 	}
 	splx(s);
 }
-
+#endif
 static void route_init(void)
 {
 	struct route_info * const ri = &COMPATNAME(route_info);
@@ -1327,10 +1327,10 @@ static void route_init(void)
 	rt_init();
 #endif
 
-	sysctl_net_route_setup(NULL);
+//	sysctl_net_route_setup(NULL);
 	ri->ri_intrq.ifq_maxlen = ri->ri_maxqlen;
-	ri->ri_sih = softint_establish(SOFTINT_NET | SOFTINT_MPSAFE,
-	    COMPATNAME(route_intr), NULL);
+//	ri->ri_sih = softint_establish(SOFTINT_NET | SOFTINT_MPSAFE,
+//	    COMPATNAME(route_intr), NULL);
 }
 
 /*
@@ -1341,7 +1341,7 @@ PR_WRAP_USRREQ(route_usrreq);
 #else
 PR_WRAP_USRREQ(compat_50_route_usrreq);
 #endif
-#endif
+
 static const struct protosw COMPATNAME(route_protosw)[] = {
 	{
 		.pr_type = SOCK_RAW,

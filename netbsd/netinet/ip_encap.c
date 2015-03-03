@@ -80,7 +80,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_encap.c,v 1.39 2011/07/17 20:54:53 joerg Exp $");
 #include "opt_inet.h"
 
 #include <sys/param.h>
-#include <sys/systm.h>
+//#include <sys/systm.h>
 #include <sys/socket.h>
 #include <sys/sockio.h>
 #include <sys/mbuf.h>
@@ -88,28 +88,28 @@ __KERNEL_RCSID(0, "$NetBSD: ip_encap.c,v 1.39 2011/07/17 20:54:53 joerg Exp $");
 #include <sys/protosw.h>
 #include <sys/queue.h>
 
-#include <net/if.h>
-#include <net/route.h>
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
 
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
-#include <netinet/ip.h>
-#include <netinet/ip_var.h>
-#include <netinet/ip_encap.h>
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/ip_encap.h>
 #ifdef MROUTING
-#include <netinet/ip_mroute.h>
+#include <netbsd/netinet/ip_mroute.h>
 #endif /* MROUTING */
 
 #ifdef INET6
-#include <netinet/ip6.h>
-#include <netinet6/ip6_var.h>
-#include <netinet6/ip6protosw.h>
-#include <netinet6/in6_var.h>
-#include <netinet6/in6_pcb.h>
-#include <netinet/icmp6.h>
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/ip6protosw.h>
+#include <netbsd/netinet6/in6_var.h>
+#include <netbsd/netinet6/in6_pcb.h>
+#include <netbsd/netinet/icmp6.h>
 #endif
 
-#include <net/net_osdep.h>
+#include <netbsd/net/net_osdep.h>
 
 enum direction { INBOUND, OUTBOUND };
 

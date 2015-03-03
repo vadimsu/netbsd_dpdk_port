@@ -10,7 +10,7 @@ netbsd/netinet/udp_usrreq.c netbsd/netinet/ip_icmp.c netbsd/netinet/ip_reass.c n
 netbsd/netinet/in_pcb.c netbsd/netinet/in_cksum.c netbsd/netinet/ip_id.c netbsd/netinet/tcp_congctl.c netbsd/netinet/igmp.c \
 netbsd/porting/callout/callout.c netbsd/netinet/rfc6056.c netbsd/net/if_loop.c netbsd/net/bpf_stub.c netbsd/netinet/in_offload.c \
 netbsd/porting/kern/subr_percpu.c netbsd/porting/kern/subr_hash.c netbsd/porting/mbuf/uipc_mbuf.c netbsd/porting/kern/uipc_mbuf2.c \
-netbsd/porting/kern/uipc_socket2.c netbsd/porting/kern/uipc_socket.c netbsd/porting/kern/uipc_domain.c \
+netbsd/porting/kern/uipc_socket2.c netbsd/porting/kern/uipc_socket.c netbsd/porting/kern/uipc_domain.c netbsd/netinet/ip_encap.c \
 netbsd/net/rtsock.c netbsd/net/link_proto.c netbsd/lib/libkern/intoa.c netbsd/porting/kern/kern_tc.c netbsd/porting/kern/subr_once.c
 #netbsd/opencrypto/cryptosoft_xform.c
 #netbsd/porting/kern/uipc_mbuf.c
