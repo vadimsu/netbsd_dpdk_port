@@ -34,4 +34,5 @@ extern unsigned long hz;
 extern unsigned long tick;
 #define ppsratecheck(a,b,c) 1
 #define atomic_inc_uint(c) (*(c))++
+#define COMPATNAME(name) name
 #endif

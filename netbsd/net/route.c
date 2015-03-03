@@ -124,7 +124,8 @@ __KERNEL_RCSID(0, "$NetBSD: route.c,v 1.126.2.1 2013/07/29 05:43:13 msaitoh Exp 
 #else /* RTFLUSH_DEBUG */
 #define	rtcache_debug() 0
 #endif /* RTFLUSH_DEBUG */
-
+#include "missing_types.h"
+#define assert(a) if(!a){printf("ASSERTION FAILED %s %d\n",__FILE__,__LINE__); exit(0);}
 struct	rtstat	rtstat;
 
 int	rttrash;		/* routes not in table but not freed */

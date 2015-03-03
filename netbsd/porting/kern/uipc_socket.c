@@ -407,7 +407,7 @@ soclose(struct socket *so)
  discard:
 	if (so->so_state & SS_NOFDREF)
 		panic("soclose: NOFDREF");
-	kauth_cred_free(so->so_cred);
+	//kauth_cred_free(so->so_cred);
 	so->so_state |= SS_NOFDREF;
 	sofree(so);
 	return (error);
@@ -1318,7 +1318,9 @@ sosetopt1(struct socket *so, const struct sockopt *sopt)
 	switch ((opt = sopt->sopt_name)) {
 
 	case SO_ACCEPTFILTER:
+#if 0 /* VADIM * - not yet */
 		error = accept_filt_setopt(so, sopt);
+#endif
 		KASSERT(solocked(so));
 		break;
 
@@ -1530,7 +1532,9 @@ sogetopt1(struct socket *so, struct sockopt *sopt)
 	switch ((opt = sopt->sopt_name)) {
 
 	case SO_ACCEPTFILTER:
+#if 0 /* VADIM - not yet */
 		error = accept_filt_getopt(so, sopt);
+#endif
 		break;
 
 	case SO_LINGER:
@@ -1963,12 +1967,16 @@ sopoll(struct socket *so, int events)
 	solock(so);
 	if ((revents = sodopoll(so, events)) == 0) {
 		if (events & (POLLIN | POLLPRI | POLLRDNORM | POLLRDBAND)) {
+#if 0 /* VADIM */
 			selrecord(curlwp, &so->so_rcv.sb_sel);
+#endif
 			so->so_rcv.sb_flags |= SB_NOTIFY;
 		}
 
 		if (events & (POLLOUT | POLLWRNORM)) {
+#if 0 /* VADIM */
 			selrecord(curlwp, &so->so_snd.sb_sel);
+#endif
 			so->so_snd.sb_flags |= SB_NOTIFY;
 		}
 	}

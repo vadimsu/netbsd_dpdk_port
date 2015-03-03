@@ -1599,7 +1599,7 @@ m_getptr(struct mbuf *m, int loc, int *off)
  *
  * => free the mbuf m itsself as well.
  */
-
+#if 0
 void
 m_ext_free(struct mbuf *m)
 {
@@ -1655,7 +1655,7 @@ m_ext_free(struct mbuf *m)
 		pool_cache_put(mb_cache, m);
 	}
 }
-
+#endif
 #if defined(DDB)
 void
 m_print(const struct mbuf *m, const char *modif, void (*pr)(const char *, ...))

@@ -89,7 +89,7 @@ __KERNEL_RCSID(0, "$NetBSD: rtsock.c,v 1.140 2012/01/30 20:02:55 christos Exp $"
 #include <netbsd/net/raw_cb.h>
 
 //#include <netbsd/netmpls/mpls.h>
-
+#include "missing_types.h"
 #if defined(COMPAT_14) || defined(COMPAT_50)
 #include <compat/net/if.h>
 #include <compat/net/route.h>
@@ -139,7 +139,7 @@ struct route_info COMPATNAME(route_info) = {
 
 #define	PRESERVED_RTF	(RTF_UP | RTF_GATEWAY | RTF_HOST | RTF_DONE | RTF_MASK)
 
-static void COMPATNAME(route_init)(void);
+static void route_init(void);
 static int COMPATNAME(route_output)(struct mbuf *, ...);
 static int COMPATNAME(route_usrreq)(struct socket *,
 	    int, struct mbuf *, struct mbuf *, struct mbuf *);
@@ -1319,8 +1319,7 @@ COMPATNAME(route_enqueue)(struct mbuf *m, int family)
 	splx(s);
 }
 
-static void
-COMPATNAME(route_init)(void)
+static void route_init(void)
 {
 	struct route_info * const ri = &COMPATNAME(route_info);
 
@@ -1359,7 +1358,7 @@ static const struct protosw COMPATNAME(route_protosw)[] = {
 struct domain COMPATNAME(routedomain) = {
 	.dom_family = PF_XROUTE,
 	.dom_name = DOMAINNAME,
-	.dom_init = COMPATNAME(route_init),
+	.dom_init = route_init,
 	.dom_protosw = COMPATNAME(route_protosw),
 	.dom_protoswNPROTOSW =
 	    &COMPATNAME(route_protosw)[__arraycount(COMPATNAME(route_protosw))],
