@@ -145,7 +145,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_output.c,v 1.213 2012/02/15 16:11:23 drochner Exp
 #ifdef IPSEC_NAT_T
 #include <netbsd/netinet/udp.h>
 #endif
-
+#include <stdarg.h>
 static struct mbuf *ip_insertoptions(struct mbuf *, struct mbuf *, int *);
 static struct ifnet *ip_multicast_if(struct in_addr *, int *);
 static void ip_mloopback(struct ifnet *, struct mbuf *,

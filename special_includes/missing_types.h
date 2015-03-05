@@ -20,11 +20,14 @@ typedef unsigned long u_long;*/
 #define mutex_obj_free(a)
 #define mutex_owned(a) 1
 #define kauth_authorize_network(a,b,c,d,e,f) 0
-#define PR_NOWAIT 0
 #define IPL_NET 0
-extern void exit(int);
+extern void exit_inernal(int);
+#ifndef KASSERT
 #define KASSERT(a) if(!(a)) { printf("ASSERT FAILED HERE %s %d\n",__FILE__,__LINE__);exit(0); }
+#endif
+#ifndef CTASSERT
 #define CTASSERT(a) KASSERT(a)
+#endif
 #define splnet() 0
 #define splx(a)
 #define splsoftnet() 0
@@ -34,5 +37,5 @@ extern unsigned long hz;
 extern unsigned long tick;
 #define ppsratecheck(a,b,c) 1
 #define atomic_inc_uint(c) (*(c))++
-#define COMPATNAME(name) name
+//#define COMPATNAME(name) name
 #endif

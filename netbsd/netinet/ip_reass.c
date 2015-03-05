@@ -73,6 +73,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_reass.c,v 1.8 2011/06/27 00:45:50 enami Exp $");
 #include <netbsd/netinet/ip_private.h>
 #include <netbsd/netinet/in_var.h>
 #include "missing_types.h"
+
 /*
  * IP reassembly queue structures.  Each fragment being reassembled is
  * attached to one of these structures.  They are timed out after TTL

@@ -111,6 +111,7 @@ __KERNEL_RCSID(0, "$NetBSD: in.c,v 1.142.2.1 2012/06/13 19:12:23 riz Exp $");
 //#include <sys/kauth.h>
 
 //#include <sys/cprng.h>
+#include <sys/pool.h>
 #include <sys/sockio.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

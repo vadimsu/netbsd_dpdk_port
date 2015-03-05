@@ -110,7 +110,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_encap.c,v 1.39 2011/07/17 20:54:53 joerg Exp $");
 #endif
 
 #include <netbsd/net/net_osdep.h>
-
+#include <stdarg.h>
 enum direction { INBOUND, OUTBOUND };
 
 #ifdef INET

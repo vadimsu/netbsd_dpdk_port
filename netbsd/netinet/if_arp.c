@@ -80,6 +80,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_arp.c,v 1.154.2.1 2014/06/03 15:34:00 msaitoh Exp
 #include <sys/param.h>
 //#include <sys/systm.h>
 #include <sys/callout.h>
+#include <lib/libkern/libkern.h>
 //#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
@@ -334,13 +335,13 @@ do {									\
 
 #define	ARP_UNLOCK()		arp_unlock()
 
-static void sysctl_net_inet_arp_setup(struct sysctllog **);
+//static void sysctl_net_inet_arp_setup(struct sysctllog **);
 
 void
 arp_init(void)
 {
 
-	sysctl_net_inet_arp_setup(NULL);
+	//sysctl_net_inet_arp_setup(NULL);
 	arpstat_percpu = percpu_alloc(sizeof(uint64_t) * ARP_NSTATS);
 }
 
@@ -495,7 +496,7 @@ arp_rtrequest(int req, struct rtentry *rt, const struct rt_addrinfo *info)
 			struct timespec ts;
 			ts.tv_sec = 1;
 			ts.tv_nsec = 0;
-			tc_setclock(&ts);
+//			tc_setclock(&ts);
 		}
 		callout_init(&arptimer_ch, CALLOUT_MPSAFE);
 		callout_reset(&arptimer_ch, hz, arptimer, NULL);
@@ -1439,7 +1440,7 @@ in_revarpinput(struct mbuf *m)
 	memcpy(&myip, ar_tpa(ah), sizeof(myip));
 	myip_initialized = 1;
 wake:	/* Do wakeup every time in case it was missed. */
-	wakeup((void *)&myip);
+//	wakeup((void *)&myip);
 
 out:
 	m_freem(m);
@@ -1503,8 +1504,10 @@ revarpwhoarewe(struct ifnet *ifp, struct in_addr *serv_in,
 	revarp_in_progress = 1;
 	while (count--) {
 		revarprequest(ifp);
+#if 0
 		result = tsleep((void *)&myip, PSOCK, "revarp", hz/2);
 		if (result != EWOULDBLOCK)
+#endif
 			break;
 	}
 	revarp_in_progress = 0;
@@ -1517,7 +1520,7 @@ revarpwhoarewe(struct ifnet *ifp, struct in_addr *serv_in,
 	return 0;
 }
 
-
+
 
 #ifdef DDB
 

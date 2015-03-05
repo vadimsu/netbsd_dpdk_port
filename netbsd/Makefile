@@ -14,7 +14,7 @@ porting/kern/uipc_socket2.c porting/kern/uipc_socket.c porting/kern/uipc_domain.
 net/rtsock.c net/link_proto.c lib/libkern/intoa.c porting/kern/kern_tc.c porting/kern/subr_once.c
 #opencrypto/cryptosoft_xform.c
 #porting/kern/uipc_mbuf.c
-CFLAGS += -Ofast
+CFLAGS += -Ofast -fno-builtin
 CFLAGS += $(WERROR_FLAGS)
 NETBSD_HEADERS=-I$(SRC_ROOT)/special_includes -I$(SRC_ROOT)/netbsd -I$(SRC_ROOT)
 DPDK_HEADERS=$(SRC_ROOT)/dpdk-1.8.0/x86_64-native-linuxapp-gcc/include

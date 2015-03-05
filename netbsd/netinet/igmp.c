@@ -64,6 +64,7 @@ __KERNEL_RCSID(0, "$NetBSD: igmp.c,v 1.53 2012/01/09 14:31:21 liamjfoy Exp $");
 #include <netbsd/netinet/igmp.h>
 #include <netbsd/netinet/igmp_var.h>
 #include <sys/pool.h>
+#include <stdarg.h>
 #define IP_MULTICASTOPTS	0
 
 static struct pool igmp_rti_pool;

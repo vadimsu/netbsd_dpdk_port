@@ -42,7 +42,7 @@
 #define LIBKERN_INLINE	static __inline
 #define LIBKERN_BODY
 #endif
-
+#if 0
 LIBKERN_INLINE int imax(int, int) __unused;
 LIBKERN_INLINE int imin(int, int) __unused;
 LIBKERN_INLINE u_int max(u_int, u_int) __unused;
@@ -62,7 +62,7 @@ LIBKERN_INLINE int isdigit(int) __unused;
 LIBKERN_INLINE int isxdigit(int) __unused;
 LIBKERN_INLINE int toupper(int) __unused;
 LIBKERN_INLINE int tolower(int) __unused;
-
+#endif
 #ifdef LIBKERN_BODY
 LIBKERN_INLINE int
 imax(int a, int b)
@@ -188,8 +188,9 @@ tolower(int ch)
 #define DIAGNOSTIC
 #endif
 #endif
-
+#ifndef CTASSERT
 #define	CTASSERT(x)		__CTASSERT(x)
+#endif
 #define	CTASSERT_SIGNED(x)	__CTASSERT(((typeof(x))-1) < 0)
 #define	CTASSERT_UNSIGNED(x)	__CTASSERT(((typeof(x))-1) >= 0)
 
@@ -197,10 +198,14 @@ tolower(int ch)
 #define _DIAGASSERT(a)	(void)0
 #ifdef lint
 #define	KASSERTMSG(e, msg, ...)	/* NOTHING */
+#ifndef KASSERT
 #define	KASSERT(e)		/* NOTHING */
+#endif
 #else /* !lint */
 #define	KASSERTMSG(e, msg, ...)	((void)0)
+#ifndef KASSERT
 #define	KASSERT(e)		((void)0)
+#endif
 #endif /* !lint */
 #else /* DIAGNOSTIC */
 #define _DIAGASSERT(a)	assert(a)
@@ -208,10 +213,11 @@ tolower(int ch)
 			(__predict_true((e)) ? (void)0 :		    \
 			    kern_assert(__KASSERTSTR msg, "diagnostic ", #e,	    \
 				__FILE__, __LINE__, ## __VA_ARGS__))
-
+#ifndef KASSERT
 #define	KASSERT(e)	(__predict_true((e)) ? (void)0 :		    \
 			    kern_assert(__KASSERTSTR, "diagnostic ", #e,	    \
 				__FILE__, __LINE__))
+#endif
 #endif
 
 #ifndef DEBUG

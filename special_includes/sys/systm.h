@@ -38,7 +38,7 @@
 
 #ifndef _SYS_SYSTM_H_
 #define _SYS_SYSTM_H_
-
+#if 0
 #if defined(_KERNEL_OPT)
 #include "opt_ddb.h"
 #include "opt_multiprocessor.h"
@@ -533,5 +533,23 @@ void assert_sleepable(void);
 #endif /* defined(DEBUG) */
 
 vaddr_t calc_cache_size(struct vm_map *, int, int);
-
+#else
+typedef	int	(*copyin_t)(const void *, void *, size_t);
+typedef int	(*copyout_t)(const void *, void *, size_t);
+extern const char hexdigits[];	/* "0123456789abcdef" in subr_prf.c */
+extern const char HEXDIGITS[];	/* "0123456789ABCDEF" in subr_prf.c */
+int	enxio(void);
+enum hashtype {
+	HASH_LIST,
+	HASH_SLIST,
+	HASH_TAILQ
+};
+#define	KERNEL_LOCK(count, lwp)			
+#define	KERNEL_UNLOCK(all, lwp, p)
+#define	KERNEL_LOCKED_P() (true)
+#define	KERNEL_UNLOCK_LAST(l)
+#define	KERNEL_UNLOCK_ALL(l, p)
+#define	KERNEL_UNLOCK_ONE(l)
+void	*hashinit(u_int, enum hashtype, bool, u_long *);
+#endif
 #endif	/* !_SYS_SYSTM_H_ */

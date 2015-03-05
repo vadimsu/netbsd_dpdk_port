@@ -103,7 +103,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp 
 #include "opt_inet_csum.h"
 
 #include <sys/param.h>
-//#include <sys/systm.h>
+#include <sys/systm.h>
 #include <lib/libkern/libkern.h>
 #include <sys/mbuf.h>
 #include <sys/domain.h>
