@@ -61,6 +61,7 @@
  */
 
 #include <rte_common.h>
+#include <rte_lcore.h>
 #include <rte_malloc.h>
 #include <../../../special_includes/sys/kmem.h>
 /* ---- kmem API */
@@ -73,7 +74,7 @@
 void *
 kmem_alloc(size_t size, km_flag_t kmflags)
 {
-    return NULL;
+    return rte_malloc_socket(NULL,size,0,rte_socket_id());
 }
 
 /*
@@ -84,7 +85,7 @@ kmem_alloc(size_t size, km_flag_t kmflags)
 void *
 kmem_zalloc(size_t size, km_flag_t kmflags)
 {
-    return NULL;
+    return rte_zmalloc_socket(NULL,size,0,rte_socket_id());
 }
 
 /*
@@ -95,6 +96,7 @@ kmem_zalloc(size_t size, km_flag_t kmflags)
 void
 kmem_free(void *p, size_t size)
 {
+   rte_free(p);
 }
 
 

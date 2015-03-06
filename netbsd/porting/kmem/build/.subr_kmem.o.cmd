@@ -1,1 +1,0 @@
-cmd_subr_kmem.o = cc -Wp,-MD,./.subr_kmem.o.d.tmp -Ofast  -I/host/dpdknetbsd//dpdk-1.8.0/x86_64-native-linuxapp-gcc/include  -DRTE_MAX_LCORE=32   -o subr_kmem.o -c /host/dpdknetbsd/netbsd/porting/kmem/subr_kmem.c 
