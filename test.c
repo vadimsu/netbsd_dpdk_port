@@ -15,9 +15,7 @@ int main(int argc,char **argv)
         printf("cannot initialize EAL\n");
         exit(0);
     }
-   
-    /* init RTE timer library */
-    rte_timer_subsystem_init();
+    callout_startup(); 
     printf("%s %d\n",__FILE__,__LINE__);
     domaininit(1);
     printf("%s %d\n",__FILE__,__LINE__);

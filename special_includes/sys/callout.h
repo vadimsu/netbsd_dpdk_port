@@ -46,7 +46,7 @@
  * callout_impl_t.
  */
 typedef struct callout {
-	void	*_c_store[10];
+	void	*_c_store[20];
 } callout_t;
 
 /* Internal flags. */
@@ -81,15 +81,6 @@ struct callout_circq {
 
 struct callout_cpu;
 
-typedef struct callout_impl {
-	struct callout_circq c_list;		/* linkage on queue */
-	void	(*c_func)(void *);		/* function to call */
-	void	*c_arg;				/* function argument */
-	struct callout_cpu * volatile c_cpu;	/* associated CPU */
-	int	c_time;				/* when callout fires */
-	u_int	c_flags;			/* state of this entry */
-	u_int	c_magic;			/* magic number */
-} callout_impl_t;
 #define	CALLOUT_MAGIC		0x11deeba1
 
 #endif	/* _CALLOUT_PRIVATE */

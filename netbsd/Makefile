@@ -8,7 +8,7 @@ netinet/ip_input.c netinet/ip_output.c netinet/in4_cksum.c netinet/tcp_input.c n
 netinet/tcp_sack.c netinet/tcp_timer.c netinet/tcp_subr.c netinet/tcp_vtw.c netinet/tcp_usrreq.c \
 netinet/udp_usrreq.c netinet/ip_icmp.c netinet/ip_reass.c netinet/cpu_in_cksum.c \
 netinet/in_pcb.c netinet/in_cksum.c netinet/ip_id.c netinet/tcp_congctl.c netinet/igmp.c \
-porting/callout/callout.c netinet/rfc6056.c net/if_loop.c net/bpf_stub.c netinet/in_offload.c \
+netinet/rfc6056.c net/if_loop.c net/bpf_stub.c netinet/in_offload.c \
 porting/kern/subr_percpu.c porting/kern/subr_hash.c porting/mbuf/uipc_mbuf.c porting/kern/uipc_mbuf2.c \
 porting/kern/uipc_socket2.c porting/kern/uipc_socket.c porting/kern/uipc_domain.c netinet/ip_encap.c \
 net/rtsock.c net/link_proto.c lib/libkern/intoa.c porting/kern/kern_tc.c porting/kern/subr_once.c
