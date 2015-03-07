@@ -294,12 +294,17 @@ struct _m_ext {
  * into account inter-structure padding.
  */
 MBUF_DEFINE(_mbuf_dummy, 1, 1);
-
+#if 0
 /* normal data len */
 #define	MLEN		(MSIZE - offsetof(struct _mbuf_dummy, m_dat))
 /* data len w/pkthdr */
 #define	MHLEN		(MSIZE - offsetof(struct _mbuf_dummy, m_pktdat))
-
+#else
+/* normal data len */
+#define	MLEN		(MSIZE)
+/* data len w/pkthdr */
+#define	MHLEN		(MSIZE)
+#endif
 #define	MINCLSIZE	(MHLEN+MLEN+1)	/* smallest amount to put in cluster */
 #define	M_MAXCOMPRESS	(MHLEN / 2)	/* max amount to copy for compression */
 

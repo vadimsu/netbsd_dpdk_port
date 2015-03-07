@@ -14,5 +14,5 @@ CFLAGS += $(ALL_HEADERS) -DRTE_MAX_LCORE=32
 #-D_NETBSD_SOURCE
 #-D__NetBSD__
 #-DINET
-LIB = mbufporting.a
+LIB = rtewrappers.a
 include $(RTE_SDK)/mk/rte.extlib.mk

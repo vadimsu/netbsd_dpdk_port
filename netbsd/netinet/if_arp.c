@@ -81,7 +81,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_arp.c,v 1.154.2.1 2014/06/03 15:34:00 msaitoh Exp
 //#include <sys/systm.h>
 #include <sys/callout.h>
 #include <lib/libkern/libkern.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/time.h>

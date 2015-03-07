@@ -67,10 +67,10 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_mbuf2.c,v 1.29 2011/08/08 19:10:33 dyoung Exp $
 #include <sys/param.h>
 //#include <sys/systm.h>
 //#include <sys/proc.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/syslog.h>
-//MALLOC_DEFINE(M_PACKET_TAGS, "packet tags", "Packet-attached information");
+MALLOC_DEFINE(M_PACKET_TAGS, "packet tags", "Packet-attached information");
 
 /*
  * ensure that [off, off + len) is contiguous on the mbuf chain "m".

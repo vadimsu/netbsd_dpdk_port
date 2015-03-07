@@ -1,1 +1,0 @@
-cmd_misc.o = cc -Wp,-MD,./.misc.o.d.tmp -Ofast  -I/host/dpdknetbsd//dpdk-1.8.0/x86_64-native-linuxapp-gcc/include  -DRTE_MAX_LCORE=32 -DSTACK_MBUFS_COUNT=16384 -DMBUF_SIZE=2048   -o misc.o -c /host/dpdknetbsd/netbsd/porting/misc/misc.c 

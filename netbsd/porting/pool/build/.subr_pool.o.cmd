@@ -1,1 +1,0 @@
-cmd_subr_pool.o = cc -Wp,-MD,./.subr_pool.o.d.tmp -Ofast  -I/host/dpdknetbsd//dpdk-1.8.0/x86_64-native-linuxapp-gcc/include  -DRTE_MAX_LCORE=32   -o subr_pool.o -c /host/dpdknetbsd/netbsd/porting/pool/subr_pool.c 

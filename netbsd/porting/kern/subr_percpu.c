@@ -252,7 +252,8 @@ percpu_init_cpu(struct cpu_info *ci)
  * => considered as an expensive and rare operation.
  * => allocated storage is initialized with zeros.
  */
-
+extern unsigned get_cpu_count();
+extern void *rte_zmalloc(const char *type, size_t size, unsigned align);
 percpu_t *
 percpu_alloc(size_t size)
 {
@@ -268,7 +269,8 @@ percpu_alloc(size_t size)
 	percpu_zero(pc, size);
 	return pc;
 #else
-        return NULL;
+	unsigned cpu_count = get_cpu_count();
+        return rte_zmalloc(NULL,size*cpu_count,0);
 #endif
 }
 
@@ -285,6 +287,8 @@ percpu_free(percpu_t *pc, size_t size)
 #if 0
 	ASSERT_SLEEPABLE();
 	vmem_free(percpu_offset_arena, (vmem_addr_t)percpu_offset(pc), size);
+#else
+	rte_free(pc);
 #endif
 }
 

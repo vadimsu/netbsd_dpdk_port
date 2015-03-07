@@ -78,6 +78,7 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket.c,v 1.209.2.4 2013/11/25 08:26:33 bouyer
 //#include <sys/proc.h>
 //#include <sys/file.h>
 //#include <sys/filedesc.h>
+#include <sys/malloc.h>
 #include <sys/kmem.h>
 #include <sys/mbuf.h>
 #include <sys/domain.h>
@@ -104,8 +105,8 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket.c,v 1.209.2.4 2013/11/25 08:26:33 bouyer
 //#include <uvm/uvm_loan.h>
 //#include <uvm/uvm_page.h>
 #include <sys/syslog.h>
-//MALLOC_DEFINE(M_SOOPTS, "soopts", "socket options");
-//MALLOC_DEFINE(M_SONAME, "soname", "socket name");
+MALLOC_DEFINE(M_SOOPTS, "soopts", "socket options");
+MALLOC_DEFINE(M_SONAME, "soname", "socket name");
 #define solocked2(a,b) 1
 extern const struct fileops socketops;
 

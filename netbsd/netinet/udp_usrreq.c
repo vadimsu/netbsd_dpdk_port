@@ -71,7 +71,7 @@ __KERNEL_RCSID(0, "$NetBSD: udp_usrreq.c,v 1.185 2012/01/09 22:26:44 liamjfoy Ex
 #include "opt_mbuftrace.h"
 
 #include <sys/param.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>

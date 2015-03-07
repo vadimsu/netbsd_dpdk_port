@@ -100,7 +100,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_icmp.c,v 1.128.2.1 2013/03/31 20:52:29 riz Exp $"
 
 #include <sys/param.h>
 //#include <sys/systm.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>

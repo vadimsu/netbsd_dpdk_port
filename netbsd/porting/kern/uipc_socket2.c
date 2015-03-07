@@ -68,6 +68,7 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket2.c,v 1.110 2011/12/20 23:56:28 christos 
 //#include <sys/proc.h>
 //#include <sys/file.h>
 //#include <sys/buf.h>
+#include <sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>

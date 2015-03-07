@@ -83,7 +83,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_loop.c,v 1.75.8.1 2014/06/03 15:34:00 msaitoh Exp
 #include <sys/errno.h>
 #include <sys/ioctl.h>
 #include <sys/time.h>
-
+#include <sys/malloc.h>
 //#include <sys/cpu.h>
 
 #include <netbsd/net/if.h>

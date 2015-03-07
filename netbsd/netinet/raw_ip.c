@@ -70,7 +70,7 @@ __KERNEL_RCSID(0, "$NetBSD: raw_ip.c,v 1.113 2011/12/19 11:59:57 drochner Exp $"
 
 #include <sys/param.h>
 //#include <sys/sysctl.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/protosw.h>

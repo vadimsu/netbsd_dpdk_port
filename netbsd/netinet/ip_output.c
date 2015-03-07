@@ -99,7 +99,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_output.c,v 1.213 2012/02/15 16:11:23 drochner Exp
 #include "opt_mrouting.h"
 
 #include <sys/param.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/errno.h>
 #include <sys/protosw.h>

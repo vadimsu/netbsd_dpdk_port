@@ -44,7 +44,7 @@
 //#include <sys/systm.h>
 //#include <sys/proc.h>
 //#include <sys/kauth.h>
-
+#include <sys/malloc.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
 #include <netbsd/net/netisr.h>

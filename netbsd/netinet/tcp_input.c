@@ -157,7 +157,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_input.c,v 1.321 2012/01/11 14:39:08 drochner Exp
 
 #include <sys/param.h>
 //#include <sys/systm.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>

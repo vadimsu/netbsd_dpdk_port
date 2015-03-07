@@ -112,7 +112,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_sack.c,v 1.28 2012/01/30 23:31:27 matt Exp $");
 
 #include <sys/param.h>
 //#include <sys/systm.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>

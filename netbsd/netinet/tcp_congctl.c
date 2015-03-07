@@ -144,7 +144,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_congctl.c,v 1.16 2011/04/08 11:15:11 yamt Exp $"
 #include <sys/param.h>
 #include <netbsd/lib/libkern/libkern.h>
 //#include <sys/systm.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>

@@ -143,7 +143,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_output.c,v 1.173.2.1 2014/11/03 23:05:45 msaitoh
 
 #include <sys/param.h>
 //#include <sys/systm.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>

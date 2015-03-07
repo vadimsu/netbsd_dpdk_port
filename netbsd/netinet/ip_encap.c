@@ -87,7 +87,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_encap.c,v 1.39 2011/07/17 20:54:53 joerg Exp $");
 #include <sys/errno.h>
 #include <sys/protosw.h>
 #include <sys/queue.h>
-
+#include <sys/malloc.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
 

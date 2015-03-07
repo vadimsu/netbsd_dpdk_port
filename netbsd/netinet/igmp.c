@@ -51,7 +51,7 @@ __KERNEL_RCSID(0, "$NetBSD: igmp.c,v 1.53 2012/01/09 14:31:21 liamjfoy Exp $");
 #include <sys/protosw.h>
 //#include <sys/systm.h>
 //#include <sys/sysctl.h>
-
+#include <sys/malloc.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
 #include <netbsd/net/net_stats.h>

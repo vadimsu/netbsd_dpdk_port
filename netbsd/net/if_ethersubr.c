@@ -82,7 +82,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_ethersubr.c,v 1.188.8.4 2014/06/03 15:34:00 msait
 //#include <sys/systm.h>
 //#include <sys/kernel.h>
 #include <sys/callout.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>

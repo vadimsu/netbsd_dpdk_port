@@ -39,10 +39,11 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_domain.c,v 1.87 2011/10/27 21:10:55 seanb Exp $
 #include <sys/socketvar.h>
 #include <sys/protosw.h>
 #include <sys/domain.h>
-#include <sys/mbuf.h>
+//#include <sys/mbuf.h>
 #include <sys/time.h>
 //#include <sys/kernel.h>
 //#include <sys/systm.h>
+#include <sys/malloc.h>
 #include <sys/callout.h>
 #include <sys/queue.h>
 //#include <sys/proc.h>
@@ -53,9 +54,9 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_domain.c,v 1.87 2011/10/27 21:10:55 seanb Exp $
 //#include <sys/filedesc.h>
 //#include <sys/kauth.h>
 #include <sys/syslog.h>
-//MALLOC_DECLARE(M_SOCKADDR);
+MALLOC_DECLARE(M_SOCKADDR);
 
-//MALLOC_DEFINE(M_SOCKADDR, "sockaddr", "socket endpoints");
+MALLOC_DEFINE(M_SOCKADDR, "sockaddr", "socket endpoints");
 
 void	pffasttimo(void *);
 void	pfslowtimo(void *);
@@ -75,7 +76,8 @@ u_int	pffasttimo_now;
 
 //static struct sysctllog *domain_sysctllog;
 //static void sysctl_net_setup(void);
-
+extern struct domain inetdomain;
+extern struct domain arpdomain;
 void
 domaininit(bool addroute)
 {
@@ -89,12 +91,17 @@ domaininit(bool addroute)
 	 * Add all of the domains.  Make sure the PF_ROUTE
 	 * domain is added last.
 	 */
+#if 0
 	__link_set_foreach(dpp, domains) {
 		if ((*dpp)->dom_family == PF_ROUTE)
 			rt_domain = *dpp;
 		else
 			domain_attach(*dpp);
 	}
+#else
+	domain_attach(&inetdomain);
+	domain_attach(&arpdomain);
+#endif
 	if (rt_domain && addroute)
 		domain_attach(rt_domain);
 

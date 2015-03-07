@@ -100,7 +100,7 @@ __KERNEL_RCSID(0, "$NetBSD: in_pcb.c,v 1.140 2011/12/19 11:59:56 drochner Exp $"
 
 #include <sys/param.h>
 //#include <sys/systm.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 
 #include <sys/mbuf.h>
 #include <sys/protosw.h>

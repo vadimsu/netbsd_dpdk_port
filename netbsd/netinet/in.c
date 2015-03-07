@@ -101,7 +101,7 @@ __KERNEL_RCSID(0, "$NetBSD: in.c,v 1.142.2.1 2012/06/13 19:12:23 riz Exp $");
 #include <sys/param.h>
 #include <sys/ioctl.h>
 #include <sys/errno.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 //#include <sys/sysctl.h>
@@ -110,7 +110,7 @@ __KERNEL_RCSID(0, "$NetBSD: in.c,v 1.142.2.1 2012/06/13 19:12:23 riz Exp $");
 #include <sys/syslog.h>
 //#include <sys/kauth.h>
 
-//#include <sys/cprng.h>
+#include <sys/cprng.h>
 #include <sys/pool.h>
 #include <sys/sockio.h>
 #include <netbsd/net/if.h>

@@ -89,15 +89,15 @@ struct kmembuckets {
 
 #ifdef _KERNEL
 #ifdef MALLOCLOG
-void	*_kern_malloc(unsigned long, struct malloc_type *, int, const char *, long);
-void	_kern_free(void *, struct malloc_type *, const char *, long);
+extern void	*_kern_malloc(unsigned long, struct malloc_type *, int, const char *, long);
+extern void	_kern_free(void *, struct malloc_type *, const char *, long);
 #define	malloc(size, type, flags) \
 	    _kern_malloc((size), (type), (flags), __FILE__, __LINE__)
 #define	free(addr, type) \
 	    _kern_free((addr), (type), __FILE__, __LINE__)
 #else
-void	*kern_malloc(unsigned long, struct malloc_type *, int);
-void	kern_free(void *, struct malloc_type *);
+extern void	*kern_malloc(unsigned long, struct malloc_type *, int);
+extern void	kern_free(void *, struct malloc_type *);
 #define malloc(size, type, flags) kern_malloc(size, type, flags)
 #define free(addr, type) kern_free(addr, type)
 #endif /* MALLOCLOG */

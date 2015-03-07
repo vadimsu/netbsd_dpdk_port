@@ -106,7 +106,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_usrreq.c,v 1.162.2.3 2013/12/14 19:29:29 bouyer 
 #include <sys/param.h>
 //#include <sys/systm.h>
 //#include <sys/kernel.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>

@@ -36,7 +36,7 @@
 
 #include <sys/param.h>
 //#include <sys/systm.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 #include <sys/kmem.h>
 #include <sys/mbuf.h>
 #include <sys/protosw.h>

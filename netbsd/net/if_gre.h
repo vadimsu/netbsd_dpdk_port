@@ -42,7 +42,7 @@
 #include <sys/queue.h>
 //#include <sys/mutex.h>
 //#include <sys/condvar.h>
-//#include <sys/malloc.h>
+#include <sys/malloc.h>
 //#include <sys/mallocvar.h>
 
 #ifdef _KERNEL

@@ -31,7 +31,7 @@ __KERNEL_RCSID(0, "$NetBSD: in_offload.c,v 1.5 2011/04/25 22:11:31 yamt Exp $");
 
 #include <sys/param.h>
 #include <sys/mbuf.h>
-
+#include <sys/malloc.h>
 #include <netbsd/net/if.h>
 
 #include <netbsd/netinet/in.h>
