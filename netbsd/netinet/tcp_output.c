@@ -134,26 +134,26 @@
  *	@(#)tcp_output.c	8.4 (Berkeley) 5/24/95
  */
 #include "missing_types.h"
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: tcp_output.c,v 1.173.2.1 2014/11/03 23:05:45 msaitoh Exp $");
 
 #include "opt_inet.h"
 #include "opt_ipsec.h"
 #include "opt_tcp_debug.h"
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/systm.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
-#include <sys/mbuf.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/errno.h>
-#include <sys/domain.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/domain.h>
 //#include <sys/kernel.h>
 #ifdef TCP_SIGNATURE
-#include <sys/md5.h>
+#include <special_includes/sys/md5.h>
 #endif
 
 #include <netbsd/net/if.h>
@@ -203,7 +203,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_output.c,v 1.173.2.1 2014/11/03 23:05:45 msaitoh
 #ifdef KAME_IPSEC
 #include <netbsd/netkey/key.h>
 #endif
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 #ifdef notyet
 extern struct mbuf *m_copypack();
 #endif

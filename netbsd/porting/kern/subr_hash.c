@@ -36,13 +36,13 @@
  *	@(#)kern_subr.c	8.4 (Berkeley) 2/14/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: subr_hash.c,v 1.4 2011/12/25 02:23:09 christos Exp $");
 
-#include <sys/param.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kmem.h>
 //#include <sys/systm.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 #include "missing_types.h"
 /*
  * General routine to allocate a hash table.

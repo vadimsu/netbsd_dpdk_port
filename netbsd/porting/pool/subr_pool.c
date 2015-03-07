@@ -34,9 +34,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <inttypes.h>
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #include <string.h>
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 #include <stdarg.h>
 
 #include <rte_common.h>

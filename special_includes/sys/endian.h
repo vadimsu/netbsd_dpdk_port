@@ -34,7 +34,7 @@
 #ifndef _SYS_ENDIAN_H_
 #define _SYS_ENDIAN_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 /*
  * Definitions for byte order, according to byte significance from low
@@ -50,9 +50,9 @@
 
 /* C-family endian-ness definitions */
 
-#include <sys/ansi.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <special_includes/sys/ansi.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/types.h>
 
 #ifndef in_addr_t
 typedef __in_addr_t	in_addr_t;
@@ -75,7 +75,7 @@ __END_DECLS
 #endif /* _XOPEN_SOURCE || _NETBSD_SOURCE */
 
 
-#include <machine/endian_machdep.h>
+#include <special_includes/machine/endian_machdep.h>
 
 /*
  * Define the order of 32-bit words in 64-bit words.
@@ -104,7 +104,7 @@ __END_DECLS
 
 #ifndef _LOCORE
 
-#include <machine/bswap.h>
+#include <special_includes/machine/bswap.h>
 
 /*
  * Macros for network/external number representation conversion.

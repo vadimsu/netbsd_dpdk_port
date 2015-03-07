@@ -94,7 +94,7 @@
  *	@(#)tcp_usrreq.c	8.5 (Berkeley) 6/21/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: tcp_usrreq.c,v 1.162.2.3 2013/12/14 19:29:29 bouyer Exp $");
 
 #include "opt_inet.h"
@@ -103,19 +103,19 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_usrreq.c,v 1.162.2.3 2013/12/14 19:29:29 bouyer 
 #include "opt_mbuftrace.h"
 
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/systm.h>
 //#include <sys/kernel.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/protosw.h>
-#include <sys/errno.h>
-#include <sys/stat.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/stat.h>
 //#include <sys/proc.h>
-#include <sys/domain.h>
+#include <special_includes/sys/domain.h>
 //#include <sys/sysctl.h>
 //#include <sys/kauth.h>
 //#include <sys/uidinfo.h>
@@ -157,7 +157,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_usrreq.c,v 1.162.2.3 2013/12/14 19:29:29 bouyer 
 #ifdef KAME_IPSEC
 #include <netbsd/netinet6/ipsec.h>
 #endif /*KAME_IPSEC*/
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 /*
  * TCP protocol interface to socket abstraction.
  */

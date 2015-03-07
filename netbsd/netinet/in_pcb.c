@@ -92,29 +92,29 @@
  *	@(#)in_pcb.c	8.4 (Berkeley) 5/24/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in_pcb.c,v 1.140 2011/12/19 11:59:56 drochner Exp $");
 
 #include "opt_inet.h"
 #include "opt_ipsec.h"
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/systm.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 
-#include <sys/mbuf.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/ioctl.h>
-#include <sys/errno.h>
-#include <sys/time.h>
-#include <sys/once.h>
-#include <sys/pool.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/once.h>
+#include <special_includes/sys/pool.h>
 //#include <sys/proc.h>
 //#include <sys/kauth.h>
 //#include <sys/uidinfo.h>
-#include <sys/domain.h>
+#include <special_includes/sys/domain.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

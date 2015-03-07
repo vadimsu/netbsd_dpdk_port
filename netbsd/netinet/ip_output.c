@@ -90,7 +90,7 @@
  *	@(#)ip_output.c	8.3 (Berkeley) 1/21/94
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip_output.c,v 1.213 2012/02/15 16:11:23 drochner Exp $");
 
 #include "opt_pfil_hooks.h"
@@ -98,16 +98,16 @@ __KERNEL_RCSID(0, "$NetBSD: ip_output.c,v 1.213 2012/02/15 16:11:23 drochner Exp
 #include "opt_ipsec.h"
 #include "opt_mrouting.h"
 
-#include <sys/param.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/errno.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
 //#include <sys/kauth.h>
 #ifdef FAST_IPSEC
-#include <sys/domain.h>
+#include <special_includes/sys/domain.h>
 #endif
 //#include <sys/systm.h>
 //#include <sys/proc.h>

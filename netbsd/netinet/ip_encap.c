@@ -73,21 +73,21 @@
  */
 #define USE_RADIX
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip_encap.c,v 1.39 2011/07/17 20:54:53 joerg Exp $");
 
 #include "opt_mrouting.h"
 #include "opt_inet.h"
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/systm.h>
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/mbuf.h>
-#include <sys/errno.h>
-#include <sys/protosw.h>
-#include <sys/queue.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/malloc.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
 

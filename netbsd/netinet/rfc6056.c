@@ -28,18 +28,18 @@
  *
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: rfc6056.c,v 1.4.4.1 2012/03/17 17:53:01 bouyer Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/errno.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/errno.h>
 //#include <sys/kauth.h>
 //#include <sys/uidinfo.h>
-#include <sys/domain.h>
-#include <sys/md5.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/md5.h>
+#include <special_includes/sys/cprng.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

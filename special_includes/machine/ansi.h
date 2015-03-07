@@ -36,9 +36,9 @@
 
 #ifdef __x86_64__
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
-#include <machine/int_types.h>
+#include <special_includes/machine/int_types.h>
 
 /*
  * Types which are fundamental to the implementation and may appear in

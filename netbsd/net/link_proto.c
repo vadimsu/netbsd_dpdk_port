@@ -31,17 +31,17 @@
  *	@(#)uipc_proto.c	8.2 (Berkeley) 2/14/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: link_proto.c,v 1.7.8.1 2014/08/07 09:39:55 msaitoh Exp $");
 
-#include <sys/param.h>
-#include <sys/socket.h>
-#include <sys/protosw.h>
-#include <sys/domain.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/mbuf.h>
 //#include <sys/un.h>
-#include <sys/socketvar.h>
-#include <sys/sockio.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/sockio.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/if_dl.h>
 #include <netbsd/net/raw_cb.h>

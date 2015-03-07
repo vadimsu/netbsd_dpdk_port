@@ -85,23 +85,23 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_etherip.c,v 1.31 2011/10/28 16:10:12 dyoung Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
 //#include <sys/kernel.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 //#include <sys/conf.h>
 //#include <sys/device.h>
-#include <sys/errno.h>
-#include <sys/time.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
 //#include <sys/sysctl.h>
-#include <sys/queue.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
 //#include <sys/intr.h>
 
 #include <netbsd/net/if.h>
@@ -132,7 +132,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_etherip.c,v 1.31 2011/10/28 16:10:12 dyoung Exp $
 #include <netbsd/netinet6/ip6protosw.h>
 #endif /* INET6 */
 
-#include <sys/sockio.h>
+#include <special_includes/sys/sockio.h>
 
 static int etherip_node;
 //static int etherip_sysctl_handler(SYSCTLFN_PROTO);

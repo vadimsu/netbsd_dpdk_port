@@ -90,7 +90,7 @@
  *	@(#)ip_input.c	8.2 (Berkeley) 1/4/94
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp $");
 
 #include "opt_inet.h"
@@ -102,18 +102,18 @@ __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp 
 #include "opt_mbuftrace.h"
 #include "opt_inet_csum.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
 #include <lib/libkern/libkern.h>
-#include <sys/mbuf.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/errno.h>
-#include <sys/time.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
 //#include <sys/kernel.h>
-#include <sys/pool.h>
+#include <special_includes/sys/pool.h>
 //#include <sys/sysctl.h>
 //#include <sys/kauth.h>
 
@@ -150,7 +150,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp 
 #include <netbsd/netipsec/ipsec.h>
 #include <netbsd/netipsec/key.h>
 #endif	/* FAST_IPSEC*/
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 #ifndef	IPFORWARDING
 #ifdef GATEWAY
 #define	IPFORWARDING	1	/* forward IP packets not for us */

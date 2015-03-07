@@ -62,7 +62,7 @@
  *	@(#)uipc_socket.c	8.6 (Berkeley) 5/2/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: uipc_socket.c,v 1.209.2.4 2013/11/25 08:26:33 bouyer Exp $");
 
 #include "opt_compat_netbsd.h"
@@ -78,19 +78,19 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket.c,v 1.209.2.4 2013/11/25 08:26:33 bouyer
 //#include <sys/proc.h>
 //#include <sys/file.h>
 //#include <sys/filedesc.h>
-#include <sys/malloc.h>
-#include <sys/kmem.h>
-#include <sys/mbuf.h>
-#include <sys/domain.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/domain.h>
 //#include <sys/kernel.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
 //#include <sys/signalvar.h>
 //#include <sys/resourcevar.h>
 //#include <sys/uidinfo.h>
 //#include <sys/event.h>
-#include <sys/poll.h>
+#include <special_includes/sys/poll.h>
 //#include <sys/kauth.h>
 //#include <sys/mutex.h>
 //#include <sys/condvar.h>
@@ -104,7 +104,7 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket.c,v 1.209.2.4 2013/11/25 08:26:33 bouyer
 //#include <uvm/uvm_extern.h>
 //#include <uvm/uvm_loan.h>
 //#include <uvm/uvm_page.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 MALLOC_DEFINE(M_SOOPTS, "soopts", "socket options");
 MALLOC_DEFINE(M_SONAME, "soname", "socket name");
 #define solocked2(a,b) 1

@@ -67,7 +67,7 @@
  *	add "inuse/lock" bit (or ref. count) along with valid bit
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_arp.c,v 1.154.2.1 2014/06/03 15:34:00 msaitoh Exp $");
 
 #include "opt_ddb.h"
@@ -77,25 +77,25 @@ __KERNEL_RCSID(0, "$NetBSD: if_arp.c,v 1.154.2.1 2014/06/03 15:34:00 msaitoh Exp
 
 #include "bridge.h"
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/systm.h>
-#include <sys/callout.h>
+#include <special_includes/sys/callout.h>
 #include <lib/libkern/libkern.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/time.h>
-#include <sys/timetc.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/timetc.h>
 //#include <sys/kernel.h>
-#include <sys/errno.h>
-#include <sys/ioctl.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/syslog.h>
 //#include <sys/proc.h>
-#include <sys/protosw.h>
-#include <sys/domain.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/domain.h>
 //#include <sys/sysctl.h>
-#include <sys/socketvar.h>
-#include <sys/percpu.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/percpu.h>
 
 #include <netbsd/net/ethertypes.h>
 #include <netbsd/net/if.h>

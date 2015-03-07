@@ -60,7 +60,7 @@
  *	@(#)if_ethersubr.c	8.2 (Berkeley) 4/4/96
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_ethersubr.c,v 1.188.8.4 2014/06/03 15:34:00 msaitoh Exp $");
 
 #include "opt_inet.h"
@@ -78,17 +78,17 @@ __KERNEL_RCSID(0, "$NetBSD: if_ethersubr.c,v 1.188.8.4 2014/06/03 15:34:00 msait
 #include "arp.h"
 #include "agr.h"
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/systm.h>
 //#include <sys/kernel.h>
-#include <sys/callout.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <sys/errno.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/syslog.h>
 //#include <sys/kauth.h>
 //#include <sys/cpu.h>
 //#include <sys/intr.h>
@@ -104,7 +104,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_ethersubr.c,v 1.188.8.4 2014/06/03 15:34:00 msait
 #include <netbsd/net/if_media.h>
 //#include <dev/mii/mii.h>
 //#include <dev/mii/miivar.h>
-#include <sys/sockio.h>
+#include <special_includes/sys/sockio.h>
 #if NARP == 0
 /*
  * XXX there should really be a way to issue this warning from within config(8)

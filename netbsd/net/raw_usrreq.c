@@ -31,25 +31,25 @@
  *	@(#)raw_usrreq.c	8.1 (Berkeley) 6/10/93
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 //__KERNEL_RCSID(0, "$NetBSD: raw_usrreq.c,v 1.37 2011/07/17 20:54:52 joerg Exp $");
 
-#include <sys/param.h>
-#include <sys/mbuf.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/errno.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/errno.h>
 //#include <sys/systm.h>
 //#include <sys/proc.h>
 //#include <sys/kauth.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
 #include <netbsd/net/netisr.h>
 #include <netbsd/net/raw_cb.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 /*
  * Initialize raw connection block q.
  */

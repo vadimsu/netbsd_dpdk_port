@@ -90,7 +90,7 @@
  *	@(#)in.c	8.4 (Berkeley) 1/9/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in.c,v 1.142.2.1 2012/06/13 19:12:23 riz Exp $");
 
 #include "opt_inet.h"
@@ -98,21 +98,21 @@ __KERNEL_RCSID(0, "$NetBSD: in.c,v 1.142.2.1 2012/06/13 19:12:23 riz Exp $");
 #include "opt_mrouting.h"
 #include "opt_pfil_hooks.h"
 
-#include <sys/param.h>
-#include <sys/ioctl.h>
-#include <sys/errno.h>
-#include <sys/malloc.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
 //#include <sys/sysctl.h>
 //#include <sys/systm.h>
 //#include <sys/proc.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 //#include <sys/kauth.h>
 
-#include <sys/cprng.h>
-#include <sys/pool.h>
-#include <sys/sockio.h>
+#include <special_includes/sys/cprng.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/sockio.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
 

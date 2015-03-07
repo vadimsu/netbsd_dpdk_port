@@ -39,16 +39,16 @@
 #ifndef _SYS_TYPES_H_
 #define	_SYS_TYPES_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 /* Machine type dependent parameters. */
-#include <machine/types.h>
+#include <special_includes/machine/types.h>
 
-#include <machine/ansi.h>
-#include <machine/int_types.h>
+#include <special_includes/machine/ansi.h>
+#include <special_includes/machine/int_types.h>
 
 
-#include <sys/ansi.h>
+#include <special_includes/sys/ansi.h>
 
 #ifndef	int8_t
 typedef	__int8_t	int8_t;
@@ -95,7 +95,7 @@ typedef	uint16_t	u_int16_t;
 typedef	uint32_t	u_int32_t;
 typedef	uint64_t	u_int64_t;
 
-#include <machine/endian.h>
+#include <special_includes/machine/endian.h>
 
 #if defined(_NETBSD_SOURCE)
 typedef	unsigned char	u_char;
@@ -244,7 +244,7 @@ union __semun {
 #ifndef __OFF_T_SYSCALLS_DECLARED
 #define __OFF_T_SYSCALLS_DECLARED
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __BEGIN_DECLS
 off_t	 lseek(int, off_t, int);
 int	 ftruncate(int, off_t);
@@ -310,7 +310,7 @@ typedef	_BSD_USECONDS_T_	useconds_t;
 #endif
 
 #ifdef _NETBSD_SOURCE
-#include <sys/fd_set.h>
+#include <special_includes/sys/fd_set.h>
 
 #define	NBBY			8
 

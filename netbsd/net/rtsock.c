@@ -60,7 +60,7 @@
  *	@(#)rtsock.c	8.7 (Berkeley) 10/12/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: rtsock.c,v 1.140 2012/01/30 20:02:55 christos Exp $");
 
 #ifdef _KERNEL_OPT
@@ -69,14 +69,14 @@ __KERNEL_RCSID(0, "$NetBSD: rtsock.c,v 1.140 2012/01/30 20:02:55 christos Exp $"
 #include "opt_compat_netbsd.h"
 #endif
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/systm.h>
 //#include <sys/proc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
 //#include <sys/sysctl.h>
 //#include <sys/kauth.h>
 //#include <sys/intr.h>

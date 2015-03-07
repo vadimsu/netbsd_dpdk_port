@@ -63,9 +63,9 @@
 #ifndef _SYS_SOCKETVAR_H_
 #define	_SYS_SOCKETVAR_H_
 
-#include <sys/select.h>
-#include <sys/selinfo.h>		/* for struct selinfo */
-#include <sys/queue.h>
+#include <special_includes/sys/select.h>
+#include <special_includes/sys/selinfo.h>		/* for struct selinfo */
+#include <special_includes/sys/queue.h>
 //#include <sys/mutex.h>
 //#include <sys/condvar.h>
 
@@ -177,7 +177,16 @@ struct socket {
 		void	*so_accept_filter_arg;	/* saved filter args */
 		char	*so_accept_filter_str;	/* saved user args */
 	} *so_accf;
-	kauth_cred_t	so_cred;	/* socket credentials */
+	TAILQ_ENTRY(socket) read_queue_entry;
+	TAILQ_ENTRY(socket) write_queue_entry;
+	TAILQ_ENTRY(socket) accept_queue_entry;
+	TAILQ_ENTRY(socket) closed_queue_entry;
+        TAILQ_ENTRY(socket) buffers_available_notification_queue_entry;
+	int read_queue_present;
+	int write_queue_present;
+	int accept_queue_present;
+	int closed_queue_present;
+        int buffers_available_notification_queue_present;
 };
 
 #define	SB_EMPTY_FIXUP(sb)						\
@@ -348,8 +357,8 @@ void	free_control_mbuf(struct lwp *, struct mbuf *, struct mbuf *);
  * Inline functions for sockets and socket buffering.
  */
 
-#include <sys/protosw.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/mbuf.h>
 
 /*
  * Do we need to notify the other side when I/O is possible?

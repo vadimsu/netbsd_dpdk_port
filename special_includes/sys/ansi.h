@@ -32,7 +32,7 @@
 #ifndef	_SYS_ANSI_H_
 #define	_SYS_ANSI_H_
 
-#include <machine/ansi.h>
+#include <special_includes/machine/ansi.h>
 
 typedef char *		__caddr_t;	/* core address */
 typedef __uint32_t	__gid_t;	/* group id */

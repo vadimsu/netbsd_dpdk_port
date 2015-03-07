@@ -29,20 +29,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip_id.c,v 1.15 2011/11/19 22:51:25 tls Exp $");
 
-#include <sys/param.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kmem.h>
 //#include <sys/mutex.h>
-//#include <sys/cprng.h>
+#include <special_includes/sys/cprng.h>
 #include "missing_types.h"
 #include <netbsd/lib/libkern/libkern.h>
 #include <netbsd/net/if.h>
 #include <netbsd/netinet/in.h>
 #include <netbsd/netinet/in_var.h>
 
-#include <sys/cprng.h>
 #define	IPID_MAXID	65535
 #define	IPID_NUMIDS	32768
 

@@ -1,6 +1,6 @@
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 
 MALLOC_DEFINE(M_DEVBUF,"","");
 MALLOC_DEFINE(M_DMAMAP,"","");

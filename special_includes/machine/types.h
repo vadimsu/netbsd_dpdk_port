@@ -36,9 +36,9 @@
 
 #ifdef __x86_64__
 
-#include <sys/cdefs.h>
-#include <sys/featuretest.h>
-#include <machine/int_types.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/machine/int_types.h>
 
 #if defined(_KERNEL)
 typedef struct label_t {

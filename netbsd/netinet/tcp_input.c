@@ -147,7 +147,7 @@
  *	connections.
  */
 #include "missing_types.h"
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: tcp_input.c,v 1.321 2012/01/11 14:39:08 drochner Exp $");
 
 #include "opt_inet.h"
@@ -155,21 +155,21 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_input.c,v 1.321 2012/01/11 14:39:08 drochner Exp
 #include "opt_inet_csum.h"
 #include "opt_tcp_debug.h"
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/systm.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
-#include <sys/mbuf.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/errno.h>
-#include <sys/syslog.h>
-#include <sys/pool.h>
-#include <sys/domain.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/domain.h>
 //#include <sys/kernel.h>
 #ifdef TCP_SIGNATURE
-#include <sys/md5.h>
+#include <special_includes/sys/md5.h>
 #endif
 //#include <sys/lwp.h> /* for lwp0 */
 //#include <sys/cprng.h>
@@ -240,7 +240,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_input.c,v 1.321 2012/01/11 14:39:08 drochner Exp
 #endif	/* FAST_IPSEC*/
 
 #include <netbsd/netinet/tcp_vtw.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/cprng.h>
 int	tcprexmtthresh = 3;
 int	tcp_log_refused;
 

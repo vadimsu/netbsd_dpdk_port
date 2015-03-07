@@ -90,7 +90,7 @@
  *	@(#)tcp_subr.c	8.2 (Berkeley) 5/24/95
  */
 #include "missing_types.h"
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $");
 
 #include "opt_inet.h"
@@ -99,19 +99,19 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $
 #include "opt_inet_csum.h"
 #include "opt_mbuftrace.h"
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/proc.h>
 //#include <sys/systm.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/protosw.h>
-#include <sys/errno.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/errno.h>
 //#include <sys/kernel.h>
-#include <sys/pool.h>
-#include <sys/md5.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/md5.h>
 //#include <sys/cprng.h>
 
 #include <netbsd/net/route.h>
@@ -160,7 +160,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $
 #endif
  #include <netbsd/netipsec/key.h>
 #endif	/* FAST_IPSEC*/
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 
 struct	inpcbtable tcbtable;	/* head of queue of active tcpcb's */
 u_int32_t tcp_now;		/* slow ticks, for RFC 1323 timestamps */

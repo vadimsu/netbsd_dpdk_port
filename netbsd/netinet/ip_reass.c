@@ -45,19 +45,19 @@
  * NFS peers).
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip_reass.c,v 1.8 2011/06/27 00:45:50 enami Exp $");
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/types.h>
 
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
 //#include <sys/mutex.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
-#include <sys/pool.h>
-#include <sys/queue.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/queue.h>
 //#include <sys/sysctl.h>
 //#include <sys/systm.h>
 

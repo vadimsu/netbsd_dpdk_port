@@ -63,7 +63,7 @@
 #ifndef _SYS_SOCKET_H_
 #define	_SYS_SOCKET_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 /*
  * Definitions related to sockets: types, address families, options.
@@ -72,7 +72,7 @@
 /*
  * Data types.
  */
-#include <sys/ansi.h>
+#include <special_includes/sys/ansi.h>
 
 #ifndef sa_family_t
 typedef __sa_family_t	sa_family_t;
@@ -84,7 +84,7 @@ typedef __socklen_t	socklen_t;
 #define socklen_t	__socklen_t
 #endif
 
-#include <machine/ansi.h>
+#include <special_includes/machine/ansi.h>
 
 #ifdef	_BSD_SIZE_T_
 typedef	_BSD_SIZE_T_	size_t;
@@ -96,8 +96,8 @@ typedef	_BSD_SSIZE_T_	ssize_t;
 #undef	_BSD_SSIZE_T_
 #endif
 
-#include <sys/uio.h>
-#include <sys/sigtypes.h>
+#include <special_includes/sys/uio.h>
+#include <special_includes/sys/sigtypes.h>
 
 /*
  * Socket types.
@@ -574,7 +574,7 @@ struct cmsghdr {
 #define	SHUT_WR		1		/* Disallow further sends. */
 #define	SHUT_RDWR	2		/* Disallow further sends/receives. */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 #ifdef	_KERNEL
 static inline socklen_t

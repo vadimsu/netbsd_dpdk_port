@@ -89,7 +89,7 @@
  *	@(#)if.c	8.5 (Berkeley) 1/9/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 //__KERNEL_RCSID(0, "$NetBSD: if.c,v 1.260.2.1 2012/11/19 20:04:22 riz Exp $");
 
 #include "opt_inet.h"
@@ -98,22 +98,22 @@
 #include "opt_natm.h"
 #include "opt_pfil_hooks.h"
 
-#include <sys/param.h>
-#include <sys/mbuf.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/malloc.h>
 //#include <sys/systm.h>
-#include <sys/callout.h>
+#include <special_includes/sys/callout.h>
 //#include <sys/proc.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
 //#include <sys/kernel.h>
-#include <sys/ioctl.h>
+#include <special_includes/sys/ioctl.h>
 //#include <sys/sysctl.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 //#include <sys/kauth.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/kmem.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/if_dl.h>
@@ -141,7 +141,7 @@
 #if NCARP > 0
 #include <netbsd/netinet/ip_carp.h>
 #endif
-#include <sys/sockio.h>
+#include <special_includes/sys/sockio.h>
 //#include <compat/sys/sockio.h>
 //#include <compat/sys/socket.h>
 #define copyout memcpy

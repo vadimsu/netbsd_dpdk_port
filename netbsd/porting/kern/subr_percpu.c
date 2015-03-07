@@ -30,15 +30,15 @@
  * per-cpu storage.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: subr_percpu.c,v 1.16 2012/01/27 19:48:40 para Exp $");
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/cpu.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/kmem.h>
 //#include <sys/kernel.h>
 //#include <sys/mutex.h>
-#include <sys/percpu.h>
+#include <special_includes/sys/percpu.h>
 //#include <sys/rwlock.h>
 //#include <sys/vmem.h>
 //#include <sys/xcall.h>

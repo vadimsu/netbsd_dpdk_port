@@ -37,8 +37,8 @@
 /*
  * Structure per communications domain.
  */
-#include <sys/mbuf.h>
-#include <sys/socket.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
 #include <netbsd/net/route.h>
 
 /*

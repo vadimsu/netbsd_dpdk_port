@@ -70,8 +70,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "missing_types.h"
-#include "sys/types.h"
-#include <sys/queue.h>
+#include "special_includes/sys/types.h"
+#include <special_includes/sys/queue.h>
 //#include<rte_mbuf.h>
 /*
  * Mbufs are of a single size, MSIZE (machine/param.h), which

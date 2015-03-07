@@ -31,21 +31,21 @@
  *	@(#)uipc_domain.c	8.3 (Berkeley) 2/14/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: uipc_domain.c,v 1.87 2011/10/27 21:10:55 seanb Exp $");
 
-#include <sys/param.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/protosw.h>
-#include <sys/domain.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/domain.h>
 //#include <sys/mbuf.h>
-#include <sys/time.h>
+#include <special_includes/sys/time.h>
 //#include <sys/kernel.h>
 //#include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/callout.h>
-#include <sys/queue.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/queue.h>
 //#include <sys/proc.h>
 //#include <sys/sysctl.h>
 //#include <sys/un.h>
@@ -53,7 +53,7 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_domain.c,v 1.87 2011/10/27 21:10:55 seanb Exp $
 //#include <sys/file.h>
 //#include <sys/filedesc.h>
 //#include <sys/kauth.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 MALLOC_DECLARE(M_SOCKADDR);
 
 MALLOC_DEFINE(M_SOCKADDR, "sockaddr", "socket endpoints");

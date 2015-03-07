@@ -57,31 +57,31 @@
  *	@(#)uipc_socket2.c	8.2 (Berkeley) 2/14/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: uipc_socket2.c,v 1.110 2011/12/20 23:56:28 christos Exp $");
 
 #include "opt_mbuftrace.h"
 #include "opt_sb_max.h"
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/systm.h>
 //#include <sys/proc.h>
 //#include <sys/file.h>
 //#include <sys/buf.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
-#include <sys/mbuf.h>
-#include <sys/protosw.h>
-#include <sys/domain.h>
-#include <sys/poll.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/poll.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
 //#include <sys/signalvar.h>
 //#include <sys/kauth.h>
-#include <sys/pool.h>
+#include <special_includes/sys/pool.h>
 //#include <sys/uidinfo.h>
 #include "missing_types.h"
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 #define solocked2(a,b) 1
 /*
  * Primitive routines for operating on sockets and socket buffers.

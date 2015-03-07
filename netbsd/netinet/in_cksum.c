@@ -31,10 +31,10 @@
  *	@(#)in_cksum.c	8.1 (Berkeley) 6/10/93
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in_cksum.c,v 1.22 2008/01/25 21:12:15 joerg Exp $");
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #include <netbsd/netinet/in.h>
 #include "missing_types.h"
 int

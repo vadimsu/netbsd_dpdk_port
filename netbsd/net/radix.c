@@ -35,24 +35,24 @@
  * Routines to build and maintain radix trees for routing lookups.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: radix.c,v 1.44 2011/07/17 20:54:52 joerg Exp $");
 
 #ifndef _NET_RADIX_H_
-#include <sys/param.h>
-#include <sys/queue.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/kmem.h>
 #ifdef	_KERNEL
 #include "opt_inet.h"
 
 //#include <sys/systm.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 #define	M_DONTWAIT M_NOWAIT
-#include <sys/domain.h>
+#include <special_includes/sys/domain.h>
 #else
 #include <stdlib.h>
 #endif
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 #include <netbsd/net/radix.h>
 #endif
 #include <netbsd/lib/libkern/libkern.h>

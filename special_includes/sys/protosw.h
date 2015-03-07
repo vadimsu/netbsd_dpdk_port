@@ -261,7 +261,7 @@ void pfctlinput2(int, const struct sockaddr *, void *);
 /*
  * Wrappers for non-MPSAFE protocols
  */
-#include <sys/systm.h>	/* kernel_lock */
+#include <special_includes/sys/systm.h>	/* kernel_lock */
 
 #define	PR_WRAP_USRREQ(name)				\
 static int						\

@@ -92,24 +92,24 @@
 
 #include "opt_route.h"
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: route.c,v 1.126.2.1 2013/07/29 05:43:13 msaitoh Exp $");
 
-#include <sys/param.h>
-#include <sys/kmem.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/malloc.h>
 //#include <sys/sysctl.h>
 //#include <sys/systm.h>
-#include <sys/callout.h>
+#include <special_includes/sys/callout.h>
 //#include <sys/proc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
 //#include <sys/kernel.h>
-#include <sys/ioctl.h>
-#include <sys/pool.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/pool.h>
 //#include <sys/kauth.h>
 
 #include <netbsd/net/if.h>
@@ -119,7 +119,7 @@ __KERNEL_RCSID(0, "$NetBSD: route.c,v 1.126.2.1 2013/07/29 05:43:13 msaitoh Exp 
 
 #include <netbsd/netinet/in.h>
 #include <netbsd/netinet/in_var.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 #ifdef RTFLUSH_DEBUG
 #define	rtcache_debug() __predict_false(_rtcache_debug)
 #else /* RTFLUSH_DEBUG */

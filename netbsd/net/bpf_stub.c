@@ -26,12 +26,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: bpf_stub.c,v 1.6 2012/01/30 23:31:27 matt Exp $");
 
-#include <sys/param.h>
-#include <sys/kmem.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/mbuf.h>
 
 #include <netbsd/net/bpf.h>
 

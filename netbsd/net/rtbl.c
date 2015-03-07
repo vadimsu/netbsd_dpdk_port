@@ -94,30 +94,30 @@
 #include "opt_route.h"
 #endif /* _KERNEL */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: rtbl.c,v 1.1 2011/03/31 19:40:52 dyoung Exp $");
 
-#include <sys/param.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kmem.h>
 //#include <sys/sysctl.h>
 //#include <sys/systm.h>
-#include <sys/callout.h>
+#include <special_includes/sys/callout.h>
 //#include <sys/proc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
 //#include <sys/kernel.h>
-#include <sys/ioctl.h>
-#include <sys/pool.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/pool.h>
 //#include <sys/kauth.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/if_dl.h>
 #include <netbsd/net/route.h>
 #include <netbsd/net/raw_cb.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 
 static rtbl_t *rt_tables[AF_MAX+1];
 

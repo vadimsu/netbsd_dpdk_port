@@ -56,11 +56,11 @@
 #define	__GNUC_PREREQ__(x, y)	0
 #endif
 
-#include <machine/cdefs.h>
+#include <special_includes/machine/cdefs.h>
 #ifdef __ELF__
-#include <sys/cdefs_elf.h>
+#include <special_includes/sys/cdefs_elf.h>
 #else
-#include <sys/cdefs_aout.h>
+#include <special_includes/sys/cdefs_aout.h>
 #endif
 
 #ifdef __GNUC__

@@ -60,7 +60,7 @@
  *	@(#)in_proto.c	8.2 (Berkeley) 2/9/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in_proto.c,v 1.102 2011/12/19 11:59:56 drochner Exp $");
 
 #include "opt_mrouting.h"
@@ -71,11 +71,11 @@ __KERNEL_RCSID(0, "$NetBSD: in_proto.c,v 1.102 2011/12/19 11:59:56 drochner Exp 
 #include "opt_pim.h"
 #include "opt_gateway.h"
 
-#include <sys/param.h>
-#include <sys/socket.h>
-#include <sys/protosw.h>
-#include <sys/domain.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/mbuf.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/radix.h>

@@ -29,15 +29,15 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in4_cksum.c,v 1.18 2011/04/25 22:04:32 yamt Exp $");
 
-#include <sys/param.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
 #include <netbsd/netinet/in.h>
 #include <netbsd/netinet/in_systm.h>
 #include <netbsd/netinet/ip.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 /*
  * Checksum of the IPv4 pseudo header.
  *

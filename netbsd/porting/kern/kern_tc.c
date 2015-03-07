@@ -38,7 +38,7 @@
  * ---------------------------------------------------------------------------
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 /* __FBSDID("$FreeBSD: src/sys/kern/kern_tc.c,v 1.166 2005/09/19 22:16:31 andre Exp $"); */
 __KERNEL_RCSID(0, "$NetBSD: kern_tc.c,v 1.42 2010/04/13 22:46:10 pooka Exp $");
 
@@ -46,19 +46,19 @@ __KERNEL_RCSID(0, "$NetBSD: kern_tc.c,v 1.42 2010/04/13 22:46:10 pooka Exp $");
 #include "opt_ntp.h"
 #endif
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 //#include <sys/kernel.h>
 //#include <sys/reboot.h>	/* XXX just to get AB_VERBOSE */
 //#include <sys/sysctl.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 //#include <sys/systm.h>
-#include <sys/timepps.h>
-#include <sys/timetc.h>
-#include <sys/timex.h>
+#include <special_includes/sys/timepps.h>
+#include <special_includes/sys/timetc.h>
+#include <special_includes/sys/timex.h>
 //#include <sys/evcnt.h>
 //#include <sys/kauth.h>
 //#include <sys/mutex.h>
-#include <sys/atomic.h>
+#include <special_includes/sys/atomic.h>
 //#include <sys/xcall.h>
 #include "missing_types.h"
 /*
