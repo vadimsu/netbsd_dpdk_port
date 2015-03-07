@@ -269,10 +269,10 @@ struct _m_ext {
 				struct	pkthdr MH_pkthdr;		\
 				union {					\
 					struct	_m_ext MH_ext;		\
-					char MH_databuf[(mhlen)];	\
+					char *MH_databuf;	\
 				} MH_dat;				\
 			} MH;						\
-			char M_databuf[(mlen)];				\
+			char *M_databuf;				\
 		} M_dat;						\
 	}
 #define	m_next		m_hdr.mh_next
@@ -289,7 +289,6 @@ struct _m_ext {
 #define	m_ext		m_ext_ref->m_ext_storage
 #define	m_pktdat	M_dat.MH.MH_dat.MH_databuf
 #define	m_dat		M_dat.M_databuf
-
 /*
  * Dummy mbuf structure to calculate the right values for MLEN/MHLEN, taking
  * into account inter-structure padding.

@@ -65,6 +65,7 @@
 //__KERNEL_RCSID(0, "$NetBSD: uipc_mbuf.c,v 1.145.2.1 2013/02/08 19:18:12 riz Exp $");
 
 #include <sys/param.h>
+#include <sys/types.h>
 //#include <sys/systm.h>
 #include <lib/libkern/libkern.h>
 #define MBTYPES
@@ -76,8 +77,8 @@
 #include <sys/pool.h>
 #include <sys/socket.h>
 //#include <sys/sysctl.h>
-//#include <rte_mbuf.h>
 #include <netbsd/net/if.h>
+#include "rte_wrappers.h"
 #include "missing_types.h"
 pool_cache_t mb_cache;	/* mbuf cache */
 pool_cache_t mcl_cache;	/* mbuf cluster cache */
@@ -172,10 +173,11 @@ void
 mbinit(void)
 {
 
-	CTASSERT(sizeof(struct _m_ext) <= MHLEN);
-	CTASSERT(sizeof(struct mbuf) == MSIZE);
-#if 0
+//	CTASSERT(sizeof(struct _m_ext) <= MHLEN);
+//	CTASSERT(sizeof(struct mbuf) == MSIZE);
+
 //	sysctl_kern_mbuf_setup();
+#if 0
         mb_data = rte_mempool_create("MBUF_DATA",
                                      STACK_MBUFS_COUNT,
                                      MBUF_SIZE, 
@@ -457,14 +459,28 @@ mb_ctor(void *arg, void *object, int flags)
 {
 	struct mbuf *m = object;
         pool_cache_t mb_data_pool = (pool_cache_t)arg;
-//        struct rte_mbuf *data_buf;
-
-  //      data_buf = rte_pktmbuf_alloc(mb_data_pool);
-//	m->m_paddr = data_buf;
-
+        struct rte_mbuf *data_buf;
+#if 0
+        data_buf = allocate_mbuf(mb_data_pool);
+        if(!data_buf) {
+            printf("FATAL %s %d\n",__FILE__,__LINE__);
+            exit(0);
+        }
+#endif
+        memset(&m->m_pkthdr,0,sizeof(m->m_pkthdr));	
+	m->m_len = 0;
+	m->m_next = NULL;
+	m->m_nextpkt = NULL;
+	m->m_flags = 0;
+	m->m_type = MT_FREE;
+	m->m_paddr = data_buf;
+#if 0
+	m->m_dat = get_mbuf_data(data_buf);
+#endif
+	m->m_data = m->m_dat;
 	return (0);
 }
-
+#if 0
 void
 m_reclaim(void *arg, int flags)
 {
@@ -489,7 +505,7 @@ m_reclaim(void *arg, int flags)
 	mbstat.m_drain++;
 	KERNEL_UNLOCK_ONE(NULL);
 }
-
+#endif
 /*
  * Space allocation routines.
  * These are also available as macros
