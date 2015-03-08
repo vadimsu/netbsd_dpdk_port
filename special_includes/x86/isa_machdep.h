@@ -72,8 +72,8 @@
 #ifndef _X86_ISA_MACHDEP_H_			/* XXX */
 #define _X86_ISA_MACHDEP_H_			/* XXX */
 
-#include <sys/bus.h>
-#include <sys/device.h>
+#include <special_includes/sys/bus.h>
+#include <special_includes/sys/device.h>
 #include <dev/isa/isadmavar.h>
 
 /*

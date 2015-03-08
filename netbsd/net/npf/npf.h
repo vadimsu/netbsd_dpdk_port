@@ -36,10 +36,10 @@
 #ifndef _NPF_NET_H_
 #define _NPF_NET_H_
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
-#include <sys/ioctl.h>
+#include <special_includes/sys/ioctl.h>
 #include <prop/proplib.h>
 
 #include <netinet/in_systm.h>

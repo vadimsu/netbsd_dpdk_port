@@ -69,16 +69,16 @@ __KERNEL_RCSID(0, "$NetBSD: raw_ip.c,v 1.113 2011/12/19 11:59:57 drochner Exp $"
 #include "opt_mrouting.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/sysctl.h>
+//#include <special_includes/sys/sysctl.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/errno.h>
-//#include <sys/systm.h>
-//#include <sys/proc.h>
-//#include <sys/kauth.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/proc.h>
+//#include <special_includes/sys/kauth.h>
 #include <special_includes/sys/syslog.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

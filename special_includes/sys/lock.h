@@ -68,8 +68,8 @@
 #ifndef	_SYS_LOCK_H_
 #define	_SYS_LOCK_H_
 
-#include <sys/stdint.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/stdint.h>
+#include <special_includes/sys/mutex.h>
 
 #include <machine/lock.h>
 

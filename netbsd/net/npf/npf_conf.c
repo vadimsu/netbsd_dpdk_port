@@ -47,16 +47,16 @@
  *	necessary writer-side barrier of the passive serialisation.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_conf.c,v 1.2.2.2 2013/02/11 21:49:48 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
-#include <sys/atomic.h>
-#include <sys/kmem.h>
-#include <sys/pserialize.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/atomic.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/pserialize.h>
+#include <special_includes/sys/mutex.h>
 
 #include "npf_impl.h"
 

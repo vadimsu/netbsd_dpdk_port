@@ -39,9 +39,9 @@
 #ifndef _SYS_SEM_H_
 #define _SYS_SEM_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
-#include <sys/ipc.h>
+#include <special_includes/sys/ipc.h>
 
 #ifdef _KERNEL
 struct __sem {
@@ -207,7 +207,7 @@ extern struct semid_ds *sema;		/* semaphore id pool */
 #endif /* _KERNEL */
 
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 #ifndef __LIBC12_SOURCE__

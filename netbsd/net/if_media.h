@@ -81,7 +81,7 @@
 
 #ifdef _KERNEL
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 
 /*
  * Driver callbacks for media status and change requests.

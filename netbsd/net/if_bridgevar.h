@@ -75,8 +75,8 @@
 #ifndef _NET_IF_BRIDGEVAR_H_
 #define _NET_IF_BRIDGEVAR_H_
 
-#include <sys/callout.h>
-#include <sys/queue.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/queue.h>
 
 /*
  * Commands used in the SIOCSDRVSPEC ioctl.  Note the lookup of the

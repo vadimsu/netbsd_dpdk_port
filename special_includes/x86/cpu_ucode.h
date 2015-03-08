@@ -31,8 +31,8 @@
 #ifndef _X86_CPU_UCODE_H_
 #define _X86_CPU_UCODE_H_
 
-#include <sys/cpu.h>
-#include <sys/cpuio.h>
+#include <special_includes/sys/cpu.h>
+#include <special_includes/sys/cpuio.h>
 #include <dev/firmload.h>
 
 int cpu_ucode_amd_get_version(struct cpu_ucode *);

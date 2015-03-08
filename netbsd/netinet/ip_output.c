@@ -105,12 +105,12 @@ __KERNEL_RCSID(0, "$NetBSD: ip_output.c,v 1.213 2012/02/15 16:11:23 drochner Exp
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
-//#include <sys/kauth.h>
+//#include <special_includes/sys/kauth.h>
 #ifdef FAST_IPSEC
 #include <special_includes/sys/domain.h>
 #endif
-//#include <sys/systm.h>
-//#include <sys/proc.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/proc.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

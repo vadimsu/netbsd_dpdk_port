@@ -48,8 +48,8 @@
 #ifndef _SYS_IPC_H_
 #define _SYS_IPC_H_
 
-#include <sys/featuretest.h>
-#include <sys/types.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/types.h>
 
 struct ipc_perm {
 	uid_t		uid;	/* user id */
@@ -130,7 +130,7 @@ int	ipcperm(struct kauth_cred *, struct ipc_perm *, int);
 #endif /* _KERNEL */
 
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 key_t	ftok(const char *, int);

@@ -37,21 +37,21 @@
  * for providing resources (to test) and Professor Madjid Merabti.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip6_flow.c,v 1.19.2.3 2014/06/03 15:34:00 msaitoh Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/time.h>
-#include <sys/kernel.h>
-#include <sys/pool.h>
-#include <sys/sysctl.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/sysctl.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

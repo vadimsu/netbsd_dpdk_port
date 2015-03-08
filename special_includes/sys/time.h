@@ -34,8 +34,8 @@
 #ifndef _SYS_TIME_H_
 #define	_SYS_TIME_H_
 
-#include <sys/featuretest.h>
-#include <sys/types.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/types.h>
 
 /*
  * Structure returned by gettimeofday(2) system call,
@@ -259,16 +259,16 @@ struct	itimerspec {
 #define	TIMER_ABSTIME	0x1	/* absolute timer */
 
 #ifdef _KERNEL
-#include <sys/timevar.h>
+#include <special_includes/sys/timevar.h>
 #else /* !_KERNEL */
 #ifndef _STANDALONE
 #if (_POSIX_C_SOURCE - 0) >= 200112L || \
     (defined(_XOPEN_SOURCE) && defined(_XOPEN_SOURCE_EXTENDED)) || \
     (_XOPEN_SOURCE - 0) >= 500 || defined(_NETBSD_SOURCE)
-#include <sys/select.h>
+#include <special_includes/sys/select.h>
 #endif
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #include <time.h>
 
 __BEGIN_DECLS

@@ -33,23 +33,23 @@
  * NPF main: dynamic load/initialisation and unload routines.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf.c,v 1.7.2.7 2013/02/11 21:49:49 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
-#include <sys/atomic.h>
-#include <sys/conf.h>
-#include <sys/kauth.h>
-#include <sys/kmem.h>
-#include <sys/lwp.h>
-#include <sys/module.h>
-#include <sys/percpu.h>
-#include <sys/rwlock.h>
-#include <sys/socketvar.h>
-#include <sys/sysctl.h>
-#include <sys/uio.h>
+#include <special_includes/sys/atomic.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/lwp.h>
+#include <special_includes/sys/module.h>
+#include <special_includes/sys/percpu.h>
+#include <special_includes/sys/rwlock.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/uio.h>
 
 #include "npf_impl.h"
 

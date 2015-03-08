@@ -26,12 +26,12 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_agrsoftc.c,v 1.4 2009/03/15 21:23:31 cegger Exp $");
 
-#include <sys/param.h>
-#include <sys/callout.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/malloc.h>
 
 #include <net/if.h>
 #include <net/if_ether.h>

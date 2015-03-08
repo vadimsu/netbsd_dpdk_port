@@ -34,19 +34,19 @@
 #define	_SYS_RND_H_
 
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #endif /* !_KERNEL */
 
-#include <sys/types.h>
-#include <sys/sha1.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/sha1.h>
 
 #ifdef _KERNEL
-#include <sys/mutex.h>
-#include <sys/queue.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/queue.h>
 #endif
 
 #ifdef _KERNEL
-#include <sys/rngtest.h>
+#include <special_includes/sys/rngtest.h>
 #endif
 
 #define	RND_DEV_RANDOM	0	/* minor devices for random and kinda random */

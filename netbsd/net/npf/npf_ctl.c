@@ -36,12 +36,12 @@
  * NPF proplib(9) dictionary consumer.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_ctl.c,v 1.12.2.10 2013/09/22 17:29:05 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/conf.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/kmem.h>
 #include <net/bpf.h>
 
 #include <prop/proplib.h>

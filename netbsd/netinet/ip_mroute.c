@@ -92,7 +92,7 @@
  * bandwidth metering and signaling
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip_mroute.c,v 1.122.2.1 2012/10/23 16:19:47 riz Exp $");
 
 #include "opt_inet.h"
@@ -103,18 +103,18 @@ __KERNEL_RCSID(0, "$NetBSD: ip_mroute.c,v 1.122.2.1 2012/10/23 16:19:47 riz Exp 
 #define _PIM_VT 1
 #endif
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/callout.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/protosw.h>
-#include <sys/errno.h>
-#include <sys/time.h>
-#include <sys/kernel.h>
-#include <sys/ioctl.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/syslog.h>
 
 #include <net/if.h>
 #include <net/route.h>

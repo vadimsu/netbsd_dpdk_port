@@ -32,18 +32,18 @@
  * Interface to new debugger.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: db_interface.c,v 1.24 2011/08/11 19:52:52 cherry Exp $");
 
 #include "opt_ddb.h"
 #include "opt_multiprocessor.h"
 
-#include <sys/param.h>
-#include <sys/proc.h>
-#include <sys/reboot.h>
-#include <sys/systm.h>
-#include <sys/atomic.h>
-#include <sys/cpu.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/reboot.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/atomic.h>
+#include <special_includes/sys/cpu.h>
 
 #include <dev/cons.h>
 

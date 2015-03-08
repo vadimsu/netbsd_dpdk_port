@@ -42,7 +42,7 @@
  * a class whose fit-time exceeds the current time.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: altq_hfsc.c,v 1.24 2008/06/18 09:06:27 yamt Exp $");
 
 #ifdef _KERNEL_OPT
@@ -53,19 +53,19 @@ __KERNEL_RCSID(0, "$NetBSD: altq_hfsc.c,v 1.24 2008/06/18 09:06:27 yamt Exp $");
 
 #ifdef ALTQ_HFSC  /* hfsc is enabled by ALTQ_HFSC option in opt_altq.h */
 
-#include <sys/param.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/systm.h>
-#include <sys/errno.h>
-#include <sys/queue.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/queue.h>
 #if 1 /* ALTQ3_COMPAT */
-#include <sys/sockio.h>
-#include <sys/proc.h>
-#include <sys/kernel.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/kernel.h>
 #endif /* ALTQ3_COMPAT */
-#include <sys/kauth.h>
+#include <special_includes/sys/kauth.h>
 
 #include <net/if.h>
 #include <netinet/in.h>

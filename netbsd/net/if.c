@@ -101,18 +101,18 @@
 #include <special_includes/sys/param.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/malloc.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/callout.h>
-//#include <sys/proc.h>
+//#include <special_includes/sys/proc.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/domain.h>
 #include <special_includes/sys/protosw.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/ioctl.h>
-//#include <sys/sysctl.h>
+//#include <special_includes/sys/sysctl.h>
 #include <special_includes/sys/syslog.h>
-//#include <sys/kauth.h>
+//#include <special_includes/sys/kauth.h>
 #include <special_includes/sys/kmem.h>
 
 #include <netbsd/net/if.h>

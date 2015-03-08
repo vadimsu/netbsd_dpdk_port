@@ -46,7 +46,7 @@ typedef struct _AES_GMAC_CTX {
 	int		rounds;
 } AES_GMAC_CTX;
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 void	AES_GMAC_Init(AES_GMAC_CTX *);

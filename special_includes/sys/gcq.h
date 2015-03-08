@@ -18,8 +18,8 @@
 #define _GCQ_H
 
 #ifdef _KERNEL
-#include <sys/types.h>
-#include <sys/null.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/null.h>
 #include <lib/libkern/libkern.h>
 #else
 #include <stdbool.h>

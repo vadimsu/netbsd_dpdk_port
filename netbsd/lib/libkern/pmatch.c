@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #include <lib/libkern/libkern.h>
 /*
  * pmatch():

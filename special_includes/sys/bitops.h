@@ -31,7 +31,7 @@
 #ifndef _SYS_BITOPS_H_
 #define _SYS_BITOPS_H_
 
-#include <sys/stdint.h>
+#include <special_includes/sys/stdint.h>
 
 /*
  * Find First Set functions

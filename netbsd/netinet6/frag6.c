@@ -30,21 +30,21 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: frag6.c,v 1.52.2.2 2012/10/25 17:23:33 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/mbuf.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/errno.h>
-#include <sys/time.h>
-#include <sys/kmem.h>
-#include <sys/kernel.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/syslog.h>
 
 #include <net/if.h>
 #include <net/route.h>

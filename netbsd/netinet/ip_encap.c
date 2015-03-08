@@ -80,7 +80,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_encap.c,v 1.39 2011/07/17 20:54:53 joerg Exp $");
 #include "opt_inet.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/sockio.h>
 #include <special_includes/sys/mbuf.h>

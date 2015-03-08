@@ -31,10 +31,10 @@
 #ifndef _SYS_VERIFIED_EXEC_H_
 #define _SYS_VERIFIED_EXEC_H_
 
-#include <sys/ioccom.h>
+#include <special_includes/sys/ioccom.h>
 
 #if defined(_KERNEL) && !defined(HAVE_NBTOOL_CONFIG_H)
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #include <prop/proplib.h>
 
 struct mount;

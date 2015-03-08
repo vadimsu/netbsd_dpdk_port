@@ -48,12 +48,12 @@
  * [including the GNU Public Licence.]
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: des_ecb.c,v 1.9 2005/12/11 12:20:52 christos Exp $");
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #ifdef _KERNEL
-#include <sys/systm.h>
+#include <special_includes/sys/systm.h>
 #else
 #include <stdio.h>
 #include <string.h>

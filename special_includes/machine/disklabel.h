@@ -50,14 +50,14 @@
 #if HAVE_NBTOOL_CONFIG_H
 #include <nbinclude/sys/bootblock.h>
 #else
-#include <sys/bootblock.h>
+#include <special_includes/sys/bootblock.h>
 #endif /* HAVE_NBTOOL_CONFIG_H */
 
 #ifndef __ASSEMBLER__
 #if HAVE_NBTOOL_CONFIG_H
 #include <nbinclude/sys/dkbad.h>
 #else
-#include <sys/dkbad.h>
+#include <special_includes/sys/dkbad.h>
 #endif /* HAVE_NBTOOL_CONFIG_H */
 struct cpu_disklabel {
 #define __HAVE_DISKLABEL_DKBAD

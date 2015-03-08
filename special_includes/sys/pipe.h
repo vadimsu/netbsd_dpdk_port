@@ -26,7 +26,7 @@
 #ifndef _SYS_PIPE_H_
 #define _SYS_PIPE_H_
 
-#include <sys/selinfo.h>		/* for struct selinfo */
+#include <special_includes/sys/selinfo.h>		/* for struct selinfo */
 
 #include <uvm/uvm_extern.h>
 

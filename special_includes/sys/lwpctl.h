@@ -58,7 +58,7 @@ typedef struct lwpctl {
 
 #if defined(_KERNEL)
 
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 
 #include <uvm/uvm_extern.h>
 

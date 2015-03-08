@@ -32,7 +32,7 @@
 #ifndef _SYS_WAPBL_REPLAY_H
 #define	_SYS_WAPBL_REPLAY_H
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 /* The WAPBL journal layout.
  * 

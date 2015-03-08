@@ -61,27 +61,27 @@
  *	@(#)in.c	8.2 (Berkeley) 11/15/93
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in6.c,v 1.159.4.2 2013/09/18 03:22:11 msaitoh Exp $");
 
 #include "opt_inet.h"
 #include "opt_pfil_hooks.h"
 #include "opt_compat_netbsd.h"
 
-#include <sys/param.h>
-#include <sys/ioctl.h>
-#include <sys/errno.h>
-#include <sys/malloc.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/sockio.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/time.h>
-#include <sys/kernel.h>
-#include <sys/syslog.h>
-#include <sys/kauth.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/cprng.h>
 
 #include <net/if.h>
 #include <net/if_types.h>

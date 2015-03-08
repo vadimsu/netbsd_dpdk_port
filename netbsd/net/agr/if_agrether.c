@@ -26,13 +26,13 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_agrether.c,v 1.9 2011/10/19 01:49:50 dyoung Exp $");
 
-#include <sys/param.h>
-#include <sys/callout.h>
-#include <sys/mbuf.h>
-#include <sys/sockio.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/sockio.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

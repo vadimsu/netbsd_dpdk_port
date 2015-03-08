@@ -121,9 +121,9 @@
 #ifndef _NETINET_TCP_VTW_H
 #define _NETINET_TCP_VTW_H
 
-#include <sys/types.h>
-#include <sys/socket.h>
-//#include <sys/sysctl.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/socket.h>
+//#include <special_includes/sys/sysctl.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
 #include <netbsd/netinet/in.h>

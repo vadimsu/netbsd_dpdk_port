@@ -101,7 +101,7 @@
  * to accomplish, and added that happy little comment.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_ppp.c,v 1.136.8.1 2012/10/31 16:07:46 riz Exp $");
 
 #include "ppp.h"
@@ -115,22 +115,22 @@ __KERNEL_RCSID(0, "$NetBSD: if_ppp.c,v 1.136.8.1 2012/10/31 16:07:46 riz Exp $")
 #endif
 #define PPP_COMPRESS
 
-#include <sys/param.h>
-#include <sys/proc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <sys/kernel.h>
-#include <sys/systm.h>
-#include <sys/time.h>
-#include <sys/malloc.h>
-#include <sys/module.h>
-#include <sys/mutex.h>
-#include <sys/once.h>
-#include <sys/conf.h>
-#include <sys/kauth.h>
-#include <sys/intr.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/module.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/once.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/intr.h>
+#include <special_includes/sys/socketvar.h>
 
 #include <net/if.h>
 #include <net/if_types.h>
@@ -158,7 +158,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_ppp.c,v 1.136.8.1 2012/10/31 16:07:46 riz Exp $")
 #include <net/ppp_defs.h>
 #include <net/if_ppp.h>
 #include <net/if_pppvar.h>
-#include <sys/cpu.h>
+#include <special_includes/sys/cpu.h>
 
 #ifdef PPP_COMPRESS
 #define PACKETPTR	struct mbuf *

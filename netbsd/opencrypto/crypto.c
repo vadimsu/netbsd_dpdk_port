@@ -52,19 +52,19 @@
  * PURPOSE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: crypto.c,v 1.41 2011/06/09 14:41:24 drochner Exp $");
 
-#include <sys/param.h>
-#include <sys/reboot.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/proc.h>
-#include <sys/pool.h>
-#include <sys/kthread.h>
-#include <sys/once.h>
-#include <sys/sysctl.h>
-#include <sys/intr.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/reboot.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/kthread.h>
+#include <special_includes/sys/once.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/intr.h>
 
 #include "opt_ocf.h"
 #include <opencrypto/cryptodev.h>

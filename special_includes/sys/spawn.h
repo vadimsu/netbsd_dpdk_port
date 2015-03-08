@@ -31,11 +31,11 @@
 #ifndef _SYS_SPAWN_H_
 #define _SYS_SPAWN_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <sys/sigtypes.h>
-#include <sys/signal.h>
-#include <sys/sched.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/sigtypes.h>
+#include <special_includes/sys/signal.h>
+#include <special_includes/sys/sched.h>
 
 struct posix_spawnattr {
 	short			sa_flags;

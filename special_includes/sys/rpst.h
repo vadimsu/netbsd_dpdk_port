@@ -30,7 +30,7 @@
 #define	_SYS_RPST_H_
 
 #if defined(_KERNEL) || defined(_STANDALONE)
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #else /* defined(_KERNEL) || defined(_STANDALONE) */
 #include <stdint.h>
 #endif /* defined(_KERNEL) || defined(_STANDALONE) */

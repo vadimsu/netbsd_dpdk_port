@@ -30,27 +30,27 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: nd6.c,v 1.141.2.3 2014/06/03 15:34:00 msaitoh Exp $");
 
 #include "opt_ipsec.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/callout.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/sockio.h>
-#include <sys/time.h>
-#include <sys/kernel.h>
-#include <sys/protosw.h>
-#include <sys/errno.h>
-#include <sys/ioctl.h>
-#include <sys/syslog.h>
-#include <sys/queue.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/cprng.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

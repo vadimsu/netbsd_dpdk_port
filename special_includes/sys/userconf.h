@@ -29,7 +29,7 @@
 #ifndef _SYS_USERCONF_H_
 #define _SYS_USERCONF_H_
 
-#include <sys/cpu.h>
+#include <special_includes/sys/cpu.h>
 
 void userconf_bootinfo(void);
 void userconf_init(void);

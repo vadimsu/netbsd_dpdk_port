@@ -31,8 +31,8 @@
 
 #ifdef _KERNEL
 
-#include <sys/types.h>
-#include <sys/device_if.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/device_if.h>
 
 typedef enum {
 	PMFE_DISPLAY_ON,

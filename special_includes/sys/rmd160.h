@@ -27,8 +27,8 @@
 #ifndef  _RMD160_H
 #define  _RMD160_H
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/types.h>
 
 #define RMD160_DIGEST_LENGTH		20
 #define RMD160_DIGEST_STRING_LENGTH	41

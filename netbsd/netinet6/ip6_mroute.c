@@ -116,26 +116,26 @@
  * MROUTING Revision: 3.5.1.2 + PIM-SMv2 (pimd) Support
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip6_mroute.c,v 1.103 2011/12/31 20:41:59 christos Exp $");
 
 #include "opt_inet.h"
 #include "opt_mrouting.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/callout.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/sockio.h>
-#include <sys/protosw.h>
-#include <sys/errno.h>
-#include <sys/time.h>
-#include <sys/kernel.h>
-#include <sys/ioctl.h>
-#include <sys/sysctl.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/syslog.h>
 
 #include <net/if.h>
 #include <net/route.h>

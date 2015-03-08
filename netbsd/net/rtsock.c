@@ -70,16 +70,16 @@ __KERNEL_RCSID(0, "$NetBSD: rtsock.c,v 1.140 2012/01/30 20:02:55 christos Exp $"
 #endif
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
-//#include <sys/proc.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/proc.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/domain.h>
 #include <special_includes/sys/protosw.h>
-//#include <sys/sysctl.h>
-//#include <sys/kauth.h>
-//#include <sys/intr.h>
+//#include <special_includes/sys/sysctl.h>
+//#include <special_includes/sys/kauth.h>
+//#include <special_includes/sys/intr.h>
 #ifdef RTSOCK_DEBUG
 #include <netbsd/netinet/in.h>
 #endif /* RTSOCK_DEBUG */

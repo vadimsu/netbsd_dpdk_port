@@ -37,12 +37,12 @@
  * John Skodon <skodonj@webquill.com>
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: rijndael-api-fst.c,v 1.24 2011/05/14 16:46:55 jmmv Exp $");
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #ifdef _KERNEL
-#include <sys/systm.h>
+#include <special_includes/sys/systm.h>
 #else
 #include <stdlib.h>
 #include <string.h>

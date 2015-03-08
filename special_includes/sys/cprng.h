@@ -31,13 +31,13 @@
 #ifndef _CPRNG_H
 #define _CPRNG_H
 #if 0
-#include <sys/types.h>
-#include <sys/fcntl.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/fcntl.h>
 #include <lib/libkern/libkern.h>
-#include <sys/rnd.h>
+#include <special_includes/sys/rnd.h>
 #include <crypto/nist_ctr_drbg/nist_ctr_drbg.h>
-#include <sys/condvar.h>
-#include <sys/select.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/select.h>
 
 /*
  * NIST SP800-90 says 2^19 bytes per request for the CTR_DRBG.

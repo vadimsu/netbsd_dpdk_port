@@ -37,7 +37,7 @@
 #ifndef _NET_IF_GIF_H_
 #define _NET_IF_GIF_H_
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 
 #ifdef _KERNEL_OPT
 #include "opt_inet.h"

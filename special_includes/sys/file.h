@@ -63,13 +63,13 @@
 #ifndef _SYS_FILE_H_
 #define	_SYS_FILE_H_
 
-#include <sys/fcntl.h>
-#include <sys/unistd.h>
+#include <special_includes/sys/fcntl.h>
+#include <special_includes/sys/unistd.h>
 
 #ifdef _KERNEL
-#include <sys/queue.h>
-#include <sys/mutex.h>
-#include <sys/condvar.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/condvar.h>
 
 struct proc;
 struct lwp;

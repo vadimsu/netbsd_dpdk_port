@@ -77,7 +77,7 @@
 #ifndef _NET_IF_PPPVAR_H_
 #define _NET_IF_PPPVAR_H_
 
-#include <sys/callout.h>
+#include <special_includes/sys/callout.h>
 
 /*
  * Supported network protocols.  These values are used for

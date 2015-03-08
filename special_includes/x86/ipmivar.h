@@ -27,8 +27,8 @@
  *
  */
 
-#include <sys/mutex.h>
-#include <sys/condvar.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/condvar.h>
 
 #include <dev/sysmon/sysmonvar.h>
 

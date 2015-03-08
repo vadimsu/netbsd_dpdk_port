@@ -32,9 +32,9 @@
 #if !defined(_SYS_CPUIO_H_)
 #define	_SYS_CPUIO_H_
 
-#include <sys/types.h>
-#include <sys/time.h>
-#include <sys/ioccom.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/ioccom.h>
 
 #ifndef _KERNEL
 #include <limits.h>

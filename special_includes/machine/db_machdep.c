@@ -25,12 +25,12 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  */
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: db_machdep.c,v 1.1.16.2 2012/10/17 22:34:15 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
 
 #include <machine/frame.h>
 #include <machine/trap.h>

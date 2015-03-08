@@ -23,15 +23,15 @@
  * PURPOSE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: cryptosoft.c,v 1.39 2011/11/28 08:05:06 tls Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/sysctl.h>
-#include <sys/errno.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/errno.h>
 
 #include "opt_ocf.h"
 #include <opencrypto/cryptodev.h>

@@ -14,12 +14,12 @@
  * 29 May 1998
 */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: skipjack.c,v 1.3 2005/12/11 12:20:53 christos Exp $");
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #include <crypto/skipjack/skipjack.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 #include <opencrypto/cryptodev.h>
 
 static const u_int8_t ftable[0x100] =

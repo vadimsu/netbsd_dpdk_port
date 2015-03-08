@@ -39,8 +39,8 @@
 #ifndef _SYS_SA_H_
 #define _SYS_SA_H_
 
-#include <sys/satypes.h>
-#include <sys/ucontext.h>
+#include <special_includes/sys/satypes.h>
+#include <special_includes/sys/ucontext.h>
 
 struct sa_t {
 	ucontext_t *sa_context;

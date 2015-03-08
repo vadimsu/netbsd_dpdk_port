@@ -50,8 +50,8 @@
 #endif
 
 #if !defined(_KERNEL)
-#include <sys/types.h>
-#include <sys/inttypes.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/inttypes.h>
 #endif
 
 typedef enum krw_t {

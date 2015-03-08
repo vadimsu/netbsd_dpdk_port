@@ -59,12 +59,12 @@
  * Basic interface to BIOS32 services.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: bios32.c,v 1.19 2009/11/07 07:27:40 cegger Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/device.h> 
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/device.h> 
 
 #include <dev/isa/isareg.h>
 #include <machine/isa_machdep.h>

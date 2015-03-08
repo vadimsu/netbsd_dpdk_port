@@ -30,7 +30,7 @@
 #include "opt_inet.h"
 #include "opt_mbuftrace.h"
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip_carp.c,v 1.47.4.3 2014/06/03 15:34:00 msaitoh Exp $");
 
 /*
@@ -40,25 +40,25 @@ __KERNEL_RCSID(0, "$NetBSD: ip_carp.c,v 1.47.4.3 2014/06/03 15:34:00 msaitoh Exp
  *
  */
 
-#include <sys/param.h>
-#include <sys/proc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/callout.h>
-#include <sys/ioctl.h>
-#include <sys/errno.h>
-#include <sys/device.h>
-#include <sys/time.h>
-#include <sys/kernel.h>
-#include <sys/kauth.h>
-#include <sys/sysctl.h>
-#include <sys/ucred.h>
-#include <sys/syslog.h>
-#include <sys/acct.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/device.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/ucred.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/acct.h>
+#include <special_includes/sys/cprng.h>
 
-#include <sys/cpu.h>
+#include <special_includes/sys/cpu.h>
 
 #include <net/if.h>
 #include <net/pfil.h>
@@ -96,7 +96,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_carp.c,v 1.47.4.3 2014/06/03 15:34:00 msaitoh Exp
 
 #include <net/bpf.h>
 
-#include <sys/sha1.h>
+#include <special_includes/sys/sha1.h>
 
 #include <netinet/ip_carp.h>
 

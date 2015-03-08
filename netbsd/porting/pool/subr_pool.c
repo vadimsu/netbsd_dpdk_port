@@ -30,14 +30,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <inttypes.h>
-#include <special_includes/sys/types.h>
-#include <string.h>
-#include <special_includes/sys/queue.h>
-#include <stdarg.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <stdint.h>
+//#include <inttypes.h>
+//#include <special_includes/sys/types.h>
+//#include <string.h>
+//#include <special_includes/sys/queue.h>
+//#include <stdarg.h>
 
 #include <rte_common.h>
 #include <rte_byteorder.h>

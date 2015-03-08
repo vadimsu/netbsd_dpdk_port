@@ -38,11 +38,11 @@
  * on rewrites (e.g. by translation routines).
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_inet.c,v 1.10.4.10 2013/09/13 04:12:54 msaitoh Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
 #include <net/pfil.h>
 #include <net/if.h>

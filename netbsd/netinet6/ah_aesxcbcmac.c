@@ -30,15 +30,15 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ah_aesxcbcmac.c,v 1.7 2009/04/18 14:58:05 tsutsui Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/socket.h>
-#include <sys/queue.h>
-#include <sys/syslog.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/mbuf.h>
 
 #include <net/if.h>
 #include <net/route.h>

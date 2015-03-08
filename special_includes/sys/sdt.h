@@ -35,7 +35,7 @@
 #define _SDT_H_
 
 /* should be stdint.h, but this works transparently for both user and kernel */
-#include <sys/stdint.h>
+#include <special_includes/sys/stdint.h>
 
 #if defined(_KERNEL_OPT)
 #include "opt_dtrace.h"

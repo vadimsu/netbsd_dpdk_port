@@ -49,17 +49,17 @@
 __KERNEL_RCSID(0, "$NetBSD: ip_reass.c,v 1.8 2011/06/27 00:45:50 enami Exp $");
 
 #include <special_includes/sys/param.h>
-//#include <sys/types.h>
+//#include <special_includes/sys/types.h>
 
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/mbuf.h>
-//#include <sys/mutex.h>
+//#include <special_includes/sys/mutex.h>
 #include <special_includes/sys/domain.h>
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/pool.h>
 #include <special_includes/sys/queue.h>
-//#include <sys/sysctl.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/sysctl.h>
+//#include <special_includes/sys/systm.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

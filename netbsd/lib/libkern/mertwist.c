@@ -29,9 +29,9 @@
  */
 
 #if defined(_KERNEL) || defined(_STANDALONE)
-#include <sys/param.h>
-#include <sys/types.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/systm.h>
 
 #include <lib/libkern/libkern.h>
 #else

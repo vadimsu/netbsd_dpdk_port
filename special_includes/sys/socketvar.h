@@ -66,15 +66,15 @@
 #include <special_includes/sys/select.h>
 #include <special_includes/sys/selinfo.h>		/* for struct selinfo */
 #include <special_includes/sys/queue.h>
-//#include <sys/mutex.h>
-//#include <sys/condvar.h>
+//#include <special_includes/sys/mutex.h>
+//#include <special_includes/sys/condvar.h>
 
 #if !defined(_KERNEL)
 struct uio;
 struct lwp;
 struct uidinfo;
 #else
-//#include <sys/uidinfo.h>
+//#include <special_includes/sys/uidinfo.h>
 #endif
 
 TAILQ_HEAD(soqhead, socket);

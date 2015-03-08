@@ -29,18 +29,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: netbsd32_syscall.c,v 1.31 2010/12/20 00:25:24 matt Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/signal.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/signal.h>
 /* XXX this file ought to include the netbsd32 version of these 2 headers */
-#include <sys/syscall.h>
-#include <sys/syscallvar.h>
-#include <sys/syscallargs.h>
-#include <sys/syscall_stats.h>
+#include <special_includes/sys/syscall.h>
+#include <special_includes/sys/syscallvar.h>
+#include <special_includes/sys/syscallargs.h>
+#include <special_includes/sys/syscall_stats.h>
 
 #include <machine/cpu.h>
 #include <machine/psl.h>

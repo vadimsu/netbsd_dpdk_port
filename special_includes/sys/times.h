@@ -54,7 +54,7 @@ struct tms {
 };
 
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 #ifndef __LIBC12_SOURCE__

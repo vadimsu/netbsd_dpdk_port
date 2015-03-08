@@ -58,7 +58,7 @@
  * JoBS queue
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: altq_jobs.c,v 1.6.14.1 2014/11/03 15:08:44 msaitoh Exp $");
 
 #ifdef _KERNEL_OPT
@@ -68,20 +68,20 @@ __KERNEL_RCSID(0, "$NetBSD: altq_jobs.c,v 1.6.14.1 2014/11/03 15:08:44 msaitoh E
 
 #ifdef ALTQ_JOBS  /* jobs is enabled by ALTQ_JOBS option in opt_altq.h */
 
-#include <sys/param.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/errno.h>
-#include <sys/kernel.h>
-#include <sys/queue.h>
-#include <sys/kauth.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/kauth.h>
 
 #ifdef __FreeBSD__
-#include <sys/limits.h>
+#include <special_includes/sys/limits.h>
 #endif
 
 #include <net/if.h>

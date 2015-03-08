@@ -3,8 +3,8 @@
 #ifndef _SYS_ATAIO_H_
 #define _SYS_ATAIO_H_
 
-#include <sys/types.h>
-#include <sys/ioctl.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/ioctl.h>
 
 typedef struct	atareq {
 	u_long	flags;		/* info about the request status and type */

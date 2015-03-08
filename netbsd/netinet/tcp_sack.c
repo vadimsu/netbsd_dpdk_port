@@ -111,7 +111,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_sack.c,v 1.28 2012/01/30 23:31:27 matt Exp $");
 #include "opt_ddb.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/protosw.h>
@@ -121,7 +121,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_sack.c,v 1.28 2012/01/30 23:31:27 matt Exp $");
 #include <special_includes/sys/syslog.h>
 #include <special_includes/sys/pool.h>
 #include <special_includes/sys/domain.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

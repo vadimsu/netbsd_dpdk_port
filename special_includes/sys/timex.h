@@ -67,7 +67,7 @@
  *	ntp_gettime - NTP user application interface
  *
  * SYNOPSIS
- *	#include <sys/timex.h>
+ *	#include <special_includes/sys/timex.h>
  *
  *	int ntp_gettime(struct ntptimeval *ntv);
  *
@@ -82,8 +82,8 @@
  *	ntp_adjtime - NTP daemon application interface
  *
  * SYNOPSIS
- *	#include <sys/timex.h>
- *	#include <sys/syscall.h>
+ *	#include <special_includes/sys/timex.h>
+ *	#include <special_includes/sys/syscall.h>
  *
  *	int syscall(SYS_ntp_adjtime, tptr);
  *	int SYS_ntp_adjtime;
@@ -100,7 +100,7 @@
 #define _SYS_TIMEX_H_ 1
 #define NTP_API		4	/* NTP API version */
 
-//#include <sys/syscall.h>
+//#include <special_includes/sys/syscall.h>
 
 /*
  * The following defines establish the performance envelope of the
@@ -238,7 +238,7 @@ struct timex {
 };
 
 #ifdef _KERNEL
-//#include <sys/mutex.h>
+//#include <special_includes/sys/mutex.h>
 
 void	ntp_update_second(int64_t *adjustment, time_t *newsec);
 void	ntp_adjtime1(struct timex *);

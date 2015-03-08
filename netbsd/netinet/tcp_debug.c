@@ -60,7 +60,7 @@
  *	@(#)tcp_debug.c	8.1 (Berkeley) 6/10/93
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: tcp_debug.c,v 1.28 2009/04/18 14:58:05 tsutsui Exp $");
 
 #include "opt_inet.h"
@@ -72,13 +72,13 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_debug.c,v 1.28 2009/04/18 14:58:05 tsutsui Exp $
 #define	TCPTIMERS
 #define	TANAMES
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/protosw.h>
-#include <sys/errno.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/errno.h>
 
 #include <net/route.h>
 #include <net/if.h>

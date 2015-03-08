@@ -1,6 +1,6 @@
 /* $NetBSD: aesxcbcmac.h,v 1.1 2011/05/24 19:10:09 drochner Exp $ */
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #define AES_BLOCKSIZE   16
 

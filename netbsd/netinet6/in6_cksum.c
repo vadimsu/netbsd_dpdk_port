@@ -29,11 +29,11 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in6_cksum.c,v 1.28 2011/04/25 22:05:05 yamt Exp $");
 
-#include <sys/param.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
 #include <netinet/in.h>
 #include <netinet/ip6.h>
 

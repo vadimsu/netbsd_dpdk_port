@@ -37,8 +37,8 @@
 
 #include "assym.h"
 
-#include <sys/errno.h>
-#include <sys/syscall.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/syscall.h>
 
 #include <machine/asm.h>
 #include <machine/frameasm.h>

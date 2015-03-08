@@ -3,7 +3,7 @@
 #ifndef _MACHINE_NETBSD32_H_
 #define _MACHINE_NETBSD32_H_
 
-#include <sys/ucontext.h>
+#include <special_includes/sys/ucontext.h>
 #include <compat/sys/ucontext.h>
 #include <compat/sys/siginfo.h>
 

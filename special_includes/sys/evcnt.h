@@ -75,8 +75,8 @@
 #ifndef _SYS_EVCNT_H_
 #define	_SYS_EVCNT_H_
 
-#include <sys/queue.h>
-#include <sys/stdint.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/stdint.h>
 
 /*
  * event counters

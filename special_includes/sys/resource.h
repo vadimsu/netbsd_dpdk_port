@@ -34,8 +34,8 @@
 #ifndef _SYS_RESOURCE_H_
 #define	_SYS_RESOURCE_H_
 
-#include <sys/featuretest.h>
-#include <sys/time.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/time.h>
 
 /*
  * Process priority specifications to get/setpriority.
@@ -125,7 +125,7 @@ extern struct loadavg averunnable;
 struct pcred;
 int	dosetrlimit(struct lwp *, struct proc *, int, struct rlimit *);
 #else
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int	getpriority(int, id_t);

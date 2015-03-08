@@ -38,7 +38,7 @@
 #error "not supposed to be exposed to userland"
 #endif
 
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 
 /*
  * Kernel per-process accounting / statistics

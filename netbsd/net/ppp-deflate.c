@@ -38,13 +38,13 @@
  * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ppp-deflate.c,v 1.20 2008/12/17 20:51:37 cegger Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/mbuf.h>
-#include <sys/module.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/module.h>
 #include <net/if.h>
 #include <net/ppp_defs.h>
 #include <net/if_ppp.h>

@@ -39,20 +39,20 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_domain.c,v 1.87 2011/10/27 21:10:55 seanb Exp $
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/domain.h>
-//#include <sys/mbuf.h>
+//#include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/time.h>
-//#include <sys/kernel.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/kernel.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/callout.h>
 #include <special_includes/sys/queue.h>
-//#include <sys/proc.h>
-//#include <sys/sysctl.h>
-//#include <sys/un.h>
-//#include <sys/unpcb.h>
-//#include <sys/file.h>
-//#include <sys/filedesc.h>
-//#include <sys/kauth.h>
+//#include <special_includes/sys/proc.h>
+//#include <special_includes/sys/sysctl.h>
+//#include <special_includes/sys/un.h>
+//#include <special_includes/sys/unpcb.h>
+//#include <special_includes/sys/file.h>
+//#include <special_includes/sys/filedesc.h>
+//#include <special_includes/sys/kauth.h>
 #include <special_includes/sys/syslog.h>
 MALLOC_DECLARE(M_SOCKADDR);
 

@@ -35,8 +35,8 @@
 #ifndef _SYS_CLOCKCTL_H_
 #define _SYS_CLOCKCTL_H_
 
-#include <sys/time.h>
-#include <sys/timex.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/timex.h>
 
 struct clockctl_settimeofday {
 	const struct timeval *tv;

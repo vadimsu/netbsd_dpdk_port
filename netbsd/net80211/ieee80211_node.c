@@ -31,7 +31,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #ifdef __FreeBSD__
 __FBSDID("$FreeBSD: src/sys/net80211/ieee80211_node.c,v 1.65 2005/08/13 17:50:21 sam Exp $");
 #endif
@@ -41,18 +41,18 @@ __KERNEL_RCSID(0, "$NetBSD: ieee80211_node.c,v 1.63 2009/01/03 03:43:23 yamt Exp
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/systm.h> 
-#include <sys/mbuf.h>   
-#include <sys/malloc.h>
-#include <sys/kernel.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h> 
+#include <special_includes/sys/mbuf.h>   
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/kernel.h>
 
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/endian.h>
-#include <sys/errno.h>
-#include <sys/proc.h>
-#include <sys/sysctl.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/endian.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/sysctl.h>
 
 #include <net/if.h>
 #include <net/if_media.h>

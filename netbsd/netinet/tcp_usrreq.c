@@ -104,8 +104,8 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_usrreq.c,v 1.162.2.3 2013/12/14 19:29:29 bouyer 
 
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <special_includes/sys/mbuf.h>
@@ -114,11 +114,11 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_usrreq.c,v 1.162.2.3 2013/12/14 19:29:29 bouyer 
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/errno.h>
 #include <special_includes/sys/stat.h>
-//#include <sys/proc.h>
+//#include <special_includes/sys/proc.h>
 #include <special_includes/sys/domain.h>
-//#include <sys/sysctl.h>
-//#include <sys/kauth.h>
-//#include <sys/uidinfo.h>
+//#include <special_includes/sys/sysctl.h>
+//#include <special_includes/sys/kauth.h>
+//#include <special_includes/sys/uidinfo.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

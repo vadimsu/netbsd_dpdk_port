@@ -37,8 +37,8 @@
 #endif
 
 #define	ELFSIZE	ARCH_ELFSIZE
-#include <sys/exec_elf.h>
-#include <sys/queue.h>
+#include <special_includes/sys/exec_elf.h>
+#include <special_includes/sys/queue.h>
 
 struct ksyms_symtab {
 	TAILQ_ENTRY(ksyms_symtab) sd_queue; /* All active tables */

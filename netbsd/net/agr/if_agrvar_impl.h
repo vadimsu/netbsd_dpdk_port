@@ -33,8 +33,8 @@
  * implementaion details for agr(4) driver.  (contrast to if_agrvar.h)
  */
 
-#include <sys/mutex.h>
-#include <sys/queue.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/queue.h>
 
 struct agr_port;
 struct agr_softc;

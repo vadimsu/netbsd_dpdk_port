@@ -72,29 +72,29 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket.c,v 1.209.2.4 2013/11/25 08:26:33 bouyer
 #include "opt_somaxkva.h"
 #include "opt_multiprocessor.h"	/* XXX */
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #include <netbsd/lib/libkern/libkern.h>
-//#include <sys/systm.h>
-//#include <sys/proc.h>
-//#include <sys/file.h>
-//#include <sys/filedesc.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/proc.h>
+//#include <special_includes/sys/file.h>
+//#include <special_includes/sys/filedesc.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/kmem.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/domain.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
-//#include <sys/signalvar.h>
-//#include <sys/resourcevar.h>
-//#include <sys/uidinfo.h>
-//#include <sys/event.h>
+//#include <special_includes/sys/signalvar.h>
+//#include <special_includes/sys/resourcevar.h>
+//#include <special_includes/sys/uidinfo.h>
+//#include <special_includes/sys/event.h>
 #include <special_includes/sys/poll.h>
-//#include <sys/kauth.h>
-//#include <sys/mutex.h>
-//#include <sys/condvar.h>
-//#include <sys/kthread.h>
+//#include <special_includes/sys/kauth.h>
+//#include <special_includes/sys/mutex.h>
+//#include <special_includes/sys/condvar.h>
+//#include <special_includes/sys/kthread.h>
 
 #ifdef COMPAT_50
 #include <compat/sys/time.h>
@@ -115,7 +115,7 @@ int		somaxconn = SOMAXCONN;
 //kmutex_t	*softnet_lock;
 
 #ifdef SOSEND_COUNTERS
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 
 static struct evcnt sosend_loan_big = EVCNT_INITIALIZER(EVCNT_TYPE_MISC,
     NULL, "sosend", "loan big");

@@ -66,7 +66,7 @@
  *
  */
 
-#include <sys/userret.h>
+#include <special_includes/sys/userret.h>
 
 static __inline void userret(struct lwp *);
 

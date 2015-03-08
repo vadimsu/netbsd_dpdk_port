@@ -39,8 +39,8 @@
 #ifndef _SYS_FLOAT_IEEE754_H_
 #define _SYS_FLOAT_IEEE754_H_
 
-#include <sys/cdefs.h>
-#include <sys/featuretest.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/featuretest.h>
 
 /*
  * feature macro to test for IEEE754

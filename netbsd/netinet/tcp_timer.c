@@ -99,14 +99,14 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_timer.c,v 1.86 2011/08/31 18:31:03 plunky Exp $"
 #include "opt_tcp_debug.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/errno.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

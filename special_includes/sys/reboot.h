@@ -56,7 +56,7 @@
 
 /*
  * Extra autoboot flags (passed by boot prog to kernel). See also
- * macros bootverbose, bootquiet in <sys/systm.h>.
+ * macros bootverbose, bootquiet in <special_includes/sys/systm.h>.
  */
 #define	AB_NORMAL	0x00000000	/* boot normally (default) */
 #define	AB_QUIET	0x00010000 	/* boot quietly */

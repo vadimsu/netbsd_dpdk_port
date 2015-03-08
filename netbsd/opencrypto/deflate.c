@@ -34,13 +34,13 @@
  * functions using the zlib library (see net/zlib.{c,h})
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: deflate.c,v 1.21 2011/07/03 01:01:06 mrg Exp $");
 
-#include <sys/types.h>
-#include <sys/malloc.h>
-#include <sys/param.h>
-#include <sys/systm.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
 #include <net/zlib.h>
 
 #include <opencrypto/cryptodev.h>

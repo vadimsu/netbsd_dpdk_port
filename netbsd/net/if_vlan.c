@@ -77,20 +77,20 @@
  *	  interface changes MTU.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_vlan.c,v 1.69.8.2 2014/11/03 20:38:09 msaitoh Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/kernel.h>
-#include <sys/mbuf.h>
-#include <sys/queue.h>
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/kauth.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/kauth.h>
 
 #include <net/bpf.h>
 #include <net/if.h>

@@ -104,11 +104,11 @@ __KERNEL_RCSID(0, "$NetBSD: in.c,v 1.142.2.1 2012/06/13 19:12:23 riz Exp $");
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
-//#include <sys/sysctl.h>
-//#include <sys/systm.h>
-//#include <sys/proc.h>
+//#include <special_includes/sys/sysctl.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/proc.h>
 #include <special_includes/sys/syslog.h>
-//#include <sys/kauth.h>
+//#include <special_includes/sys/kauth.h>
 
 #include <special_includes/sys/cprng.h>
 #include <special_includes/sys/pool.h>

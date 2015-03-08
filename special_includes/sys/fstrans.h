@@ -36,7 +36,7 @@
 #ifndef _SYS_FSTRANS_H_
 #define	_SYS_FSTRANS_H_
 
-#include <sys/mount.h>
+#include <special_includes/sys/mount.h>
 
 #define SUSPEND_SUSPEND	0x0001		/* VFS_SUSPENDCTL: suspend */
 #define SUSPEND_RESUME	0x0002		/* VFS_SUSPENDCTL: resume */

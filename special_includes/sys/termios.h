@@ -34,8 +34,8 @@
 #ifndef _SYS_TERMIOS_H_
 #define _SYS_TERMIOS_H_
 
-#include <sys/ansi.h>
-#include <sys/featuretest.h>
+#include <special_includes/sys/ansi.h>
+#include <special_includes/sys/featuretest.h>
 
 /*
  * Special Control Characters
@@ -258,7 +258,7 @@ typedef	__pid_t		pid_t;
 #define	pid_t		__pid_t
 #endif
 #endif /* _XOPEN_SOURCE || _NETBSD_SOURCE */
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 speed_t	cfgetispeed(const struct termios *);
@@ -289,9 +289,9 @@ __END_DECLS
 /*
  * Include tty ioctl's that aren't just for backwards compatibility
  * with the old tty driver.  These ioctl definitions were previously
- * in <sys/ioctl.h>.
+ * in <special_includes/sys/ioctl.h>.
  */
-#include <sys/ttycom.h>
+#include <special_includes/sys/ttycom.h>
 #endif
 
 /*
@@ -300,5 +300,5 @@ __END_DECLS
 #endif /* !_SYS_TERMIOS_H_ */
 
 #if defined(_NETBSD_SOURCE)
-#include <sys/ttydefaults.h>
+#include <special_includes/sys/ttydefaults.h>
 #endif

@@ -64,7 +64,7 @@
 #ifndef _NETINET_IN_VAR_H_
 #define _NETINET_IN_VAR_H_
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 
 /*
  * Interface address, Internet version.  One of these structures

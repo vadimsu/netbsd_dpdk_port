@@ -99,23 +99,23 @@
  * XXXfvdl update copyright notice. this started out as a stripped isa/npx.c
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: fpu.c,v 1.38 2011/08/11 18:36:14 cherry Exp $");
 
 #include "opt_multiprocessor.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/conf.h>
-#include <sys/cpu.h>
-#include <sys/file.h>
-#include <sys/proc.h>
-#include <sys/ioctl.h>
-#include <sys/device.h>
-#include <sys/vmmeter.h>
-#include <sys/kernel.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/cpu.h>
+#include <special_includes/sys/file.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/device.h>
+#include <special_includes/sys/vmmeter.h>
+#include <special_includes/sys/kernel.h>
 
-#include <sys/bus.h>
+#include <special_includes/sys/bus.h>
 #include <machine/cpu.h>
 #include <machine/intr.h>
 #include <machine/cpufunc.h>

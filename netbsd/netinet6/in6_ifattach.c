@@ -30,20 +30,20 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in6_ifattach.c,v 1.87 2011/12/31 20:41:59 christos Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kmem.h>
-#include <sys/malloc.h>
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/kernel.h>
-#include <sys/syslog.h>
-#include <sys/md5.h>
-#include <sys/socketvar.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/md5.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/cprng.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

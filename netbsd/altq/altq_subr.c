@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: altq_subr.c,v 1.28 2009/01/04 18:41:36 pooka Exp $");
 
 #ifdef _KERNEL_OPT
@@ -36,18 +36,18 @@ __KERNEL_RCSID(0, "$NetBSD: altq_subr.c,v 1.28 2009/01/04 18:41:36 pooka Exp $")
 #include "pf.h"
 #endif
 
-#include <sys/param.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/kernel.h>
-#include <sys/errno.h>
-#include <sys/syslog.h>
-#include <sys/sysctl.h>
-#include <sys/queue.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/queue.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

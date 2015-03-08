@@ -30,8 +30,8 @@
 #ifndef _HAVE_SYS_VIDEOIO_H
 #define _HAVE_SYS_VIDEOIO_H
 
-#include <sys/types.h>
-#include <sys/time.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/time.h>
 #ifdef _KERNEL
 #include <compat/sys/time.h>
 #endif

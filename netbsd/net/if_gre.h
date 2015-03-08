@@ -38,16 +38,16 @@
 #ifndef _NET_IF_GRE_H_
 #define _NET_IF_GRE_H_
 
-//#include <sys/evcnt.h>
-#include <sys/queue.h>
-//#include <sys/mutex.h>
-//#include <sys/condvar.h>
-#include <sys/malloc.h>
-//#include <sys/mallocvar.h>
+//#include <special_includes/sys/evcnt.h>
+#include <special_includes/sys/queue.h>
+//#include <special_includes/sys/mutex.h>
+//#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/malloc.h>
+//#include <special_includes/sys/mallocvar.h>
 
 #ifdef _KERNEL
 
-//#include <sys/pcq.h>
+//#include <special_includes/sys/pcq.h>
 
 struct gre_soparm {
 	struct socket		*sp_so;

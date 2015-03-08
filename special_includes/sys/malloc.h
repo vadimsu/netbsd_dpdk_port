@@ -51,7 +51,7 @@
 #define	M_ZERO		0x0002	/* zero the allocation */
 #define	M_CANFAIL	0x0004	/* can fail if requested memory can't ever
 				 * be allocated */
-#include <sys/mallocvar.h>
+#include <special_includes/sys/mallocvar.h>
 /*
  * The following are standard, built-in malloc types that are
  * not specific to any one subsystem.

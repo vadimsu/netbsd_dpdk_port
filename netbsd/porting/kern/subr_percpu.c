@@ -34,14 +34,14 @@
 __KERNEL_RCSID(0, "$NetBSD: subr_percpu.c,v 1.16 2012/01/27 19:48:40 para Exp $");
 
 #include <special_includes/sys/param.h>
-//#include <sys/cpu.h>
+//#include <special_includes/sys/cpu.h>
 #include <special_includes/sys/kmem.h>
-//#include <sys/kernel.h>
-//#include <sys/mutex.h>
+//#include <special_includes/sys/kernel.h>
+//#include <special_includes/sys/mutex.h>
 #include <special_includes/sys/percpu.h>
-//#include <sys/rwlock.h>
-//#include <sys/vmem.h>
-//#include <sys/xcall.h>
+//#include <special_includes/sys/rwlock.h>
+//#include <special_includes/sys/vmem.h>
+//#include <special_includes/sys/xcall.h>
 
 #define	PERCPU_QUANTUM_SIZE	(ALIGNBYTES + 1)
 #define	PERCPU_QCACHE_MAX	0

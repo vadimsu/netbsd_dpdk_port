@@ -31,7 +31,7 @@
  *	@(#)ufs_subr.c	7.13 (Berkeley) 6/28/90
  */
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #include <lib/libkern/libkern.h>
 
 int

@@ -33,11 +33,11 @@
  * NPF complex instructions.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_instr.c,v 1.9.2.8 2013/11/17 19:21:07 bouyer Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
 #include <net/if.h>
 #include <net/ethertypes.h>

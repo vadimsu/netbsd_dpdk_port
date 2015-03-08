@@ -32,7 +32,7 @@
 #ifndef _SYS_TAPE_H_
 #define _SYS_TAPE_H_
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 
 #define	TAPENAMELEN	16
 

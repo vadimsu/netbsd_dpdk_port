@@ -41,9 +41,9 @@
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/errno.h>
-//#include <sys/systm.h>
-//#include <sys/proc.h>
-//#include <sys/kauth.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/proc.h>
+//#include <special_includes/sys/kauth.h>
 #include <special_includes/sys/malloc.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

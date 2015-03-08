@@ -42,7 +42,7 @@
 #ifndef _SYS_POWER_H_
 #define	_SYS_POWER_H_
 
-#include <sys/ioccom.h>
+#include <special_includes/sys/ioccom.h>
 
 #ifndef _KERNEL
 #include <stdint.h>

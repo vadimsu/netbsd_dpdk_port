@@ -58,10 +58,10 @@
  * [including the GNU Public Licence.]
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: bf_ecb.c,v 1.3 2005/12/11 12:20:48 christos Exp $");
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #include <crypto/blowfish/blowfish.h>
 #include "bf_locl.h"

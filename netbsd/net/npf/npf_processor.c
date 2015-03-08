@@ -49,12 +49,12 @@
  * codes) and arguments use 32 bits words.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_processor.c,v 1.9.2.5 2013/02/11 21:49:49 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/kmem.h>
 
 #include "npf_impl.h"
 #include "npf_ncode.h"

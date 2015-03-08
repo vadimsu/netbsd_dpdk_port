@@ -35,8 +35,8 @@ __KERNEL_RCSID(0, "$NetBSD: rfc6056.c,v 1.4.4.1 2012/03/17 17:53:01 bouyer Exp $
 
 #include <special_includes/sys/param.h>
 #include <special_includes/sys/errno.h>
-//#include <sys/kauth.h>
-//#include <sys/uidinfo.h>
+//#include <special_includes/sys/kauth.h>
+//#include <special_includes/sys/uidinfo.h>
 #include <special_includes/sys/domain.h>
 #include <special_includes/sys/md5.h>
 #include <special_includes/sys/cprng.h>

@@ -1,6 +1,6 @@
-//#include <sys/cdefs.h>
+//#include <special_includes/sys/cdefs.h>
 
-//#include <sys/param.h>
+//#include <special_includes/sys/param.h>
 #include <rte_common.h>
 #include <rte_timer.h>
 #include <rte_lcore.h>

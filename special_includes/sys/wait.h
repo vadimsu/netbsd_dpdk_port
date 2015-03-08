@@ -34,7 +34,7 @@
 #ifndef _SYS_WAIT_H_
 #define _SYS_WAIT_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 /*
  * This file holds definitions relevent to the wait4 system call
@@ -112,7 +112,7 @@
 #define	WAIT_ANY	(-1)	/* any process */
 #define	WAIT_MYPGRP	0	/* any process in my process group */
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 /*
  * Deprecated:
@@ -167,7 +167,7 @@ union wait {
 #endif /* _XOPEN_SOURCE || _NETBSD_SOURCE */
 
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 struct rusage;	/* forward declaration */

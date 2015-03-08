@@ -30,7 +30,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #ifdef __FreeBSD__
 __FBSDID("$FreeBSD: src/sys/net80211/ieee80211_xauth.c,v 1.2 2004/12/31 22:42:38 sam Exp $");
 #endif
@@ -50,12 +50,12 @@ __KERNEL_RCSID(0, "$NetBSD: ieee80211_xauth.c,v 1.5 2006/02/27 01:08:28 dyoung E
  * of the available callbacks--the user mode authenticator process works
  * entirely from messages about stations joining and leaving.
  */
-#include <sys/param.h>
-#include <sys/kernel.h>
-#include <sys/systm.h> 
-#include <sys/mbuf.h>   
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/systm.h> 
+#include <special_includes/sys/mbuf.h>   
 
-#include <sys/socket.h>
+#include <special_includes/sys/socket.h>
 
 #include <net/if.h>
 #include <net/if_media.h>

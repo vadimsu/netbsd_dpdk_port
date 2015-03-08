@@ -35,7 +35,7 @@ struct radix_tree {
 };
 
 #if defined(_KERNEL) || defined(_STANDALONE)
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #else /* defined(_KERNEL) || defined(_STANDALONE) */
 #include <stdbool.h>
 #include <stdint.h>

@@ -29,8 +29,8 @@
 #ifndef _X86_PMAP_PV_H_
 #define	_X86_PMAP_PV_H_
 
-#include <sys/mutex.h>
-#include <sys/queue.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/queue.h>
 
 struct vm_page;
 

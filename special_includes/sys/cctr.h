@@ -29,7 +29,7 @@
 #ifndef _SYS_CCTR_H_
 #define	_SYS_CCTR_H_
 
-#include <sys/timetc.h>
+#include <special_includes/sys/timetc.h>
 
 /*
  * Variables used by cycle counter in kern_cctr.c.

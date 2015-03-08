@@ -29,11 +29,11 @@
 #ifndef _SYS_MODULE_H_
 #define _SYS_MODULE_H_
 
-#include <sys/types.h>
-#include <sys/param.h>
-#include <sys/cdefs.h>
-#include <sys/queue.h>
-#include <sys/uio.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/uio.h>
 
 #define	MAXMODNAME	32
 #define	MAXMODDEPS	10
@@ -65,7 +65,7 @@ typedef enum modcmd {
 
 #ifdef _KERNEL
 
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 
 #include <prop/proplib.h>
 

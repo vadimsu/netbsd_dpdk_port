@@ -30,8 +30,8 @@
 #define	_SYS_KOBJ_H_
 
 #define ELFSIZE ARCH_ELFSIZE
-#include <sys/exec.h>
-#include <sys/exec_elf.h>
+#include <special_includes/sys/exec.h>
+#include <special_includes/sys/exec_elf.h>
 
 typedef struct kobj *kobj_t;
 

@@ -54,18 +54,18 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: kobj_machdep.c,v 1.5 2008/12/08 08:41:36 njoly Exp $");
 
 #define	ELFSIZE		ARCH_ELFSIZE
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
-#include <sys/kobj.h>
-#include <sys/exec.h>
-#include <sys/exec_elf.h>
-#include <sys/xcall.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/kobj.h>
+#include <special_includes/sys/exec.h>
+#include <special_includes/sys/exec_elf.h>
+#include <special_includes/sys/xcall.h>
 
 #include <machine/cpufunc.h>
 

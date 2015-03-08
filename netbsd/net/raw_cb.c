@@ -35,7 +35,7 @@
 //__KERNEL_RCSID(0, "$NetBSD: raw_cb.c,v 1.20 2008/08/04 06:19:35 matt Exp $");
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/socket.h>

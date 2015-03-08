@@ -33,11 +33,11 @@
  * NPF module for packet construction routines.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_sendpkt.c,v 1.8.4.6 2013/02/11 21:49:49 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
 #include <netinet/in_systm.h>
 #include <netinet/in.h>
@@ -48,7 +48,7 @@ __KERNEL_RCSID(0, "$NetBSD: npf_sendpkt.c,v 1.8.4.6 2013/02/11 21:49:49 riz Exp 
 #include <netinet/ip6.h>
 #include <netinet/icmp6.h>
 #include <netinet6/ip6_var.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/mbuf.h>
 
 #include "npf_impl.h"
 

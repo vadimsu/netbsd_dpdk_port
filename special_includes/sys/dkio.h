@@ -32,7 +32,7 @@
 #ifndef _SYS_DKIO_H_
 #define _SYS_DKIO_H_
 
-#include <sys/ioccom.h>
+#include <special_includes/sys/ioccom.h>
 #include <prop/plistref.h>
 
 /*

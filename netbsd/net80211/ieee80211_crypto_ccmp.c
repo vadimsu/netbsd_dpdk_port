@@ -29,7 +29,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #ifdef __FreeBSD__
 __FBSDID("$FreeBSD: src/sys/net80211/ieee80211_crypto_ccmp.c,v 1.7 2005/07/11 03:06:23 sam Exp $");
 #endif
@@ -44,13 +44,13 @@ __KERNEL_RCSID(0, "$NetBSD: ieee80211_crypto_ccmp.c,v 1.8 2008/12/17 20:51:37 ce
  * AP driver. The code is used with the consent of the author and
  * it's license is included below.
  */
-#include <sys/param.h>
-#include <sys/systm.h> 
-#include <sys/mbuf.h>   
-#include <sys/malloc.h>
-#include <sys/kernel.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h> 
+#include <special_includes/sys/mbuf.h>   
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/kernel.h>
 
-#include <sys/socket.h>
+#include <special_includes/sys/socket.h>
 
 #include <net/if.h>
 #include <net/if_ether.h>

@@ -34,8 +34,8 @@
 #ifndef _SYS_STDARG_H_
 #define	_SYS_STDARG_H_
 
-#include <sys/ansi.h>
-#include <sys/featuretest.h>
+#include <special_includes/sys/ansi.h>
+#include <special_includes/sys/featuretest.h>
 
 #ifdef __lint__
 #define __builtin_next_arg(t)		((t) ? 0 : 0)

@@ -38,7 +38,7 @@
 #define _X86_CPU_H_
 
 #if defined(_KERNEL) || defined(_STANDALONE)
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #else
 #include <stdbool.h>
 #endif /* _KERNEL || _STANDALONE */
@@ -63,14 +63,14 @@
 
 #include <x86/cacheinfo.h>
 
-#include <sys/cpu_data.h>
-//#include <sys/evcnt.h>
-#include <sys/device_if.h> /* for device_t */
+#include <special_includes/sys/cpu_data.h>
+//#include <special_includes/sys/evcnt.h>
+#include <special_includes/sys/device_if.h> /* for device_t */
 
 #ifdef XEN
 #include <xen/xen-public/xen.h>
 #include <xen/xen-public/event_channel.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 #endif /* XEN */
 
 struct intrsource;

@@ -65,9 +65,9 @@
 #ifndef _SYS_USERRET_H_
 #define	_SYS_USERRET_H_
 
-#include <sys/lockdebug.h>
-#include <sys/userret.h>
-#include <sys/intr.h>
+#include <special_includes/sys/lockdebug.h>
+#include <special_includes/sys/userret.h>
+#include <special_includes/sys/intr.h>
 
 /*
  * Define the MI code needed before returning to user mode, for

@@ -224,7 +224,7 @@ typedef int	boolean_t;
 #if defined(_KERNEL) || defined(_LIBC)
 /*
  * semctl(2)'s argument structure.  This is here for the benefit of
- * <sys/syscallargs.h>.  It is not in the user's namespace in SUSv2.
+ * <special_includes/sys/syscallargs.h>.  It is not in the user's namespace in SUSv2.
  * The SUSv2 semctl(2) takes variable arguments.
  */
 union __semun {

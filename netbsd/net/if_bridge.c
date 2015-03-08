@@ -79,7 +79,7 @@
  *	  consider heterogenous bridges).
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_bridge.c,v 1.74 2011/11/19 22:51:25 tls Exp $");
 
 #ifdef _KERNEL_OPT
@@ -88,19 +88,19 @@ __KERNEL_RCSID(0, "$NetBSD: if_bridge.c,v 1.74 2011/11/19 22:51:25 tls Exp $");
 #include "opt_pfil_hooks.h"
 #endif /* _KERNEL_OPT */
 
-#include <sys/param.h>
-#include <sys/kernel.h>
-#include <sys/mbuf.h>
-#include <sys/queue.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h> /* for softnet_lock */
-#include <sys/sockio.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/pool.h>
-#include <sys/kauth.h>
-#include <sys/cpu.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h> /* for softnet_lock */
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/cpu.h>
+#include <special_includes/sys/cprng.h>
 
 #include <net/bpf.h>
 #include <net/if.h>

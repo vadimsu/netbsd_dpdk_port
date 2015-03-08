@@ -29,7 +29,7 @@
 #ifndef _SYS_PERCPU_H_
 #define	_SYS_PERCPU_H_
 
-#include <sys/percpu_types.h>
+#include <special_includes/sys/percpu_types.h>
 
 void	percpu_init(void);
 void	percpu_init_cpu(struct cpu_info *);

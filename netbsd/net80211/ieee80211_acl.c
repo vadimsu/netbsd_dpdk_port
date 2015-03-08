@@ -29,7 +29,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #ifdef __FreeBSD__
 __FBSDID("$FreeBSD: src/sys/net80211/ieee80211_acl.c,v 1.4 2005/08/13 17:31:48 sam Exp $");
 #endif
@@ -48,13 +48,13 @@ __KERNEL_RCSID(0, "$NetBSD: ieee80211_acl.c,v 1.9 2011/06/12 00:07:19 christos E
  * and if found the frame is either accepted (ACL_POLICY_ALLOW)
  * or rejected (ACL_POLICY_DENT).
  */
-#include <sys/param.h>
-#include <sys/kernel.h>
-#include <sys/systm.h> 
-#include <sys/mbuf.h>   
-#include <sys/queue.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/systm.h> 
+#include <special_includes/sys/mbuf.h>   
+#include <special_includes/sys/queue.h>
 
-#include <sys/socket.h>
+#include <special_includes/sys/socket.h>
 
 #include <net/if.h>
 #include <net/if_media.h>

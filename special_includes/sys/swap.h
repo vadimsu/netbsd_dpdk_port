@@ -28,7 +28,7 @@
 #ifndef _SYS_SWAP_H_
 #define _SYS_SWAP_H_
 
-#include <sys/syslimits.h>
+#include <special_includes/sys/syslimits.h>
 
 /* Thise structure is used to return swap information for userland */
 

@@ -35,7 +35,7 @@
 #ifndef _NET80211_IEEE80211_NODE_H_
 #define _NET80211_IEEE80211_NODE_H_
 
-#include <sys/atomic.h>
+#include <special_includes/sys/atomic.h>
 #include <net80211/ieee80211_netbsd.h>
 #include <net80211/ieee80211_ioctl.h>		/* for ieee80211_nodestats */
 

@@ -25,21 +25,21 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: rbus_machdep.c,v 1.5 2011/07/01 19:24:14 dyoung Exp $");
 
 #include "opt_pcifixup.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/extent.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/extent.h>
 
-#include <sys/sysctl.h>
+#include <special_includes/sys/sysctl.h>
 
-#include <sys/bus.h>
+#include <special_includes/sys/bus.h>
 #include <dev/cardbus/rbus.h>
 
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 #include <dev/isa/isareg.h>
 #include <dev/isa/isavar.h>
 

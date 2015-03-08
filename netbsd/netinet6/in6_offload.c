@@ -26,11 +26,11 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in6_offload.c,v 1.6 2011/04/25 22:07:57 yamt Exp $");
 
-#include <sys/param.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
 
 #include <net/if.h>
 

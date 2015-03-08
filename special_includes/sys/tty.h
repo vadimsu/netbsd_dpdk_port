@@ -65,13 +65,13 @@
 #ifndef _SYS_TTY_H_
 #define _SYS_TTY_H_
 
-#include <sys/termios.h>
-#include <sys/select.h>
-#include <sys/selinfo.h>	/* For struct selinfo. */
-#include <sys/mutex.h>
-#include <sys/condvar.h>
-#include <sys/queue.h>
-#include <sys/callout.h>
+#include <special_includes/sys/termios.h>
+#include <special_includes/sys/select.h>
+#include <special_includes/sys/selinfo.h>	/* For struct selinfo. */
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/callout.h>
 
 /*
  * Clists are actually ring buffers. The c_cc, c_cf, c_cl fields have

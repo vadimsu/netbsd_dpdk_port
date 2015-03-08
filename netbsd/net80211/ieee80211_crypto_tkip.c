@@ -29,7 +29,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #ifdef __FreeBSD__
 __FBSDID("$FreeBSD: src/sys/net80211/ieee80211_crypto_tkip.c,v 1.10 2005/08/08 18:46:35 sam Exp $");
 #endif
@@ -44,14 +44,14 @@ __KERNEL_RCSID(0, "$NetBSD: ieee80211_crypto_tkip.c,v 1.11 2011/04/03 10:04:32 d
  * AP driver. The code is used with the consent of the author and
  * it's license is included below.
  */
-#include <sys/param.h>
-#include <sys/systm.h> 
-#include <sys/mbuf.h>   
-#include <sys/malloc.h>
-#include <sys/kernel.h>
-#include <sys/endian.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h> 
+#include <special_includes/sys/mbuf.h>   
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/endian.h>
 
-#include <sys/socket.h>
+#include <special_includes/sys/socket.h>
 
 #include <net/if.h>
 #include <net/if_ether.h>

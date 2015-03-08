@@ -30,9 +30,9 @@
 #ifndef _NET_IF_ECO_H_
 #define _NET_IF_ECO_H_
 
-#include <sys/callout.h>
-#include <sys/mbuf.h>
-#include <sys/queue.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/queue.h>
 
 #include <netbsd/net/if.h>
 

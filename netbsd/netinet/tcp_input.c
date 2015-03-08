@@ -156,7 +156,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_input.c,v 1.321 2012/01/11 14:39:08 drochner Exp
 #include "opt_tcp_debug.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <special_includes/sys/mbuf.h>
@@ -167,12 +167,12 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_input.c,v 1.321 2012/01/11 14:39:08 drochner Exp
 #include <special_includes/sys/syslog.h>
 #include <special_includes/sys/pool.h>
 #include <special_includes/sys/domain.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #ifdef TCP_SIGNATURE
 #include <special_includes/sys/md5.h>
 #endif
-//#include <sys/lwp.h> /* for lwp0 */
-//#include <sys/cprng.h>
+//#include <special_includes/sys/lwp.h> /* for lwp0 */
+//#include <special_includes/sys/cprng.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
@@ -344,7 +344,7 @@ tcp_fields_to_net(struct tcphdr *th)
 }
 
 #ifdef TCP_CSUM_COUNTERS
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 
 #if defined(INET)
 extern struct evcnt tcp_hwcsum_ok;
@@ -368,7 +368,7 @@ extern struct evcnt tcp6_swcsum;
 #endif /* TCP_CSUM_COUNTERS */
 
 #ifdef TCP_REASS_COUNTERS
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 
 extern struct evcnt tcp_reass_;
 extern struct evcnt tcp_reass_empty;

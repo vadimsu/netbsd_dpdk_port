@@ -69,8 +69,8 @@
 #ifndef	_SYS_SCHED_H_
 #define	_SYS_SCHED_H_
 
-#include <sys/featuretest.h>
-#include <sys/types.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/types.h>
 
 #if defined(_KERNEL_OPT)
 #include "opt_multiprocessor.h"
@@ -140,8 +140,8 @@ __END_DECLS
 
 #if defined(_KERNEL) || defined(_KMEMUSER)
 
-#include <sys/mutex.h>
-#include <sys/time.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/time.h>
 
 /*
  * Per-CPU scheduler state.  Field markings and the corresponding locks: 

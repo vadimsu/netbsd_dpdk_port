@@ -51,7 +51,7 @@ typedef __uint32_t	uint32_t;
 #define	uint32_t	__uint32_t
 #endif
 
-#include <sys/ansi.h>
+#include <special_includes/sys/ansi.h>
 
 #ifndef in_addr_t
 typedef __in_addr_t	in_addr_t;

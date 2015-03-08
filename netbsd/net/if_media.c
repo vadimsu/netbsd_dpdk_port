@@ -75,15 +75,15 @@
  * to implement this interface.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_media.c,v 1.30 2009/10/05 21:27:36 dyoung Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/errno.h>
-#include <sys/ioctl.h>
-#include <sys/socket.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/malloc.h>
 
 #include <net/if.h>
 #include <net/if_media.h>

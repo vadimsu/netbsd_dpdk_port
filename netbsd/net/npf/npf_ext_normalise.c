@@ -26,12 +26,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_ext_normalise.c,v 1.1.4.3 2013/02/08 19:18:11 riz Exp $");
 
-#include <sys/types.h>
-#include <sys/module.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/module.h>
+#include <special_includes/sys/kmem.h>
 
 #include <net/if.h>
 #include <netinet/in_systm.h>

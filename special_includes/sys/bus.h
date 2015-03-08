@@ -29,7 +29,7 @@
 #ifndef _SYS_BUS_H_
 #define	_SYS_BUS_H_
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #ifdef __HAVE_NEW_STYLE_BUS_H
 
@@ -210,7 +210,7 @@ void	bus_space_trim(bus_space_tag_t, bus_space_reservation_t *, bus_size_t,
 	               bus_size_t);
 #endif
 
-#include <sys/bus_proto.h>
+#include <special_includes/sys/bus_proto.h>
 
 #include <machine/bus_funcs.h>
 

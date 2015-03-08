@@ -60,11 +60,11 @@
 #ifndef _SYS_VNODE_H_
 #define	_SYS_VNODE_H_
 
-#include <sys/event.h>
-#include <sys/queue.h>
-#include <sys/condvar.h>
-#include <sys/rwlock.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/event.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/rwlock.h>
+#include <special_includes/sys/mutex.h>
 
 /* XXX: clean up includes later */
 #include <uvm/uvm_param.h>	/* XXX */
@@ -521,12 +521,12 @@ struct vop_generic_args {
 #define	VOFFSET(OP) (VDESC(OP)->vdesc_offset)
 
 /* XXX This include should go away */
-#include <sys/mount.h>
+#include <special_includes/sys/mount.h>
 
 /*
  * Finally, include the default set of vnode operations.
  */
-#include <sys/vnode_if.h>
+#include <special_includes/sys/vnode_if.h>
 
 /*
  * Public vnode manipulation functions.

@@ -30,14 +30,14 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #if	defined(_KERNEL)
-#include <sys/time.h>
-#include <sys/proc.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/proc.h>
 #include <uvm/uvm_extern.h>
 #endif
 #if	!defined(_STANDALONE)
-#include <sys/sysctl.h>
+#include <special_includes/sys/sysctl.h>
 #endif
 
 #include <machine/cpu.h>

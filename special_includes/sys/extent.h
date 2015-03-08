@@ -32,9 +32,9 @@
 #ifndef _SYS_EXTENT_H_
 #define _SYS_EXTENT_H_
 
-#include <sys/queue.h>
-#include <sys/mutex.h>
-#include <sys/condvar.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/condvar.h>
 
 struct extent_region {
 	LIST_ENTRY(extent_region) er_link;	/* link in region list */

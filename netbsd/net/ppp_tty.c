@@ -92,7 +92,7 @@
 /* from if_sl.c,v 1.11 84/10/04 12:54:47 rick Exp */
 /* from NetBSD: if_ppp.c,v 1.15.2.2 1994/07/28 05:17:58 cgd Exp */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ppp_tty.c,v 1.57 2010/04/05 07:22:24 joerg Exp $");
 
 #include "ppp.h"
@@ -101,19 +101,19 @@ __KERNEL_RCSID(0, "$NetBSD: ppp_tty.c,v 1.57 2010/04/05 07:22:24 joerg Exp $");
 #define VJC
 #define PPP_COMPRESS
 
-#include <sys/param.h>
-#include <sys/proc.h>
-#include <sys/mbuf.h>
-#include <sys/dkstat.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <sys/file.h>
-#include <sys/tty.h>
-#include <sys/kernel.h>
-#include <sys/conf.h>
-#include <sys/vnode.h>
-#include <sys/systm.h>
-#include <sys/kauth.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/dkstat.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/file.h>
+#include <special_includes/sys/tty.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/vnode.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kauth.h>
 
 #include <net/if.h>
 #include <net/if_types.h>

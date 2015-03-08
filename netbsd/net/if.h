@@ -67,7 +67,7 @@
 #include <stdbool.h>
 #endif
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 /*
  * Length of interface external name, including terminating '\0'.
@@ -77,8 +77,8 @@
 
 #if defined(_NETBSD_SOURCE)
 
-#include <sys/socket.h>
-#include <sys/queue.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/queue.h>
 #include <netbsd/net/dlt.h>
 #include <netbsd/net/pfil.h>
 
@@ -114,7 +114,7 @@
  * routing and gateway routines maintaining information used to locate
  * interfaces.  These routines live in the files if.c and route.c
  */
-#include <sys/time.h>
+#include <special_includes/sys/time.h>
 
 #if defined(_KERNEL_OPT)
 #include "opt_compat_netbsd.h"
@@ -204,9 +204,9 @@ struct ifqueue {
 struct ifnet_lock;
 
 #ifdef _KERNEL
-//#include <sys/mutex.h>
-//#include <sys/condvar.h>
-#include <sys/percpu.h>
+//#include <special_includes/sys/mutex.h>
+//#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/percpu.h>
 
 struct ifnet_lock {
 //	kmutex_t il_lock;	/* Protects the critical section. */
@@ -834,7 +834,7 @@ do {									\
 #define	IFQ_INC_DROPS(ifq)		((ifq)->ifq_drops++)
 #define	IFQ_SET_MAXLEN(ifq, len)	((ifq)->ifq_maxlen = (len))
 
-#include <sys/mallocvar.h>
+#include <special_includes/sys/mallocvar.h>
 MALLOC_DECLARE(M_IFADDR);
 MALLOC_DECLARE(M_IFMADDR);
 
@@ -937,7 +937,7 @@ struct if_nameindex {
 	char		*if_name;	/* null terminated name: "le0", ... */
 };
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __BEGIN_DECLS
 unsigned int if_nametoindex(const char *);
 char *	if_indextoname(unsigned int, char *);

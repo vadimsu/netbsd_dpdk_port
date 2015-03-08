@@ -37,7 +37,7 @@
 #ifndef _SYS_KPRINTF_H_
 #define	_SYS_KPRINTF_H_
 
-#include <sys/stdarg.h>
+#include <special_includes/sys/stdarg.h>
 
 /*
  * Implementation internals of the kernel printf.  Exposing them here

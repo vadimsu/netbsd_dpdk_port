@@ -32,7 +32,7 @@
 #ifndef _SYS_FDIO_H_
 #define _SYS_FDIO_H_
 
-#include <sys/ioccom.h>
+#include <special_includes/sys/ioccom.h>
 
 /* Floppy diskette definitions */
 

@@ -29,20 +29,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_ieee1394subr.c,v 1.45 2010/04/05 07:22:23 joerg Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/bus.h>
-#include <sys/device.h>
-#include <sys/kernel.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/select.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/bus.h>
+#include <special_includes/sys/device.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/select.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

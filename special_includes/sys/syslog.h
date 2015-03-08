@@ -185,9 +185,9 @@ struct syslog_data {
     .log_mask = 0xff, \
 }
 
-#include <sys/cdefs.h>
-#include <sys/featuretest.h>
-#include <sys/ansi.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/ansi.h>
 
 __BEGIN_DECLS
 void	closelog(void);

@@ -39,7 +39,7 @@
  * PURPOSE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #include <stdint.h>
 __KERNEL_RCSID(1, "$NetBSD: cryptosoft_xform.c,v 1.25 2011/11/28 08:05:06 tls Exp $");
 #include "missing_types.h"
@@ -55,13 +55,13 @@ typedef unsigned int u_int32_t;
 
 #include <opencrypto/deflate.h>
 
-#include <sys/md5.h>
-#include <sys/rmd160.h>
-#include <sys/sha1.h>
-#include <sys/sha2.h>
+#include <special_includes/sys/md5.h>
+#include <special_includes/sys/rmd160.h>
+#include <special_includes/sys/sha1.h>
+#include <special_includes/sys/sha2.h>
 #include <opencrypto/aesxcbcmac.h>
 #include <opencrypto/gmac.h>
-#include <sys/errno.h>
+#include <special_includes/sys/errno.h>
 struct swcr_auth_hash {
 	const struct auth_hash *auth_hash;
 	int ctxsize;

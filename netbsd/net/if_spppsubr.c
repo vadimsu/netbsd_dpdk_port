@@ -40,7 +40,7 @@
  * From: Id: if_spppsubr.c,v 1.23 1999/02/23 14:47:50 hm Exp
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_spppsubr.c,v 1.125 2011/12/17 20:05:39 tls Exp $");
 
 #if defined(_KERNEL_OPT)
@@ -53,20 +53,20 @@ __KERNEL_RCSID(0, "$NetBSD: if_spppsubr.c,v 1.125 2011/12/17 20:05:39 tls Exp $"
 #endif
 
 
-#include <sys/param.h>
-#include <sys/proc.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
-#include <sys/sockio.h>
-#include <sys/socket.h>
-#include <sys/syslog.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/callout.h>
-#include <sys/md5.h>
-#include <sys/inttypes.h>
-#include <sys/kauth.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/md5.h>
+#include <special_includes/sys/inttypes.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/cprng.h>
 
 #include <net/if.h>
 #include <net/netisr.h>

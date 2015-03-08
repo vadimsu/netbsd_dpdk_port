@@ -100,8 +100,8 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $
 #include "opt_mbuftrace.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/proc.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/proc.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <special_includes/sys/mbuf.h>
@@ -109,10 +109,10 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_subr.c,v 1.246.2.1 2012/10/31 17:30:20 riz Exp $
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/errno.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/pool.h>
 #include <special_includes/sys/md5.h>
-//#include <sys/cprng.h>
+//#include <special_includes/sys/cprng.h>
 
 #include <netbsd/net/route.h>
 #include <netbsd/net/if.h>
@@ -245,7 +245,7 @@ static struct pool tcpcb_pool;
 static int tcp_drainwanted;
 
 #ifdef TCP_CSUM_COUNTERS
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 
 #if defined(INET)
 struct evcnt tcp_hwcsum_bad = EVCNT_INITIALIZER(EVCNT_TYPE_MISC,
@@ -282,7 +282,7 @@ EVCNT_ATTACH_STATIC(tcp6_swcsum);
 
 
 #ifdef TCP_OUTPUT_COUNTERS
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 
 struct evcnt tcp_output_bigheader = EVCNT_INITIALIZER(EVCNT_TYPE_MISC,
     NULL, "tcp", "output big header");
@@ -307,7 +307,7 @@ EVCNT_ATTACH_STATIC(tcp_output_refbig);
 #endif /* TCP_OUTPUT_COUNTERS */
 
 #ifdef TCP_REASS_COUNTERS
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 
 struct evcnt tcp_reass_ = EVCNT_INITIALIZER(EVCNT_TYPE_MISC,
     NULL, "tcp_reass", "calls");

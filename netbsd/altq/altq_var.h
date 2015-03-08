@@ -31,9 +31,9 @@
 
 #ifdef _KERNEL
 
-#include <sys/param.h>
-#include <sys/kernel.h>
-#include <sys/queue.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/queue.h>
 
 #ifdef ALTQ3_CLFIER_COMPAT
 /*
@@ -162,7 +162,7 @@ typedef u_long ioctlcmd_t;
 /* macro for timeout/untimeout */
 #if (__FreeBSD_version > 300000) || defined(__NetBSD__)
 /* use callout */
-#include <sys/callout.h>
+#include <special_includes/sys/callout.h>
 
 #if (__FreeBSD_version > 500000) || defined(__NetBSD__)
 #define	CALLOUT_INIT(c)		callout_init((c), 0)
@@ -175,7 +175,7 @@ typedef u_long ioctlcmd_t;
 #define	CALLOUT_INITIALIZER	{ { { NULL } }, 0, NULL, NULL, 0 }
 #endif
 #elif defined(__OpenBSD__)
-#include <sys/timeout.h>
+#include <special_includes/sys/timeout.h>
 /* callout structure as a wrapper of struct timeout */
 struct callout {
 	struct timeout	c_to;

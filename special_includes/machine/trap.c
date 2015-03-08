@@ -67,7 +67,7 @@
  * 386 Trap and System call handling
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: trap.c,v 1.69.2.1 2012/06/03 21:45:10 jdc Exp $");
 
 #include "opt_ddb.h"
@@ -75,20 +75,20 @@ __KERNEL_RCSID(0, "$NetBSD: trap.c,v 1.69.2.1 2012/06/03 21:45:10 jdc Exp $");
 #include "opt_xen.h"
 #include "opt_dtrace.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/acct.h>
-#include <sys/kauth.h>
-#include <sys/kernel.h>
-#include <sys/kmem.h>
-#include <sys/ras.h>
-#include <sys/signal.h>
-#include <sys/syscall.h>
-#include <sys/cpu.h>
-#include <sys/ucontext.h>
-#include <sys/sa.h>
-#include <sys/savar.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/acct.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/ras.h>
+#include <special_includes/sys/signal.h>
+#include <special_includes/sys/syscall.h>
+#include <special_includes/sys/cpu.h>
+#include <special_includes/sys/ucontext.h>
+#include <special_includes/sys/sa.h>
+#include <special_includes/sys/savar.h>
 
 #include <uvm/uvm_extern.h>
 
@@ -106,10 +106,10 @@ __KERNEL_RCSID(0, "$NetBSD: trap.c,v 1.69.2.1 2012/06/03 21:45:10 jdc Exp $");
 #include "isa.h"
 #endif
 
-#include <sys/kgdb.h>
+#include <special_includes/sys/kgdb.h>
 
 #ifdef KDTRACE_HOOKS
-#include <sys/dtrace_bsd.h>
+#include <special_includes/sys/dtrace_bsd.h>
 
 /*
  * This is a hook which is initialized by the dtrace module

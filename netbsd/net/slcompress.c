@@ -40,14 +40,14 @@
  *	- Initial distribution.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: slcompress.c,v 1.38 2009/04/18 15:20:06 tsutsui Exp $");
 
 #include "opt_inet.h"
 #ifdef INET
-#include <sys/param.h>
-#include <sys/mbuf.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/systm.h>
 
 #include <netinet/in.h>
 #include <netinet/in_systm.h>

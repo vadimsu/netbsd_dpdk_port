@@ -32,7 +32,7 @@
 #ifndef _SYS_UCONTEXT_H_
 #define _SYS_UCONTEXT_H_
 
-#include <sys/sigtypes.h>
+#include <special_includes/sys/sigtypes.h>
 #include <machine/mcontext.h>
 
 typedef struct __ucontext	ucontext_t;

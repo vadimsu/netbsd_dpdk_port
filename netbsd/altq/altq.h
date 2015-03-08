@@ -39,9 +39,9 @@
 #endif
 
 #ifdef ALTQ3_COMPAT
-#include <sys/param.h>
-#include <sys/ioccom.h>
-#include <sys/queue.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/ioccom.h>
+#include <special_includes/sys/queue.h>
 #include <netinet/in.h>
 
 #ifndef IFNAMSIZ

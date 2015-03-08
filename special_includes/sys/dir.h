@@ -41,7 +41,7 @@
 
 #ifdef	_KERNEL
 /* This file should only be used by old user-level code. */
-#error "Please use <sys/dirent.h> instead"
+#error "Please use <special_includes/sys/dirent.h> instead"
 #endif
 
 #include <dirent.h>

@@ -32,17 +32,17 @@
  * Instruction disassembler.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: db_disasm.c,v 1.16 2011/07/17 20:54:36 joerg Exp $");
 
 #ifndef _KERNEL
-#include <sys/types.h>
-#include <sys/time.h>
-#include <sys/ksyms.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/ksyms.h>
 #endif	/* _KERNEL */
 
-#include <sys/param.h>
-#include <sys/proc.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/proc.h>
 #include <machine/db_machdep.h>
 
 #include <ddb/db_access.h>

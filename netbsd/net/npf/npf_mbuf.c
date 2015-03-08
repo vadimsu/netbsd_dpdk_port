@@ -36,11 +36,11 @@
  * abstracted within this source.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_mbuf.c,v 1.6.14.3 2013/02/08 19:18:10 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
 
 #include "npf_impl.h"
 

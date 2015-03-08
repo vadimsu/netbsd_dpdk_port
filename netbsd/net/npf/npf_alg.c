@@ -33,15 +33,15 @@
  * NPF interface for application level gateways (ALGs).
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_alg.c,v 1.2.16.5 2013/02/11 21:49:49 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
-#include <sys/kmem.h>
-#include <sys/pserialize.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/pserialize.h>
+#include <special_includes/sys/mutex.h>
 #include <net/pfil.h>
 
 #include "npf_impl.h"

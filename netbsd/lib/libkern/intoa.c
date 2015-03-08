@@ -39,7 +39,7 @@
  * @(#) Header: net.c,v 1.9 93/08/06 19:32:15 leres Exp  (LBL)
  */
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #if defined(_KERNEL) || defined(_STANDALONE)
 #include <lib/libkern/libkern.h>

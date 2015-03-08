@@ -55,10 +55,10 @@
  * [including the GNU Public Licence.]
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: des_cbc.c,v 1.8 2005/12/11 12:20:52 christos Exp $");
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #include <crypto/des/des_locl.h>
 

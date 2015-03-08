@@ -64,7 +64,7 @@
 #ifndef _NETINET6_IN6_VAR_H_
 #define _NETINET6_IN6_VAR_H_
 
-#include <sys/callout.h>
+#include <special_includes/sys/callout.h>
 
 /*
  * Interface address, Internet version.  One of these structures

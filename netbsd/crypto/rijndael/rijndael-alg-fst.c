@@ -26,12 +26,12 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: rijndael-alg-fst.c,v 1.7 2005/12/11 12:20:52 christos Exp $");
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #ifdef _KERNEL
-#include <sys/systm.h>
+#include <special_includes/sys/systm.h>
 #else
 #include <string.h>
 #endif

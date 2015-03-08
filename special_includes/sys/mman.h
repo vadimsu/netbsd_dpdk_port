@@ -34,7 +34,7 @@
 #ifndef _SYS_MMAN_H_
 #define _SYS_MMAN_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 #include <machine/ansi.h>
 
@@ -43,7 +43,7 @@ typedef	_BSD_SIZE_T_	size_t;
 #undef	_BSD_SIZE_T_
 #endif
 
-#include <sys/ansi.h>
+#include <special_includes/sys/ansi.h>
 
 #ifndef	mode_t
 typedef	__mode_t	mode_t;
@@ -165,7 +165,7 @@ typedef	__off_t		off_t;		/* file offset */
 
 #ifndef _KERNEL
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 void *	mmap(void *, size_t, int, int, int, off_t);

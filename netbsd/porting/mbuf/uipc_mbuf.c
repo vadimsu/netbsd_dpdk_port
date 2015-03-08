@@ -61,23 +61,23 @@
  *	@(#)uipc_mbuf.c	8.4 (Berkeley) 2/14/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 //__KERNEL_RCSID(0, "$NetBSD: uipc_mbuf.c,v 1.145.2.1 2013/02/08 19:18:12 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
-#include <sys/malloc.h>
-//#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/malloc.h>
+//#include <special_includes/sys/systm.h>
 #include <lib/libkern/libkern.h>
 #define MBTYPES
-#include <sys/mbuf.h>
-#include <sys/syslog.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
-#include <sys/percpu.h>
-#include <sys/pool.h>
-#include <sys/socket.h>
-//#include <sys/sysctl.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/percpu.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/socket.h>
+//#include <special_includes/sys/sysctl.h>
 #include <netbsd/net/if.h>
 #include "rte_wrappers.h"
 #include "missing_types.h"

@@ -33,9 +33,9 @@
 #include "opt_pfil_hooks.h"
 #endif
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 #include <netbsd/net/dlt.h>
-#include <sys/null.h>
+#include <special_includes/sys/null.h>
 
 struct mbuf;
 struct ifnet;

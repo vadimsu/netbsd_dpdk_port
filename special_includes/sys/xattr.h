@@ -34,14 +34,14 @@
  *
  * This provides an interface that is compatible with Linux's extended
  * attribute support.  These calls operate on the same extended attributes
- * as <sys/extattr.h>, but access only the "user" namespace.
+ * as <special_includes/sys/extattr.h>, but access only the "user" namespace.
  */
 
 #ifndef _SYS_XATTR_H_
 #define	_SYS_XATTR_H_
 
-#include <sys/types.h>
-#include <sys/param.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/param.h>
 
 /*
  * This is compatible with EXTATTR_MAXNAMELEN, and also happens to be
@@ -56,7 +56,7 @@
 
 #ifndef _KERNEL
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int	setxattr(const char *, const char *, const void *, size_t, int);

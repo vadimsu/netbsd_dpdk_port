@@ -33,16 +33,16 @@
  * NPF ruleset module.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_ruleset.c,v 1.10.2.7 2013/02/18 18:26:14 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
-#include <sys/kmem.h>
-#include <sys/queue.h>
-#include <sys/mbuf.h>
-#include <sys/types.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/types.h>
 
 #include <net/bpf.h>
 #include <net/pfil.h>

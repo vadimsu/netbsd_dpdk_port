@@ -35,7 +35,7 @@
  * implementation details.
  */
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 
 #define	LACP_TIMER_CURRENT_WHILE	0
 #define	LACP_TIMER_PERIODIC		1

@@ -33,7 +33,7 @@
 
 #include <machine/cpu.h>
 
-#include <sys/lwp.h>
+#include <special_includes/sys/lwp.h>
 
 struct cpu_info;
 

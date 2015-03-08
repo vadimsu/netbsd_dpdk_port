@@ -23,8 +23,8 @@
 
 #if defined(_KERNEL)
 
-#include <sys/rnd.h>
-#include <sys/callout.h>
+#include <special_includes/sys/rnd.h>
+#include <special_includes/sys/callout.h>
 #include <crypto/rijndael/rijndael.h>
 
 /* VIA C3 xcrypt-* instruction context control options */

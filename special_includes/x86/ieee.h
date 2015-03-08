@@ -46,7 +46,7 @@
  * mode bits, exceptions, and so forth.
  */
 
-#include <sys/ieee754.h>
+#include <special_includes/sys/ieee754.h>
 
 #define	EXT_EXPBITS	15
 #define EXT_FRACHBITS	32

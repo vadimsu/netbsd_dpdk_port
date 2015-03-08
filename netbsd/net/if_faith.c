@@ -39,22 +39,22 @@
  * IPv6-to-IPv4 TCP relay capturing interface
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_faith.c,v 1.47 2010/04/05 07:22:23 joerg Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/errno.h>
-#include <sys/ioctl.h>
-#include <sys/time.h>
-#include <sys/queue.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/queue.h>
 
-#include <sys/cpu.h>
+#include <special_includes/sys/cpu.h>
 
 #include <net/if.h>
 #include <net/if_types.h>

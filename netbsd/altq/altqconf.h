@@ -6,7 +6,7 @@
 #include "opt_altq_enabled.h"
 #endif
 
-#include <sys/conf.h>
+#include <special_includes/sys/conf.h>
 
 #ifdef ALTQ
 #define	NALTQ	1

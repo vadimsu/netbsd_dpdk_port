@@ -52,11 +52,11 @@
 #ifndef _SYS_MSG_H_
 #define _SYS_MSG_H_
 
-#include <sys/featuretest.h>
-#include <sys/ipc.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/ipc.h>
 #ifdef _KERNEL
-#include <sys/condvar.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/mutex.h>
 #endif
 
 #ifdef _KERNEL
@@ -196,7 +196,7 @@ extern kmutex_t	msgmutex;
 #endif /* _KERNEL */
 
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int	msgctl(int, int, struct msqid_ds *) __RENAME(__msgctl50);
@@ -205,7 +205,7 @@ int	msgsnd(int, const void *, size_t, int);
 ssize_t	msgrcv(int, void *, size_t, long, int);
 __END_DECLS
 #else
-#include <sys/systm.h>
+#include <special_includes/sys/systm.h>
 
 struct proc;
 

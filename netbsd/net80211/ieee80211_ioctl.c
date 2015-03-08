@@ -31,7 +31,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #ifdef __FreeBSD__
 __FBSDID("$FreeBSD: src/sys/net80211/ieee80211_ioctl.c,v 1.35 2005/08/30 14:27:47 avatar Exp $");
 #endif
@@ -46,14 +46,14 @@ __KERNEL_RCSID(0, "$NetBSD: ieee80211_ioctl.c,v 1.57 2011/12/31 20:41:58 christo
 #include "opt_inet.h"
 #include "opt_compat_netbsd.h"
 
-#include <sys/endian.h>
-#include <sys/param.h>
-#include <sys/kernel.h>
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/kauth.h>
+#include <special_includes/sys/endian.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/kauth.h>
  
 #include <net/if.h>
 #include <net/if_arp.h>

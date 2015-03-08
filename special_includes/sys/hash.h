@@ -32,7 +32,7 @@
 #ifndef	_SYS_HASH_H_
 #define	_SYS_HASH_H_
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #ifdef __HAVE_MACHINE_HASH_H
 #include <machine/hash.h>
 #endif

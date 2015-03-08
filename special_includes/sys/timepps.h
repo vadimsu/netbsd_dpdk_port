@@ -39,7 +39,7 @@
  * Operating Systems, Version 1.0", draft-mogul-pps-api-05.txt
  */
 
-#include <sys/ioccom.h>
+#include <special_includes/sys/ioccom.h>
 
 #define PPS_API_VERS_1	1	/* API version number */
 
@@ -131,7 +131,7 @@ typedef struct {
 
 #ifdef _KERNEL
 
-//#include <sys/mutex.h>
+//#include <special_includes/sys/mutex.h>
 
 //extern kmutex_t timecounter_lock;
 
@@ -157,8 +157,8 @@ int pps_ioctl(unsigned long, void *, struct pps_state *);
 
 #else /* !_KERNEL */
 
-#include <sys/cdefs.h>
-#include <sys/ioctl.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/ioctl.h>
 #include <errno.h>
 
 static __inline int time_pps_create(int, pps_handle_t *);

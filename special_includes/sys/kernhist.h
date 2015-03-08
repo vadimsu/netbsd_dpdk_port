@@ -35,9 +35,9 @@
 #include "opt_kernhist.h"
 #endif
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 #ifdef KERNHIST
-#include <sys/cpu.h>
+#include <special_includes/sys/cpu.h>
 #endif
 
 /*
@@ -100,9 +100,9 @@ LIST_HEAD(kern_history_head, kern_history);
 #define KERNHIST_FUNC(FNAME)
 #define kernhist_dump(NAME)
 #else
-#include <sys/kernel.h>		/* for "cold" variable */
-#include <sys/atomic.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/kernel.h>		/* for "cold" variable */
+#include <special_includes/sys/atomic.h>
+#include <special_includes/sys/kmem.h>
 
 extern	struct kern_history_head kern_histories;
 

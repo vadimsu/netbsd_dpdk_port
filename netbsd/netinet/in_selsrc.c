@@ -28,7 +28,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in_selsrc.c,v 1.8 2009/10/19 23:19:39 rmind Exp $");
 
 #include "opt_inet.h"
@@ -36,16 +36,16 @@ __KERNEL_RCSID(0, "$NetBSD: in_selsrc.c,v 1.8 2009/10/19 23:19:39 rmind Exp $");
 
 #include <lib/libkern/libkern.h>
 
-#include <sys/param.h>
-#include <sys/ioctl.h>
-#include <sys/errno.h>
-#include <sys/malloc.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/sysctl.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/syslog.h>
 
 #include <net/if.h>
 

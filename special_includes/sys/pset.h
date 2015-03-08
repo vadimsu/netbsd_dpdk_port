@@ -29,8 +29,8 @@
 #ifndef _SYS_PSET_H_
 #define _SYS_PSET_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/types.h>
 
 /* Types of processor-sets */
 #define	PS_NONE			0

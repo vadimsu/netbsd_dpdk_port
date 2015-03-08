@@ -38,7 +38,7 @@
  * "Header: bpf.c,v 1.67 96/09/26 22:00:52 leres Exp ";
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: bpf.c,v 1.168.2.1 2013/09/11 03:54:35 msaitoh Exp $");
 
 #if defined(_KERNEL_OPT)
@@ -47,33 +47,33 @@ __KERNEL_RCSID(0, "$NetBSD: bpf.c,v 1.168.2.1 2013/09/11 03:54:35 msaitoh Exp $"
 #include "strip.h"
 #endif
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/mbuf.h>
-#include <sys/buf.h>
-#include <sys/time.h>
-#include <sys/proc.h>
-#include <sys/ioctl.h>
-#include <sys/conf.h>
-#include <sys/vnode.h>
-#include <sys/queue.h>
-#include <sys/stat.h>
-#include <sys/module.h>
-#include <sys/once.h>
-#include <sys/atomic.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/buf.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/vnode.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/stat.h>
+#include <special_includes/sys/module.h>
+#include <special_includes/sys/once.h>
+#include <special_includes/sys/atomic.h>
 
-#include <sys/file.h>
-#include <sys/filedesc.h>
-#include <sys/tty.h>
-#include <sys/uio.h>
+#include <special_includes/sys/file.h>
+#include <special_includes/sys/filedesc.h>
+#include <special_includes/sys/tty.h>
+#include <special_includes/sys/uio.h>
 
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/errno.h>
-#include <sys/kernel.h>
-#include <sys/poll.h>
-#include <sys/sysctl.h>
-#include <sys/kauth.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/poll.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/kauth.h>
 
 #include <net/if.h>
 #include <net/slip.h>

@@ -31,14 +31,14 @@
  * This is also a demo extension.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_ext_rndblock.c,v 1.1.2.2 2012/12/15 23:45:58 riz Exp $");
 
-#include <sys/types.h>
-#include <sys/cprng.h>
-#include <sys/atomic.h>
-#include <sys/module.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/cprng.h>
+#include <special_includes/sys/atomic.h>
+#include <special_includes/sys/module.h>
+#include <special_includes/sys/kmem.h>
 
 #include "npf.h"
 

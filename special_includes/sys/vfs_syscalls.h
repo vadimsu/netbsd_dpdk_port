@@ -29,8 +29,8 @@
 #ifndef _SYS_VFS_SYSCALLS_H_
 #define _SYS_VFS_SYSCALLS_H_
 
-#include <sys/types.h>
-#include <sys/fstypes.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/fstypes.h>
 
 struct stat;
 struct statvfs;

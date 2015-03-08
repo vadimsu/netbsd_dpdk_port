@@ -123,7 +123,7 @@ struct btinfo_memmap {
 #if HAVE_NBTOOL_CONFIG_H
 #include <nbinclude/sys/bootblock.h>
 #else
-#include <sys/bootblock.h>
+#include <special_includes/sys/bootblock.h>
 #endif /* HAVE_NBTOOL_CONFIG_H */
 
 /*

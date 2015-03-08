@@ -30,14 +30,14 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: route6.c,v 1.23 2008/04/15 03:57:04 thorpej Exp $");
 
-#include <sys/param.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/systm.h>
-#include <sys/queue.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/queue.h>
 
 #include <net/if.h>
 

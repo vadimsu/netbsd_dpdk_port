@@ -26,12 +26,12 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ieee8023ad_lacp_debug.c,v 1.6 2011/07/17 20:54:52 joerg Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/callout.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/callout.h>
 
 #include <net/if.h>
 #include <net/if_ether.h>

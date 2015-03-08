@@ -36,8 +36,8 @@
  * Functions to provide access to x86-specific instructions.
  */
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/types.h>
 
 #include <machine/segments.h>
 #include <machine/specialreg.h>

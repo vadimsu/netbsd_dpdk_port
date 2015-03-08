@@ -29,7 +29,7 @@
 #ifndef _SYS_BOOT_FLAG_H_
 #define _SYS_BOOT_FLAG_H_
 
-#include <sys/reboot.h>
+#include <special_includes/sys/reboot.h>
 
 /*
  * Recognize standard boot arguments. If the flag is known, appropriate

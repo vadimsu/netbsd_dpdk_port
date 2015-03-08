@@ -32,7 +32,7 @@
 #ifndef _SYS_MD5_H_
 #define _SYS_MD5_H_
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #define MD5_DIGEST_LENGTH		16
 #define	MD5_DIGEST_STRING_LENGTH	33

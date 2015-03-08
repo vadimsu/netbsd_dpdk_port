@@ -32,7 +32,7 @@
  * character device interface, which allows reading and injecting frames.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_tap.c,v 1.66.14.1 2014/06/03 15:13:30 msaitoh Exp $");
 
 #if defined(_KERNEL_OPT)
@@ -41,27 +41,27 @@ __KERNEL_RCSID(0, "$NetBSD: if_tap.c,v 1.66.14.1 2014/06/03 15:13:30 msaitoh Exp
 #include "opt_compat_netbsd.h"
 #endif
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
-#include <sys/malloc.h>
-#include <sys/conf.h>
-#include <sys/device.h>
-#include <sys/file.h>
-#include <sys/filedesc.h>
-#include <sys/ksyms.h>
-#include <sys/poll.h>
-#include <sys/proc.h>
-#include <sys/select.h>
-#include <sys/sockio.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/device.h>
+#include <special_includes/sys/file.h>
+#include <special_includes/sys/filedesc.h>
+#include <special_includes/sys/ksyms.h>
+#include <special_includes/sys/poll.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/select.h>
+#include <special_includes/sys/sockio.h>
 #if defined(COMPAT_40) || defined(MODULAR)
-#include <sys/sysctl.h>
+#include <special_includes/sys/sysctl.h>
 #endif
-#include <sys/kauth.h>
-#include <sys/mutex.h>
-#include <sys/simplelock.h>
-#include <sys/intr.h>
-#include <sys/stat.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/simplelock.h>
+#include <special_includes/sys/intr.h>
+#include <special_includes/sys/stat.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

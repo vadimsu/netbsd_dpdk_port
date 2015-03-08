@@ -13,7 +13,7 @@
 #define LDBL_MAX	1.1897314953572317650E+4932L
 #define LDBL_MAX_10_EXP	4932
 
-#include <sys/float_ieee754.h>
+#include <special_includes/sys/float_ieee754.h>
 
 #if !defined(_ANSI_SOURCE) && !defined(_POSIX_C_SOURCE) && \
     !defined(_XOPEN_SOURCE) || \

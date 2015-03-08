@@ -47,19 +47,19 @@ __KERNEL_RCSID(0, "$NetBSD: kern_tc.c,v 1.42 2010/04/13 22:46:10 pooka Exp $");
 #endif
 
 #include <special_includes/sys/param.h>
-//#include <sys/kernel.h>
-//#include <sys/reboot.h>	/* XXX just to get AB_VERBOSE */
-//#include <sys/sysctl.h>
+//#include <special_includes/sys/kernel.h>
+//#include <special_includes/sys/reboot.h>	/* XXX just to get AB_VERBOSE */
+//#include <special_includes/sys/sysctl.h>
 #include <special_includes/sys/syslog.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/timepps.h>
 #include <special_includes/sys/timetc.h>
 #include <special_includes/sys/timex.h>
-//#include <sys/evcnt.h>
-//#include <sys/kauth.h>
-//#include <sys/mutex.h>
+//#include <special_includes/sys/evcnt.h>
+//#include <special_includes/sys/kauth.h>
+//#include <special_includes/sys/mutex.h>
 #include <special_includes/sys/atomic.h>
-//#include <sys/xcall.h>
+//#include <special_includes/sys/xcall.h>
 #include "missing_types.h"
 /*
  * A large step happens on boot.  This constant detects such steps.
@@ -312,7 +312,7 @@ tc_delta(struct timehands *th)
 /*
  * Functions for reading the time.  We have to loop until we are sure that
  * the timehands that we operated on was not updated under our feet.  See
- * the comment in <sys/timevar.h> for a description of these 12 functions.
+ * the comment in <special_includes/sys/timevar.h> for a description of these 12 functions.
  */
 
 void

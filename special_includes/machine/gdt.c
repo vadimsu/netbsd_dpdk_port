@@ -36,18 +36,18 @@
  * can be hidden in macros.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: gdt.c,v 1.24 2010/07/07 01:14:52 chs Exp $");
 
 #include "opt_multiprocessor.h"
 #include "opt_xen.h"
 #include "opt_user_ldt.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/mutex.h>
-#include <sys/cpu.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/cpu.h>
 
 #include <uvm/uvm.h>
 

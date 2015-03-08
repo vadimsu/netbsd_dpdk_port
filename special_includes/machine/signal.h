@@ -36,7 +36,7 @@
 
 #ifdef __x86_64__
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 typedef int sig_atomic_t;
 

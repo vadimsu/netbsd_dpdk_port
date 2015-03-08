@@ -31,9 +31,9 @@
 __KERNEL_RCSID(0, "$NetBSD: subr_once.c,v 1.6 2009/03/15 17:14:40 cegger Exp $");
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
-//#include <sys/condvar.h>
-//#include <sys/mutex.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/condvar.h>
+//#include <special_includes/sys/mutex.h>
 #include <special_includes/sys/once.h>
 #include "missing_types.h"
 //static kmutex_t oncemtx;

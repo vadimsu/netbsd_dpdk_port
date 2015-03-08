@@ -41,7 +41,7 @@
  * $FreeBSD: src/sys/libkern/arc4random.c,v 1.9 2001/08/30 12:30:58 bde Exp $
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 #ifdef _KERNEL
 #define NRND 1
@@ -49,17 +49,17 @@
 #define NRND 0
 #endif
 
-#include <sys/types.h>
-#include <sys/time.h>
-#include <sys/param.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/param.h>
 #ifdef _KERNEL
-#include <sys/kernel.h>
+#include <special_includes/sys/kernel.h>
 #endif
-#include <sys/systm.h>
+#include <special_includes/sys/systm.h>
 
 #ifdef _KERNEL
-#include <sys/mutex.h>
-#include <sys/rngtest.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/rngtest.h>
 #else
 #define mutex_spin_enter(x) ;
 #define mutex_spin_exit(x) ;
@@ -69,7 +69,7 @@
 #include <lib/libkern/libkern.h>
 
 #if NRND > 0
-#include <sys/rnd.h>
+#include <special_includes/sys/rnd.h>
 #include <dev/rnd_private.h>
 
 static rndsink_t	rs;

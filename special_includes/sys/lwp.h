@@ -33,18 +33,18 @@
 #ifndef _SYS_LWP_H_
 #define _SYS_LWP_H_
 
-#include <sys/param.h>
-#include <sys/time.h>
-#include <sys/queue.h>
-#include <sys/callout.h>
-#include <sys/kcpuset.h>
-#include <sys/mutex.h>
-#include <sys/condvar.h>
-#include <sys/signalvar.h>
-#include <sys/sched.h>
-#include <sys/specificdata.h>
-#include <sys/syncobj.h>
-#include <sys/resource.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/kcpuset.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/signalvar.h>
+#include <special_includes/sys/sched.h>
+#include <special_includes/sys/specificdata.h>
+#include <special_includes/sys/syncobj.h>
+#include <special_includes/sys/resource.h>
 
 #if defined(_KERNEL)
 #include <machine/cpu.h>		/* curcpu() and cpu_info */
@@ -69,7 +69,7 @@
  */
 #if defined(_KERNEL) || defined(_KMEMUSER)
 
-#include <sys/pcu.h>
+#include <special_includes/sys/pcu.h>
 
 struct lockdebug;
 struct sadata_vp;

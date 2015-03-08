@@ -33,13 +33,13 @@
 /*
  * Support for file system extended attributes.  Originally developed by
  * the TrustedBSD Project.  For a Linux-compatible interface to the same
- * subsystem, see <sys/xattr.h>.
+ * subsystem, see <special_includes/sys/xattr.h>.
  */
 
 #ifndef _SYS_EXTATTR_H_
 #define	_SYS_EXTATTR_H_
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #define	EXTATTR_NAMESPACE_USER		0x00000001
 #define	EXTATTR_NAMESPACE_USER_STRING	"user"
@@ -52,7 +52,7 @@
 
 #ifdef _KERNEL
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 
 /* VOP_LISTEXTATTR flags */
 #define EXTATTR_LIST_LENPREFIX	1	/* names with length prefix */
@@ -65,7 +65,7 @@ int	extattr_check_cred(struct vnode *, int, kauth_cred_t,
 
 #else
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __BEGIN_DECLS
 int	extattrctl(const char *_path, int _cmd, const char *_filename,
 	    int _attrnamespace, const char *_attrname);

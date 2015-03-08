@@ -28,16 +28,16 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: criov.c,v 1.8 2011/02/24 19:28:03 drochner Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/errno.h>
-#include <sys/malloc.h>
-#include <sys/kernel.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/mbuf.h>
 
 #include <uvm/uvm_extern.h>
 

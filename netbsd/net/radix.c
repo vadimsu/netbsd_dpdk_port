@@ -45,7 +45,7 @@ __KERNEL_RCSID(0, "$NetBSD: radix.c,v 1.44 2011/07/17 20:54:52 joerg Exp $");
 #ifdef	_KERNEL
 #include "opt_inet.h"
 
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #define	M_DONTWAIT M_NOWAIT
 #include <special_includes/sys/domain.h>

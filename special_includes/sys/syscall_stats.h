@@ -37,7 +37,7 @@
 #endif
 
 #ifdef SYSCALL_STATS
-#include <sys/syscall.h>
+#include <special_includes/sys/syscall.h>
 
 extern uint64_t syscall_counts[SYS_NSYSENT];
 extern uint64_t syscall_count_user, syscall_count_system, syscall_count_interrupt;

@@ -32,7 +32,7 @@
 #ifndef _SYS_CONDVAR_H_
 #define	_SYS_CONDVAR_H_
 
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 
 typedef struct kcondvar {
 	void		*cv_opaque[3];

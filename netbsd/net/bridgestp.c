@@ -39,17 +39,17 @@
  * (In English: IEEE 802.1D, Draft 17, 1998)
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: bridgestp.c,v 1.14 2009/01/18 10:28:55 mrg Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <sys/device.h>
-#include <sys/kernel.h>
-#include <sys/callout.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/device.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/callout.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

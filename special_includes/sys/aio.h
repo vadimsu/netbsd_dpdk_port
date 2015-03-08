@@ -29,8 +29,8 @@
 #ifndef _SYS_AIO_H_
 #define _SYS_AIO_H_
 
-#include <sys/types.h>
-#include <sys/signal.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/signal.h>
 
 /* Returned by aio_cancel() */
 #define AIO_CANCELED		0x1
@@ -72,11 +72,11 @@ struct aiocb {
 #define AIO_LISTIO_MAX		512
 #define AIO_MAX			AIO_LISTIO_MAX * 16
 
-#include <sys/condvar.h>
-#include <sys/lwp.h>
-#include <sys/mutex.h>
-#include <sys/pool.h>
-#include <sys/queue.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/lwp.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/queue.h>
 
 /* Operations (as flags) */
 #define AIO_LIO			0x00

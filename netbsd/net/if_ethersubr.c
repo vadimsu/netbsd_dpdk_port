@@ -79,8 +79,8 @@ __KERNEL_RCSID(0, "$NetBSD: if_ethersubr.c,v 1.188.8.4 2014/06/03 15:34:00 msait
 #include "agr.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/callout.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/mbuf.h>
@@ -89,10 +89,10 @@ __KERNEL_RCSID(0, "$NetBSD: if_ethersubr.c,v 1.188.8.4 2014/06/03 15:34:00 msait
 #include <special_includes/sys/ioctl.h>
 #include <special_includes/sys/errno.h>
 #include <special_includes/sys/syslog.h>
-//#include <sys/kauth.h>
-//#include <sys/cpu.h>
-//#include <sys/intr.h>
-//#include <sys/device.h>
+//#include <special_includes/sys/kauth.h>
+//#include <special_includes/sys/cpu.h>
+//#include <special_includes/sys/intr.h>
+//#include <special_includes/sys/device.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/netisr.h>

@@ -29,25 +29,25 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_pppoe.c,v 1.98 2011/09/05 12:19:09 rjs Exp $");
 
 #include "pppoe.h"
 #include "opt_pfil_hooks.h"
 #include "opt_pppoe.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
-#include <sys/callout.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/proc.h>
-#include <sys/ioctl.h>
-#include <sys/kauth.h>
-#include <sys/intr.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/intr.h>
+#include <special_includes/sys/socketvar.h>
 
 #include <net/if.h>
 #include <net/if_types.h>

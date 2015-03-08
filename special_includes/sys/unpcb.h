@@ -34,8 +34,8 @@
 #ifndef _SYS_UNPCB_H_
 #define _SYS_UNPCB_H_
 
-#include <sys/un.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/un.h>
+#include <special_includes/sys/mutex.h>
 
 /*
  * Protocol control block for an active

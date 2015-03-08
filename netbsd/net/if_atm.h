@@ -138,7 +138,7 @@ int	atm_output(struct ifnet *, struct mbuf *, const struct sockaddr *,
 #endif
 #ifdef ATM_PVCEXT
 #ifdef _KERNEL
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 /*
  * ATM PVC subinterface: a trick to assign a subinterface
  * to a PVC.

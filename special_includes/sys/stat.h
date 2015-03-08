@@ -39,11 +39,11 @@
 #ifndef _SYS_STAT_H_
 #define	_SYS_STAT_H_
 
-#include <sys/featuretest.h>
-#include <sys/types.h>		/* XXX */
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/types.h>		/* XXX */
 
 #if defined(_NETBSD_SOURCE)
-#include <sys/time.h>
+#include <special_includes/sys/time.h>
 #endif
 
 struct stat {
@@ -214,7 +214,7 @@ struct stat {
 #define UTIME_OMIT	((1 << 30) - 2)
 
 #if !defined(_KERNEL) && !defined(_STANDALONE)
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int	chmod(const char *, mode_t);

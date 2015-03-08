@@ -31,7 +31,7 @@
 #ifndef _SYS_QUOTACTL_H_
 #define _SYS_QUOTACTL_H_
 
-#include <sys/stdint.h>
+#include <special_includes/sys/stdint.h>
 
 /*
  * Note - this is an internal interface. Application code (and,

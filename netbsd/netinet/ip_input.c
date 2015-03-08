@@ -112,10 +112,10 @@ __KERNEL_RCSID(0, "$NetBSD: ip_input.c,v 1.298 2012/01/09 14:31:22 liamjfoy Exp 
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/errno.h>
 #include <special_includes/sys/time.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/pool.h>
-//#include <sys/sysctl.h>
-//#include <sys/kauth.h>
+//#include <special_includes/sys/sysctl.h>
+//#include <special_includes/sys/kauth.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/if_dl.h>
@@ -243,7 +243,7 @@ struct pfil_head inet_pfil_hook;
 struct pool inmulti_pool;
 
 #ifdef INET_CSUM_COUNTERS
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 
 struct evcnt ip_hwcsum_bad = EVCNT_INITIALIZER(EVCNT_TYPE_MISC,
     NULL, "inet", "hwcsum bad");

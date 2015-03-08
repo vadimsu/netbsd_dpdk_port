@@ -35,11 +35,11 @@
 #ifndef _FLASHIO_H_
 #define _FLASHIO_H_
 
-#include <sys/ioctl.h>
+#include <special_includes/sys/ioctl.h>
 
 /* this header may be used fron the kernel */
 #if defined(_KERNEL) || defined(_STANDALONE)
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #else
 #include <stdint.h>
 #include <stdbool.h>

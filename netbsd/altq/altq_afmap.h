@@ -30,7 +30,7 @@
 #ifndef _ALTQ_ALTQ_AFMAP_H_
 #define	_ALTQ_ALTQ_AFMAP_H_
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 #include <altq/altq.h>
 
 struct atm_flowmap {

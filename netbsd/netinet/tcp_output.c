@@ -142,7 +142,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_output.c,v 1.173.2.1 2014/11/03 23:05:45 msaitoh
 #include "opt_tcp_debug.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <special_includes/sys/mbuf.h>
@@ -151,7 +151,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_output.c,v 1.173.2.1 2014/11/03 23:05:45 msaitoh
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/errno.h>
 #include <special_includes/sys/domain.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #ifdef TCP_SIGNATURE
 #include <special_includes/sys/md5.h>
 #endif
@@ -221,7 +221,7 @@ int	tcp_autosndbuf_inc = 8 * 1024;
 int	tcp_autosndbuf_max = 256 * 1024;
 
 #ifdef TCP_OUTPUT_COUNTERS
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 
 extern struct evcnt tcp_output_bigheader;
 extern struct evcnt tcp_output_predict_hit;

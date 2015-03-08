@@ -94,11 +94,11 @@
 #define _SOFTKERNEL
 #endif
 
-#include <sys/null.h>
+#include <special_includes/sys/null.h>
 
 #ifndef __ASSEMBLER__
-//#include <sys/inttypes.h>
-//#include <sys/types.h>
+//#include <special_includes/sys/inttypes.h>
+//#include <special_includes/sys/types.h>
 
 /*
  * Machine-independent constants (some used in following include files).
@@ -108,7 +108,7 @@
  * MAXHOSTNAMELEN should be >= (_POSIX_HOST_NAME_MAX + 1) (see <limits.h>)
  * MAXLOGNAME should be >= UT_NAMESIZE (see <utmp.h>)
  */
-#include <sys/syslimits.h>
+#include <special_includes/sys/syslimits.h>
 
 #define	MAXCOMLEN	16		/* max command name remembered */
 #define	MAXINTERP	PATH_MAX	/* max interpreter file name length */
@@ -132,12 +132,12 @@
 
 /* More types and definitions used throughout the kernel. */
 #ifdef _KERNEL
-#include <sys/cdefs.h>
-#include <sys/errno.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <sys/ucred.h>
-#include <sys/uio.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/resource.h>
+#include <special_includes/sys/ucred.h>
+#include <special_includes/sys/uio.h>
 //#include <uvm/uvm_param.h>
 #ifndef NPROC
 #define	NPROC	(20 + 16 * MAXUSERS)
@@ -159,7 +159,7 @@
 #endif /* _KERNEL */
 
 /* Signals. */
-#include <sys/signal.h>
+#include <special_includes/sys/signal.h>
 
 /* Machine type dependent parameters. */
 #include <machine/param.h>

@@ -33,17 +33,17 @@
  * NPF packet handler.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_handler.c,v 1.13.2.9 2013/02/11 21:49:48 riz Exp $");
 
-#include <sys/types.h>
-#include <sys/param.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/param.h>
 
-#include <sys/mbuf.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/mutex.h>
 #include <net/if.h>
 #include <net/pfil.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/socketvar.h>
 
 #include <netinet/in_systm.h>
 #include <netinet/in.h>

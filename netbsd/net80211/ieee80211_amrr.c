@@ -18,13 +18,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ieee80211_amrr.c,v 1.2 2007/12/11 12:40:10 lukem Exp $");
 
-#include <sys/param.h>
-#include <sys/kernel.h>
-#include <sys/socket.h>
-#include <sys/sysctl.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sysctl.h>
 
 #include <net/if.h>
 #include <net/if_media.h>

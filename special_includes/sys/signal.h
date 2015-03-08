@@ -39,8 +39,8 @@
 #ifndef	_SYS_SIGNAL_H_
 #define	_SYS_SIGNAL_H_
 
-#include <sys/featuretest.h>
-#include <sys/sigtypes.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/sigtypes.h>
 
 #define _NSIG		64
 
@@ -88,7 +88,7 @@
 #endif
 
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #endif
 
 #define	SIG_DFL		((void (*)(int))  0)
@@ -111,12 +111,12 @@
 
 #if (_POSIX_C_SOURCE - 0) >= 199309L || (_XOPEN_SOURCE - 0) >= 500 || \
     defined(_NETBSD_SOURCE)
-#include <sys/siginfo.h>
+#include <special_includes/sys/siginfo.h>
 #endif
 
 #if (defined(_XOPEN_SOURCE) && defined(_XOPEN_SOURCE_EXTENDED)) || \
     (_XOPEN_SOURCE - 0) >= 500 || defined(_NETBSD_SOURCE)
-#include <sys/ucontext.h>
+#include <special_includes/sys/ucontext.h>
 #endif /* _XOPEN_SOURCE_EXTENDED || _XOPEN_SOURCE >= 500 || _NETBSD_SOURCE */
 
 /*
@@ -231,7 +231,7 @@ struct	sigevent {
 
 /*
  * For historical reasons; programs expect signal's return value to be
- * defined by <sys/signal.h>.
+ * defined by <special_includes/sys/signal.h>.
  */
 __BEGIN_DECLS
 void	(*signal(int, void (*)(int)))(int);

@@ -122,9 +122,9 @@
 #define	_SYS_BOOTBLOCK_H
 
 #if !defined(__ASSEMBLER__)
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #if defined(_KERNEL) || defined(_STANDALONE)
-#include <sys/stdint.h>
+#include <special_includes/sys/stdint.h>
 #else
 #include <stdint.h>
 #endif

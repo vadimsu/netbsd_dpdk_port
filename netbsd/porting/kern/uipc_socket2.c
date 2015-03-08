@@ -64,10 +64,10 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket2.c,v 1.110 2011/12/20 23:56:28 christos 
 #include "opt_sb_max.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
-//#include <sys/proc.h>
-//#include <sys/file.h>
-//#include <sys/buf.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/proc.h>
+//#include <special_includes/sys/file.h>
+//#include <special_includes/sys/buf.h>
 #include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <special_includes/sys/mbuf.h>
@@ -76,10 +76,10 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_socket2.c,v 1.110 2011/12/20 23:56:28 christos 
 #include <special_includes/sys/poll.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
-//#include <sys/signalvar.h>
-//#include <sys/kauth.h>
+//#include <special_includes/sys/signalvar.h>
+//#include <special_includes/sys/kauth.h>
 #include <special_includes/sys/pool.h>
-//#include <sys/uidinfo.h>
+//#include <special_includes/sys/uidinfo.h>
 #include "missing_types.h"
 #include <special_includes/sys/syslog.h>
 #define solocked2(a,b) 1

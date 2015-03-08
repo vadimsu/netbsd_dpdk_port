@@ -43,11 +43,11 @@
 #ifndef _SYS_SAVAR_H_
 #define _SYS_SAVAR_H_
 
-#include <sys/lock.h>
-#include <sys/tree.h>
-#include <sys/queue.h>
-#include <sys/sleepq.h>
-#include <sys/sa.h>	/* needed for struct sa_t */
+#include <special_includes/sys/lock.h>
+#include <special_includes/sys/tree.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/sleepq.h>
+#include <special_includes/sys/sa.h>	/* needed for struct sa_t */
 
 struct lwp;
 

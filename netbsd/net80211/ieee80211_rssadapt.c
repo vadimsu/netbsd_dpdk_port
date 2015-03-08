@@ -26,15 +26,15 @@
  * OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #ifdef __NetBSD__
 __KERNEL_RCSID(0, "$NetBSD: ieee80211_rssadapt.c,v 1.17 2009/10/19 23:19:39 rmind Exp $");
 #endif
 
-#include <sys/param.h>
-#include <sys/types.h>
-#include <sys/kernel.h>		/* for hz */
-#include <sys/sysctl.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/kernel.h>		/* for hz */
+#include <special_includes/sys/sysctl.h>
 
 #include <net/if.h>
 #include <net/if_media.h>

@@ -99,16 +99,16 @@ __KERNEL_RCSID(0, "$NetBSD: ip_icmp.c,v 1.128.2.1 2013/03/31 20:52:29 riz Exp $"
 #include "opt_ipsec.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <lib/libkern/libkern.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/time.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/syslog.h>
-//#include <sys/sysctl.h>
+//#include <special_includes/sys/sysctl.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

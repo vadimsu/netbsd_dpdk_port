@@ -35,7 +35,7 @@ __KERNEL_RCSID(0, "$NetBSD: cpu_in_cksum.c,v 1.1 2008/01/25 21:12:14 joerg Exp $
 #include <special_includes/sys/endian.h>
 #include <special_includes/sys/mbuf.h>
 #ifdef _KERNEL
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #else
 #include <assert.h>
 #include <stdbool.h>

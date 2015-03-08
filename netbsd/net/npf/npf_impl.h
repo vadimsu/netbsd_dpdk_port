@@ -47,12 +47,12 @@
 #include "opt_inet6.h"
 #endif
 
-#include <sys/types.h>
-#include <sys/queue.h>
-#include <sys/hash.h>
-#include <sys/rbtree.h>
-#include <sys/ptree.h>
-#include <sys/rwlock.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/hash.h>
+#include <special_includes/sys/rbtree.h>
+#include <special_includes/sys/ptree.h>
+#include <special_includes/sys/rwlock.h>
 #include <net/if.h>
 
 #include "npf.h"

@@ -59,13 +59,13 @@
  * [including the GNU Public Licence.]
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: bf_skey.c,v 1.6 2005/12/11 12:20:48 christos Exp $");
 
-#include <sys/types.h>
-#include <sys/time.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/time.h>
 #ifdef _KERNEL
-#include <sys/systm.h>
+#include <special_includes/sys/systm.h>
 #else
 #include <string.h>
 #endif

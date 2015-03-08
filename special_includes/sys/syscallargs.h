@@ -10,9 +10,9 @@
 #ifndef _SYS_SYSCALLARGS_H_
 #define	_SYS_SYSCALLARGS_H_
 
-#include <sys/mount.h>
-#include <sys/sched.h>
-#include <sys/socket.h>
+#include <special_includes/sys/mount.h>
+#include <special_includes/sys/sched.h>
+#include <special_includes/sys/socket.h>
 
 #define	SYS_MAXSYSARGS	8
 

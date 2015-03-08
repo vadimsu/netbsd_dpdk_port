@@ -36,12 +36,12 @@
 #define	__HAVE_PREEMPTION
 
 #ifdef _KERNEL
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #else
 #include <stdbool.h>
 #endif
 
-#include <sys/evcnt.h>
+#include <special_includes/sys/evcnt.h>
 #include <machine/intrdefs.h>
 
 #ifndef _LOCORE
@@ -153,7 +153,7 @@ splraiseipl(ipl_cookie_t icookie)
 	return splraise(icookie._ipl);
 }
 
-#include <sys/spl.h>
+#include <special_includes/sys/spl.h>
 
 /*
  * Stub declarations.

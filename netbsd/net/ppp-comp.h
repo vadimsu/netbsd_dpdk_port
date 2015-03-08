@@ -62,7 +62,7 @@
  * Structure giving methods for compression/decompression.
  */
 #ifdef PACKETPTR
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 
 struct compressor {
 	int	compress_proto;	/* CCP compression protocol number */

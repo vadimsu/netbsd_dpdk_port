@@ -50,12 +50,12 @@
  * Basic copy to amd64 by fvdl.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: db_memrw.c,v 1.9.4.1 2012/05/09 15:50:38 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/proc.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/systm.h>
 
 #include <machine/db_machdep.h>
 

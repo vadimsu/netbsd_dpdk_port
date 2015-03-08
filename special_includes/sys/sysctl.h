@@ -40,25 +40,25 @@
 /*
  * These are for the eproc structure defined below.
  */
-#include <sys/param.h> /* precautionary upon removal from ucred.h */
-#include <sys/time.h>
-#include <sys/ucred.h>
-#include <sys/ucontext.h>
-#include <sys/proc.h>
-#include <sys/mallocvar.h>
+#include <special_includes/sys/param.h> /* precautionary upon removal from ucred.h */
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/ucred.h>
+#include <special_includes/sys/ucontext.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/mallocvar.h>
 #include <uvm/uvm_extern.h>
 
 
 /* For offsetof() */
 #if defined(_KERNEL) || defined(_STANDALONE)
-#include <sys/systm.h>
+#include <special_includes/sys/systm.h>
 #else
 #include <stddef.h>
 #include <stdbool.h>
 #endif
 
 #ifdef _KERNEL
-#include <sys/cprng.h>
+#include <special_includes/sys/cprng.h>
 #endif
 
 /*
@@ -492,7 +492,7 @@ struct kinfo_proc2 {
 	int32_t	p_ppid;			/* PID_T: Parent process id */
 	int32_t	p_sid;			/* PID_T: session id */
 	int32_t	p__pgid;		/* PID_T: process group id */
-					/* XXX: <sys/proc.h> hijacks p_pgid */
+					/* XXX: <special_includes/sys/proc.h> hijacks p_pgid */
 	int32_t	p_tpgid;		/* PID_T: tty process group id */
 
 	uint32_t p_uid;			/* UID_T: effective user id */
@@ -969,7 +969,7 @@ struct evcnt_sysctl {
 	{ "stopexit", CTLTYPE_INT }, \
 }
 
-/* Limit types from <sys/resources.h> */
+/* Limit types from <special_includes/sys/resources.h> */
 #define	PROC_PID_LIMIT_CPU	(RLIMIT_CPU+1)
 #define	PROC_PID_LIMIT_FSIZE	(RLIMIT_FSIZE+1)
 #define	PROC_PID_LIMIT_DATA	(RLIMIT_DATA+1)
@@ -1222,7 +1222,7 @@ extern const u_int sysctl_lwpflagmap[];
 extern cprng_strong_t *sysctl_prng;
 
 #else	/* !_KERNEL */
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 typedef void *sysctlfn;
 

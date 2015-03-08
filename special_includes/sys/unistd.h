@@ -34,7 +34,7 @@
 #ifndef _SYS_UNISTD_H_
 #define	_SYS_UNISTD_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 /* compile-time symbolic constants */
 #define	_POSIX_JOB_CONTROL	1
@@ -214,7 +214,7 @@
 /* configurable system variables; use as argument to sysconf(3) */
 /*
  * XXX The value of _SC_CLK_TCK is embedded in <time.h>.
- * XXX The value of _SC_PAGESIZE is embedded in <sys/shm.h>.
+ * XXX The value of _SC_PAGESIZE is embedded in <special_includes/sys/shm.h>.
  */
 #define	_SC_ARG_MAX		 1
 #define	_SC_CHILD_MAX		 2

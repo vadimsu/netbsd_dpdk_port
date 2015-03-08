@@ -30,16 +30,16 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: scope6.c,v 1.8 2009/09/11 22:06:29 dyoung Exp $");
 
-#include <sys/param.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/systm.h>
-#include <sys/queue.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/syslog.h>
 
 #include <net/route.h>
 #include <net/if.h>

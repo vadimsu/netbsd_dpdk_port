@@ -32,9 +32,9 @@
  *  http://info.isl.ntt.co.jp/crypt/eng/camellia/specifications.html
  */
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <sys/systm.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/systm.h>
 #include <crypto/camellia/camellia.h>
 
 

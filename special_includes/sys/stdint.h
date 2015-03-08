@@ -32,7 +32,7 @@
 #ifndef _SYS_STDINT_H_
 #define _SYS_STDINT_H_
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #include <machine/int_types.h>
 
 #ifndef	int8_t

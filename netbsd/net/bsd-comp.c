@@ -40,14 +40,14 @@
  * This version is for use with mbufs on BSD-derived systems.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: bsd-comp.c,v 1.20 2008/11/29 23:15:20 cube Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/module.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/module.h>
 #include <net/if.h>
 #include <net/if_types.h>
 #include <net/ppp_defs.h>

@@ -40,10 +40,10 @@
 #ifndef _CTYPE_INLINE_H_
 #define _CTYPE_INLINE_H_
 
-#include <sys/cdefs.h>
-#include <sys/featuretest.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/featuretest.h>
 
-#include <sys/ctype_bits.h>
+#include <special_includes/sys/ctype_bits.h>
 
 #define	isdigit(c)	((int)((_ctype_ + 1)[(c)] & _CTYPE_N))
 #define	islower(c)	((int)((_ctype_ + 1)[(c)] & _CTYPE_L))

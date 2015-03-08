@@ -45,12 +45,12 @@ struct mq_attr {
 /* Internal kernel data */
 #ifdef _KERNEL
 
-#include <sys/condvar.h>
-#include <sys/mutex.h>
-#include <sys/queue.h>
-#include <sys/selinfo.h>
-#include <sys/types.h>
-#include <sys/param.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/selinfo.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/param.h>
 
 /*
  * Flags below are used in mq_flags for internal purposes.

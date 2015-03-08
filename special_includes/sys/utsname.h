@@ -37,7 +37,7 @@
 #ifndef	_SYS_UTSNAME_H_
 #define	_SYS_UTSNAME_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 #define	_SYS_NMLN	256
 
@@ -53,7 +53,7 @@ struct utsname {
 	char	machine[_SYS_NMLN];	/* Hardware type. */
 };
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int	uname(struct utsname *);

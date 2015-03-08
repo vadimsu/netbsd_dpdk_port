@@ -37,8 +37,8 @@
  * Disk device structures.
  */
 
-#include <sys/time.h>
-#include <sys/queue.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/queue.h>
 
 #define	IOSTATNAMELEN	16
 

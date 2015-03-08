@@ -26,13 +26,13 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_agrtimer.c,v 1.6 2010/02/08 17:59:06 dyoung Exp $");
 
-#include <sys/param.h>
-#include <sys/callout.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kernel.h>
 
 #include <net/if.h>
 

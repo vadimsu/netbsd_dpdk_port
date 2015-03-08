@@ -32,7 +32,7 @@
 #ifndef _SYS_WAPBL_H
 #define	_SYS_WAPBL_H
 
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 
 #include <miscfs/specfs/specdev.h>
 
@@ -82,9 +82,9 @@ extern int wapbl_debug_print;
 
 /****************************************************************/
 
-#include <sys/queue.h>
-#include <sys/vnode.h>
-#include <sys/buf.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/vnode.h>
+#include <special_includes/sys/buf.h>
 
 #ifdef _KERNEL
 

@@ -75,21 +75,21 @@
 #endif
 
 #include <machine/proc.h>		/* Machine-dependent proc substruct */
-#include <sys/aio.h>
-#include <sys/rwlock.h>
-#include <sys/mqueue.h>
-#include <sys/mutex.h>
-#include <sys/condvar.h>
-#include <sys/lwp.h>
-#include <sys/queue.h>
-#include <sys/signalvar.h>
-#include <sys/siginfo.h>
-#include <sys/event.h>
-#include <sys/specificdata.h>
+#include <special_includes/sys/aio.h>
+#include <special_includes/sys/rwlock.h>
+#include <special_includes/sys/mqueue.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/lwp.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/signalvar.h>
+#include <special_includes/sys/siginfo.h>
+#include <special_includes/sys/event.h>
+#include <special_includes/sys/specificdata.h>
 
 #ifndef _KERNEL
-#include <sys/time.h>
-#include <sys/resource.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/resource.h>
 #endif
 
 /*

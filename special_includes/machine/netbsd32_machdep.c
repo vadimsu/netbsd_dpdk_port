@@ -35,7 +35,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: netbsd32_machdep.c,v 1.74.10.2 2012/06/12 23:13:07 riz Exp $");
 
 #ifdef _KERNEL_OPT
@@ -46,22 +46,22 @@ __KERNEL_RCSID(0, "$NetBSD: netbsd32_machdep.c,v 1.74.10.2 2012/06/12 23:13:07 r
 #include "opt_mtrr.h"
 #endif
 
-#include <sys/param.h>
-#include <sys/exec.h>
-#include <sys/exec_aout.h>
-#include <sys/kmem.h>
-#include <sys/proc.h>
-#include <sys/signalvar.h>
-#include <sys/systm.h>
-#include <sys/sa.h>
-#include <sys/savar.h>
-#include <sys/core.h>
-#include <sys/mount.h>
-#include <sys/buf.h>
-#include <sys/vnode.h>
-#include <sys/ras.h>
-#include <sys/ptrace.h>
-#include <sys/kauth.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/exec.h>
+#include <special_includes/sys/exec_aout.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/signalvar.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/sa.h>
+#include <special_includes/sys/savar.h>
+#include <special_includes/sys/core.h>
+#include <special_includes/sys/mount.h>
+#include <special_includes/sys/buf.h>
+#include <special_includes/sys/vnode.h>
+#include <special_includes/sys/ras.h>
+#include <special_includes/sys/ptrace.h>
+#include <special_includes/sys/kauth.h>
 
 #include <machine/fpu.h>
 #include <machine/frame.h>

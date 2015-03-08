@@ -76,15 +76,15 @@ __KERNEL_RCSID(0, "$NetBSD: if_loop.c,v 1.75.8.1 2014/06/03 15:34:00 msaitoh Exp
 
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/errno.h>
 #include <special_includes/sys/ioctl.h>
 #include <special_includes/sys/time.h>
 #include <special_includes/sys/malloc.h>
-//#include <sys/cpu.h>
+//#include <special_includes/sys/cpu.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/if_types.h>

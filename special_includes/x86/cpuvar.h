@@ -95,7 +95,7 @@ struct cpufeature_attach_args {
 };
 
 #ifdef _KERNEL
-#include <sys/kcpuset.h>
+#include <special_includes/sys/kcpuset.h>
 #if defined(_KERNEL_OPT)
 #include "opt_multiprocessor.h"
 #endif /* defined(_KERNEL_OPT) */

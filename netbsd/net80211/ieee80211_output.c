@@ -31,7 +31,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #ifdef __FreeBSD__
 __FBSDID("$FreeBSD: src/sys/net80211/ieee80211_output.c,v 1.34 2005/08/10 16:22:29 sam Exp $");
 #endif
@@ -44,14 +44,14 @@ __KERNEL_RCSID(0, "$NetBSD: ieee80211_output.c,v 1.51 2011/12/31 20:41:58 christ
 #ifdef __NetBSD__
 #endif /* __NetBSD__ */
 
-#include <sys/param.h>
-#include <sys/systm.h> 
-#include <sys/mbuf.h>   
-#include <sys/kernel.h>
-#include <sys/endian.h>
-#include <sys/errno.h>
-#include <sys/proc.h>
-#include <sys/sysctl.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h> 
+#include <special_includes/sys/mbuf.h>   
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/endian.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/sysctl.h>
 
 #include <net/if.h>
 #include <net/if_llc.h>

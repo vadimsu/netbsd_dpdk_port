@@ -34,9 +34,9 @@
 #ifndef _NET_ROUTE_H_
 #define _NET_ROUTE_H_
 
-#include <sys/queue.h>
-#include <sys/socket.h>
-#include <sys/types.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/types.h>
 #include <netbsd/net/if.h>
 
 #if !(defined(_KERNEL) || defined(_STANDALONE))

@@ -8,7 +8,7 @@
 #ifndef _X86_IEEEFP_H_
 #define _X86_IEEEFP_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 #include <machine/fenv.h>
 
 typedef int fp_except;

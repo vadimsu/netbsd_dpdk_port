@@ -85,8 +85,8 @@
 #ifndef _CRYPTO_CRYPTO_H_
 #define _CRYPTO_CRYPTO_H_
 
-#include <sys/ioccom.h>
-#include <sys/condvar.h>
+#include <special_includes/sys/ioccom.h>
+#include <special_includes/sys/condvar.h>
 
 /* Some initial values */
 #define CRYPTO_DRIVERS_INITIAL	4

@@ -61,26 +61,26 @@
  *	@(#)in_pcb.c	8.2 (Berkeley) 1/4/94
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in6_pcb.c,v 1.118 2011/12/31 20:41:59 christos Exp $");
 
 #include "opt_inet.h"
 #include "opt_ipsec.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/ioctl.h>
-#include <sys/errno.h>
-#include <sys/time.h>
-#include <sys/proc.h>
-#include <sys/kauth.h>
-#include <sys/domain.h>
-#include <sys/once.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/once.h>
 
 #include <net/if.h>
 #include <net/route.h>

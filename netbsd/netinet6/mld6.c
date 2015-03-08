@@ -101,22 +101,22 @@
  *	@(#)igmp.c	8.1 (Berkeley) 7/19/93
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: mld6.c,v 1.55.4.1 2014/12/29 15:45:44 martin Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/protosw.h>
-#include <sys/syslog.h>
-#include <sys/sysctl.h>
-#include <sys/kernel.h>
-#include <sys/callout.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/cprng.h>
 
 #include <net/if.h>
 

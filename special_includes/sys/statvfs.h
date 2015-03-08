@@ -32,12 +32,12 @@
 #ifndef	_SYS_STATVFS_H_
 #define	_SYS_STATVFS_H_
 
-#include <sys/cdefs.h>
-#include <sys/featuretest.h>
-#include <sys/stdint.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/stdint.h>
 #include <machine/ansi.h>
-#include <sys/ansi.h>
-#include <sys/fstypes.h>
+#include <special_includes/sys/ansi.h>
+#include <special_includes/sys/fstypes.h>
 
 #define	_VFS_NAMELEN	32
 #define	_VFS_MNAMELEN	1024
@@ -171,7 +171,7 @@ __END_DECLS
 #endif /* _KERNEL || _STANDALONE */
 
 #if defined(_KERNEL)
-#include <sys/kmem.h>
+#include <special_includes/sys/kmem.h>
 #define	STATVFSBUF_GET()	kmem_alloc(sizeof(struct statvfs), KM_SLEEP)
 #define	STATVFSBUF_PUT(sb)	kmem_free(sb, sizeof(struct statvfs))
 #endif /* defined(_KERNEL) */

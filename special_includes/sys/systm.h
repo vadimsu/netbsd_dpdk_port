@@ -49,10 +49,10 @@
 
 #include <machine/endian.h>
 
-#include <sys/types.h>
-#include <sys/stdarg.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/stdarg.h>
 
-#include <sys/device_if.h>
+#include <special_includes/sys/device_if.h>
 
 struct clockframe;
 struct lwp;

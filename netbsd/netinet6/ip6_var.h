@@ -64,7 +64,7 @@
 #ifndef _NETINET6_IP6_VAR_H_
 #define _NETINET6_IP6_VAR_H_
 
-#include <sys/socketvar.h>
+#include <special_includes/sys/socketvar.h>
 #include <netbsd/net/route.h>
 
 /*

@@ -37,11 +37,11 @@
 struct callout;
 struct lwp;
 
-//#include <sys/sched.h>	/* for schedstate_percpu */
-//#include <sys/condvar.h>
-#include <sys/pcu.h>
-#include <sys/percpu_types.h>
-#include <sys/queue.h>
+//#include <special_includes/sys/sched.h>	/* for schedstate_percpu */
+//#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/pcu.h>
+#include <special_includes/sys/percpu_types.h>
+#include <special_includes/sys/queue.h>
 
 /*
  * MI per-cpu data

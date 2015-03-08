@@ -33,7 +33,7 @@
 #ifndef _SYS_CALLOUT_H_
 #define _SYS_CALLOUT_H_
 
-//#include <sys/types.h>
+//#include <special_includes/sys/types.h>
 
 /*
  * The callout implementation is private to kern_timeout.c yet uses

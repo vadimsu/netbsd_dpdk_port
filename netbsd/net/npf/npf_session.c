@@ -79,26 +79,26 @@
  *			npf_state_t::nst_lock
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_session.c,v 1.10.4.10 2013/11/17 19:16:58 bouyer Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 
-#include <sys/atomic.h>
-#include <sys/condvar.h>
-#include <sys/hash.h>
-#include <sys/kmem.h>
-#include <sys/kthread.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/atomic.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/hash.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/kthread.h>
+#include <special_includes/sys/mutex.h>
 #include <net/pfil.h>
-#include <sys/pool.h>
-#include <sys/rwlock.h>
-#include <sys/queue.h>
-#include <sys/systm.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/rwlock.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/systm.h>
 
 #include "npf_impl.h"
 

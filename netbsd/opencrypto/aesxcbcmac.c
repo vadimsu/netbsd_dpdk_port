@@ -29,11 +29,11 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: aesxcbcmac.c,v 1.1 2011/05/24 19:10:08 drochner Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
 #include <crypto/rijndael/rijndael.h>
 
 #include <opencrypto/aesxcbcmac.h>

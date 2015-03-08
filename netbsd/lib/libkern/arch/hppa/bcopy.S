@@ -493,7 +493,7 @@ RCSID("$NetBSD: bcopy.S,v 1.14 2011/01/31 12:10:58 skrll Exp $")
 
 #if defined(SPCOPY) && !defined(_STANDALONE)
 
-#include <sys/errno.h>
+#include <special_includes/sys/errno.h>
 #include "assym.h"
 
 /*

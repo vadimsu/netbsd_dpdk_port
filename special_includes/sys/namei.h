@@ -42,11 +42,11 @@
 #ifndef _SYS_NAMEI_H_
 #define	_SYS_NAMEI_H_
 
-#include <sys/queue.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/mutex.h>
 
 #ifdef _KERNEL
-#include <sys/kauth.h>
+#include <special_includes/sys/kauth.h>
 
 /*
  * Abstraction for a single pathname.
@@ -213,7 +213,7 @@ struct	namecache {
 };
 
 #ifdef _KERNEL
-#include <sys/pool.h>
+#include <special_includes/sys/pool.h>
 
 struct mount;
 struct cpu_info;

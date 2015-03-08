@@ -39,7 +39,7 @@
 #ifndef	_SYS_IOCTL_H_
 #define	_SYS_IOCTL_H_
 
-#include <sys/ttycom.h>
+#include <special_includes/sys/ttycom.h>
 
 /*
  * Pun for SunOS prior to 3.2.  SunOS 3.2 and later support TIOCGWINSZ
@@ -55,11 +55,11 @@ struct ttysize {
 #define	TIOCGSIZE	TIOCGWINSZ
 #define	TIOCSSIZE	TIOCSWINSZ
 
-#include <sys/ioccom.h>
+#include <special_includes/sys/ioccom.h>
 
-//#include <sys/dkio.h>
-//#include <sys/filio.h>
-//#include <sys/sockio.h>
+//#include <special_includes/sys/dkio.h>
+//#include <special_includes/sys/filio.h>
+//#include <special_includes/sys/sockio.h>
 
 /*
  * Passthrough ioctl commands. These are passed through to devices
@@ -85,7 +85,7 @@ struct ioctl_pt {
 
 #ifndef _KERNEL
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int	ioctl(int, unsigned long, ...);
@@ -114,5 +114,5 @@ __END_DECLS
 #if defined(USE_OLD_TTY) || defined(COMPAT_43) || defined(COMPAT_SUNOS) || \
     defined(COMPAT_SVR4) || defined(COMPAT_FREEBSD) || defined(COMPAT_OSF1) || \
     defined(COMPAT_IBCS2) || defined(MODULAR)
-#include <sys/ioctl_compat.h>
+#include <special_includes/sys/ioctl_compat.h>
 #endif

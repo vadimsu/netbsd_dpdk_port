@@ -33,13 +33,13 @@
 #define	_SYS_RBTREE_H_
 
 #if defined(_KERNEL) || defined(_STANDALONE)
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #else
 #include <stdbool.h>
 #include <inttypes.h>
 #endif
-#include <sys/queue.h>
-#include <sys/endian.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/endian.h>
 
 __BEGIN_DECLS
 

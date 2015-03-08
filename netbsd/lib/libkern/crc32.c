@@ -16,7 +16,7 @@
 
 /* @(#) Id */
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #include <machine/endian.h>
 
 typedef uint32_t u4;

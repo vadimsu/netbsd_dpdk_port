@@ -26,12 +26,12 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_agrether_hash.c,v 1.3 2007/05/05 18:23:23 yamt Exp $");
 
-#include <sys/param.h>
-#include <sys/mbuf.h>
-#include <sys/hash.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/hash.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

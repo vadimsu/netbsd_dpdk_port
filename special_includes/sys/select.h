@@ -34,13 +34,13 @@
 #ifndef _SYS_SELECT_H_
 #define	_SYS_SELECT_H_
 
-#include <sys/cdefs.h>
-#include <sys/featuretest.h>
-#include <sys/fd_set.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/fd_set.h>
 
 #ifdef _KERNEL
-#include <sys/selinfo.h>		/* for struct selinfo */
-#include <sys/signal.h>			/* for sigset_t */
+#include <special_includes/sys/selinfo.h>		/* for struct selinfo */
+#include <special_includes/sys/signal.h>			/* for sigset_t */
 
 struct lwp;
 struct proc;
@@ -59,7 +59,7 @@ int	pollsock(struct socket *, const struct timespec *, int);
 
 #else /* _KERNEL */
 
-#include <sys/sigtypes.h>
+#include <special_includes/sys/sigtypes.h>
 #include <time.h>
 
 __BEGIN_DECLS

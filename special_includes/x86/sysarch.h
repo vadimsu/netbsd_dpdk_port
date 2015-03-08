@@ -181,7 +181,7 @@ int x86_set_ldt1(struct lwp *, struct x86_set_ldt_args *, union descriptor *);
 int x86_set_sdbase(void *, char, lwp_t *, bool);
 int x86_get_sdbase(void *, char);
 #else
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __BEGIN_DECLS
 int _X86_SYSARCH_L(get_ldt)(int, union descriptor *, int);
 int _X86_SYSARCH_L(set_ldt)(int, union descriptor *, int);

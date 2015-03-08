@@ -91,7 +91,7 @@ static __inline void *bufq_private(const struct bufq_state *) __unused;
 static __inline bool buf_inorder(const struct buf *, const struct buf *, int)
     __unused;
 
-#include <sys/null.h> /* for NULL */
+#include <special_includes/sys/null.h> /* for NULL */
 
 static __inline void *
 bufq_private(const struct bufq_state *bufq)

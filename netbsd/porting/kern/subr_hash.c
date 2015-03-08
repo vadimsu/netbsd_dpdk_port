@@ -41,7 +41,7 @@ __KERNEL_RCSID(0, "$NetBSD: subr_hash.c,v 1.4 2011/12/25 02:23:09 christos Exp $
 
 #include <special_includes/sys/param.h>
 #include <special_includes/sys/kmem.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/syslog.h>
 #include "missing_types.h"
 /*

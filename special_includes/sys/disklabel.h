@@ -38,7 +38,7 @@
  * We need <machine/types.h> for __HAVE_OLD_DISKLABEL
  */
 #ifndef _LOCORE
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #endif
 
 /*
@@ -377,7 +377,7 @@ static const char *const fstypenames[] = { FSTYPE_DEFN(FS_TYPENAMES) NULL };
 #endif
 
 #ifdef FSCKNAMES
-/* These are the names MOUNT_XXX from <sys/mount.h> */
+/* These are the names MOUNT_XXX from <special_includes/sys/mount.h> */
 #define	FS_FSCKNAMES(tag, number, name, fsck, mount) ARRAY_INIT(number,fsck),
 static const char *const fscknames[] = { FSTYPE_DEFN(FS_FSCKNAMES) NULL };
 #undef	FS_FSCKNAMES
@@ -385,7 +385,7 @@ static const char *const fscknames[] = { FSTYPE_DEFN(FS_FSCKNAMES) NULL };
 #endif
 
 #ifdef MOUNTNAMES
-/* These are the names MOUNT_XXX from <sys/mount.h> */
+/* These are the names MOUNT_XXX from <special_includes/sys/mount.h> */
 #define	FS_MOUNTNAMES(tag, number, name, fsck, mount) ARRAY_INIT(number,mount),
 static const char *const mountnames[] = { FSTYPE_DEFN(FS_MOUNTNAMES) NULL };
 #undef	FS_MOUNTNAMES
@@ -469,7 +469,7 @@ const char *getfstypename(int);
 
 #if !defined(_KERNEL) && !defined(_LOCORE)
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 #endif
 

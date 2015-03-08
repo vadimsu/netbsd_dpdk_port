@@ -55,7 +55,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: kgdb_machdep.c,v 1.8 2011/04/03 22:29:25 dyoung Exp $");
 
 #include "opt_ddb.h"
@@ -66,9 +66,9 @@ __KERNEL_RCSID(0, "$NetBSD: kgdb_machdep.c,v 1.8 2011/04/03 22:29:25 dyoung Exp 
  * by Jason R. Thorpe. Modified for NetBSD/amd64 by Frank van der Linden.
  */
 
-#include <sys/param.h>
-#include <sys/kgdb.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kgdb.h>
+#include <special_includes/sys/systm.h>
 
 #include <machine/pte.h>
 #include <machine/trap.h>

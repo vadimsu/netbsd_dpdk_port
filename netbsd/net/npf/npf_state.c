@@ -33,13 +33,13 @@
  * NPF state engine to track sessions.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_state.c,v 1.6.4.8 2013/02/11 21:49:49 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
 
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 
 #include "npf_impl.h"
 

@@ -78,7 +78,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_arp.c,v 1.154.2.1 2014/06/03 15:34:00 msaitoh Exp
 #include "bridge.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/callout.h>
 #include <lib/libkern/libkern.h>
 #include <special_includes/sys/malloc.h>
@@ -86,14 +86,14 @@ __KERNEL_RCSID(0, "$NetBSD: if_arp.c,v 1.154.2.1 2014/06/03 15:34:00 msaitoh Exp
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/time.h>
 #include <special_includes/sys/timetc.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/errno.h>
 #include <special_includes/sys/ioctl.h>
 #include <special_includes/sys/syslog.h>
-//#include <sys/proc.h>
+//#include <special_includes/sys/proc.h>
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/domain.h>
-//#include <sys/sysctl.h>
+//#include <special_includes/sys/sysctl.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/percpu.h>
 

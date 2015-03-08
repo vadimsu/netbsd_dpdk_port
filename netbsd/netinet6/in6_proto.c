@@ -61,7 +61,7 @@
  *	@(#)in_proto.c	8.1 (Berkeley) 6/10/93
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in6_proto.c,v 1.95.2.1 2013/07/08 07:40:07 jdc Exp $");
 
 #include "opt_gateway.h"
@@ -69,12 +69,12 @@ __KERNEL_RCSID(0, "$NetBSD: in6_proto.c,v 1.95.2.1 2013/07/08 07:40:07 jdc Exp $
 #include "opt_ipsec.h"
 #include "opt_iso.h"
 
-#include <sys/param.h>
-#include <sys/socket.h>
-#include <sys/protosw.h>
-#include <sys/kernel.h>
-#include <sys/domain.h>
-#include <sys/mbuf.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/mbuf.h>
 
 #include <net/if.h>
 #include <net/radix.h>

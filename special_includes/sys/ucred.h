@@ -35,7 +35,7 @@
 #define	_SYS_UCRED_H_
 
 #ifdef _KERNEL
-#include <sys/syslimits.h>
+#include <special_includes/sys/syslimits.h>
 #else
 #include <limits.h>
 #endif

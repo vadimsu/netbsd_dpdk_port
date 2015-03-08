@@ -32,7 +32,7 @@
 #ifndef _SYS_SPECIFICDATA_H_
 #define	_SYS_SPECIFICDATA_H_
 
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 
 typedef unsigned int specificdata_key_t;
 typedef void (*specificdata_dtor_t)(void *);

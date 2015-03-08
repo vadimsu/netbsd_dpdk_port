@@ -3,8 +3,8 @@
 #ifndef _SYS_DVDIO_H_
 #define _SYS_DVDIO_H_
 
-#include <sys/types.h>
-#include <sys/ioccom.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/ioccom.h>
 
 /* DVD-ROM Specific ioctls */
 #define DVD_READ_STRUCT		_IOWR('d', 0, dvd_struct)

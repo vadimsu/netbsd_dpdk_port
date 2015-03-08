@@ -44,7 +44,7 @@
  * router. See gre(4) for more details.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_gre.c,v 1.150.6.1 2014/11/03 15:08:44 msaitoh Exp $");
 
 #include "opt_atalk.h"
@@ -52,30 +52,30 @@ __KERNEL_RCSID(0, "$NetBSD: if_gre.c,v 1.150.6.1 2014/11/03 15:08:44 msaitoh Exp
 #include "opt_inet.h"
 #include "opt_mpls.h"
 
-#include <sys/param.h>
-#include <sys/file.h>
-#include <sys/filedesc.h>
-#include <sys/malloc.h>
-#include <sys/mallocvar.h>
-#include <sys/mbuf.h>
-#include <sys/proc.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/ioctl.h>
-#include <sys/queue.h>
-#include <sys/intr.h>
-#include <sys/systm.h>
-#include <sys/sysctl.h>
-#include <sys/kauth.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/file.h>
+#include <special_includes/sys/filedesc.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mallocvar.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/intr.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/kauth.h>
 
-#include <sys/kernel.h>
-#include <sys/mutex.h>
-#include <sys/condvar.h>
-#include <sys/kthread.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/kthread.h>
 
-#include <sys/cpu.h>
+#include <special_includes/sys/cpu.h>
 
 #include <net/ethertypes.h>
 #include <net/if.h>
@@ -107,7 +107,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_gre.c,v 1.150.6.1 2014/11/03 15:08:44 msaitoh Exp
 #include <netatalk/at_extern.h>
 #endif
 
-#include <sys/time.h>
+#include <special_includes/sys/time.h>
 #include <net/bpf.h>
 
 #include <net/if_gre.h>

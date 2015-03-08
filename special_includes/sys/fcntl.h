@@ -46,10 +46,10 @@
  */
 
 #ifndef _KERNEL
-#include <sys/featuretest.h>
-#include <sys/types.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/types.h>
 #if defined(_XOPEN_SOURCE) || defined(_NETBSD_SOURCE)
-#include <sys/stat.h>
+#include <special_includes/sys/stat.h>
 #endif /* _XOPEN_SOURCE || _NETBSD_SOURCE */
 #endif /* !_KERNEL */
 
@@ -299,7 +299,7 @@ struct flock {
 
 
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int	open(const char *, int, ...);

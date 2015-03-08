@@ -39,7 +39,7 @@
 
 #ifdef _KERNEL
 
-#include <sys/vnode.h>
+#include <special_includes/sys/vnode.h>
 
 struct lockf;
 

@@ -28,8 +28,8 @@
 #ifndef _X86_CPU_MSR_H
 #define _X86_CPU_MSR_H
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
 #ifdef _KERNEL
 

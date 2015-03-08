@@ -64,7 +64,7 @@
 #ifndef _SYS_SELINFO_H_
 #define	_SYS_SELINFO_H_
 
-//#include <sys/event.h>		/* for struct klist */
+//#include <special_includes/sys/event.h>		/* for struct klist */
 
 /*
  * Used to maintain information about processes that wish to be

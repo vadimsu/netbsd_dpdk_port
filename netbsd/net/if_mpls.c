@@ -29,18 +29,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_mpls.c,v 1.8.8.1 2013/07/30 03:05:39 msaitoh Exp $");
 
 #include "opt_inet.h"
 #include "opt_mpls.h"
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 
-#include <sys/errno.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/sysctl.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/sysctl.h>
 
 #include <net/bpf.h>
 #include <net/if.h>

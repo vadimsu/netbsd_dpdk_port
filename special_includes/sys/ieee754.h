@@ -50,7 +50,7 @@
 #include <machine/endian.h>
 
 /*
- * <sys/ieee754.h> defines the layout of IEEE 754 floating point types.
+ * <special_includes/sys/ieee754.h> defines the layout of IEEE 754 floating point types.
  * Only single-precision and double-precision types are defined here;
  * extended types, if available, are defined in the machine-dependent
  * header.

@@ -33,8 +33,8 @@
 #ifndef _NETINET6_ND6_H_
 #define _NETINET6_ND6_H_
 
-#include <sys/queue.h>
-#include <sys/callout.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/callout.h>
 
 struct	llinfo_nd6 {
 	struct	llinfo_nd6 *ln_next;
@@ -344,7 +344,7 @@ struct nd_pfxrouter {
 
 LIST_HEAD(nd_prhead, nd_prefix);
 
-#include <sys/mallocvar.h>
+#include <special_includes/sys/mallocvar.h>
 MALLOC_DECLARE(M_IP6NDP);
 
 /* nd6.c */

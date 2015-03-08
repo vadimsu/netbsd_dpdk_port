@@ -31,7 +31,7 @@
 #ifndef _SYS_TLS_H_
 #define _SYS_TLS_H_
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #include <machine/types.h>
 
 #if defined(__HAVE_TLS_VARIANT_I) || defined(__HAVE_TLS_VARIANT_II)

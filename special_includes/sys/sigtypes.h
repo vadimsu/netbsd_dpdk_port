@@ -45,7 +45,7 @@
  * its internals.
  */
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 #include <machine/int_types.h>
 #include <machine/ansi.h>
 
@@ -124,7 +124,7 @@ typedef struct
  * Now include types used by Scheduler Activations. Included here as
  * this is the best standard header to add them to.
  */
-#include <sys/satypes.h>
+#include <special_includes/sys/satypes.h>
 #endif
 
 #endif	/* !_SYS_SIGTYPES_H_ */

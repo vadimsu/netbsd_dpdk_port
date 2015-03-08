@@ -37,8 +37,8 @@
 #ifndef _SYS_AUDIOIO_H_
 #define _SYS_AUDIOIO_H_
 
-#include <sys/types.h>
-#include <sys/ioccom.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/ioccom.h>
 
 #ifndef _KERNEL
 #include <string.h>	/* Required for memset(3) prototype (AUDIO_INITINFO) */

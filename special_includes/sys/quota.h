@@ -28,7 +28,7 @@
 #ifndef _SYS_QUOTA_H_
 #define _SYS_QUOTA_H_
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 /* quota id types (entities being billed) */
 #define QUOTA_IDTYPE_USER	0

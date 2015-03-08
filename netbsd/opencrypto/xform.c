@@ -39,11 +39,11 @@
  * PURPOSE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: xform.c,v 1.28 2011/05/26 21:50:03 drochner Exp $");
 
-#include <sys/param.h>
-#include <sys/malloc.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
 
 #include <opencrypto/cryptodev.h>
 #include <opencrypto/xform.h>

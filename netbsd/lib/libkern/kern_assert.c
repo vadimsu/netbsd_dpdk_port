@@ -31,8 +31,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/types.h>
-#include <sys/systm.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/systm.h>
 
 #ifdef _STANDALONE
 #include <lib/libkern/libkern.h>

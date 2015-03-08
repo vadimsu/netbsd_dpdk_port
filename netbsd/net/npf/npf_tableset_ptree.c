@@ -33,14 +33,14 @@
  * Patricia/RADIX tree comparators for NPF tables.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_tableset_ptree.c,v 1.1.2.2 2012/07/16 22:13:27 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
-#include <sys/bitops.h>
-#include <sys/ptree.h>
+#include <special_includes/sys/bitops.h>
+#include <special_includes/sys/ptree.h>
 
 #include "npf_impl.h"
 

@@ -32,12 +32,12 @@
 #ifndef	_SYS_SLEEPQ_H_
 #define	_SYS_SLEEPQ_H_
 
-#include <sys/lwp.h>
-#include <sys/mutex.h>
-#include <sys/pool.h>
-#include <sys/queue.h>
-#include <sys/sched.h>
-#include <sys/syncobj.h>
+#include <special_includes/sys/lwp.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/sched.h>
+#include <special_includes/sys/syncobj.h>
 
 /*
  * Generic sleep queues.

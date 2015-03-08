@@ -28,7 +28,7 @@
 #ifndef _AMD64_FENV_H_
 #define _AMD64_FENV_H_
 
-#include <sys/stdint.h>
+#include <special_includes/sys/stdint.h>
 #include <machine/fpu.h>
 
 /*

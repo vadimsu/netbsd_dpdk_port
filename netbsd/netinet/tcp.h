@@ -34,10 +34,10 @@
 #ifndef _NETINET_TCP_H_
 #define _NETINET_TCP_H_
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 #if defined(_NETBSD_SOURCE)
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 typedef uint32_t tcp_seq;
 /*

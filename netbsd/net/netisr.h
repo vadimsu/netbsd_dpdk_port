@@ -60,7 +60,7 @@
 #if !defined(_LOCORE)
 
 /* XXX struct sockaddr defn for for if.h, if_arp.h */
-#include <sys/socket.h>
+#include <special_includes/sys/socket.h>
 
 /*
  * XXX IFNAMSIZE for if_ppp.h, natm.h; struct ifnet decl for in6.h, in.h;

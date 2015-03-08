@@ -29,19 +29,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: linux_syscall.c,v 1.31 2010/12/20 00:25:24 matt Exp $");
 
 #if defined(_KERNEL_OPT)
 #include "opt_compat_linux.h"
 #endif
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/signal.h>
-#include <sys/syscall.h>
-#include <sys/syscallvar.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/signal.h>
+#include <special_includes/sys/syscall.h>
+#include <special_includes/sys/syscallvar.h>
 
 #include <machine/cpu.h>
 #include <machine/psl.h>

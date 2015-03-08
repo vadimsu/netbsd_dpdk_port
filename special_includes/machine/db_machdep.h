@@ -36,7 +36,7 @@
 #if defined(_KERNEL_OPT)
 #include "opt_multiprocessor.h"
 #endif /* defined(_KERNEL_OPT) */
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #include <uvm/uvm_extern.h>
 #include <machine/trap.h>
 

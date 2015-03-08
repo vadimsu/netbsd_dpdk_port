@@ -29,7 +29,7 @@
 #ifndef _SYS_VMEM_H_
 #define	_SYS_VMEM_H_
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #if !defined(_KERNEL)
 #include <stdbool.h>

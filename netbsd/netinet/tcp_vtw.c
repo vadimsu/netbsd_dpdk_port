@@ -35,7 +35,7 @@
 #include "opt_tcp_debug.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/kmem.h>
 #include <special_includes/sys/mbuf.h>
@@ -46,7 +46,7 @@
 #include <special_includes/sys/syslog.h>
 #include <special_includes/sys/pool.h>
 #include <special_includes/sys/domain.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
 #include <netbsd/net/if_types.h>
@@ -2193,8 +2193,8 @@ vtw_earlyinit(void)
 }
 
 #ifdef VTW_DEBUG
-#include <sys/syscallargs.h>
-#include <sys/sysctl.h>
+#include <special_includes/sys/syscallargs.h>
+#include <special_includes/sys/sysctl.h>
 
 /*!\brief	add lalp, fafp entries for debug
  */

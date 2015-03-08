@@ -68,10 +68,10 @@
 #ifndef _SYS_SHM_H_
 #define _SYS_SHM_H_
 
-#include <sys/cdefs.h>
-#include <sys/featuretest.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/featuretest.h>
 
-#include <sys/ipc.h>
+#include <special_includes/sys/ipc.h>
 
 #define	SHM_RDONLY	010000	/* Attach read-only (else read-write) */
 #define	SHM_RND		020000	/* Round attach address to SHMLBA */

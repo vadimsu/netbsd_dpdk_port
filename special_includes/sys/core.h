@@ -57,7 +57,7 @@
 #define CORE_DATA	2
 #define CORE_STACK	4
 
-#include <sys/aout_mids.h>
+#include <special_includes/sys/aout_mids.h>
 
 /*
  * A core file consists of a header followed by a number of segments.

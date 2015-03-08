@@ -47,7 +47,7 @@ this code that are retained.
 /* If you need this in a boot program, you have bigger problems... */
 #ifndef _STANDALONE
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 __RCSID("$NetBSD: softfloat.c,v 1.4 2005/12/11 12:24:37 christos Exp $");
 #endif /* LIBC_SCCS and not lint */

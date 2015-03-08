@@ -52,7 +52,7 @@
 #ifndef _NET_IF_DL_H_
 #define _NET_IF_DL_H_
 
-#include <sys/ansi.h>
+#include <special_includes/sys/ansi.h>
 
 #ifndef sa_family_t
 typedef __sa_family_t	sa_family_t;
@@ -93,7 +93,7 @@ struct sockaddr_dl *sockaddr_dl_setaddr(struct sockaddr_dl *, socklen_t,
     const void *, uint8_t);
 #else
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 void	link_addr(const char *, struct sockaddr_dl *);

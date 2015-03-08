@@ -58,5 +58,5 @@ struct ttychars {
 #endif /* !_SYS_TTYCHARS_H_ */
 
 #ifdef USE_OLD_TTY
-#include <sys/ttydefaults.h>	/* to pick up character defaults */
+#include <special_includes/sys/ttydefaults.h>	/* to pick up character defaults */
 #endif

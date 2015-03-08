@@ -34,8 +34,8 @@
 #ifndef _SYS_FD_SET_H_
 #define	_SYS_FD_SET_H_
 
-#include <sys/cdefs.h>
-#include <sys/featuretest.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/featuretest.h>
 #include <machine/int_types.h>
 
 /*

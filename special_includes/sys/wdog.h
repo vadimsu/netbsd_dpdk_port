@@ -36,7 +36,7 @@
 #ifndef _SYS_WDOG_H_
 #define	_SYS_WDOG_H_
 
-#include <sys/ioccom.h>
+#include <special_includes/sys/ioccom.h>
 
 /*
  * Definitions for manipulating watchdog timers.

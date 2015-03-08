@@ -27,9 +27,9 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #include <crypto/camellia/camellia.h>
 
 void

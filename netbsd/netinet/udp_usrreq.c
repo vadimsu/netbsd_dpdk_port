@@ -60,7 +60,7 @@
  *	@(#)udp_usrreq.c	8.6 (Berkeley) 5/23/95
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: udp_usrreq.c,v 1.185 2012/01/09 22:26:44 liamjfoy Exp $");
 
 #include "opt_inet.h"
@@ -70,18 +70,18 @@ __KERNEL_RCSID(0, "$NetBSD: udp_usrreq.c,v 1.185 2012/01/09 22:26:44 liamjfoy Ex
 #include "opt_ipkdb.h"
 #include "opt_mbuftrace.h"
 
-#include <sys/param.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/errno.h>
-#include <sys/stat.h>
-//#include <sys/systm.h>
-//#include <sys/proc.h>
-#include <sys/domain.h>
-//#include <sys/sysctl.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/stat.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/proc.h>
+#include <special_includes/sys/domain.h>
+//#include <special_includes/sys/sysctl.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>
@@ -143,7 +143,7 @@ __KERNEL_RCSID(0, "$NetBSD: udp_usrreq.c,v 1.185 2012/01/09 22:26:44 liamjfoy Ex
 #ifdef IPKDB
 #include <ipkdb/ipkdb.h>
 #endif
-#include <sys/syslog.h>
+#include <special_includes/sys/syslog.h>
 /*
  * UDP protocol implementation.
  * Per RFC 768, August, 1980.
@@ -189,7 +189,7 @@ struct mowner udp_tx_mowner = MOWNER_INIT("udp", "tx");
 #endif
 
 #ifdef UDP_CSUM_COUNTERS
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 
 #if defined(INET)
 struct evcnt udp_hwcsum_bad = EVCNT_INITIALIZER(EVCNT_TYPE_MISC,

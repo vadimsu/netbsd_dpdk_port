@@ -108,7 +108,7 @@
 
 
 #if defined(_KERNEL)
-#include <sys/kcpuset.h>
+#include <special_includes/sys/kcpuset.h>
 
 /*
  * pmap data structures: see pmap.c for details of locking.
@@ -420,7 +420,7 @@ void	pmap_cpu_init_late(struct cpu_info *);
 bool	sse2_idlezero_page(void *);
 
 #ifdef XEN
-#include <sys/bitops.h>
+#include <special_includes/sys/bitops.h>
 
 #define XPTE_MASK	L1_FRAME
 /* Selects the index of a PTE in (A)PTE_BASE */

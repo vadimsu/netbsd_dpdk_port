@@ -30,13 +30,13 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: esp_rijndael.c,v 1.20 2006/11/16 01:33:45 christos Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/socket.h>
-#include <sys/queue.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/queue.h>
 
 #include <net/if.h>
 #include <net/route.h>

@@ -38,7 +38,7 @@
 
 #ifdef _KERNEL
 #ifndef _SYS_XCALL_H_
-#include <sys/xcall.h>
+#include <special_includes/sys/xcall.h>
 #endif
 #endif
 

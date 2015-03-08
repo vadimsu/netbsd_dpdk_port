@@ -27,19 +27,19 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: accf_http.c,v 1.7 2009/09/02 14:56:57 tls Exp $");
 
 #define ACCEPT_FILTER_MOD
 
-#include <sys/param.h>
-#include <sys/kernel.h>
-#include <sys/mbuf.h>
-#include <sys/module.h>
-#include <sys/signalvar.h>
-#include <sys/sysctl.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/module.h>
+#include <special_includes/sys/signalvar.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
 
 #include <netinet/accept_filter.h>
 

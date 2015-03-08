@@ -34,7 +34,7 @@
 #ifndef _X86_I82093VAR_H_
 #define _X86_I82093VAR_H_
 
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 #include <machine/apicvar.h>
 
 struct ioapic_pin 

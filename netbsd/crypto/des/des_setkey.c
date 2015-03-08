@@ -56,12 +56,12 @@
  * 1.0 First working version
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: des_setkey.c,v 1.10 2005/12/11 12:20:52 christos Exp $");
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 #ifdef _KERNEL
-#include <sys/systm.h>
+#include <special_includes/sys/systm.h>
 #else
 #include <string.h>
 #endif

@@ -81,11 +81,11 @@
  * This avoids reuse issues caused by reseeding.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip6_id.c,v 1.17 2011/11/19 22:51:29 tls Exp $");
 
-#include <sys/param.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/cprng.h>
 
 #include <lib/libkern/libkern.h>
 

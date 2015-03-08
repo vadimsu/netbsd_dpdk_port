@@ -36,7 +36,7 @@
 #ifndef _X86_LOCK_H_
 #define	_X86_LOCK_H_
 
-#include <sys/param.h>
+#include <special_includes/sys/param.h>
 
 static __inline int
 __SIMPLELOCK_LOCKED_P(__cpu_simple_lock_t *__ptr)

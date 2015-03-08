@@ -39,8 +39,8 @@
 
 #ifdef __x86_64__
 
-#include <sys/tree.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/tree.h>
+#include <special_includes/sys/mutex.h>
 #ifdef _KERNEL_OPT
 #include "opt_xen.h"
 #endif

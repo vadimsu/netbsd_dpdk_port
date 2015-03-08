@@ -29,7 +29,7 @@
 #ifndef _NET_AGR_IF_AGRSUBR_H_
 #define	_NET_AGR_IF_AGRSUBR_H_
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 
 struct agr_mc_entry;
 

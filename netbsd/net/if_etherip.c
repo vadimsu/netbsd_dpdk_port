@@ -92,17 +92,17 @@ __KERNEL_RCSID(0, "$NetBSD: if_etherip.c,v 1.31 2011/10/28 16:10:12 dyoung Exp $
 
 #include <special_includes/sys/param.h>
 #include <special_includes/sys/systm.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/malloc.h>
-//#include <sys/conf.h>
-//#include <sys/device.h>
+//#include <special_includes/sys/conf.h>
+//#include <special_includes/sys/device.h>
 #include <special_includes/sys/errno.h>
 #include <special_includes/sys/time.h>
-//#include <sys/sysctl.h>
+//#include <special_includes/sys/sysctl.h>
 #include <special_includes/sys/queue.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
-//#include <sys/intr.h>
+//#include <special_includes/sys/intr.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/if_dl.h>

@@ -69,7 +69,7 @@
 #include "opt_xen.h"
 #endif
 
-#include <sys/atomic.h>
+#include <special_includes/sys/atomic.h>
 
 #include <machine/pte.h>
 #include <machine/segments.h>

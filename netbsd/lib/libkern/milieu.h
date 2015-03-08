@@ -61,10 +61,10 @@ this code that are retained.
 #if !defined(_KERNEL) && !defined(_STANDALONE)
 #include <inttypes.h>
 #else
-#include <sys/inttypes.h>
+#include <special_includes/sys/inttypes.h>
 #endif
 
-#include <sys/endian.h>
+#include <special_includes/sys/endian.h>
 
 /*
 -------------------------------------------------------------------------------

@@ -26,15 +26,15 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ieee8023ad_lacp.c,v 1.10 2011/07/01 02:46:24 joerg Exp $");
 
-#include <sys/param.h>
-#include <sys/callout.h>
-#include <sys/mbuf.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/kernel.h> /* hz */
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/kernel.h> /* hz */
 
 #include <net/if.h>
 #include <net/if_dl.h>

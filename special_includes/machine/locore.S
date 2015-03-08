@@ -168,8 +168,8 @@
 #include "ioapic.h"
 #include "ksyms.h"
 
-#include <sys/errno.h>
-#include <sys/syscall.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/syscall.h>
 
 #include <machine/pte.h>
 #include <machine/segments.h>

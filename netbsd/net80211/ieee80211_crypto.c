@@ -31,7 +31,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #ifdef __FreeBSD__
 __FBSDID("$FreeBSD: src/sys/net80211/ieee80211_crypto.c,v 1.12 2005/08/08 18:46:35 sam Exp $");
 #endif
@@ -44,15 +44,15 @@ __KERNEL_RCSID(0, "$NetBSD: ieee80211_crypto.c,v 1.15 2011/05/23 15:37:36 drochn
 /*
  * IEEE 802.11 generic crypto support.
  */
-#include <sys/param.h>
-#include <sys/mbuf.h>   
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>   
 
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/endian.h>
-#include <sys/errno.h>
-#include <sys/proc.h>
-#include <sys/sysctl.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/endian.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/sysctl.h>
 
 #include <net/if.h>
 #include <net/if_media.h>

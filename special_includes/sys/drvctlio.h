@@ -35,7 +35,7 @@
 #define _SYS_DRVCTLIO_H_ 
 
 #include <prop/proplib.h>
-#include <sys/ioccom.h>
+#include <special_includes/sys/ioccom.h>
 
 #define DRVCTLDEV "/dev/drvctl"
 

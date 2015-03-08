@@ -137,7 +137,7 @@ struct ps_strings32 {
  * in creating the new process's vmspace.
  */
 
-#include <sys/uio.h>
+#include <special_includes/sys/uio.h>
 
 struct lwp;
 struct proc;

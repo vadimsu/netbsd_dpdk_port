@@ -65,11 +65,11 @@
 
 #define	ELFSIZE		ARCH_ELFSIZE
 
-#include <sys/systm.h>
-#include <sys/kobj.h>
-#include <sys/exec.h>
-#include <sys/exec_elf.h>
-#include <sys/module.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kobj.h>
+#include <special_includes/sys/exec.h>
+#include <special_includes/sys/exec_elf.h>
+#include <special_includes/sys/module.h>
 
 typedef struct {
 	void		*addr;

@@ -36,7 +36,7 @@
 
 #ifdef __x86_64__
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 /*
  * 7.18.1 Integer types

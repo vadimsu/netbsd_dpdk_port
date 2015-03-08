@@ -41,8 +41,8 @@
 #ifndef _NET_BPFDESC_H_
 #define _NET_BPFDESC_H_
 
-#include <sys/callout.h>
-#include <sys/selinfo.h>		/* for struct selinfo */
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/selinfo.h>		/* for struct selinfo */
 #include <netbsd/net/if.h>			/* for IFNAMSIZ */
 
 /*

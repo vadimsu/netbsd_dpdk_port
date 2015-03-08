@@ -34,7 +34,7 @@
 
 #include <machine/signal.h>
 #ifdef _KERNEL
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 #endif
 
 typedef union sigval {

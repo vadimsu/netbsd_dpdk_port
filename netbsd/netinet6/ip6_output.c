@@ -61,7 +61,7 @@
  *	@(#)ip_output.c	8.3 (Berkeley) 1/21/94
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ip6_output.c,v 1.145.2.1 2014/08/27 14:44:42 msaitoh Exp $");
 
 #include "opt_inet.h"
@@ -69,16 +69,16 @@ __KERNEL_RCSID(0, "$NetBSD: ip6_output.c,v 1.145.2.1 2014/08/27 14:44:42 msaitoh
 #include "opt_ipsec.h"
 #include "opt_pfil_hooks.h"
 
-#include <sys/param.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/errno.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/socketvar.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/kauth.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/kauth.h>
 
 #include <net/if.h>
 #include <net/route.h>

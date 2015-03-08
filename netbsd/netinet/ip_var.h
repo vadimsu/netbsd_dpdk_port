@@ -34,7 +34,7 @@
 #ifndef _NETINET_IP_VAR_H_
 #define _NETINET_IP_VAR_H_
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 #include <netbsd/net/route.h>
 
 /*

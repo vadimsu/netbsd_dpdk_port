@@ -39,7 +39,7 @@
 #ifdef __x86_64__
 
 #ifdef  __GNUC__
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 __BEGIN_DECLS
 
 #define	__BYTE_SWAP_U64_VARIABLE __byte_swap_u64_variable

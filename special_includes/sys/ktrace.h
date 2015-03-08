@@ -34,7 +34,7 @@
 #ifndef _SYS_KTRACE_H_
 #define _SYS_KTRACE_H_
 
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 
 /*
  * operations to ktrace system call  (KTROP(op))
@@ -261,7 +261,7 @@ struct ktr_execfd {
 
 #ifndef	_KERNEL
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int	ktrace(const char *, int, int, pid_t);

@@ -86,31 +86,31 @@
  * Sped up a bunch of things.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_strip.c,v 1.96 2011/09/23 15:29:09 christos Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/proc.h>
-#include <sys/mbuf.h>
-#include <sys/buf.h>
-#include <sys/dkstat.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <sys/file.h>
-#include <sys/conf.h>
-#include <sys/tty.h>
-#include <sys/kernel.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/buf.h>
+#include <special_includes/sys/dkstat.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/file.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/tty.h>
+#include <special_includes/sys/kernel.h>
 #if __NetBSD__
-#include <sys/systm.h>
-#include <sys/callout.h>
-#include <sys/kauth.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/kauth.h>
 #endif
-#include <sys/syslog.h>
-#include <sys/cpu.h>
-#include <sys/intr.h>
-#include <sys/socketvar.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/cpu.h>
+#include <special_includes/sys/intr.h>
+#include <special_includes/sys/socketvar.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>
@@ -135,7 +135,7 @@ typedef u_char ttychar_t;
 typedef char ttychar_t;
 #endif
 
-#include <sys/time.h>
+#include <special_includes/sys/time.h>
 #include <net/bpf.h>
 
 /*

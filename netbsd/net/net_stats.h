@@ -33,7 +33,7 @@
 #define _NET_NET_STATS_H_
 
 #ifdef _KERNEL
-#include <sys/percpu.h>
+#include <special_includes/sys/percpu.h>
 
 #define	_NET_STAT_GETREF(stat)	percpu_getref((stat))
 #define	_NET_STAT_PUTREF(stat)	percpu_putref((stat))

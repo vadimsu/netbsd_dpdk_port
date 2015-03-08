@@ -145,7 +145,7 @@
  * Kernel variables for tcp.
  */
 
-#include <sys/callout.h>
+#include <special_includes/sys/callout.h>
 #ifdef TCP_SIGNATURE
 #undef TCP_SIGNATURE
 #endif

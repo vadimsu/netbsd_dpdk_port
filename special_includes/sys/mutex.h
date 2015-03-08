@@ -140,8 +140,8 @@
 #endif
 
 #if !defined(_KERNEL)
-#include <sys/types.h>
-#include <sys/inttypes.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/inttypes.h>
 #endif
 
 typedef enum kmutex_type_t {
@@ -178,7 +178,7 @@ void	mutex_wakeup(kmutex_t *);
 #endif	/* __MUTEX_PRIVATE */
 
 #ifdef _KERNEL
-#include <sys/intr.h>
+#include <special_includes/sys/intr.h>
 #endif
 
 #include <machine/mutex.h>

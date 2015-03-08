@@ -60,11 +60,11 @@
 #ifndef _SYS_FILEDESC_H_
 #define	_SYS_FILEDESC_H_
 
-#include <sys/param.h>
-#include <sys/queue.h>
-#include <sys/mutex.h>
-#include <sys/rwlock.h>
-#include <sys/condvar.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/rwlock.h>
+#include <special_includes/sys/condvar.h>
 
 /*
  * This structure is used for the management of descriptors.  It may be

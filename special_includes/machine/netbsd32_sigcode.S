@@ -31,7 +31,7 @@
 
 #include "assym.h"
 #include <machine/asm.h>
-#include <sys/syscall.h>
+#include <special_includes/sys/syscall.h>
 
 /*
  * Signal trampoline for 1.6 compatibility; copied to top of user stack.

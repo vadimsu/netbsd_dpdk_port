@@ -61,7 +61,7 @@ this code that are retained.
 ===============================================================================
 */
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #if !defined(_KERNEL) && !defined(_STANDALONE)
 #include <inttypes.h>
@@ -70,7 +70,7 @@ this code that are retained.
 #include "sys/inttypes.h"
 #include "machine/ieeefp.h"
 #endif
-#include <sys/endian.h>
+#include <special_includes/sys/endian.h>
 
 /*
 -------------------------------------------------------------------------------

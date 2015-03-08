@@ -33,17 +33,17 @@
  * NPF logging extension.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_ext_log.c,v 1.1.4.3 2013/02/08 19:18:11 riz Exp $");
 
-#include <sys/types.h>
-#include <sys/module.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/module.h>
 
-#include <sys/conf.h>
-#include <sys/kmem.h>
-#include <sys/mbuf.h>
-#include <sys/mutex.h>
-#include <sys/queue.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/queue.h>
 
 #include <net/if.h>
 #include <net/if_types.h>

@@ -65,8 +65,8 @@
 __KERNEL_RCSID(0, "$NetBSD: uipc_mbuf2.c,v 1.29 2011/08/08 19:10:33 dyoung Exp $");
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
-//#include <sys/proc.h>
+//#include <special_includes/sys/systm.h>
+//#include <special_includes/sys/proc.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/syslog.h>

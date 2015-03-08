@@ -34,9 +34,9 @@
 #ifndef _SYS_UN_H_
 #define _SYS_UN_H_
 
-#include <sys/ansi.h>
-#include <sys/featuretest.h>
-#include <sys/types.h>
+#include <special_includes/sys/ansi.h>
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/types.h>
 
 #ifndef sa_family_t
 typedef __sa_family_t	sa_family_t;

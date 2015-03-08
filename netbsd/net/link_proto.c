@@ -39,7 +39,7 @@ __KERNEL_RCSID(0, "$NetBSD: link_proto.c,v 1.7.8.1 2014/08/07 09:39:55 msaitoh E
 #include <special_includes/sys/protosw.h>
 #include <special_includes/sys/domain.h>
 #include <special_includes/sys/mbuf.h>
-//#include <sys/un.h>
+//#include <special_includes/sys/un.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/sockio.h>
 #include <netbsd/net/if.h>

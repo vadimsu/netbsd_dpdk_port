@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0,"$NetBSD: xlat_mbr_fstype.c,v 1.8 2012/01/16 18:47:57 christos Exp $");
 
 
-#include <sys/disklabel.h>
-#include <sys/bootblock.h>
+#include <special_includes/sys/disklabel.h>
+#include <special_includes/sys/bootblock.h>
 
 int
 xlat_mbr_fstype(int mbr_type)

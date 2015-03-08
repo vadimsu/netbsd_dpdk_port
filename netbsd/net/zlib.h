@@ -34,7 +34,7 @@
 #define _NET_ZLIB_H_
 
 #ifdef __NetBSD__
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #endif
 
 /* +++ zconf.h */
@@ -55,7 +55,7 @@
  * Programs using this library appear to expect those...
  */
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 /*
  * If you *really* need a unique prefix for all types and library functions,
@@ -281,7 +281,7 @@ typedef uLong FAR uLongf;
 #endif
 
 #if (defined(HAVE_UNISTD_H) || defined(__NetBSD__)) && !defined(_KERNEL)
-#  include <sys/types.h> /* for off_t */
+#  include <special_includes/sys/types.h> /* for off_t */
 #  include <unistd.h>    /* for SEEK_* and off_t */
 #  define z_off_t  off_t
 #endif

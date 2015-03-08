@@ -30,8 +30,8 @@
 #ifndef _SYS_FILEASSOC_H_
 #define _SYS_FILEASSOC_H_
 
-#include <sys/cdefs.h>
-#include <sys/param.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/param.h>
 
 typedef struct fileassoc *fileassoc_t;
 typedef void (*fileassoc_cleanup_cb_t)(void *);

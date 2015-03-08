@@ -18,11 +18,11 @@
  * bandwidth metering and signaling.
  */
 
-#include <sys/queue.h>
-#include <sys/callout.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/callout.h>
 
 #ifdef _KERNEL
-struct sockopt; /* from <sys/socketvar.h> */
+struct sockopt; /* from <special_includes/sys/socketvar.h> */
 #endif
 
 /*

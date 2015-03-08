@@ -34,9 +34,9 @@
 #ifndef	_SYS_SIGNALVAR_H_
 #define	_SYS_SIGNALVAR_H_
 
-#include <sys/siginfo.h>
-#include <sys/queue.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/siginfo.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/mutex.h>
 
 /*
  * Kernel signal definitions and data structures,
@@ -118,7 +118,7 @@ typedef struct sigstore {
 
 #ifdef _KERNEL
 
-#include <sys/systm.h>			/* for copyin_t/copyout_t */
+#include <special_includes/sys/systm.h>			/* for copyin_t/copyout_t */
 
 extern sigset_t contsigmask, sigcantmask;
 

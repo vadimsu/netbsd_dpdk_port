@@ -26,18 +26,18 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_agrsubr.c,v 1.9 2010/01/19 22:08:17 pooka Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/callout.h>
-#include <sys/malloc.h>
-#include <sys/systm.h>
-#include <sys/types.h>
-#include <sys/queue.h>
-#include <sys/sockio.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/sockio.h>
 
 #include <net/if.h>
 

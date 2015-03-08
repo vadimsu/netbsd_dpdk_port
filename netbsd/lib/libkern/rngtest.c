@@ -135,13 +135,13 @@ the GNU Public License.
  *
  */
 
-#include <sys/types.h>
-#include <sys/systm.h>
-#include <sys/rngtest.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/rngtest.h>
 
 #include <lib/libkern/libkern.h>
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: rngtest.c,v 1.2 2011/11/25 12:45:00 joerg Exp $");
 
 #ifndef _KERNEL

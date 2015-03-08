@@ -63,7 +63,7 @@
 #ifndef _NETINET_IN_PCB_H_
 #define _NETINET_IN_PCB_H_
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 #include <netbsd/netinet/in_pcb_hdr.h>
 
 /*

@@ -72,16 +72,16 @@ endif
 quote #define __MUTEX_PRIVATE
 quote #define __RWLOCK_PRIVATE
 
-include <sys/param.h>
-include <sys/proc.h>
-include <sys/resourcevar.h>
-include <sys/device.h>
-include <sys/mbuf.h>
-include <sys/mutex.h>
-include <sys/rwlock.h>
-include <sys/cpu_data.h>
-include <sys/evcnt.h>
-include <sys/cpu.h>
+include <special_includes/sys/param.h>
+include <special_includes/sys/proc.h>
+include <special_includes/sys/resourcevar.h>
+include <special_includes/sys/device.h>
+include <special_includes/sys/mbuf.h>
+include <special_includes/sys/mutex.h>
+include <special_includes/sys/rwlock.h>
+include <special_includes/sys/cpu_data.h>
+include <special_includes/sys/evcnt.h>
+include <special_includes/sys/cpu.h>
 
 include <netinet/in.h>
 include <netinet/in_systm.h>
@@ -122,7 +122,7 @@ ifdef XEN
 include <xen/xen-public/xen.h>
 endif  
 
-include <sys/bus.h>
+include <special_includes/sys/bus.h>
 
 define	LSRUN			LSRUN
 define	LSONPROC		LSONPROC

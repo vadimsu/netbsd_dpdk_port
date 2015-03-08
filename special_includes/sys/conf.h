@@ -43,7 +43,7 @@
  * Definitions of device driver entry switches
  */
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 
 struct buf;
 struct knote;
@@ -95,7 +95,7 @@ struct cdevsw {
 
 #ifdef _KERNEL
 
-#include <sys/mutex.h>
+#include <special_includes/sys/mutex.h>
 extern kmutex_t device_lock;
 
 int devsw_attach(const char *, const struct bdevsw *, devmajor_t *,

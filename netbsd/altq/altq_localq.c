@@ -5,7 +5,7 @@
  * this file is in the public domain.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: altq_localq.c,v 1.10 2007/03/04 05:59:01 christos Exp $");
 
 #ifdef _KERNEL_OPT
@@ -14,10 +14,10 @@ __KERNEL_RCSID(0, "$NetBSD: altq_localq.c,v 1.10 2007/03/04 05:59:01 christos Ex
 
 #ifdef ALTQ_LOCALQ  /* localq is enabled by ALTQ_LOCALQ option in opt_altq.h */
 
-#include <sys/param.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/sockio.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
 
 #include <net/if.h>
 #include <netinet/in.h>

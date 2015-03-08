@@ -20,7 +20,7 @@
 #ifndef _SYS_GPIO_H_
 #define _SYS_GPIO_H_
 
-#include <sys/time.h>
+#include <special_includes/sys/time.h>
 
 /* GPIO pin states */
 #define GPIO_PIN_LOW		0x00	/* low level (logical 0) */

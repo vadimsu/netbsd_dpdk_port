@@ -98,19 +98,19 @@ __KERNEL_RCSID(0, "$NetBSD: route.c,v 1.126.2.1 2013/07/29 05:43:13 msaitoh Exp 
 #include <special_includes/sys/param.h>
 #include <special_includes/sys/kmem.h>
 #include <special_includes/sys/malloc.h>
-//#include <sys/sysctl.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/sysctl.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/callout.h>
-//#include <sys/proc.h>
+//#include <special_includes/sys/proc.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/domain.h>
 #include <special_includes/sys/protosw.h>
-//#include <sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 #include <special_includes/sys/ioctl.h>
 #include <special_includes/sys/pool.h>
-//#include <sys/kauth.h>
+//#include <special_includes/sys/kauth.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/if_dl.h>

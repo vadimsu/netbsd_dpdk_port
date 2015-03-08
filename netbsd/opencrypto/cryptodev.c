@@ -63,28 +63,28 @@
  *
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: cryptodev.c,v 1.68 2011/07/04 16:06:17 joerg Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kmem.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/pool.h>
-#include <sys/sysctl.h>
-#include <sys/file.h>
-#include <sys/filedesc.h>
-#include <sys/errno.h>
-#include <sys/md5.h>
-#include <sys/sha1.h>
-#include <sys/conf.h>
-#include <sys/device.h>
-#include <sys/kauth.h>
-#include <sys/select.h>
-#include <sys/poll.h>
-#include <sys/atomic.h>
-#include <sys/stat.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/file.h>
+#include <special_includes/sys/filedesc.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/md5.h>
+#include <special_includes/sys/sha1.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/device.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/select.h>
+#include <special_includes/sys/poll.h>
+#include <special_includes/sys/atomic.h>
+#include <special_includes/sys/stat.h>
 
 #include "opt_ocf.h"
 #include "opt_compat_netbsd.h"

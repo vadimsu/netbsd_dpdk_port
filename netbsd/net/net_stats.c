@@ -29,13 +29,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: net_stats.c,v 1.4 2008/05/04 07:22:14 thorpej Exp $");
 
-#include <sys/types.h>
-#include <sys/systm.h>
-#include <sys/sysctl.h>
-#include <sys/kmem.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/sysctl.h>
+#include <special_includes/sys/kmem.h>
 
 #include <net/net_stats.h>
 

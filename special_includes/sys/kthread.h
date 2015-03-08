@@ -41,7 +41,7 @@
  * Kernel thread handling.
  */
 
-#include <sys/proc.h>
+#include <special_includes/sys/proc.h>
 
 #define	KTHREAD_IDLE		0x01	/* Do not run on creation */
 #define	KTHREAD_MPSAFE		0x02	/* Do not acquire kernel_lock */

@@ -57,19 +57,19 @@
  *	@(#)if_ethersubr.c	8.2 (Berkeley) 4/4/96
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_ecosubr.c,v 1.36.4.1 2014/12/07 15:09:32 martin Exp $");
 
 #include "opt_inet.h"
 #include "opt_pfil_hooks.h"
 
-#include <sys/param.h>
-#include <sys/errno.h>
-#include <sys/kernel.h>
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/syslog.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/systm.h>
 
 #include <net/if.h>
 #include <net/if_dl.h>

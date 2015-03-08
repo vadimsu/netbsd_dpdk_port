@@ -35,23 +35,23 @@
 #define _SYS_MOUNT_H_
 
 #ifndef _KERNEL
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 #if defined(_NETBSD_SOURCE)
-#include <sys/stat.h>
+#include <special_includes/sys/stat.h>
 #endif /* _NETBSD_SOURCE */
 #endif
 
 #ifndef _STANDALONE
-#include <sys/param.h> /* precautionary upon removal from ucred.h */
-#include <sys/time.h>
-#include <sys/uio.h>
-#include <sys/ucred.h>
-#include <sys/fstypes.h>
-#include <sys/queue.h>
-#include <sys/rwlock.h>
-#include <sys/statvfs.h>
-#include <sys/specificdata.h>
-#include <sys/condvar.h>
+#include <special_includes/sys/param.h> /* precautionary upon removal from ucred.h */
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/uio.h>
+#include <special_includes/sys/ucred.h>
+#include <special_includes/sys/fstypes.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/rwlock.h>
+#include <special_includes/sys/statvfs.h>
+#include <special_includes/sys/specificdata.h>
+#include <special_includes/sys/condvar.h>
 #endif	/* !_STANDALONE */
 
 /*
@@ -468,7 +468,7 @@ extern struct vfs_list_head vfs_list;
 
 #else /* _KERNEL */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 #if !defined(__LIBC12_SOURCE__) && !defined(_STANDALONE)

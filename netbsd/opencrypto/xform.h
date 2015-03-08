@@ -92,7 +92,7 @@ extern const struct comp_algo comp_algo_deflate_nogrow;
 extern const struct comp_algo comp_algo_gzip;
 
 #ifdef _KERNEL
-#include <sys/malloc.h>
+#include <special_includes/sys/malloc.h>
 MALLOC_DECLARE(M_XDATA);
 #endif
 #endif /* _CRYPTO_XFORM_H_ */

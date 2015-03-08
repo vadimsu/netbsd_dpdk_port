@@ -37,7 +37,7 @@ typedef struct kcpuset	kcpuset_t;
 
 #ifdef _KERNEL
 
-#include <sys/sched.h>
+#include <special_includes/sys/sched.h>
 
 void		kcpuset_sysinit(void);
 

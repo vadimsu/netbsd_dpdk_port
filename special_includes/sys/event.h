@@ -31,10 +31,10 @@
 #ifndef _SYS_EVENT_H_
 #define	_SYS_EVENT_H_
 
-#include <sys/featuretest.h>
-#include <sys/types.h>			/* for size_t */
-#include <sys/inttypes.h>		/* for uintptr_t */
-#include <sys/null.h>			/* for NULL */
+#include <special_includes/sys/featuretest.h>
+#include <special_includes/sys/types.h>			/* for size_t */
+#include <special_includes/sys/inttypes.h>		/* for uintptr_t */
+#include <special_includes/sys/null.h>			/* for NULL */
 
 #define	EVFILT_READ		0
 #define	EVFILT_WRITE		1
@@ -120,9 +120,9 @@ struct kevent {
 
 /*
  * This is currently visible to userland to work around broken
- * programs which pull in <sys/proc.h> or <sys/select.h>.
+ * programs which pull in <special_includes/sys/proc.h> or <special_includes/sys/select.h>.
  */
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 struct knote;
 SLIST_HEAD(klist, knote);
 
@@ -130,7 +130,7 @@ SLIST_HEAD(klist, knote);
 /*
  * ioctl(2)s supported on kqueue descriptors.
  */
-#include <sys/ioctl.h>
+#include <special_includes/sys/ioctl.h>
 
 struct kfilter_mapping {
 	char		*name;		/* name to lookup or return */
@@ -202,7 +202,7 @@ struct knote {
 #define	kn_data		kn_kevent.data
 };
 
-#include <sys/systm.h> /* for copyin_t */
+#include <special_includes/sys/systm.h> /* for copyin_t */
 
 struct lwp;
 struct timespec;
@@ -240,7 +240,7 @@ extern const struct filterops seltrue_filtops;
 
 #else 	/* !_KERNEL */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 struct timespec;
 
 __BEGIN_DECLS

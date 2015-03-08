@@ -21,7 +21,7 @@
  * whether an up-to-date version of this file is already installed.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: zlib.c,v 1.33 2009/03/18 10:22:42 cegger Exp $");
 
 #define NO_DUMMY_DECL
@@ -54,9 +54,9 @@ __KERNEL_RCSID(0, "$NetBSD: zlib.c,v 1.33 2009/03/18 10:22:42 cegger Exp $");
 
 #if defined(KERNEL) || defined(_KERNEL)
 /* Assume this is a *BSD or SVR4 kernel */
-#include <sys/param.h>
-#include <sys/time.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/systm.h>
 #  define HAVE_MEMCPY
 #else
 #if defined(__KERNEL__)
@@ -72,8 +72,8 @@ __KERNEL_RCSID(0, "$NetBSD: zlib.c,v 1.33 2009/03/18 10:22:42 cegger Exp $");
 #  include <lib/libkern/libkern.h>
 
 #else
-#  include <sys/types.h>
-#  include <sys/param.h>
+#  include <special_includes/sys/types.h>
+#  include <special_includes/sys/param.h>
 #ifdef STDC
 #  include <stddef.h>
 #  include <string.h>

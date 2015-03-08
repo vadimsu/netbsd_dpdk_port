@@ -48,7 +48,7 @@ struct timeb {
 };
 
 #ifndef _KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int ftime(struct timeb *);

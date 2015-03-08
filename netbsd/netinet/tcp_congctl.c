@@ -143,7 +143,7 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_congctl.c,v 1.16 2011/04/08 11:15:11 yamt Exp $"
 
 #include <special_includes/sys/param.h>
 #include <netbsd/lib/libkern/libkern.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/protosw.h>
@@ -153,8 +153,8 @@ __KERNEL_RCSID(0, "$NetBSD: tcp_congctl.c,v 1.16 2011/04/08 11:15:11 yamt Exp $"
 #include <special_includes/sys/syslog.h>
 #include <special_includes/sys/pool.h>
 #include <special_includes/sys/domain.h>
-//#include <sys/kernel.h>
-//#include <sys/mutex.h>
+//#include <special_includes/sys/kernel.h>
+//#include <special_includes/sys/mutex.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/route.h>

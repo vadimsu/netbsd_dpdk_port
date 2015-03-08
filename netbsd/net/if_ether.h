@@ -38,7 +38,7 @@
 #ifdef _KERNEL_OPT
 #include "opt_mbuftrace.h"
 #endif
-#include <sys/mbuf.h>
+#include <special_includes/sys/mbuf.h>
 #endif
 
 /*
@@ -315,7 +315,7 @@ int	ether_aton_r(u_char *, size_t, const char *);
 /*
  * Prototype ethers(3) functions.
  */
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __BEGIN_DECLS
 char *	ether_ntoa(const struct ether_addr *);
 struct ether_addr *

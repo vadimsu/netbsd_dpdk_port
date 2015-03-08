@@ -37,11 +37,11 @@
 #include "opt_dtrace.h"
 #endif
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/kernel.h>
-#include <sys/kmem.h>
-#include <sys/proc.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/proc.h>
 
 /* Forward definitions: */
 struct mbuf;

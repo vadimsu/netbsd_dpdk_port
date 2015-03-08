@@ -31,7 +31,7 @@
 #ifndef _RNGTEST_H
 #define _RNGTEST_H
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #define FIPS140_RNG_TEST_BITS 20000
 #define FIPS140_RNG_TEST_BYTES (FIPS140_RNG_TEST_BITS / NBBY)

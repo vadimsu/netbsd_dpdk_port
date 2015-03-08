@@ -36,9 +36,9 @@
 #include <stdbool.h>
 #endif
 
-#include <sys/ioccom.h>
-#include <sys/power.h>
-#include <sys/queue.h>
+#include <special_includes/sys/ioccom.h>
+#include <special_includes/sys/power.h>
+#include <special_includes/sys/queue.h>
 
 /*
  * ENVironmental SYStem version 2 (aka ENVSYS 2)

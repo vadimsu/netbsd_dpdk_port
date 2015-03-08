@@ -60,10 +60,10 @@
 #ifndef _SYS_TIMEVAR_H_
 #define _SYS_TIMEVAR_H_
 
-#include <sys/callout.h>
-#include <sys/queue.h>
-#include <sys/signal.h>
-#include <sys/systm.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/signal.h>
+#include <special_includes/sys/systm.h>
 
 /*
  * Structure used to manage timers in a process.

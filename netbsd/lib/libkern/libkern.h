@@ -34,9 +34,9 @@
 #ifndef _LIB_LIBKERN_LIBKERN_H_
 #define _LIB_LIBKERN_LIBKERN_H_
 
-//#include <sys/types.h>
-//#include <sys/inttypes.h>
-#include <sys/null.h>
+//#include <special_includes/sys/types.h>
+//#include <special_includes/sys/inttypes.h>
+#include <special_includes/sys/null.h>
 
 #ifndef LIBKERN_INLINE
 #define LIBKERN_INLINE	static __inline

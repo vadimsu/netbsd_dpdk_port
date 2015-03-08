@@ -41,7 +41,7 @@
 #endif
 
 #include <machine/ansi.h>
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 #ifdef	_BSD_SIZE_T_
 typedef	_BSD_SIZE_T_	size_t;
@@ -59,7 +59,7 @@ struct iovec {
 };
 
 #if defined(_NETBSD_SOURCE)
-#include <sys/ansi.h>
+#include <special_includes/sys/ansi.h>
 
 #ifndef	off_t
 typedef	__off_t		off_t;	/* file offset */
@@ -106,7 +106,7 @@ void uio_setup_sysspace(struct uio *);
 #endif
 
 #ifndef	_KERNEL
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 #if defined(_NETBSD_SOURCE)

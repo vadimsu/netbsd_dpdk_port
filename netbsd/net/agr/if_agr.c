@@ -26,22 +26,22 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_agr.c,v 1.30 2011/10/19 01:49:50 dyoung Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/callout.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/systm.h>
-#include <sys/types.h>
-#include <sys/queue.h>
-#include <sys/sockio.h>
-#include <sys/proc.h>	/* XXX for curproc */
-#include <sys/kauth.h>
-#include <sys/xcall.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/callout.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/proc.h>	/* XXX for curproc */
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/xcall.h>
 
 #include <net/bpf.h>
 #include <net/if.h>

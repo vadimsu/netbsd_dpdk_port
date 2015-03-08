@@ -75,20 +75,20 @@
  *	port map and NAT entry is destroyed when session expires.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: npf_nat.c,v 1.10.2.9 2013/11/17 19:16:57 bouyer Exp $");
 
-#include <sys/param.h>
-#include <sys/types.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/types.h>
 
-#include <sys/atomic.h>
-#include <sys/bitops.h>
-#include <sys/condvar.h>
-#include <sys/kmem.h>
-#include <sys/mutex.h>
-#include <sys/pool.h>
-#include <sys/proc.h>
-#include <sys/cprng.h>
+#include <special_includes/sys/atomic.h>
+#include <special_includes/sys/bitops.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/cprng.h>
 
 #include <net/pfil.h>
 #include <netinet/in.h>

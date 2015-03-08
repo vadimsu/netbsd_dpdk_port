@@ -1,7 +1,7 @@
 /* $NetBSD: if_srt.c,v 1.17 2011/10/28 22:08:14 dyoung Exp $ */
 /* This file is in the public domain. */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_srt.c,v 1.17 2011/10/28 22:08:14 dyoung Exp $");
 
 #include "opt_inet.h"
@@ -15,20 +15,20 @@ __KERNEL_RCSID(0, "$NetBSD: if_srt.c,v 1.17 2011/10/28 22:08:14 dyoung Exp $");
 #endif
 
 /* include-file bug workarounds */
-#include <sys/types.h>		/* sys/conf.h */
-#include <sys/resource.h>	/* sys/resourcevar.h
+#include <special_includes/sys/types.h>		/* sys/conf.h */
+#include <special_includes/sys/resource.h>	/* sys/resourcevar.h
 				 * (uvm/uvm_param.h, sys/mbuf.h)
 				 */
 #include <netinet/in.h>		/* netinet/ip.h */
-#include <sys/param.h>		/* sys/mbuf.h */
+#include <special_includes/sys/param.h>		/* sys/mbuf.h */
 #include <netinet/in_systm.h>	/* netinet/ip.h */
 
-#include <sys/conf.h>
-#include <sys/mbuf.h>
-#include <sys/errno.h>
-#include <sys/fcntl.h>
-#include <sys/param.h>
-#include <sys/ioctl.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/fcntl.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/ioctl.h>
 #include <netinet/ip.h>
 #include <netinet/ip6.h>
 #include <net/if_types.h>

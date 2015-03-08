@@ -29,7 +29,7 @@
 #ifndef _SYS_PERCPU_TYPES_H_
 #define	_SYS_PERCPU_TYPES_H_
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 struct cpu_info;
 typedef struct percpu percpu_t;

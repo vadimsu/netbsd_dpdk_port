@@ -29,7 +29,7 @@
 #ifndef _SYS_KMEM_H_
 #define	_SYS_KMEM_H_
 
-//#include <sys/types.h>
+//#include <special_includes/sys/types.h>
 
 typedef unsigned int km_flag_t;
 

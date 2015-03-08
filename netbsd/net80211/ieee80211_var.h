@@ -52,7 +52,7 @@
 #error	"No support for your operating system!"
 #endif
 
-#include <sys/queue.h>	/* XXX */
+#include <special_includes/sys/queue.h>	/* XXX */
 
 #include <net80211/_ieee80211.h>
 #include <net80211/ieee80211.h>

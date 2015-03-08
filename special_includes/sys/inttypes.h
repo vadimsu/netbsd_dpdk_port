@@ -36,7 +36,7 @@
  * 7.8  Format conversion of integer types
  */
 
-#include <sys/stdint.h>
+#include <special_includes/sys/stdint.h>
 
 #if !defined(__cplusplus) || defined(__STDC_FORMAT_MACROS)
 #include <machine/int_fmtio.h>

@@ -34,7 +34,7 @@ __KERNEL_RCSID(0, "$NetBSD: ip_id.c,v 1.15 2011/11/19 22:51:25 tls Exp $");
 
 #include <special_includes/sys/param.h>
 #include <special_includes/sys/kmem.h>
-//#include <sys/mutex.h>
+//#include <special_includes/sys/mutex.h>
 #include <special_includes/sys/cprng.h>
 #include "missing_types.h"
 #include <netbsd/lib/libkern/libkern.h>

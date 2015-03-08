@@ -11,7 +11,7 @@
 /*
  * XXX
  */
-#include <sys/bus.h>
+#include <special_includes/sys/bus.h>
 #include <dev/pci/pcivar.h>
 #include <machine/pci_machdep.h>
 

@@ -203,7 +203,7 @@ int	ptrace_machdep_dorequest(struct lwp *, struct lwp *, int,
 
 #else /* !_KERNEL */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 int	ptrace(int _request, pid_t _pid, void *_addr, int _data);

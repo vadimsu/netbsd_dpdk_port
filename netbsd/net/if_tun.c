@@ -14,30 +14,30 @@
  * operation though.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: if_tun.c,v 1.115 2012/01/28 01:02:27 rmind Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/proc.h>
-#include <sys/systm.h>
-#include <sys/mbuf.h>
-#include <sys/buf.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <sys/errno.h>
-#include <sys/syslog.h>
-#include <sys/select.h>
-#include <sys/poll.h>
-#include <sys/file.h>
-#include <sys/signalvar.h>
-#include <sys/conf.h>
-#include <sys/kauth.h>
-#include <sys/simplelock.h>
-#include <sys/mutex.h>
-#include <sys/cpu.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/buf.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/select.h>
+#include <special_includes/sys/poll.h>
+#include <special_includes/sys/file.h>
+#include <special_includes/sys/signalvar.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/kauth.h>
+#include <special_includes/sys/simplelock.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/cpu.h>
 
 #include <net/if.h>
 #include <net/if_types.h>
@@ -54,7 +54,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_tun.c,v 1.115 2012/01/28 01:02:27 rmind Exp $");
 #endif
 
 
-#include <sys/time.h>
+#include <special_includes/sys/time.h>
 #include <net/bpf.h>
 
 #include <net/if_tun.h>

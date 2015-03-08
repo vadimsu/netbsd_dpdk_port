@@ -69,12 +69,12 @@
 #ifndef _SYS_BUF_H_
 #define	_SYS_BUF_H_
 
-#include <sys/pool.h>
-#include <sys/queue.h>
-#include <sys/mutex.h>
-#include <sys/condvar.h>
+#include <special_includes/sys/pool.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/condvar.h>
 #if defined(_KERNEL)
-#include <sys/workqueue.h>
+#include <special_includes/sys/workqueue.h>
 #endif /* defined(_KERNEL) */
 
 struct buf;

@@ -33,8 +33,8 @@
 #define _SYS_RAS_H_
 
 #ifndef __ASSEMBLER__
-#include <sys/types.h>
-#include <sys/queue.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/queue.h>
 
 struct ras {
 	struct ras	*ras_next;
@@ -46,7 +46,7 @@ struct ras {
 #define RAS_PURGE		1
 #define RAS_PURGE_ALL		2
 #else
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 #endif /* __ASSEMBLER__ */
 
 #ifdef _KERNEL
@@ -70,7 +70,7 @@ extern void __CONCAT(name,_ras_start(void)), __CONCAT(name,_ras_end(void))
 
 /*
  * RAS_START and RAS_END contain implicit instruction reordering
- * barriers.  See __insn_barrier() in <sys/cdefs.h>.
+ * barriers.  See __insn_barrier() in <special_includes/sys/cdefs.h>.
  *
  * Note: You are strongly advised to avoid coding RASs in C. There is a
  * good chance the compiler will generate code which cannot be restarted.

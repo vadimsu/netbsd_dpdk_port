@@ -36,8 +36,8 @@
 #error nothing of interest to userspace here
 #endif
 
-#include <sys/systm.h>
-#include <sys/proc.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
 
 extern struct emul emul_netbsd;
 

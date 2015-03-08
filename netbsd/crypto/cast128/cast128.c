@@ -8,10 +8,10 @@
  *	Released 1997.10.11
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: cast128.c,v 1.9 2006/05/10 21:53:15 mrg Exp $");
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 #include <crypto/cast128/cast128.h>
 #include <crypto/cast128/cast128sb.h>
 

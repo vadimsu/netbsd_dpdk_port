@@ -32,16 +32,16 @@
 
 #ifdef _KERNEL
 
-#include <sys/param.h>
-#include <sys/conf.h>
-#include <sys/kernel.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/kernel.h>
 
 #if (__FreeBSD_version > 300000)
 #define	ALTQ_KLD
 #endif
 
 #ifdef ALTQ_KLD
-#include <sys/module.h>
+#include <special_includes/sys/module.h>
 #endif
 
 #ifndef dev_decl

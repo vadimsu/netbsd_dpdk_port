@@ -31,7 +31,7 @@
  * These notices must be retained in any copies of any part of this software.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: altq_cbq.c,v 1.26 2009/11/22 18:40:26 mbalmer Exp $");
 
 #ifdef _KERNEL_OPT
@@ -42,19 +42,19 @@ __KERNEL_RCSID(0, "$NetBSD: altq_cbq.c,v 1.26 2009/11/22 18:40:26 mbalmer Exp $"
 
 #ifdef ALTQ_CBQ	/* cbq is enabled by ALTQ_CBQ option in opt_altq.h */
 
-#include <sys/param.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/socket.h>
-#include <sys/systm.h>
-#include <sys/proc.h>
-#include <sys/errno.h>
-#include <sys/time.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
 #ifdef ALTQ3_COMPAT
-#include <sys/uio.h>
-#include <sys/kernel.h>
+#include <special_includes/sys/uio.h>
+#include <special_includes/sys/kernel.h>
 #endif
-#include <sys/kauth.h>
+#include <special_includes/sys/kauth.h>
 
 #include <net/if.h>
 #include <netinet/in.h>

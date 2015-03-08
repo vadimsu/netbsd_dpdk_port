@@ -68,7 +68,7 @@
 #error "do not include netinet6/in6.h directly, include netinet/in.h.  see RFC2553"
 #endif
 
-#include <sys/socket.h>
+#include <special_includes/sys/socket.h>
 
 /*
  * Identification of the network protocol stack
@@ -755,7 +755,7 @@ typedef	_BSD_SIZE_T_		size_t;
 #undef	_BSD_SIZE_T_
 #endif
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 
 __BEGIN_DECLS
 struct cmsghdr;

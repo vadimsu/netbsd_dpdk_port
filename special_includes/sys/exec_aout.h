@@ -59,7 +59,7 @@ struct exec {
 #define	ZMAGIC		0413	/* demand load format */
 #define	QMAGIC		0314	/* "compact" demand load format; deprecated */
 
-#include <sys/aout_mids.h>
+#include <special_includes/sys/aout_mids.h>
 
 /*
  * a_flags

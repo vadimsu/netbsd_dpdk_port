@@ -39,7 +39,7 @@
 #ifndef	_SYS_FILIO_H_
 #define	_SYS_FILIO_H_
 
-#include <sys/ioccom.h>
+#include <special_includes/sys/ioccom.h>
 
 /* Generic file-descriptor ioctl's. */
 #define	FIOCLEX		 _IO('f', 1)		/* set close on exec on fd */

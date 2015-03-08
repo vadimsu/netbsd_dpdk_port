@@ -34,28 +34,28 @@
  * RFC2393 IP payload compression protocol (IPComp).
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: ipcomp_output.c,v 1.30 2011/07/17 20:54:53 joerg Exp $");
 
 #include "opt_inet.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/malloc.h>
-#include <sys/mbuf.h>
-#include <sys/domain.h>
-#include <sys/protosw.h>
-#include <sys/socket.h>
-#include <sys/errno.h>
-#include <sys/time.h>
-#include <sys/kernel.h>
-#include <sys/syslog.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/domain.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/syslog.h>
 
 #include <net/if.h>
 #include <net/route.h>
 #include <net/netisr.h>
 #include <net/zlib.h>
-#include <sys/cpu.h>
+#include <special_includes/sys/cpu.h>
 
 #include <netinet/in.h>
 #include <netinet/in_systm.h>

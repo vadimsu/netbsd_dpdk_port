@@ -99,7 +99,7 @@ __KERNEL_RCSID(0, "$NetBSD: in_pcb.c,v 1.140 2011/12/19 11:59:56 drochner Exp $"
 #include "opt_ipsec.h"
 
 #include <special_includes/sys/param.h>
-//#include <sys/systm.h>
+//#include <special_includes/sys/systm.h>
 #include <special_includes/sys/malloc.h>
 
 #include <special_includes/sys/mbuf.h>
@@ -111,9 +111,9 @@ __KERNEL_RCSID(0, "$NetBSD: in_pcb.c,v 1.140 2011/12/19 11:59:56 drochner Exp $"
 #include <special_includes/sys/time.h>
 #include <special_includes/sys/once.h>
 #include <special_includes/sys/pool.h>
-//#include <sys/proc.h>
-//#include <sys/kauth.h>
-//#include <sys/uidinfo.h>
+//#include <special_includes/sys/proc.h>
+//#include <special_includes/sys/kauth.h>
+//#include <special_includes/sys/uidinfo.h>
 #include <special_includes/sys/domain.h>
 
 #include <netbsd/net/if.h>

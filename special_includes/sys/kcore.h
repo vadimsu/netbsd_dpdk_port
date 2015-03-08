@@ -30,7 +30,7 @@
 /*
  * Definitions for the kernel crash-dump format. The structure of
  * the files and headers is borrowed from the 'regular' core files
- * as described in <sys/core.h>.
+ * as described in <special_includes/sys/core.h>.
  */
 #define	KCORE_MAGIC	0x8fca
 #define	KCORESEG_MAGIC	0x8fac

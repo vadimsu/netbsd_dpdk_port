@@ -72,7 +72,7 @@
 
 #ifdef __x86_64__
 
-#include <sys/signal.h>
+#include <special_includes/sys/signal.h>
 
 #include <machine/segments.h>
 #include <machine/tss.h>

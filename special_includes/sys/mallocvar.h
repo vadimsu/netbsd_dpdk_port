@@ -34,7 +34,7 @@
 #ifndef _SYS_MALLOCVAR_H_
 #define	_SYS_MALLOCVAR_H_
 
-#include <sys/types.h>
+#include <special_includes/sys/types.h>
 
 #define	M_MAGIC		877983977
 

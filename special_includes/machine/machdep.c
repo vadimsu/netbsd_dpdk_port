@@ -110,7 +110,7 @@
  *	@(#)machdep.c	7.4 (Berkeley) 6/3/91
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: machdep.c,v 1.175.2.8 2013/04/20 09:59:39 bouyer Exp $");
 
 /* #define XENDEBUG_LOW  */
@@ -129,34 +129,34 @@ __KERNEL_RCSID(0, "$NetBSD: machdep.c,v 1.175.2.8 2013/04/20 09:59:39 bouyer Exp
 #include "isa.h"
 #include "pci.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/signal.h>
-#include <sys/signalvar.h>
-#include <sys/kernel.h>
-#include <sys/cpu.h>
-#include <sys/exec.h>
-#include <sys/exec_aout.h>	/* for MID_* */
-#include <sys/reboot.h>
-#include <sys/conf.h>
-#include <sys/mbuf.h>
-#include <sys/msgbuf.h>
-#include <sys/mount.h>
-#include <sys/core.h>
-#include <sys/kcore.h>
-#include <sys/ucontext.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/signal.h>
+#include <special_includes/sys/signalvar.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/cpu.h>
+#include <special_includes/sys/exec.h>
+#include <special_includes/sys/exec_aout.h>	/* for MID_* */
+#include <special_includes/sys/reboot.h>
+#include <special_includes/sys/conf.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/msgbuf.h>
+#include <special_includes/sys/mount.h>
+#include <special_includes/sys/core.h>
+#include <special_includes/sys/kcore.h>
+#include <special_includes/sys/ucontext.h>
 #include <machine/kcore.h>
-#include <sys/ras.h>
-#include <sys/sa.h>
-#include <sys/savar.h>
-#include <sys/syscallargs.h>
-#include <sys/ksyms.h>
-#include <sys/device.h>
-#include <sys/lwp.h>
-#include <sys/proc.h>
+#include <special_includes/sys/ras.h>
+#include <special_includes/sys/sa.h>
+#include <special_includes/sys/savar.h>
+#include <special_includes/sys/syscallargs.h>
+#include <special_includes/sys/ksyms.h>
+#include <special_includes/sys/device.h>
+#include <special_includes/sys/lwp.h>
+#include <special_includes/sys/proc.h>
 
 #ifdef KGDB
-#include <sys/kgdb.h>
+#include <special_includes/sys/kgdb.h>
 #endif
 
 #include <dev/cons.h>
@@ -165,7 +165,7 @@ __KERNEL_RCSID(0, "$NetBSD: machdep.c,v 1.175.2.8 2013/04/20 09:59:39 bouyer Exp
 #include <uvm/uvm.h>
 #include <uvm/uvm_page.h>
 
-#include <sys/sysctl.h>
+#include <special_includes/sys/sysctl.h>
 
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>

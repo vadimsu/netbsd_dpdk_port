@@ -33,7 +33,7 @@
  * Functions to provide access to i386-specific instructions.
  */
 
-#include <sys/errno.h>
+#include <special_includes/sys/errno.h>
 
 #include <machine/asm.h>
 #include <machine/frameasm.h>

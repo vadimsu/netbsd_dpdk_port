@@ -36,9 +36,9 @@
 #ifndef _SYS_EVENTVAR_H_
 #define	_SYS_EVENTVAR_H_
 
-#include <sys/mutex.h>
-#include <sys/selinfo.h>
-#include <sys/filedesc.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/selinfo.h>
+#include <special_includes/sys/filedesc.h>
 
 #define	KQ_NEVENTS	8		/* minimize copy{in,out} calls */
 #define	KQ_EXTENT	256		/* linear growth by this amount */

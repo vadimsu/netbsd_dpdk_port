@@ -52,16 +52,16 @@
  */
 
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: process_machdep.c,v 1.19.2.1 2012/05/21 15:25:55 riz Exp $");
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/time.h>
-#include <sys/kernel.h>
-#include <sys/proc.h>
-#include <sys/vnode.h>
-#include <sys/ptrace.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kernel.h>
+#include <special_includes/sys/proc.h>
+#include <special_includes/sys/vnode.h>
+#include <special_includes/sys/ptrace.h>
 
 #include <machine/psl.h>
 #include <machine/reg.h>

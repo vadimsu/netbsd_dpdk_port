@@ -30,23 +30,23 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: in6_gif.c,v 1.58 2009/03/14 14:46:10 dsl Exp $");
 
 #include "opt_inet.h"
 #include "opt_iso.h"
 
-#include <sys/param.h>
-#include <sys/systm.h>
-#include <sys/socket.h>
-#include <sys/sockio.h>
-#include <sys/mbuf.h>
-#include <sys/errno.h>
-#include <sys/ioctl.h>
-#include <sys/queue.h>
-#include <sys/syslog.h>
-#include <sys/protosw.h>
-#include <sys/kernel.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
+#include <special_includes/sys/socket.h>
+#include <special_includes/sys/sockio.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/errno.h>
+#include <special_includes/sys/ioctl.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/syslog.h>
+#include <special_includes/sys/protosw.h>
+#include <special_includes/sys/kernel.h>
 
 #include <net/if.h>
 #include <net/route.h>

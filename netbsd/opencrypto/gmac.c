@@ -23,8 +23,8 @@
  * the AES cipher.  FIPS SP 800-38D describes the algorithm details.
  */
 
-#include <sys/param.h>
-#include <sys/systm.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/systm.h>
 
 #include <crypto/rijndael/rijndael.h>
 #include <opencrypto/gmac.h>

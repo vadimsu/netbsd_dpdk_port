@@ -36,7 +36,7 @@
  *	@(#)bpf_filter.c	8.1 (Berkeley) 6/10/93
  */
 
-#include <sys/cdefs.h>
+#include <special_includes/sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: bpf_filter.c,v 1.50 2011/12/29 23:47:21 alnsn Exp $");
 
 #if 0
@@ -46,16 +46,16 @@ static const char rcsid[] =
 #endif
 #endif
 
-#include <sys/param.h>
-#include <sys/time.h>
-#include <sys/kmem.h>
-#include <sys/endian.h>
+#include <special_includes/sys/param.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/kmem.h>
+#include <special_includes/sys/endian.h>
 
 #define EXTRACT_SHORT(p)	be16dec(p)
 #define EXTRACT_LONG(p)		be32dec(p)
 
 #ifdef _KERNEL
-#include <sys/mbuf.h>
+#include <special_includes/sys/mbuf.h>
 #define MINDEX(len, m, k) 		\
 { 					\
 	len = m->m_len; 		\

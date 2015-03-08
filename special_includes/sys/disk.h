@@ -80,13 +80,13 @@
  */
 
 #ifdef _KERNEL
-#include <sys/device.h>
+#include <special_includes/sys/device.h>
 #endif
-#include <sys/dkio.h>
-#include <sys/time.h>
-#include <sys/queue.h>
-#include <sys/mutex.h>
-#include <sys/iostat.h>
+#include <special_includes/sys/dkio.h>
+#include <special_includes/sys/time.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/iostat.h>
 
 #include <prop/proplib.h>
 

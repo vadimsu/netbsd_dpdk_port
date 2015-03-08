@@ -28,8 +28,8 @@
 #ifndef	_SYS_DIRHASH_H_
 #define	_SYS_DIRHASH_H_
 
-#include <sys/queue.h>
-#include <sys/dirent.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/dirent.h>
 
 #ifndef DIRHASH_SIZE
 #define	DIRHASH_SIZE	(1024*1024)

@@ -64,7 +64,7 @@
 #ifndef _NETINET6_IN6_PCB_H_
 #define _NETINET6_IN6_PCB_H_
 
-#include <sys/queue.h>
+#include <special_includes/sys/queue.h>
 #include <netbsd/netinet/in_pcb_hdr.h>
 
 /*

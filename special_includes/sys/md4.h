@@ -32,8 +32,8 @@
 #ifndef _SYS_MD4_H_
 #define _SYS_MD4_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <special_includes/sys/cdefs.h>
+#include <special_includes/sys/types.h>
 
 #define MD4_DIGEST_LENGTH 16
 

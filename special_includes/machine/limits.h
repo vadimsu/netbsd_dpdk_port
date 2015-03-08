@@ -36,7 +36,7 @@
 
 #ifdef __x86_64__
 
-#include <sys/featuretest.h>
+#include <special_includes/sys/featuretest.h>
 
 #define	CHAR_BIT	8		/* number of bits in a char */
 

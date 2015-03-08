@@ -32,9 +32,9 @@
 #ifndef _SYS_UIDINFO_H_
 #define _SYS_UIDINFO_H_
 
-#include <sys/types.h>
-#include <sys/queue.h>
-#include <sys/mutex.h>
+#include <special_includes/sys/types.h>
+#include <special_includes/sys/queue.h>
+#include <special_includes/sys/mutex.h>
 
 /*
  * Structure associated with user caching.

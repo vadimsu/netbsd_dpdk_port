@@ -77,14 +77,14 @@
 #ifndef _SYS_DEVICE_H_
 #define	_SYS_DEVICE_H_
 
-#include <sys/device_if.h>
-#include <sys/evcnt.h>
-#include <sys/queue.h>
+#include <special_includes/sys/device_if.h>
+#include <special_includes/sys/evcnt.h>
+#include <special_includes/sys/queue.h>
 
 #ifdef _KERNEL
-#include <sys/mutex.h>
-#include <sys/condvar.h>
-#include <sys/pmf.h>
+#include <special_includes/sys/mutex.h>
+#include <special_includes/sys/condvar.h>
+#include <special_includes/sys/pmf.h>
 #endif
 
 #include <prop/proplib.h>
