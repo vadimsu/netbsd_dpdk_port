@@ -8,9 +8,12 @@
  */
 #include <stdint.h>
 #include <special_includes/sys/types.h>
+#include <special_includes/sys/param.h>
 #include <special_includes/sys/queue.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
+#include <special_includes/sys/time.h>
+#include <netbsd/netinet/in.h>
 
 TAILQ_HEAD(read_ready_socket_list_head, socket) read_ready_socket_list_head;
 uint64_t read_sockets_queue_len = 0;
@@ -151,10 +154,12 @@ void *create_raw_socket2(unsigned int ip_addr,unsigned short port)
 	sin.sin_family = AF_INET;
 	sin.sin_addr.s_addr = ip_addr;
 	sin.sin_port = htons(port);
+#if 0
 	if(sobind(raw_sock,(struct sockaddr *)&sin,sizeof(sin))) {
 		printf("cannot bind %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
+#endif
 	return raw_sock;
 }
 void *create_raw_socket(const char *ip_addr,unsigned short port)
@@ -181,10 +186,12 @@ void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
 	sin.sin_family = AF_INET;
 	sin.sin_addr.s_addr = ip_addr;
 	sin.sin_port = htons(port);
+#if 0
 	if(sobind(udp_sock,(struct sockaddr *)&sin,sizeof(sin))) {
 		printf("cannot bind %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
+#endif
 #if 0
 	if(udp_sock->sk) {
             sock_reset_flag(udp_sock->sk,SOCK_USE_WRITE_QUEUE);
@@ -684,8 +691,10 @@ void app_glue_close_socket(void *sk)
 		TAILQ_REMOVE(&closed_socket_list_head,sock,closed_queue_entry);
 		sock->closed_queue_present = 0;
 	}
+#if 0
 	if(sock->sk)
 		sock->sk->sk_user_data = NULL;
+#endif
 	soclose(sock);
 }
 /*
