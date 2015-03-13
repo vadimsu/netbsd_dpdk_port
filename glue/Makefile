@@ -2,7 +2,7 @@ RTE_SDK=$(CURRENT_DIR)dpdk-1.8.0
 RTE_TARGET ?= x86_64-native-linuxapp-gcc
 include $(RTE_SDK)/mk/rte.extvars.mk
 SRC_ROOT=$(CURRENT_DIR)
-SRCS-y := app_glue.c
+SRCS-y := app_glue.c device.c
 CFLAGS += -Ofast
 CFLAGS += $(WERROR_FLAGS)
 DPDK_HEADERS = $(SRC_ROOT)/dpdk-1.8.0/x86_64-native-linuxapp-gcc/include

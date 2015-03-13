@@ -16,3 +16,12 @@ void exit_internal(int code)
 {
     exit(code);
 }
+
+int enxio()
+{
+    return 0;
+}
+
+void schednetisr(int num)
+{
+}

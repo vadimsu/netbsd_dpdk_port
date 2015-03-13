@@ -13,6 +13,8 @@
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/time.h>
+#include <special_includes/sys/mbuf.h>
+#include <special_includes/sys/malloc.h>
 #include <netbsd/netinet/in.h>
 
 TAILQ_HEAD(read_ready_socket_list_head, socket) read_ready_socket_list_head;
@@ -143,23 +145,34 @@ static void app_glue_sock_wakeup(struct sock *sk)
  */
 void *create_raw_socket2(unsigned int ip_addr,unsigned short port)
 {
-	struct sockaddr_in sin;
+	struct sockaddr_in *sin;
 	struct timeval tv;
 	struct socket *raw_sock = NULL;
+	struct mbuf *m;
+
 	if(socreate(AF_INET,&raw_sock,SOCK_RAW,port,NULL)) {
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
 
-	sin.sin_family = AF_INET;
-	sin.sin_addr.s_addr = ip_addr;
-	sin.sin_port = htons(port);
-#if 0
-	if(sobind(raw_sock,(struct sockaddr *)&sin,sizeof(sin))) {
-		printf("cannot bind %s %d\n",__FILE__,__LINE__);
+	m = m_get(M_WAIT, MT_SONAME);
+	if (!m) {
+		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
-#endif
+	m->m_len = sizeof(struct sockaddr_in);
+	sin = mtod(m, struct sockaddr_in *);
+
+	sin->sin_family = AF_INET;
+	sin->sin_addr.s_addr = ip_addr;
+	sin->sin_port = htons(port);
+
+	if(sobind(raw_sock,m)) {
+		printf("cannot bind %s %d\n",__FILE__,__LINE__);
+		m_freem(m);
+		return NULL;
+	}
+	m_freem(m);
 	return raw_sock;
 }
 void *create_raw_socket(const char *ip_addr,unsigned short port)
@@ -175,23 +188,34 @@ void *create_raw_socket(const char *ip_addr,unsigned short port)
  */
 void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
 {
-	struct sockaddr_in sin;
+	struct sockaddr_in *sin;
 	struct timeval tv;
 	struct socket *udp_sock = NULL;
+	struct mbuf *m;
+
 	if(socreate(AF_INET,&udp_sock,SOCK_DGRAM,0,NULL)) {
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
 
-	sin.sin_family = AF_INET;
-	sin.sin_addr.s_addr = ip_addr;
-	sin.sin_port = htons(port);
-#if 0
-	if(sobind(udp_sock,(struct sockaddr *)&sin,sizeof(sin))) {
-		printf("cannot bind %s %d\n",__FILE__,__LINE__);
+	m = m_get(M_WAIT, MT_SONAME);
+	if (!m) {
+		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
-#endif
+	m->m_len = sizeof(struct sockaddr_in);
+	sin = mtod(m, struct sockaddr_in *);
+
+	sin->sin_family = AF_INET;
+	sin->sin_addr.s_addr = ip_addr;
+	sin->sin_port = htons(port);
+
+	if(sobind(udp_sock,m)) {
+		printf("cannot bind %s %d\n",__FILE__,__LINE__);	
+		m_freem(m);
+		return NULL;
+	}
+
 #if 0
 	if(udp_sock->sk) {
             sock_reset_flag(udp_sock->sk,SOCK_USE_WRITE_QUEUE);
@@ -200,6 +224,7 @@ void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
             app_glue_sock_write_space(udp_sock->sk);
 	}
 #endif
+	m_freem(m);
 	return udp_sock;
 }
 
@@ -217,34 +242,48 @@ void *create_udp_socket(const char *ip_addr,unsigned short port)
 void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 		            unsigned int peer_ip_addr,unsigned short port)
 {
-	struct sockaddr_in sin;
+	struct sockaddr_in *sin;
 	struct timeval tv;
 	struct socket *client_sock = NULL;
+	struct mbuf *m;
+	struct sockopt soopt;
+	
 	if(socreate(AF_INET,&client_sock,SOCK_STREAM,0,NULL)) {
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
+	m = m_get(M_WAIT, MT_SONAME);
+	if (!m) {
+		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
+		return NULL;
+	}
+	m->m_len = sizeof(struct sockaddr_in);
+	sin = mtod(m, struct sockaddr_in *);
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
-#if 0
-	if(sock_setsockopt(client_sock,SOL_SOCKET,SO_RCVTIMEO,(char *)&tv,sizeof(tv))) {
+
+	soopt.sopt_level = SOL_SOCKET;
+	soopt.sopt_name = SO_RCVTIMEO;
+	soopt.sopt_data = &tv;
+	if(sosetopt(client_sock,&soopt)) {
 		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
-	if(sock_setsockopt(client_sock,SOL_SOCKET,SO_SNDTIMEO,(char *)&tv,sizeof(tv))) {
+	soopt.sopt_name = SO_SNDTIMEO;
+	if(sosetsopt(client_sock,&soopt)) {
 		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
 	while(1) {
-		sin.sin_family = AF_INET;
-		sin.sin_addr.s_addr = my_ip_addr;
+		sin->sin_family = AF_INET;
+		sin->sin_addr.s_addr = my_ip_addr;
 		if(my_port) {
-			sin.sin_port = htons(my_port);
+			sin->sin_port = htons(my_port);
 		}
 		else {
-			sin.sin_port = htons(rand() & 0xffff);
+			sin->sin_port = htons(rand() & 0xffff);
 		}
-		if(kernel_bind(client_sock,(struct sockaddr *)&sin,sizeof(sin))) {
+		if(sobind(client_sock,m)) {
 			printf("cannot bind %s %d\n",__FILE__,__LINE__);
 			if(my_port) {
 				break;
@@ -253,14 +292,17 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 		}
 		break;
 	}
-	sin.sin_family = AF_INET;
-	sin.sin_addr.s_addr = peer_ip_addr;
-	sin.sin_port = htons(port);
+	sin->sin_family = AF_INET;
+	sin->sin_addr.s_addr = peer_ip_addr;
+	sin->sin_port = htons(port);
+#if 0
 	if(client_sock->sk) {
 		client_sock->sk->sk_state_change = app_glue_sock_wakeup;
 	}
-	kernel_connect(client_sock, (struct sockaddr *)&sin,sizeof(sin), 0);
 #endif
+	soconnect(client_sock, m);
+
+	m_freem(m);
 	return client_sock;
 }
 /*
@@ -277,54 +319,73 @@ void *create_client_socket(const char *my_ip_addr,unsigned short my_port,
 }
 void *create_server_socket2(unsigned int my_ip_addr,unsigned short port)
 {
-	struct sockaddr_in sin;
+	struct sockaddr_in *sin;
 	struct timeval tv;
 	struct socket *server_sock = NULL;
 	uint32_t bufsize;
+	struct mbuf *m;
+	struct sockopt soopt;
 
 	if(socreate(AF_INET,&server_sock,SOCK_STREAM,0,NULL)) {
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
-#if 0
+	m = m_get(M_WAIT, MT_SONAME);
+	if (!m) {
+		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
+		return NULL;
+	}
+	m->m_len = sizeof(struct sockaddr_in);
+	sin = mtod(m, struct sockaddr_in *);
+
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
-	if(sock_setsockopt(server_sock,SOL_SOCKET,SO_RCVTIMEO,(char *)&tv,sizeof(tv))) {
+	soopt.sopt_level = SOL_SOCKET;
+	soopt.sopt_name = SO_RCVTIMEO;
+	soopt.sopt_data = &tv;
+	if(sosetopt(server_sock,&soopt)) {
 		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
-	if(sock_setsockopt(server_sock,SOL_SOCKET,SO_SNDTIMEO,(char *)&tv,sizeof(tv))) {
+	soopt.sopt_name = SO_SNDTIMEO;
+	if(sosetopt(server_sock,&soopt)) {
 		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
 #if 0
 	bufsize = 0x1000000;
-	if(sock_setsockopt(server_sock,SOL_SOCKET,SO_SNDBUF,(char *)&bufsize,sizeof(bufsize))) {
+	soopt.sopt_name = SO_SNDBUF;
+	soopt.sopt_data = &bufsize;
+	if(sosetopt(server_sock,&soopt)) {
 		printf("%s %d cannot set bufsize\n",__FILE__,__LINE__);
 	}
-	if(sock_setsockopt(server_sock,SOL_SOCKET,SO_RCVBUF,(char *)&bufsize,sizeof(bufsize))) {
+	soopt.sopt_name = SO_SNDBUF;
+	if(sosetopt(server_sock,&soopt)) {
 		printf("%s %d cannot set bufsize\n",__FILE__,__LINE__);
 	}
 #endif
-	sin.sin_family = AF_INET;
-	sin.sin_addr.s_addr = my_ip_addr;
-	sin.sin_port = htons(port);
+	sin->sin_family = AF_INET;
+	sin->sin_addr.s_addr = my_ip_addr;
+	sin->sin_port = htons(port);
 
-	if(kernel_bind(server_sock,(struct sockaddr *)&sin,sizeof(sin))) {
+	if(sobind(server_sock,m)) {
 		printf("cannot bind %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
+#if 0
 	if(server_sock->sk) {
 		server_sock->sk->sk_state_change = app_glue_sock_wakeup;
 	}
 	else {
 		printf("FATAL %s %d\n",__FILE__,__LINE__);exit(0);
 	}
-	if(kernel_listen(server_sock,32000)) {
+#endif
+	if(solisten(server_sock,32000)) {
 		printf("cannot listen %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
-#endif
+
+	m_freem(m);
 	return server_sock;
 }
 /*
