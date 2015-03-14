@@ -56,21 +56,23 @@
  * The following are standard, built-in malloc types that are
  * not specific to any one subsystem.
  */
-MALLOC_DECLARE(M_DEVBUF);
-MALLOC_DECLARE(M_DMAMAP);
-MALLOC_DECLARE(M_FREE);
-MALLOC_DECLARE(M_PCB);
-MALLOC_DECLARE(M_TEMP);
+enum {
+MALLOC_DECLARE(M_DEVBUF),
+MALLOC_DECLARE(M_DMAMAP),
+MALLOC_DECLARE(M_FREE),
+MALLOC_DECLARE(M_PCB),
+MALLOC_DECLARE(M_TEMP),
 
 /* XXX These should all be declared elsewhere. */
-MALLOC_DECLARE(M_RTABLE);
-MALLOC_DECLARE(M_FTABLE);
-MALLOC_DECLARE(M_UFSMNT);
-MALLOC_DECLARE(M_NETADDR);
-MALLOC_DECLARE(M_IPMOPTS);
-MALLOC_DECLARE(M_IPMADDR);
-MALLOC_DECLARE(M_MRTABLE);
-MALLOC_DECLARE(M_BWMETER);
+MALLOC_DECLARE(M_RTABLE),
+MALLOC_DECLARE(M_FTABLE),
+MALLOC_DECLARE(M_UFSMNT),
+MALLOC_DECLARE(M_NETADDR),
+MALLOC_DECLARE(M_IPMOPTS),
+MALLOC_DECLARE(M_IPMADDR),
+MALLOC_DECLARE(M_MRTABLE),
+MALLOC_DECLARE(M_BWMETER),
+};
 #endif /* _KERNEL */
 
 /*
@@ -89,30 +91,30 @@ struct kmembuckets {
 
 #ifdef _KERNEL
 #ifdef MALLOCLOG
-extern void	*_kern_malloc(unsigned long, struct malloc_type *, int, const char *, long);
-extern void	_kern_free(void *, struct malloc_type *, const char *, long);
+extern void	*_kern_malloc(unsigned long, malloc_type, int, const char *, long);
+extern void	_kern_free(void *, malloc_type, const char *, long);
 #define	malloc(size, type, flags) \
 	    _kern_malloc((size), (type), (flags), __FILE__, __LINE__)
 #define	free(addr, type) \
 	    _kern_free((addr), (type), __FILE__, __LINE__)
 #else
-extern void	*kern_malloc(unsigned long, struct malloc_type *, int);
-extern void	kern_free(void *, struct malloc_type *);
+extern void	*kern_malloc(unsigned long, malloc_type, int);
+extern void	kern_free(void *, malloc_type);
 #define malloc(size, type, flags) kern_malloc(size, type, flags)
 #define free(addr, type) kern_free(addr, type)
 #endif /* MALLOCLOG */
 
 #ifdef MALLOC_DEBUG
 void	debug_malloc_init(void);
-int	debug_malloc(unsigned long, struct malloc_type *, int, void **);
-int	debug_free(void *, struct malloc_type *);
+int	debug_malloc(unsigned long, malloc_type, int, void **);
+int	debug_free(void *, malloc_type);
 
 void	debug_malloc_print(void);
 void	debug_malloc_printit(void (*)(const char *, ...)
     __printflike(1, 2), vaddr_t);
 #endif /* MALLOC_DEBUG */
 
-void	*kern_realloc(void *, unsigned long, struct malloc_type *, int);
+void	*kern_realloc(void *, unsigned long, malloc_type, int);
 #define realloc(ptr, size, type, flags) \
 	    kern_realloc(ptr, size, type, flags)
 unsigned long

@@ -835,8 +835,8 @@ do {									\
 #define	IFQ_SET_MAXLEN(ifq, len)	((ifq)->ifq_maxlen = (len))
 
 #include <special_includes/sys/mallocvar.h>
-MALLOC_DECLARE(M_IFADDR);
-MALLOC_DECLARE(M_IFMADDR);
+#define M_IFADDR 0
+#define M_IFMADDR 0
 
 #define	IFNET_FIRST()			TAILQ_FIRST(&ifnet)
 #define	IFNET_NEXT(__ifp)		TAILQ_NEXT((__ifp), if_list)

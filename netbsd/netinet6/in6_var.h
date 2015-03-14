@@ -479,7 +479,7 @@ struct	in6_rrenumreq {
 #endif
 
 #ifdef _KERNEL
-MALLOC_DECLARE(M_IP6OPT);
+#define M_IP6OPT 0
 
 extern struct in6_ifaddr *in6_ifaddr;
 

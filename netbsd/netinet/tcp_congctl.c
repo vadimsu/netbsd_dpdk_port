@@ -212,7 +212,7 @@ static void tcp_congctl_fillnames(void);
 
 extern int tcprexmtthresh;
 
-MALLOC_DEFINE(M_TCPCONGCTL, "tcpcongctl", "TCP congestion control structures");
+#define M_TCPCONGCTL 0
 
 /* currently selected global congestion control */
 char tcp_congctl_global_name[TCPCC_MAXLEN];

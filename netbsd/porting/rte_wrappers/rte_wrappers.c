@@ -5,7 +5,7 @@
 #include <rte_mbuf.h>
 #include <rte_lcore.h>
 #include <rte_malloc.h>
-
+typedef int malloc_type;
 void *allocate_mbuf(void *pool)
 {
 	struct rte_mempool *rte_pool = (struct rte_mempool*)pool;
@@ -29,11 +29,11 @@ unsigned get_cpu_count()
     return rte_lcore_count();
 }
 
-void  *kern_malloc(unsigned long size, struct malloc_type *type, int flags)
+void  *kern_malloc(unsigned long size, malloc_type type, int flags)
 {
 	return rte_malloc(NULL,size,0);
 }
-void kern_free(void *addr, struct malloc_type *type)
+void kern_free(void *addr, malloc_type type)
 {
 	rte_free(addr);
 }

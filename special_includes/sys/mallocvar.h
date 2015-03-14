@@ -43,32 +43,10 @@
  * This structure describes a type of malloc'd memory and carries
  * allocation statistics for that memory.
  */
-struct malloc_type {
-	struct malloc_type *ks_next;	/* next in list */
-	u_long	ks_magic;	 /* indicates valid structure */
-	const char *ks_shortdesc;/* short description */
-
-	/* Statistics */
-	u_long	ks_inuse;	/* # of packets of this type currently in use */
-	u_long	ks_calls;	/* total packets of this type ever allocated */
-	u_long 	ks_memuse;	/* total memory held in bytes */
-	u_short	ks_limblocks;	/* number of times blocked for hitting limit */
-	u_short	ks_mapblocks;	/* number of times blocked for kernel map */
-	u_long	ks_maxused;	/* maximum number ever used */
-	u_long	ks_limit;	/* most that are allowed to exist */
-	u_long	ks_size;	/* sizes of this thing that are allocated */
-	u_int	ks_active[MAXBUCKET+1];	/* number of active allocations per size */
-};
+typedef int malloc_type;
 
 #ifdef _KERNEL
-#define	MALLOC_JUSTDEFINE_LIMIT(type, shortdesc, longdesc, limit)	\
-struct malloc_type type[1] = {						\
-	[0] = {								\
-		.ks_magic = M_MAGIC,					\
-		.ks_shortdesc = shortdesc,				\
-		.ks_limit = limit,					\
-	},								\
-};
+#define	MALLOC_JUSTDEFINE_LIMIT(type, shortdesc, longdesc, limit)	
 
 #define	MALLOC_JUSTDEFINE(type, shortdesc, longdesc)			\
 	MALLOC_JUSTDEFINE_LIMIT(type, shortdesc, longdesc, 0)
@@ -80,13 +58,12 @@ struct malloc_type type[1] = {						\
 #define	MALLOC_DEFINE(type, shortdesc, longdesc)			\
 	MALLOC_DEFINE_LIMIT(type, shortdesc, longdesc, 0)
 
-#define	MALLOC_DECLARE(type)						\
-	extern struct malloc_type type[1]
+#define	MALLOC_DECLARE(type) type
 
-void	malloc_type_attach(struct malloc_type *);
-void	malloc_type_detach(struct malloc_type *);
+void	malloc_type_attach(malloc_type);
+void	malloc_type_detach(malloc_type);
 
-void	malloc_type_setlimit(struct malloc_type *, u_long);
+void	malloc_type_setlimit(malloc_type, u_long);
 #endif /* _KERNEL */
 
 #endif /* _SYS_MALLOCVAR_H_ */
