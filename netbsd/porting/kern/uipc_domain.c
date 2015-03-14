@@ -35,6 +35,7 @@
 __KERNEL_RCSID(0, "$NetBSD: uipc_domain.c,v 1.87 2011/10/27 21:10:55 seanb Exp $");
 
 #include <special_includes/sys/param.h>
+#include <lib/libkern/libkern.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/protosw.h>
@@ -54,6 +55,7 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_domain.c,v 1.87 2011/10/27 21:10:55 seanb Exp $
 //#include <special_includes/sys/filedesc.h>
 //#include <special_includes/sys/kauth.h>
 #include <special_includes/sys/syslog.h>
+
 MALLOC_DECLARE(M_SOCKADDR);
 
 MALLOC_DEFINE(M_SOCKADDR, "sockaddr", "socket endpoints");

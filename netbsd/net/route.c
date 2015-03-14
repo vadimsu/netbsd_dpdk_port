@@ -281,9 +281,9 @@ rt_init(void)
 	sysctl_net_rtcache_setup(NULL);
 #endif
 
-	pool_init(&rtentry_pool, sizeof(struct rtentry), 0, 0, 0, "rtentpl",
+	pool_init(&rtentry_pool, sizeof(struct rtentry), ROUTE_ENTRIES_COUNT, 0, 0, "rtentpl",
 	    NULL, IPL_SOFTNET);
-	pool_init(&rttimer_pool, sizeof(struct rttimer), 0, 0, 0, "rttmrpl",
+	pool_init(&rttimer_pool, sizeof(struct rttimer), ROUTE_ENTRIES_COUNT, 0, 0, "rttmrpl",
 	    NULL, IPL_SOFTNET);
 
 	rn_init();	/* initialize all zeroes, all ones, mask table */

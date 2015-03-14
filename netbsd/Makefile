@@ -16,11 +16,12 @@ porting/kern/uipc_domain.c porting/kern/malloc.c
 #opencrypto/cryptosoft_xform.c
 #porting/kern/uipc_mbuf.c
 CFLAGS += -Ofast -fno-builtin
+#CFLAGS += -g -fno-builtin
 CFLAGS += $(WERROR_FLAGS)
 NETBSD_HEADERS=-I$(SRC_ROOT)/special_includes -I$(SRC_ROOT)/netbsd -I$(SRC_ROOT)
 DPDK_HEADERS=$(SRC_ROOT)/dpdk-1.8.0/x86_64-native-linuxapp-gcc/include
 ALL_HEADERS = $(NETBSD_HEADERS) -I$(DPDK_HEADERS)
-CFLAGS += $(ALL_HEADERS) -D_KERNEL -D__NetBSD__ -DINET -D_NETBSD_SOURCE -DSTACK_MBUFS_COUNT=16384
+CFLAGS += $(ALL_HEADERS) -D_KERNEL -D__NetBSD__ -DINET -D_NETBSD_SOURCE -DSTACK_MBUFS_COUNT=16384 -DROUTE_ENTRIES_COUNT=10
 #-DGSO
 #-DMSIZE=256
 LIB = libnetinet.a

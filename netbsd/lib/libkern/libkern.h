@@ -262,15 +262,27 @@ struct mtprng_state {
 };
 
 /* Prototypes for which GCC built-ins exist. */
-void	*memcpy(void *, const void *, size_t);
+//void	*memcpy(void *, const void *, size_t);
 int	 memcmp(const void *, const void *, size_t);
-void	*memset(void *, int, size_t);
+static inline void *memset(void *d, int v, size_t l)
+{
+    __builtin_memset(d, v, l);
+    return d;
+}
+static inline void *memcpy(void *d,const void *s, size_t l)
+{
+    __builtin_memcpy(d, s, l);
+    return d;
+}
 #if __GNUC_PREREQ__(2, 95) && !defined(_STANDALONE)
+#if 0
 #define	memcpy(d, s, l)		__builtin_memcpy(d, s, l)
+#else
+#endif
 #define	memcmp(a, b, l)		__builtin_memcmp(a, b, l)
 #endif
 #if __GNUC_PREREQ__(2, 95) && !defined(_STANDALONE)
-#define	memset(d, v, l)		__builtin_memset(d, v, l)
+//#define	memset(d, v, l)		__builtin_memset(d, v, l)
 #endif
 
 char	*strcpy(char *, const char *);
