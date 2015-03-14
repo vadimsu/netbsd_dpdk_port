@@ -191,7 +191,7 @@ etherip_match(device_t self, cfdata_t cfdata, void *arg)
 {
 	return 1;
 }
-#endif
+
 static void
 etherip_attach(device_t parent, device_t self, void *aux)
 {
@@ -324,7 +324,7 @@ etherip_detach(device_t self, int flags)
 
 	return 0;
 }
-
+#endif
 /*
  * This function is called by the ifmedia layer to notify the driver
  * that the user requested a media change.  A real driver would

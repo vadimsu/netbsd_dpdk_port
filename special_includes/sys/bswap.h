@@ -9,7 +9,7 @@
 #include <special_includes/sys/cdefs.h>
 #include <special_includes/sys/types.h>
 
-#include <machine/bswap.h>
+#include <special_includes/machine/bswap.h>
 
 __BEGIN_DECLS
 /* Always declare the functions in case their address is taken (etc) */
@@ -23,7 +23,7 @@ uint32_t bswap32(uint32_t) __RENAME(__bswap32) __constfunc;
 uint64_t bswap64(uint64_t) __constfunc;
 __END_DECLS
 
-#if defined(__GNUC__) && defined(__OPTIMIZE__) && !defined(__lint__)
+//#if defined(__GNUC__) && defined(__OPTIMIZE__) && !defined(__lint__)
 
 /* machine/byte_swap.h might have defined inline versions */
 #ifndef __BYTE_SWAP_U64_VARIABLE
@@ -73,7 +73,7 @@ __END_DECLS
 	(__builtin_constant_p((x)) ? \
 	 __byte_swap_u16_constant(x) : __BYTE_SWAP_U16_VARIABLE(x))
 
-#endif /* __GNUC__ && __OPTIMIZE__ */
+//#endif /* __GNUC__ && __OPTIMIZE__ */
 #endif /* !_LOCORE */
 
 #endif /* !_SYS_BSWAP_H_ */

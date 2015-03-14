@@ -49,7 +49,7 @@ __KERNEL_RCSID(0, "$NetBSD: link_proto.c,v 1.7.8.1 2014/08/07 09:39:55 msaitoh E
 
 static int sockaddr_dl_cmp(const struct sockaddr *, const struct sockaddr *);
 static int link_usrreq(struct socket *, int, struct mbuf *, struct mbuf *,
-    struct mbuf *, struct lwp *);
+    struct mbuf *);
 static void link_init(void);
 
 /*
@@ -89,7 +89,7 @@ link_init(void)
 
 static int
 link_control(struct socket *so, unsigned long cmd, void *data,
-    struct ifnet *ifp, struct lwp *l)
+    struct ifnet *ifp)
 {
 	int error, s;
 	bool isactive, mkactive;
@@ -209,7 +209,7 @@ link_control(struct socket *so, unsigned long cmd, void *data,
 
 static int
 link_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
-	struct mbuf *control, struct lwp *l)
+	struct mbuf *control)
 {
 	switch (req) {
 	case PRU_ATTACH:
@@ -220,7 +220,7 @@ link_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
 		return 0;
 	case PRU_CONTROL:
 		return link_control(so, (unsigned long)m, nam,
-		    (struct ifnet *)control, l);
+		    (struct ifnet *)control);
 	default:
 		return EOPNOTSUPP;
 	}

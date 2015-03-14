@@ -167,7 +167,7 @@ void
 tcp_sack_init(void)
 {
 
-	pool_init(&sackhole_pool, sizeof(struct sackhole), 0, 0, 0,
+	pool_init(&sackhole_pool, sizeof(struct sackhole), TCP_SACK_HOLES_COUNT, 0, 0,
 	    "sackholepl", NULL, IPL_SOFTNET);
 }
 

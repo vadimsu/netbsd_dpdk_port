@@ -162,11 +162,11 @@ struct socket {
 	void		(*so_upcall) (struct socket *, void *, int, int);
 	void *		so_upcallarg;	/* Arg for above */
 	int		(*so_send) (struct socket *, struct mbuf *,
-					struct uio *, struct mbuf *,
-					struct mbuf *, int, struct lwp *);
+					struct mbuf *,
+					struct mbuf *, int);
 	int		(*so_receive) (struct socket *,
 					struct mbuf **,
-					struct uio *, struct mbuf **,
+					struct mbuf **,
 					struct mbuf **, int *);
 	struct mowner	*so_mowner;	/* who owns mbufs for this socket */
 	struct uidinfo	*so_uidinfo;	/* who opened the socket */

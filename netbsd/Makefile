@@ -15,13 +15,13 @@ net/rtsock.c net/link_proto.c lib/libkern/intoa.c porting/kern/kern_tc.c porting
 porting/kern/uipc_domain.c porting/kern/malloc.c
 #opencrypto/cryptosoft_xform.c
 #porting/kern/uipc_mbuf.c
-CFLAGS += -Ofast -fno-builtin
-#CFLAGS += -g -fno-builtin
+#CFLAGS += -Ofast -fno-builtin
+CFLAGS += -g -fno-builtin
 CFLAGS += $(WERROR_FLAGS)
 NETBSD_HEADERS=-I$(SRC_ROOT)/special_includes -I$(SRC_ROOT)/netbsd -I$(SRC_ROOT)
 DPDK_HEADERS=$(SRC_ROOT)/dpdk-1.8.0/x86_64-native-linuxapp-gcc/include
 ALL_HEADERS = $(NETBSD_HEADERS) -I$(DPDK_HEADERS)
-CFLAGS += $(ALL_HEADERS) -D_KERNEL -D__NetBSD__ -DINET -D_NETBSD_SOURCE -DSTACK_MBUFS_COUNT=16384 -DROUTE_ENTRIES_COUNT=10
+CFLAGS += $(ALL_HEADERS) -D_KERNEL -D__NetBSD__ -DINET -D_NETBSD_SOURCE -DSTACK_MBUFS_COUNT=16384 -DROUTE_ENTRIES_COUNT=10 -DTCP_QENTRIES_COUNT=16384 -DTCP_SYNCACHE_ENTRIES_COUNT=16384 -DTCP_SACK_HOLES_COUNT=16384 -DTCP_CB_COUNT=16384 -DIN_CB_COUNT=16384 -DIP_FLOW_COUNT=8192
 #-DGSO
 #-DMSIZE=256
 LIB = libnetinet.a

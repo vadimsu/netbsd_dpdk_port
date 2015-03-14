@@ -7,6 +7,7 @@ unsigned long hz=0;
 unsigned long tick=0;
 size_t  coherency_unit = COHERENCY_UNIT;
 void *createInterface(int instance);
+void *create_udp_socket(const char *ip_addr,unsigned short port);
 int main(int argc,char **argv)
 {
     int ret;
@@ -27,10 +28,7 @@ int main(int argc,char **argv)
     ifp = createInterface(0);
     printf("%s %d %p\n",__FILE__,__LINE__,ifp);
     configure_if_addr(ifp,inet_addr("192.168.1.1"),inet_addr("255.255.255.0"));
-//    arp_init();
-//    printf("%s %d\n",__FILE__,__LINE__);
-//    ip_init();
-//    printf("%s %d\n",__FILE__,__LINE__);
-    printf("HELLO\n");
+    void *socket = create_udp_socket("192.168.1.1",7777);
+    printf("HELLO %p\n",socket);
     return 0;
 }

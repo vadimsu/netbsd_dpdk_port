@@ -348,11 +348,13 @@ int	 skpc(int, size_t, u_char *);
 int	 strcasecmp(const char *, const char *);
 static inline size_t	 strlcpy(char *dst, const char *src, size_t sz)
 {
-    return strncpy(dst,src,sz);
+    strncpy(dst,src,sz);
+    return sz;
 }
 static inline size_t strlcat(char *dst, const char *src, size_t sz)
 {
-    return strncat(dst,src,sz);
+    strncat(dst,src,sz);
+    return sz;
 }
 int	 strncasecmp(const char *, const char *, size_t);
 u_long	 strtoul(const char *, char **, int);

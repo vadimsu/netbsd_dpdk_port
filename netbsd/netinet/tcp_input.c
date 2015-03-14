@@ -416,7 +416,7 @@ void
 tcpipqent_init(void)
 {
 
-	pool_init(&tcpipqent_pool, sizeof(struct ipqent), 0, 0, 0, "tcpipqepl",
+	pool_init(&tcpipqent_pool, sizeof(struct ipqent), TCP_QENTRIES_COUNT, 0, 0, "tcpipqepl",
 	    NULL, IPL_VM);
 }
 
@@ -3692,7 +3692,7 @@ syn_cache_init(void)
 {
 	int i;
 
-	pool_init(&syn_cache_pool, sizeof(struct syn_cache), 0, 0, 0,
+	pool_init(&syn_cache_pool, sizeof(struct syn_cache), TCP_SYNCACHE_ENTRIES_COUNT, 0, 0,
 	    "synpl", NULL, IPL_SOFTNET);
 
 	/* Initialize the hash buckets. */

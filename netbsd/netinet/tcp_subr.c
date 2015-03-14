@@ -385,7 +385,7 @@ tcp_init(void)
 	int hlen;
 
 	in_pcbinit(&tcbtable, tcbhashsize, tcbhashsize);
-	pool_init(&tcpcb_pool, sizeof(struct tcpcb), 0, 0, 0, "tcpcbpl",
+	pool_init(&tcpcb_pool, sizeof(struct tcpcb), TCP_CB_COUNT, 0, 0, "tcpcbpl",
 	    NULL, IPL_SOFTNET);
 
 	hlen = sizeof(struct ip) + sizeof(struct tcphdr);

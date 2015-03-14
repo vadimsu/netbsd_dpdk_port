@@ -390,7 +390,7 @@ typedef struct vestigial_inpcb {
 #ifdef _KERNEL
 void vtw_restart(vestigial_inpcb_t*);
 int vtw_earlyinit(void);
-int sysctl_tcp_vtw_enable(SYSCTLFN_PROTO);
+//int sysctl_tcp_vtw_enable(SYSCTLFN_PROTO);
 #endif /* _KERNEL */
 
 #ifdef VTW_DEBUG

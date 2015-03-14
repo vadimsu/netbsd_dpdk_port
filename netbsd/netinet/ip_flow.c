@@ -143,7 +143,7 @@ void
 ipflow_poolinit(void)
 {
 
-	pool_init(&ipflow_pool, sizeof(struct ipflow), 0, 0, 0, "ipflowpl",
+	pool_init(&ipflow_pool, sizeof(struct ipflow), IP_FLOW_COUNT, 0, 0, "ipflowpl",
 	    NULL, IPL_NET);
 }
 

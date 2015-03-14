@@ -271,7 +271,7 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
 	soopt.sopt_name = SO_SNDTIMEO;
-	if(sosetsopt(client_sock,&soopt)) {
+	if(sosetopt(client_sock,&soopt)) {
 		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
 	while(1) {

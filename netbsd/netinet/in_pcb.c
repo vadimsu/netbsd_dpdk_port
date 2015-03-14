@@ -166,7 +166,7 @@ static int
 inpcb_poolinit(void)
 {
 
-	pool_init(&inpcb_pool, sizeof(struct inpcb), 0, 0, 0, "inpcbpl", NULL,
+	pool_init(&inpcb_pool, sizeof(struct inpcb), IN_CB_COUNT, 0, 0, "inpcbpl", NULL,
 	    IPL_NET);
 	return 0;
 }

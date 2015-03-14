@@ -7,7 +7,7 @@
 
 #ifdef __x86_64__
 
-#include <machine/byte_swap.h>
+#include <special_includes/machine/byte_swap.h>
 
 #define __BSWAP_RENAME
 #include <special_includes/sys/bswap.h>

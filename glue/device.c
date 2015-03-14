@@ -71,7 +71,7 @@ struct ifnet *createInterface(int instance)
     struct ifnet *ifp = malloc(sizeof(struct ifnet),M_NETADDR,0);
     char ifname[IFNAMSIZ];
     char macaddr[6];
-printf("%s %d\n",__FILE__,__LINE__);
+
     sprintf(ifname,"dpdk%d",instance);
     strlcpy(ifp->if_xname, ifname, IFNAMSIZ);
     ifp->if_mtu = ETHERMTU;
@@ -87,12 +87,12 @@ printf("%s %d\n",__FILE__,__LINE__);
     ifp->if_qflush = dpdk_qflush;
 #endif
 //    ifp->if_snd.ifq_maxlen = adapter->num_tx_desc - 2;
-printf("%s %d\n",__FILE__,__LINE__);
+
     if_attach(ifp);
-printf("%s %d\n",__FILE__,__LINE__);
+
     ether_ifattach(ifp, macaddr);
 //    ether_set_ifflags_cb(ec, ixgbe_ifflags_cb);
-printf("%s %d\n",__FILE__,__LINE__);
+
 //	ifp->if_hdrlen = sizeof(struct ether_vlan_header);
 
     ifp->if_capabilities |= IFCAP_HWCSUM | IFCAP_TSOv4;
