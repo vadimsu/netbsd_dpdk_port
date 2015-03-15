@@ -93,7 +93,10 @@ int	max_protohdr;
 int	max_hdr;
 int	max_datalen;
 
-static int mb_ctor(void *, void *, int);
+static int mb_ctor(struct rte_mempool *mp,
+                   void *opaque_arg,
+                   void *_m,
+                   __attribute__((unused)) unsigned i);
 
 static void	sysctl_kern_mbuf_setup(void);
 
@@ -170,6 +173,7 @@ nmbclusters_limit(void)
 /*
  * Initialize the mbuf allocator.
  */
+void *pool_data_mbuf_create(const char *name,int size,int count);
 void
 mbinit(void)
 {
@@ -178,15 +182,8 @@ mbinit(void)
 //	CTASSERT(sizeof(struct mbuf) == MSIZE);
 
 //	sysctl_kern_mbuf_setup();
-#if 0
-        mb_data = rte_mempool_create("MBUF_DATA",
-                                     STACK_MBUFS_COUNT,
-                                     MBUF_SIZE, 
-                                     0,
-                                     sizeof(struct rte_pktmbuf_pool_private),
-                                     rte_pktmbuf_pool_init, NULL,
-                                     rte_pktmbuf_init, NULL,
-                                     rte_socket_id(), 0);
+#if 1
+        mb_data = pool_data_mbuf_create("MBUF_DATA",MBUF_SIZE,STACK_MBUFS_COUNT);
 #endif
 	mb_cache = pool_cache_init(msize, STACK_MBUFS_COUNT, 0, 0, "mbpl",
 	    NULL, IPL_VM, mb_ctor, NULL, mb_data);
@@ -456,12 +453,15 @@ sysctl_kern_mbuf_setup(void)
 }
 #endif
 static int
-mb_ctor(void *arg, void *object, int flags)
+mb_ctor(struct rte_mempool *mp,
+        void *opaque_arg,
+        void *_m,
+        __attribute__((unused)) unsigned i)
 {
-	struct mbuf *m = object;
-        pool_cache_t mb_data_pool = (pool_cache_t)arg;
+	struct mbuf *m = _m;
+        pool_cache_t mb_data_pool = (pool_cache_t)opaque_arg;
         struct rte_mbuf *data_buf;
-#if 0
+#if 1
         data_buf = allocate_mbuf(mb_data_pool);
         if(!data_buf) {
             printf("FATAL %s %d\n",__FILE__,__LINE__);
@@ -475,7 +475,7 @@ mb_ctor(void *arg, void *object, int flags)
 	m->m_flags = 0;
 	m->m_type = MT_FREE;
 	m->m_paddr = data_buf;
-#if 0
+#if 1
 	m->m_dat = get_mbuf_data(data_buf);
 #endif
 	m->m_data = m->m_dat;

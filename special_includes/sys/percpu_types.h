@@ -32,11 +32,14 @@
 #include <special_includes/sys/types.h>
 
 struct cpu_info;
-typedef struct percpu percpu_t;
+//typedef struct percpu percpu_t;
 
 typedef struct percpu_cpu {
 	size_t pcc_size;
 	void *pcc_data;
 } percpu_cpu_t;
+
+typedef percpu_cpu_t percpu_t;
+//typedef struct percpu percpu_t;
 
 #endif /* _SYS_PERCPU_TYPES_H_ */

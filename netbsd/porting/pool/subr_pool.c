@@ -38,7 +38,7 @@
 //#include <string.h>
 //#include <special_includes/sys/queue.h>
 //#include <stdarg.h>
-
+#include <rte_config.h>
 #include <rte_common.h>
 #include <rte_byteorder.h>
 #include <rte_log.h>
@@ -58,6 +58,7 @@
 #include <rte_random.h>
 #include <rte_debug.h>
 #include <rte_ring.h>
+#include <rte_mbuf.h>
 
 #include<rte_mempool.h>
 typedef unsigned char bool;
@@ -307,4 +308,12 @@ void
 pool_cache_sethardlimit(pool_cache_t pc, int n, const char *warnmess, int ratecap)
 {
     printf("NOT IMPLEMENTED %s %d\n",__FILE__,__LINE__);
+}
+
+void *pool_data_mbuf_create(const char *name,int size,int count)
+{
+    return rte_mempool_create(name,count,size,0,sizeof(struct rte_pktmbuf_pool_private),
+                                     rte_pktmbuf_pool_init, NULL,
+                                     rte_pktmbuf_init, NULL,
+                                     rte_socket_id(), 0);
 }

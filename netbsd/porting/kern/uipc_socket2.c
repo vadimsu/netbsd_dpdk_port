@@ -241,7 +241,7 @@ void
 soinit2(void)
 {
 
-	socket_cache = pool_cache_init(sizeof(struct socket), 0, 0, 0,
+	socket_cache = pool_cache_init(sizeof(struct socket), SOCK_CACHE_SIZE, 0, 0,
 	    "socket", NULL, IPL_SOFTNET, NULL, NULL, NULL);
 }
 

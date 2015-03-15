@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <rte_common.h>
+#include <rte_lcore.h>
 
 const char hexdigits[] = "0123456789abcdef";
 
@@ -24,4 +26,9 @@ int enxio()
 
 void schednetisr(int num)
 {
+}
+
+int get_current_cpu()
+{
+    return rte_lcore_id();
 }

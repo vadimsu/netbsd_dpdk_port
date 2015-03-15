@@ -5,6 +5,8 @@
 #include <rte_mbuf.h>
 #include <rte_lcore.h>
 #include <rte_malloc.h>
+#include <rte_memcpy.h>
+
 typedef int malloc_type;
 void *allocate_mbuf(void *pool)
 {
@@ -36,4 +38,14 @@ void  *kern_malloc(unsigned long size, malloc_type type, int flags)
 void kern_free(void *addr, malloc_type type)
 {
 	rte_free(addr);
+}
+
+void internal_memcpy(void *d,const void *s, size_t sz)
+{
+    rte_memcpy(d, s, sz);
+}
+
+void internal_memset(void *d, int v, size_t sz)
+{
+    memset(d, v, sz);
 }

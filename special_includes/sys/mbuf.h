@@ -72,7 +72,7 @@
 #include "missing_types.h"
 #include "special_includes/sys/types.h"
 #include <special_includes/sys/queue.h>
-//#include<rte_mbuf.h>
+#include<special_includes/sys/pool.h>
 /*
  * Mbufs are of a single size, MSIZE (machine/param.h), which
  * includes overhead.  An mbuf may add a single "mbuf cluster" of size
@@ -546,7 +546,11 @@ do {									\
  * Free a single mbuf and associated external storage.
  * Place the successor, if any, in n.
  */
-#define	MFREE(m, n)							
+#define MFREE(m, n)                                                     \
+          if ((m)->m_flags & M_PKTHDR)                                    \
+                  m_tag_delete_chain((m), NULL);                          \
+          (n) = (m)->m_next;                                              \
+          pool_cache_put(mb_cache, (m));                          \
 /*
  * Copy mbuf pkthdr from `from' to `to'.
  * `from' must have M_PKTHDR set, and `to' must be empty.
@@ -788,6 +792,7 @@ extern int	max_hdr;		/* largest link+protocol header */
 extern int	max_datalen;		/* MHLEN - max_hdr */
 extern const int msize;			/* mbuf base size */
 extern const int mclbytes;		/* mbuf cluster size */
+extern pool_cache_t mb_cache;
 #ifdef MBUFTRACE
 LIST_HEAD(mownerhead, mowner);
 extern struct mownerhead mowners;

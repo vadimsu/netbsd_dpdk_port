@@ -43,6 +43,7 @@ __KERNEL_RCSID(0, "$NetBSD: subr_percpu.c,v 1.16 2012/01/27 19:48:40 para Exp $"
 //#include <special_includes/sys/vmem.h>
 //#include <special_includes/sys/xcall.h>
 
+
 #define	PERCPU_QUANTUM_SIZE	(ALIGNBYTES + 1)
 #define	PERCPU_QCACHE_MAX	0
 #define	PERCPU_IMPORT_SIZE	2048
@@ -258,8 +259,7 @@ percpu_t *
 percpu_alloc(size_t size)
 {
 #if 0
-	vmem_addr_t offset;
-	percpu_t *pc;
+	vmem_addr_t offset;	
 
 	ASSERT_SLEEPABLE();
 	if (vmem_alloc(percpu_offset_arena, size, VM_SLEEP | VM_BESTFIT,
@@ -269,8 +269,14 @@ percpu_alloc(size_t size)
 	percpu_zero(pc, size);
 	return pc;
 #else
+        percpu_t *pc;
 	unsigned cpu_count = get_cpu_count();
-        return rte_zmalloc(NULL,size*cpu_count,0);
+        pc = (percpu_t *)rte_zmalloc(NULL,sizeof(percpu_t)+size*cpu_count,0);
+        if(!pc)
+            return NULL;
+        pc->pcc_data = pc + 1;
+        pc->pcc_size = size;
+        return pc;
 #endif
 }
 
@@ -307,7 +313,8 @@ percpu_getref(percpu_t *pc)
 	KPREEMPT_DISABLE(curlwp);
 	return percpu_getptr_remote(pc, curcpu());
 #else
-    return NULL;
+    char *p = (char *)pc->pcc_data;
+    return &p[pc->pcc_size*get_current_cpu()];
 #endif
 }
 

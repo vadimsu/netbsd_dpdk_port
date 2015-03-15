@@ -25,6 +25,8 @@ int main(int argc,char **argv)
     printf("%s %d\n",__FILE__,__LINE__);
     bpf_setops();
     rt_init();
+    soinit2();
+    mbinit();
     ifp = createInterface(0);
     printf("%s %d %p\n",__FILE__,__LINE__,ifp);
     configure_if_addr(ifp,inet_addr("192.168.1.1"),inet_addr("255.255.255.0"));
