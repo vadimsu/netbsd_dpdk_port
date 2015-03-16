@@ -571,6 +571,7 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
  restart:
 	if ((error = sblock(&so->so_snd, SBLOCKWAIT(flags))) != 0)
 		goto out;
+#if 0 /* VADIM */
 	do {
 		if (so->so_state & SS_CANTSENDMORE) {
 			error = EPIPE;
@@ -610,7 +611,6 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
 		mp = &top;
 		space -= clen;
 		do {
-#if 0 /* VADIM */
 			do {
 				sounlock(so);
 				splx(s);
@@ -675,7 +675,7 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
 					break;
 				}
 			} while (space > 0 && atomic);
-#endif
+
 			if (so->so_state & SS_CANTSENDMORE) {
 				error = EPIPE;
 				goto release;
@@ -699,7 +699,58 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
 				goto release;
 		} while (resid && space > 0);
 	} while (resid);
-
+#else
+    if (so->so_state & SS_CANTSENDMORE) {
+	    error = EPIPE;
+		goto release;
+	}
+    if (so->so_error) {
+		error = so->so_error;
+		so->so_error = 0;
+		goto release;
+	}
+	if ((so->so_state & SS_ISCONNECTED) == 0) {
+		if (so->so_proto->pr_flags & PR_CONNREQUIRED) {
+			if ((so->so_state & SS_ISCONFIRMING) == 0 &&
+			    !(resid == 0 && clen != 0)) {
+				error = ENOTCONN;
+				goto release;
+			}
+		} else if (addr == 0) {
+			error = EDESTADDRREQ;
+			goto release;
+		}
+	}
+    space = sbspace(&so->so_snd);
+	if (flags & MSG_OOB)
+		space += 1024;
+	if ((atomic && resid > so->so_snd.sb_hiwat) ||
+	    clen > so->so_snd.sb_hiwat) {
+		error = EMSGSIZE;
+		goto release;
+	}
+	if (space < resid + clen &&
+	    (atomic || space < so->so_snd.sb_lowat || space < clen)) {
+		error = EWOULDBLOCK;
+		goto release;	
+	}
+	space -= clen;
+	if (dontroute)
+		so->so_options |= SO_DONTROUTE;
+	if (resid > 0)
+		so->so_state |= SS_MORETOCOME;
+	error = (*so->so_proto->pr_usrreq)(so,
+	    (flags & MSG_OOB) ? PRU_SENDOOB : PRU_SEND,
+	    top, addr, control);
+	if (dontroute)
+		so->so_options &= ~SO_DONTROUTE;
+	if (resid > 0)
+		so->so_state &= ~SS_MORETOCOME;
+	control = NULL;
+	top = NULL;
+	if (error != 0)
+		goto release;    
+#endif
  release:
 	sbunlock(&so->so_snd);
  out:
@@ -769,7 +820,6 @@ int
 soreceive(struct socket *so, struct mbuf **paddr, 
 	struct mbuf **mp0, struct mbuf **controlp, int *flagsp)
 {
-#if 0
 	struct mbuf	*m, **mp, *mt;
 	size_t len, offset, moff, orig_resid;
 	int atomic, flags, error, s, type;
@@ -793,7 +843,7 @@ soreceive(struct socket *so, struct mbuf **paddr,
 		flags = *flagsp &~ MSG_EOR;
 	else
 		flags = 0;
-
+#if 0
 	if (flags & MSG_OOB) {
 		m = m_get(M_WAIT, MT_DATA);
 		solock(so);
@@ -1229,6 +1279,57 @@ soreceive(struct socket *so, struct mbuf **paddr,
 	splx(s);
 	return error;
 #else
+    if (so->so_state & SS_ISCONFIRMING)
+        (*pr->pr_usrreq)(so, PRU_RCVD, NULL, NULL, NULL);
+    m = so->so_rcv.sb_mb;
+    if(m == NULL) {
+        if (so->so_error) {
+	    if (m != NULL)
+		goto dontblock;
+	    error = so->so_error;
+	    if ((flags & MSG_PEEK) == 0)
+		so->so_error = 0;
+	    goto release;
+	}
+	if (so->so_state & SS_CANTRCVMORE) {
+	    if (m != NULL)
+		goto dontblock;
+	    else
+		goto release;
+	}
+        if ((so->so_state & (SS_ISCONNECTED|SS_ISCONNECTING)) == 0 &&
+	    (so->so_proto->pr_flags & PR_CONNREQUIRED)) {
+	    error = ENOTCONN;
+	    goto release;
+	}
+    }
+dontblock:
+    nextrecord = m->m_nextpkt;
+    if (pr->pr_flags & PR_ADDR) {
+#ifdef DIAGNOSTIC
+	if (m->m_type != MT_SONAME)
+    	    panic("receive 1a");
+#endif
+	orig_resid = 0;
+	if (flags & MSG_PEEK) {
+	    if (paddr)
+		*paddr = m_copy(m, 0, m->m_len);
+		m = m->m_next;
+	} else {
+	    sbfree(&so->so_rcv, m);
+	    mbuf_removed = 1;
+	    if (paddr != NULL) {
+		*paddr = m;
+		so->so_rcv.sb_mb = m->m_next;
+		m->m_next = NULL;
+		m = so->so_rcv.sb_mb;
+	    } else {
+	        MFREE(m, so->so_rcv.sb_mb);
+	        m = so->so_rcv.sb_mb;
+	    }
+	    sbsync(&so->so_rcv, nextrecord);
+	}
+    }
     return 0;
 #endif
 }

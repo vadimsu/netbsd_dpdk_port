@@ -818,3 +818,36 @@ void app_glue_print_stats()
 	printf("app_glue_rx_queues_process %"PRIu64"\n",app_glue_rx_queues_process);
 #endif
 }
+
+int app_glue_sendto(struct socket *so, void *data,int len,unsigned int ip_addr,unsigned short port)
+{
+    struct mbuf *addr,*top;
+    struct sockaddr_in *sin;
+
+    addr = m_get(M_WAIT, MT_SONAME);
+    if (!addr) {
+	printf("cannot create socket %s %d\n",__FILE__,__LINE__);
+	return NULL;
+    }
+    addr->m_len = sizeof(struct sockaddr_in);
+    sin = mtod(addr, struct sockaddr_in *);
+
+    sin->sin_family = AF_INET;
+    sin->sin_addr.s_addr = ip_addr;
+    sin->sin_port = htons(port);
+    top = m_get(M_WAIT, MT_SONAME);
+    if(!top) {
+        m_freem(addr);
+        return -1;
+    }
+    memcpy(mtod(top, void *),data,len);
+    top->m_len = len;
+    return sosend(so, addr, top,NULL, 0);
+}
+
+int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short *port,void **buf,int buflen)
+{
+    struct mbuf *paddr = NULL,*mp0 = NULL,*controlp = NULL;
+    int flags = 0,rc;
+    rc = soreceive( so, &paddr,&mp0, &controlp, &flags);
+}

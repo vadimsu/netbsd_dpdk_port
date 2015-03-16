@@ -47,7 +47,6 @@ static void dpdk_ifstop(struct ifnet *ifp, int disable)
 
 static int dpdk_ioctl(struct ifnet *ifp, u_long cmd, void *arg)
 {
-printf("%s %d\n",__FILE__,__LINE__);
 	return 0;
 }
 

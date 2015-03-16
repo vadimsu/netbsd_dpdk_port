@@ -30,7 +30,13 @@ int main(int argc,char **argv)
     ifp = createInterface(0);
     printf("%s %d %p\n",__FILE__,__LINE__,ifp);
     configure_if_addr(ifp,inet_addr("192.168.1.1"),inet_addr("255.255.255.0"));
-    void *socket = create_udp_socket("192.168.1.1",7777);
-    printf("HELLO %p\n",socket);
+    void *socket1 = create_udp_socket("192.168.1.1",7777);
+    void *socket2 = create_udp_socket("192.168.1.1",7778);
+    int rc = app_glue_sendto(socket1, "SOME DATA", 10 ,inet_addr("192.168.1.1"),7778);
+    printf("rc=%d\n",rc);
+    if(socket1) {
+        app_glue_close_socket(socket1);
+    }
+    printf("HELLO\n");
     return 0;
 }
