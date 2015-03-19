@@ -550,6 +550,8 @@ m_gethdr(int nowait, int type)
 	m->m_pkthdr.rcvif = NULL;
 	m->m_pkthdr.csum_flags = 0;
 	m->m_pkthdr.csum_data = 0;
+	m->m_next = NULL;
+	m->m_nextpkt = NULL;
 	SLIST_INIT(&m->m_pkthdr.tags);
 
 	return m;

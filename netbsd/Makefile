@@ -15,8 +15,8 @@ net/rtsock.c net/link_proto.c lib/libkern/intoa.c porting/kern/kern_tc.c porting
 porting/kern/uipc_domain.c
 #opencrypto/cryptosoft_xform.c
 #porting/kern/uipc_mbuf.c
-CFLAGS += -Ofast -fno-builtin
-#CFLAGS += -g -fno-builtin
+#CFLAGS += -Ofast -fno-builtin
+CFLAGS += -g -fno-builtin
 CFLAGS += $(WERROR_FLAGS)
 NETBSD_HEADERS=-I$(SRC_ROOT)/special_includes -I$(SRC_ROOT)/netbsd -I$(SRC_ROOT)
 DPDK_HEADERS=$(SRC_ROOT)/dpdk-1.8.0/x86_64-native-linuxapp-gcc/include

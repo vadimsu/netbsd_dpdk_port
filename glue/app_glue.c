@@ -835,13 +835,14 @@ int app_glue_sendto(struct socket *so, void *data,int len,unsigned int ip_addr,u
     sin->sin_family = AF_INET;
     sin->sin_addr.s_addr = ip_addr;
     sin->sin_port = htons(port);
-    top = m_get(M_WAIT, MT_SONAME);
+    top = m_gethdr(M_WAIT, MT_SONAME);
     if(!top) {
         m_freem(addr);
         return -1;
     }
     memcpy(mtod(top, void *),data,len);
     top->m_len = len;
+    top->m_pkthdr.len = len; 
     return sosend(so, addr, top,NULL, 0);
 }
 
@@ -850,4 +851,5 @@ int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short
     struct mbuf *paddr = NULL,*mp0 = NULL,*controlp = NULL;
     int flags = 0,rc;
     rc = soreceive( so, &paddr,&mp0, &controlp, &flags);
+    return rc;
 }

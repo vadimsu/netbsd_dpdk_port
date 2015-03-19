@@ -274,7 +274,8 @@ sockaddr_copy(struct sockaddr *dst, socklen_t socklen,
 		panic("%s: source too long, %d < %d bytes", __func__, socklen,
 		    src->sa_len);
 	}
-	return memcpy(dst, src, src->sa_len);
+	memcpy(dst, src, src->sa_len);
+	return dst;
 }
 
 struct sockaddr *

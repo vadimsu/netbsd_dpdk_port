@@ -702,11 +702,13 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
 #else
     if (so->so_state & SS_CANTSENDMORE) {
 	    error = EPIPE;
+printf("%s %d\n",__FILE__,__LINE__);
 		goto release;
 	}
     if (so->so_error) {
 		error = so->so_error;
 		so->so_error = 0;
+printf("%s %d\n",__FILE__,__LINE__);
 		goto release;
 	}
 	if ((so->so_state & SS_ISCONNECTED) == 0) {
@@ -714,10 +716,12 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
 			if ((so->so_state & SS_ISCONFIRMING) == 0 &&
 			    !(resid == 0 && clen != 0)) {
 				error = ENOTCONN;
+printf("%s %d\n",__FILE__,__LINE__);
 				goto release;
 			}
 		} else if (addr == 0) {
 			error = EDESTADDRREQ;
+printf("%s %d\n",__FILE__,__LINE__);
 			goto release;
 		}
 	}
@@ -727,11 +731,13 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
 	if ((atomic && resid > so->so_snd.sb_hiwat) ||
 	    clen > so->so_snd.sb_hiwat) {
 		error = EMSGSIZE;
+printf("%s %d\n",__FILE__,__LINE__);
 		goto release;
 	}
 	if (space < resid + clen &&
 	    (atomic || space < so->so_snd.sb_lowat || space < clen)) {
 		error = EWOULDBLOCK;
+printf("%s %d\n",__FILE__,__LINE__);
 		goto release;	
 	}
 	space -= clen;
@@ -752,8 +758,10 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
 		goto release;    
 #endif
  release:
+printf("%s %d\n",__FILE__,__LINE__);
 	sbunlock(&so->so_snd);
  out:
+printf("%s %d\n",__FILE__,__LINE__);
 	sounlock(so);
 	splx(s);
 	if (top)
@@ -1283,6 +1291,7 @@ soreceive(struct socket *so, struct mbuf **paddr,
         (*pr->pr_usrreq)(so, PRU_RCVD, NULL, NULL, NULL);
     m = so->so_rcv.sb_mb;
     if(m == NULL) {
+        error = -1;
         if (so->so_error) {
 	    if (m != NULL)
 		goto dontblock;
@@ -1302,6 +1311,7 @@ soreceive(struct socket *so, struct mbuf **paddr,
 	    error = ENOTCONN;
 	    goto release;
 	}
+        goto release;
     }
 dontblock:
     nextrecord = m->m_nextpkt;
@@ -1331,6 +1341,8 @@ dontblock:
 	}
     }
     return 0;
+release:
+    return error;
 #endif
 }
 
