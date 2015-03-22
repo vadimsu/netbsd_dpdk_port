@@ -461,13 +461,12 @@ mb_ctor(struct rte_mempool *mp,
 	struct mbuf *m = _m;
         pool_cache_t mb_data_pool = (pool_cache_t)opaque_arg;
         struct rte_mbuf *data_buf;
-#if 1
+
         data_buf = allocate_mbuf(mb_data_pool);
         if(!data_buf) {
             printf("FATAL %s %d\n",__FILE__,__LINE__);
             exit(0);
         }
-#endif
         memset(&m->m_pkthdr,0,sizeof(m->m_pkthdr));	
 	m->m_len = 0;
 	m->m_next = NULL;
@@ -475,9 +474,7 @@ mb_ctor(struct rte_mempool *mp,
 	m->m_flags = 0;
 	m->m_type = MT_FREE;
 	m->m_paddr = data_buf;
-#if 1
 	m->m_dat = get_mbuf_data(data_buf);
-#endif
 	m->m_data = m->m_dat;
 	return (0);
 }
@@ -545,7 +542,7 @@ m_gethdr(int nowait, int type)
 	if (m == NULL)
 		return NULL;
 
-	m->m_data = m->m_pktdat;
+	m->m_pktdat = m->m_data; 
 	m->m_flags = M_PKTHDR;
 	m->m_pkthdr.rcvif = NULL;
 	m->m_pkthdr.csum_flags = 0;
