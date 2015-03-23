@@ -188,6 +188,15 @@ getsombuf(struct socket *so, int type)
 	return m;
 }
 
+void soinit(void)
+{
+	soinit2();
+
+        /* Set the initial adjusted socket buffer size. */
+        if (sb_max_set(sb_max))
+                panic("bad initial sb_max value: %lu", sb_max);
+}
+
 /*
  * Socket operation routines.
  * These routines are called by the routines in
@@ -222,7 +231,6 @@ socreate(int dom, struct socket **aso, int type, int proto,
 		return EPROTONOSUPPORT;
 	if (prp->pr_type != type)
 		return EPROTOTYPE;
-
 	so = soget(true);
 	so->so_type = type;
 	so->so_proto = prp;
@@ -702,13 +710,11 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
 #else
     if (so->so_state & SS_CANTSENDMORE) {
 	    error = EPIPE;
-printf("%s %d\n",__FILE__,__LINE__);
 		goto release;
 	}
     if (so->so_error) {
 		error = so->so_error;
 		so->so_error = 0;
-printf("%s %d\n",__FILE__,__LINE__);
 		goto release;
 	}
 	if ((so->so_state & SS_ISCONNECTED) == 0) {
@@ -716,12 +722,10 @@ printf("%s %d\n",__FILE__,__LINE__);
 			if ((so->so_state & SS_ISCONFIRMING) == 0 &&
 			    !(resid == 0 && clen != 0)) {
 				error = ENOTCONN;
-printf("%s %d\n",__FILE__,__LINE__);
 				goto release;
 			}
 		} else if (addr == 0) {
 			error = EDESTADDRREQ;
-printf("%s %d\n",__FILE__,__LINE__);
 			goto release;
 		}
 	}
@@ -731,13 +735,11 @@ printf("%s %d\n",__FILE__,__LINE__);
 	if ((atomic && resid > so->so_snd.sb_hiwat) ||
 	    clen > so->so_snd.sb_hiwat) {
 		error = EMSGSIZE;
-printf("%s %d\n",__FILE__,__LINE__);
 		goto release;
 	}
 	if (space < resid + clen &&
 	    (atomic || space < so->so_snd.sb_lowat || space < clen)) {
 		error = EWOULDBLOCK;
-printf("%s %d\n",__FILE__,__LINE__);
 		goto release;	
 	}
 	space -= clen;
@@ -758,10 +760,8 @@ printf("%s %d\n",__FILE__,__LINE__);
 		goto release;    
 #endif
  release:
-printf("%s %d\n",__FILE__,__LINE__);
 	sbunlock(&so->so_snd);
  out:
-printf("%s %d\n",__FILE__,__LINE__);
 	sounlock(so);
 	splx(s);
 	if (top)

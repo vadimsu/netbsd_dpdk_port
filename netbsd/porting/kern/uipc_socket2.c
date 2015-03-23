@@ -614,9 +614,9 @@ soreserve(struct socket *so, u_long sndcc, u_long rcvcc)
 int
 sbreserve(struct sockbuf *sb, u_long cc, struct socket *so)
 {
-#if 0
+
 //	struct lwp *l = curlwp; /* XXX */
-//	rlim_t maxcc;
+	rlim_t maxcc;
 	struct uidinfo *uidinfo;
 
 	KASSERT(so->so_lock == NULL || solocked(so));
@@ -626,15 +626,15 @@ sbreserve(struct sockbuf *sb, u_long cc, struct socket *so)
 	if (cc == 0 || cc > sb_max_adj)
 		return (0);
 
-	maxcc = l->l_proc->p_rlimit[RLIMIT_SBSIZE].rlim_cur;
+	maxcc = RLIM_INFINITY;
 
-	uidinfo = so->so_uidinfo;
-	if (!chgsbsize(uidinfo, &sb->sb_hiwat, cc, maxcc))
-		return 0;
+	if(cc > maxcc)
+		cc = maxcc;
+	sb->sb_hiwat = cc;
+
 	sb->sb_mbmax = min(cc * 2, sb_max);
 	if (sb->sb_lowat > sb->sb_hiwat)
 		sb->sb_lowat = sb->sb_hiwat;
-#endif
 	return (1);
 }
 

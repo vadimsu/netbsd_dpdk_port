@@ -25,13 +25,14 @@ int main(int argc,char **argv)
     printf("%s %d\n",__FILE__,__LINE__);
     bpf_setops();
     rt_init();
-    soinit2();
+    soinit();
     mbinit();
     ifp = createInterface(0);
     printf("%s %d %p\n",__FILE__,__LINE__,ifp);
     configure_if_addr(ifp,inet_addr("192.168.1.1"),inet_addr("255.255.255.0"));
     printf("%s %d\n",__FILE__,__LINE__);
     void *socket1,*socket2;
+#if 0
     int i;
     for(i = 0; i < 1000000;i++) {
         socket1 = create_udp_socket("192.168.1.1",7777);
@@ -45,6 +46,7 @@ int main(int argc,char **argv)
             app_glue_close_socket(socket2);
         }
     }
+#endif
     socket1 = create_udp_socket("192.168.1.1",7777);
     printf("%s %d\n",__FILE__,__LINE__);
     socket2 = create_udp_socket("192.168.1.1",7778);
