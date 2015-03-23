@@ -146,6 +146,7 @@ static void app_glue_sock_wakeup(struct sock *sk)
 void *create_raw_socket2(unsigned int ip_addr,unsigned short port)
 {
 	struct sockaddr_in *sin;
+	struct sockaddr *sa;
 	struct timeval tv;
 	struct socket *raw_sock = NULL;
 	struct mbuf *m;
@@ -160,8 +161,11 @@ void *create_raw_socket2(unsigned int ip_addr,unsigned short port)
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
-	m->m_len = sizeof(struct sockaddr_in);
-	sin = mtod(m, struct sockaddr_in *);
+	m->m_len = sizeof(struct sockaddr);
+	sa = mtod(m, struct sockaddr *);
+	sa->sa_len = sizeof(struct sockaddr_in);
+	sa->sa_family = AF_INET;
+	sin = (struct sockaddr_in *)sa->sa_data;
 
 	sin->sin_family = AF_INET;
 	sin->sin_addr.s_addr = ip_addr;
@@ -189,6 +193,7 @@ void *create_raw_socket(const char *ip_addr,unsigned short port)
 void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
 {
 	struct sockaddr_in *sin;
+	struct sockaddr *sa;
 	struct timeval tv;
 	struct socket *udp_sock = NULL;
 	struct mbuf *m;
@@ -203,8 +208,11 @@ void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
-	m->m_len = sizeof(struct sockaddr_in);
-	sin = mtod(m, struct sockaddr_in *);
+	m->m_len = sizeof(struct sockaddr);
+	sa = mtod(m, struct sockaddr *);
+	sa->sa_len = sizeof(struct sockaddr_in);
+	sa->sa_family = AF_INET;
+	sin = (struct sockaddr_in *)sa->sa_data;
 
 	sin->sin_family = AF_INET;
 	sin->sin_addr.s_addr = ip_addr;
@@ -243,6 +251,7 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 		            unsigned int peer_ip_addr,unsigned short port)
 {
 	struct sockaddr_in *sin;
+	struct sockaddr *sa;
 	struct timeval tv;
 	struct socket *client_sock = NULL;
 	struct mbuf *m;
@@ -257,8 +266,11 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
-	m->m_len = sizeof(struct sockaddr_in);
-	sin = mtod(m, struct sockaddr_in *);
+	m->m_len = sizeof(struct sockaddr);
+	sa = mtod(m, struct sockaddr *);
+	sa->sa_len = sizeof(struct sockaddr_in);
+	sa->sa_family = AF_INET;
+	sin = (struct sockaddr_in *)sa->sa_data;
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
 
@@ -320,6 +332,7 @@ void *create_client_socket(const char *my_ip_addr,unsigned short my_port,
 void *create_server_socket2(unsigned int my_ip_addr,unsigned short port)
 {
 	struct sockaddr_in *sin;
+	struct sockaddr *sa;
 	struct timeval tv;
 	struct socket *server_sock = NULL;
 	uint32_t bufsize;
@@ -335,8 +348,11 @@ void *create_server_socket2(unsigned int my_ip_addr,unsigned short port)
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
-	m->m_len = sizeof(struct sockaddr_in);
-	sin = mtod(m, struct sockaddr_in *);
+	m->m_len = sizeof(struct sockaddr);
+	sa = mtod(m, struct sockaddr *);
+	sa->sa_len = sizeof(struct sockaddr_in);
+	sa->sa_family = AF_INET;
+	sin = (struct sockaddr_in *)sa->sa_data;
 
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;

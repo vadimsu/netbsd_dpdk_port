@@ -19,8 +19,11 @@ void configure_if_addr(struct ifnet *ifp,unsigned int ip_addr,unsigned int mask)
 {
     struct ifreq ifr;
     struct sockaddr *sa = ifreq_getaddr(0,&ifr);
-    struct sockaddr_in *sin = (struct sockaddr_in *)sa; 
+    struct sockaddr_in *sin = (struct sockaddr_in *)sa->sa_data; 
     int rc;
+
+    sa->sa_len = sizeof(struct sockaddr_in);
+    sa->sa_family = AF_INET;
 
     sin->sin_family = AF_INET;
     sin->sin_addr.s_addr = ip_addr;
@@ -55,6 +58,12 @@ static void dpdk_if_start(struct ifnet *ifp)
 printf("%s %d\n",__FILE__,__LINE__);
 }
 
+static int dpdk_if_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *sa, struct rtentry *re)
+{
+printf("%s %d\n",__FILE__,__LINE__);
+    return 0;
+}
+
 static int dpdk_mq_start(struct ifnet *ifp, struct mbuf *m)
 {
 printf("%s %d\n",__FILE__,__LINE__);
@@ -81,10 +90,9 @@ struct ifnet *createInterface(int instance)
     ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
     ifp->if_ioctl = dpdk_ioctl;
     ifp->if_start = dpdk_if_start;
-#if __FreeBSD_version >= 800000
-    ifp->if_transmit = dpdk_mq_start;
-    ifp->if_qflush = dpdk_qflush;
-#endif
+    //ifp->if_output = dpdk_if_output;
+//    ifp->if_transmit = dpdk_mq_start;
+//    ifp->if_qflush = dpdk_qflush;
 //    ifp->if_snd.ifq_maxlen = adapter->num_tx_desc - 2;
 
     if_attach(ifp);
@@ -99,6 +107,6 @@ struct ifnet *createInterface(int instance)
 
     /* Don't enable LRO by default */
     ifp->if_capabilities |= IFCAP_LRO;	
-
+    if_up(ifp);
     return ifp;
 }
