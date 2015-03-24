@@ -24,18 +24,26 @@ void configure_if_addr(struct ifnet *ifp,unsigned int ip_addr,unsigned int mask)
 
     sa->sa_len = sizeof(struct sockaddr_in);
     sa->sa_family = AF_INET;
-
+printf("%s %d\n",__FILE__,__LINE__);
     sin->sin_family = AF_INET;
     sin->sin_addr.s_addr = ip_addr;
     if((rc = in_control(NULL/*socket*/, SIOCSIFADDR, &ifr, ifp))) {
         printf("cannot configure IP Address on interface %d\n",rc);
         return;
     }
-    sin->sin_addr.s_addr = ip_addr;
+printf("%s %d\n",__FILE__,__LINE__);
+    sin->sin_addr.s_addr = mask;
     if((rc = in_control(NULL/*socket*/, SIOCSIFNETMASK, &ifr, ifp))) {
         printf("cannot configure IP Address on interface %d\n",rc);
         return;
     }
+printf("%s %d\n",__FILE__,__LINE__);
+    sin->sin_addr.s_addr = 0;
+    if((rc = in_control(NULL/*socket*/, SIOCGIFADDR, &ifr, ifp))) {
+        printf("cannot configure IP Address on interface %d\n",rc);
+        return;
+    }
+    printf("got IP address %x\n",sin->sin_addr.s_addr);
 }
 
 static int dpdk_if_init(struct ifnet *ifp)
