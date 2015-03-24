@@ -192,6 +192,7 @@ void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
 	struct timeval tv;
 	struct socket *udp_sock = NULL;
 	struct mbuf *m;
+	int rc;
 
 	if(socreate(AF_INET,&udp_sock,SOCK_DGRAM,0,NULL)) {
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
@@ -210,8 +211,9 @@ void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
 	sin->sin_addr.s_addr = ip_addr;
 	sin->sin_port = htons(port);
 
-	if(sobind(udp_sock,m)) {
-		printf("cannot bind %s %d\n",__FILE__,__LINE__);	
+	rc = sobind(udp_sock,m);
+	if(rc) {
+		printf("cannot bind %s %d %d\n",__FILE__,__LINE__,rc);	
 		m_freem(m);
 		return NULL;
 	}

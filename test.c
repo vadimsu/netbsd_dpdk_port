@@ -47,10 +47,11 @@ int main(int argc,char **argv)
         }
     }
 #endif
-    socket1 = create_udp_socket("192.168.1.1",7777);
+    createLoopbackInterface();
+    socket1 = create_udp_socket("127.0.0.1",7777);
     printf("%s %d\n",__FILE__,__LINE__);
-    socket2 = create_udp_socket("192.168.1.1",7778);
-    int rc = app_glue_sendto(socket1, "SOME DATA", 10 ,inet_addr("192.168.1.1"),7778);
+    socket2 = create_udp_socket("127.0.0.1",7778);
+    int rc = app_glue_sendto(socket1, "SOME DATA", 10 ,inet_addr("127.0.0.1"),7778);
     printf("rc=%d\n",rc);
     int buflen = 1024;
     void *buf = NULL;

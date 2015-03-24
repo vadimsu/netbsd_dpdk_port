@@ -19,25 +19,20 @@ void configure_if_addr(struct ifnet *ifp,unsigned int ip_addr,unsigned int mask)
 {
     struct ifreq ifr;
     struct sockaddr *sa = ifreq_getaddr(0,&ifr);
-    struct sockaddr_in *sin = (struct sockaddr_in *)sa->sa_data; 
+    struct sockaddr_in *sin = satocsin(sa); 
     int rc;
 
-    sa->sa_len = sizeof(struct sockaddr_in);
-    sa->sa_family = AF_INET;
-printf("%s %d\n",__FILE__,__LINE__);
     sin->sin_family = AF_INET;
     sin->sin_addr.s_addr = ip_addr;
     if((rc = in_control(NULL/*socket*/, SIOCSIFADDR, &ifr, ifp))) {
         printf("cannot configure IP Address on interface %d\n",rc);
         return;
     }
-printf("%s %d\n",__FILE__,__LINE__);
     sin->sin_addr.s_addr = mask;
     if((rc = in_control(NULL/*socket*/, SIOCSIFNETMASK, &ifr, ifp))) {
         printf("cannot configure IP Address on interface %d\n",rc);
         return;
     }
-printf("%s %d\n",__FILE__,__LINE__);
     sin->sin_addr.s_addr = 0;
     if((rc = in_control(NULL/*socket*/, SIOCGIFADDR, &ifr, ifp))) {
         printf("cannot configure IP Address on interface %d\n",rc);
@@ -116,5 +111,12 @@ struct ifnet *createInterface(int instance)
     /* Don't enable LRO by default */
     ifp->if_capabilities |= IFCAP_LRO;	
     if_up(ifp);
+    ifp->if_flags |= IFF_RUNNING|IFF_MULTICAST;
     return ifp;
+}
+
+void createLoopbackInterface()
+{
+    loopattach(0);
+    configure_if_addr(lo0ifp,inet_addr("127.0.0.1"),inet_addr("127.0.0.1"));
 }
