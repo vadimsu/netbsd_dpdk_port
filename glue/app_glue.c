@@ -162,6 +162,7 @@ void *create_raw_socket2(unsigned int ip_addr,unsigned short port)
 	}
 	m->m_len = sizeof(struct sockaddr);
 	sin = mtod(m, struct sockaddr_in *);
+	sin->sin_len = sizeof(struct sockaddr_in);
 
 	sin->sin_family = AF_INET;
 	sin->sin_addr.s_addr = ip_addr;
@@ -206,7 +207,7 @@ void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
 	}
 	m->m_len = sizeof(struct sockaddr);
 	sin = mtod(m, struct sockaddr_in *);
-
+	sin->sin_len = sizeof(struct sockaddr_in);
 	sin->sin_family = AF_INET;
 	sin->sin_addr.s_addr = ip_addr;
 	sin->sin_port = htons(port);
@@ -261,6 +262,7 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 	}
 	m->m_len = sizeof(struct sockaddr);
 	sin = mtod(m, struct sockaddr_in *);
+	sin->sin_len = sizeof(struct sockaddr_in);
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
 
@@ -339,6 +341,7 @@ void *create_server_socket2(unsigned int my_ip_addr,unsigned short port)
 	}
 	m->m_len = sizeof(struct sockaddr);
 	sin = mtod(m, struct sockaddr_in *);
+	sin->sin_len = sizeof(struct sockaddr_in);
 
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;

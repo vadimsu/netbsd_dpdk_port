@@ -22,6 +22,7 @@ void configure_if_addr(struct ifnet *ifp,unsigned int ip_addr,unsigned int mask)
     struct sockaddr_in *sin = satocsin(sa); 
     int rc;
 
+    sin->sin_len = sizeof(struct sockaddr_in);
     sin->sin_family = AF_INET;
     sin->sin_addr.s_addr = ip_addr;
     if((rc = in_control(NULL/*socket*/, SIOCSIFADDR, &ifr, ifp))) {
@@ -83,6 +84,8 @@ struct ifnet *createInterface(int instance)
     char ifname[IFNAMSIZ];
     char macaddr[6];
 
+    memset(ifp,0,sizeof(*ifp));
+
     sprintf(ifname,"dpdk%d",instance);
     strlcpy(ifp->if_xname, ifname, IFNAMSIZ);
     ifp->if_mtu = ETHERMTU;
@@ -117,6 +120,8 @@ struct ifnet *createInterface(int instance)
 
 void createLoopbackInterface()
 {
+    printf("%s %d %p\n",__FILE__,__LINE__,lo0ifp);
     loopattach(0);
+    printf("%s %d %p\n",__FILE__,__LINE__,lo0ifp);
     configure_if_addr(lo0ifp,inet_addr("127.0.0.1"),inet_addr("127.0.0.1"));
 }
