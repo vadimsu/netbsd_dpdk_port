@@ -19,9 +19,10 @@ void configure_if_addr(struct ifnet *ifp,unsigned int ip_addr,unsigned int mask)
 {
     struct ifreq ifr;
     struct sockaddr *sa = ifreq_getaddr(0,&ifr);
-    struct sockaddr_in *sin = satocsin(sa); 
+    struct sockaddr_in *sin = satosin(sa); 
     int rc;
 
+    memset(&ifr,0,sizeof(ifr));
     sin->sin_len = sizeof(struct sockaddr_in);
     sin->sin_family = AF_INET;
     sin->sin_addr.s_addr = ip_addr;
