@@ -475,6 +475,7 @@ mb_ctor(struct rte_mempool *mp,
 	m->m_type = MT_FREE;
 	m->m_paddr = data_buf;
 	m->m_dat = get_mbuf_data(data_buf);
+printf("%s %d %p %p\n",__FILE__,__LINE__,m->m_dat,m);
 	m->m_data = m->m_dat;
 	return (0);
 }
@@ -753,6 +754,7 @@ nospace:
 struct mbuf *
 m_copypacket(struct mbuf *m, int how)
 {
+#if 0 /* VADIM */
 	struct mbuf *top, *n, *o;
 
 	MGET(n, how, m->m_type);
@@ -795,6 +797,9 @@ nospace:
 	m_freem(top);
 	MCFail++;
 	return NULL;
+#else
+	return m;
+#endif
 }
 
 /*

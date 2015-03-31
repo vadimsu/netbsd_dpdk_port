@@ -747,6 +747,7 @@ sosend(struct socket *so, struct mbuf *addr, struct mbuf *top,
 		so->so_options |= SO_DONTROUTE;
 	if (resid > 0)
 		so->so_state |= SS_MORETOCOME;
+printf("%s %d %p %p %p %p %p\n",__FILE__,__LINE__,top,top->m_dat,top->m_data,top->m_next,top->m_nextpkt);
 	error = (*so->so_proto->pr_usrreq)(so,
 	    (flags & MSG_OOB) ? PRU_SENDOOB : PRU_SEND,
 	    top, addr, control);
@@ -1291,20 +1292,16 @@ soreceive(struct socket *so, struct mbuf **paddr,
         (*pr->pr_usrreq)(so, PRU_RCVD, NULL, NULL, NULL);
     m = so->so_rcv.sb_mb;
     if(m == NULL) {
+printf("%s %d\n",__FILE__,__LINE__);
         error = -1;
         if (so->so_error) {
-	    if (m != NULL)
-		goto dontblock;
 	    error = so->so_error;
 	    if ((flags & MSG_PEEK) == 0)
 		so->so_error = 0;
 	    goto release;
 	}
 	if (so->so_state & SS_CANTRCVMORE) {
-	    if (m != NULL)
-		goto dontblock;
-	    else
-		goto release;
+	    goto release;
 	}
         if ((so->so_state & (SS_ISCONNECTED|SS_ISCONNECTING)) == 0 &&
 	    (so->so_proto->pr_flags & PR_CONNREQUIRED)) {
@@ -1320,12 +1317,15 @@ dontblock:
 	if (m->m_type != MT_SONAME)
     	    panic("receive 1a");
 #endif
-	orig_resid = 0;
+#if 0 /* VADIM - no support for PEEK */
 	if (flags & MSG_PEEK) {
 	    if (paddr)
 		*paddr = m_copy(m, 0, m->m_len);
 		m = m->m_next;
 	} else {
+#else
+	{
+#endif
 	    sbfree(&so->so_rcv, m);
 	    mbuf_removed = 1;
 	    if (paddr != NULL) {
@@ -1340,6 +1340,72 @@ dontblock:
 	    sbsync(&so->so_rcv, nextrecord);
 	}
     }
+printf("%s %d %p %p %p\n",__FILE__,__LINE__,m,m->m_dat,m->m_data);
+    moff = 0;
+    offset = 0;
+    error = 0;
+    while (m != NULL && error == 0) {
+	if (m->m_type == MT_OOBDATA) {
+		if (type != MT_OOBDATA)
+			break;
+	} else if (type == MT_OOBDATA)
+		break;
+#ifdef DIAGNOSTIC
+	else if (m->m_type != MT_DATA && m->m_type != MT_HEADER)
+		panic("receive 3");
+#endif
+	so->so_state &= ~SS_RCVATMARK;
+printf("%s %d\n",__FILE__,__LINE__);
+#if 0 /* VADIM - not used */
+	len = 0xFFFFFFFF;
+	if (so->so_oobmark && len > so->so_oobmark - offset)
+		len = so->so_oobmark - offset;
+	if (len > m->m_len - moff)
+		len = m->m_len - moff;
+#endif	
+	if (m->m_flags & M_EOR)
+		flags |= MSG_EOR;
+printf("%s %d %p\n",__FILE__,__LINE__,m->m_next);
+	nextrecord = m->m_nextpkt;
+	sbfree(&so->so_rcv, m);
+	*mp = m;
+	mp = &m->m_next;
+	so->so_rcv.sb_mb = m = m->m_next;
+	*mp = NULL;
+	/*
+	 * If m != NULL, we also know that
+	 * so->so_rcv.sb_mb != NULL.
+	 */
+printf("%s %d %p %p\n",__FILE__,__LINE__,nextrecord,m);
+	KASSERT(so->so_rcv.sb_mb == m);
+	if (m) {
+		m->m_nextpkt = nextrecord;
+		if (nextrecord == NULL)
+			so->so_rcv.sb_lastrecord = m;
+	} else {
+		so->so_rcv.sb_mb = nextrecord;
+		SB_EMPTY_FIXUP(&so->so_rcv);
+	}
+	SBLASTRECORDCHK(&so->so_rcv, "soreceive 3");
+	SBLASTMBUFCHK(&so->so_rcv, "soreceive 3");
+#if 0 /* VADIM - no support for OOB for now */	
+	if (so->so_oobmark) {
+		if ((flags & MSG_PEEK) == 0) {
+			so->so_oobmark -= len;
+			if (so->so_oobmark == 0) {
+				so->so_state |= SS_RCVATMARK;
+				break;
+			}
+		} else {
+			offset += len;
+			if (offset == so->so_oobmark)
+				break;
+		}
+	}
+#endif
+	if (flags & MSG_EOR)
+		break;
+    } 
     return 0;
 release:
     return error;

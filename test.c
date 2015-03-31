@@ -46,8 +46,14 @@ int main(int argc,char **argv)
     unsigned int ip_addr;
     rc = app_glue_receivefrom(socket2,&ip_addr, &port,&buf,buflen);
     printf("rc=%d\n",rc);
-    if(!rc)
-        printf("%s\n",(char *)buf);
+    if(!rc) {
+	int i;
+	char *p = (char *)buf;
+
+	for(i = 0;i < 20;i++) {
+	        printf("%x\n",(char *)p[i]);
+	}
+    }
     if(socket1) {
         app_glue_close_socket(socket1);
     }
