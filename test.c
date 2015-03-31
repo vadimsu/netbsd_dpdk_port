@@ -19,6 +19,7 @@ int main(int argc,char **argv)
         printf("cannot initialize EAL\n");
         exit(0);
     }
+    softint_init();
     callout_startup(); 
     printf("%s %d\n",__FILE__,__LINE__);
     domaininit(1);
@@ -32,21 +33,7 @@ int main(int argc,char **argv)
     configure_if_addr(ifp,inet_addr("192.168.1.1"),inet_addr("255.255.255.0"));
     printf("%s %d\n",__FILE__,__LINE__);
     void *socket1,*socket2;
-#if 0
-    int i;
-    for(i = 0; i < 1000000;i++) {
-        socket1 = create_udp_socket("192.168.1.1",7777);
-   //     printf("%s %d\n",__FILE__,__LINE__);
-        socket2 = create_udp_socket("192.168.1.1",7778);
-     //   printf("%s %d\n",__FILE__,__LINE__);
-        if(socket1) {
-            app_glue_close_socket(socket1);
-        }
-        if(socket2) {
-            app_glue_close_socket(socket2);
-        }
-    }
-#endif
+
     createLoopbackInterface();
     socket1 = create_udp_socket("127.0.0.1",7777);
     printf("%s %d\n",__FILE__,__LINE__);
@@ -59,12 +46,14 @@ int main(int argc,char **argv)
     unsigned int ip_addr;
     rc = app_glue_receivefrom(socket2,&ip_addr, &port,&buf,buflen);
     printf("rc=%d\n",rc);
+    if(!rc)
+        printf("%s\n",(char *)buf);
     if(socket1) {
         app_glue_close_socket(socket1);
     }
     if(socket2) {
         app_glue_close_socket(socket2);
     }
-    printf("HELLO\n");
+    printf("The END\n");
     return 0;
 }

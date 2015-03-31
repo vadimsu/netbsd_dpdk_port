@@ -12,7 +12,7 @@ netinet/rfc6056.c net/if_loop.c net/bpf_stub.c netinet/in_offload.c \
 porting/kern/subr_percpu.c porting/kern/subr_hash.c porting/mbuf/uipc_mbuf.c porting/kern/uipc_mbuf2.c \
 porting/kern/uipc_socket2.c porting/kern/uipc_socket.c netinet/ip_encap.c \
 net/rtsock.c net/link_proto.c lib/libkern/intoa.c porting/kern/kern_tc.c porting/kern/subr_once.c \
-porting/kern/uipc_domain.c
+porting/kern/uipc_domain.c porting/kern/kern_softint.c
 #opencrypto/cryptosoft_xform.c
 #porting/kern/uipc_mbuf.c
 #CFLAGS += -Ofast -fno-builtin

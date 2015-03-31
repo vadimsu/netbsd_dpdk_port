@@ -24,10 +24,6 @@ int enxio()
     return 0;
 }
 
-void schednetisr(int num)
-{
-}
-
 int get_current_cpu()
 {
     return rte_lcore_id();

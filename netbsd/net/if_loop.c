@@ -230,7 +230,6 @@ looutput(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	if (ifp->if_flags & IFF_LOOPBACK)
 		bpf_mtap_af(ifp, dst->sa_family, m);
 	m->m_pkthdr.rcvif = ifp;
-
 	if (rt && rt->rt_flags & (RTF_REJECT|RTF_BLACKHOLE)) {
 		m_freem(m);
 		return (rt->rt_flags & RTF_BLACKHOLE ? 0 :
@@ -344,9 +343,7 @@ looutput(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 		return (ENOBUFS);
 	}
 	IF_ENQUEUE(ifq, m);
-#if 0 /* VADIM - replace with direct call */
 	schednetisr(isr);
-#endif
 	ifp->if_ipackets++;
 	ifp->if_ibytes += m->m_pkthdr.len;
 	splx(s);

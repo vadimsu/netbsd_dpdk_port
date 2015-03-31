@@ -31,7 +31,7 @@
 
 #ifndef _SYS_INTR_H_
 #define	_SYS_INTR_H_
-
+#if 0
 #include <machine/intr.h>
 
 #ifdef _KERNEL
@@ -90,5 +90,19 @@ extern int	safepri;
 #define	splserial()	splhigh()
 
 #endif	/* _KERNEL */
+#else
+#define	SOFTINT_BIO	0x0000
+#define	SOFTINT_CLOCK	0x0001
+#define	SOFTINT_SERIAL	0x0002
+#define	SOFTINT_NET	0x0003
+#define	SOFTINT_MPSAFE	0x0100
 
+/* Implementation private flags. */
+#define	SOFTINT_PENDING	0x1000
+#define	SOFTINT_ACTIVE	0x2000
+
+#define	SOFTINT_COUNT	0x0004
+#define	SOFTINT_LVLMASK	0x00ff
+#define	SOFTINT_IMPMASK	0xf000
+#endif
 #endif	/* _SYS_INTR_H_ */

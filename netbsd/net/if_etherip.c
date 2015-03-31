@@ -102,7 +102,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_etherip.c,v 1.31 2011/10/28 16:10:12 dyoung Exp $
 #include <special_includes/sys/queue.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
-//#include <special_includes/sys/intr.h>
+#include <special_includes/sys/intr.h>
 
 #include <netbsd/net/if.h>
 #include <netbsd/net/if_dl.h>
@@ -580,13 +580,13 @@ static int
 etherip_init(struct ifnet *ifp)
 {
 	struct etherip_softc *sc = ifp->if_softc;
-#if 0 /* VADIM */
+
 	if (sc->sc_si == NULL)
 		sc->sc_si = softint_establish(SOFTINT_NET, etheripintr, sc);
 
 	if (sc->sc_si == NULL)
 		return(ENOMEM);
-#endif
+
 	ifp->if_flags |= IFF_RUNNING;
 	etherip_start(ifp);
 
