@@ -528,9 +528,9 @@ m_get(int nowait, int type)
 	m->m_type = type;
 	m->m_next = NULL;
 	m->m_nextpkt = NULL;
-	m->m_data = m->m_dat;
+	m->m_data = m->m_dat = get_mbuf_data(m->m_paddr);
 	m->m_flags = 0;
-
+printf("%s %d %p %p\n",__FILE__,__LINE__,m->m_dat,m);
 	return m;
 }
 
@@ -551,7 +551,6 @@ m_gethdr(int nowait, int type)
 	m->m_next = NULL;
 	m->m_nextpkt = NULL;
 	SLIST_INIT(&m->m_pkthdr.tags);
-
 	return m;
 }
 
@@ -563,6 +562,7 @@ m_getclr(int nowait, int type)
 	MGET(m, nowait, type);
 	if (m == 0)
 		return (NULL);
+printf("%s %d\n",__FILE__,__LINE__);
 	memset(mtod(m, void *), 0, MLEN);
 	return (m);
 }
