@@ -334,7 +334,7 @@ rip_output(struct mbuf *m, ...)
 			m_freem(m);
 			return (EMSGSIZE);
 		}
-		M_PREPEND(m, sizeof(struct ip), M_DONTWAIT);
+		M_PREPEND(m, sizeof(struct ip), M_WAIT);
 		if (!m)
 			return (ENOBUFS);
 		ip = mtod(m, struct ip *);

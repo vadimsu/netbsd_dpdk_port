@@ -1132,7 +1132,7 @@ udp_output(struct mbuf *m, ...)
 	 * Calculate data length and get a mbuf
 	 * for UDP and IP headers.
 	 */
-	M_PREPEND(m, sizeof(struct udpiphdr), M_DONTWAIT);
+	M_PREPEND(m, sizeof(struct udpiphdr), M_WAIT);
 	if (m == 0) {
 		error = ENOBUFS;
 		goto release;

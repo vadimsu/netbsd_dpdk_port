@@ -9,12 +9,12 @@
 #include <stdint.h>
 #include <special_includes/sys/types.h>
 #include <special_includes/sys/param.h>
+#include <special_includes/sys/malloc.h>
+#include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/queue.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/time.h>
-#include <special_includes/sys/mbuf.h>
-#include <special_includes/sys/malloc.h>
 #include <netbsd/netinet/in.h>
 
 TAILQ_HEAD(read_ready_socket_list_head, socket) read_ready_socket_list_head;
@@ -828,6 +828,7 @@ int app_glue_sendto(struct socket *so, void *data,int len,unsigned int ip_addr,u
 {
     struct mbuf *addr,*top;
     struct sockaddr_in *sin;
+    int rc;
 
     addr = m_get(M_WAIT, MT_SONAME);
     if (!addr) {
@@ -840,32 +841,44 @@ int app_glue_sendto(struct socket *so, void *data,int len,unsigned int ip_addr,u
     sin->sin_family = AF_INET;
     sin->sin_addr.s_addr = ip_addr;
     sin->sin_port = htons(port);
-    top = m_gethdr(M_WAIT, MT_SONAME);
+    top = m_get(M_WAIT, MT_DATA);
     if(!top) {
         m_freem(addr);
         return -1;
     }
+    printf("%s %d %p\n",__FILE__,__LINE__,mtod(top, void *));
     memcpy(mtod(top, void *),data,len);
     top->m_len = len;
-    top->m_pkthdr.len = len; 
-    return sosend(so, addr, top,NULL, 0);
+    rc = sosend(so, addr, top,NULL, 0);
+    m_freem(addr);
+    return rc;
 }
 
-int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short *port,void **buf,int buflen)
+int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short *port,void *buf,int buflen)
 {
     struct mbuf *paddr = NULL,*mp0 = NULL,*controlp = NULL;
     int flags = 0,rc;
     rc = soreceive( so, &paddr,&mp0, &controlp, &flags);
     if(!rc) {
 	struct mbuf *tmp = mp0;
+	unsigned copied = 0;
+	char *p = (char *)buf;
 	while(tmp) {
 		printf("%s %d %p %p %p %d\n",__FILE__,__LINE__,tmp,tmp->m_dat,tmp->m_data,tmp->m_len);
 		if(tmp->m_len > 0) {
-			*buf = tmp->m_data;
-			break;
+			if((copied + tmp->m_len) > buflen) {
+				printf("%s %d\n",__FILE__,__LINE__);
+				break;
+			}
+			memcpy(&p[copied],tmp->m_data,tmp->m_len);
+			copied += tmp->m_len;
 		}
 		tmp = tmp->m_next;
 	} 
+	m_freem(mp0);
+	if(paddr) {
+		m_freem(paddr);
+	}
     }
     return rc;
 }

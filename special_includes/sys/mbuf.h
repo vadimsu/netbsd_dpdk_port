@@ -650,6 +650,7 @@ do {									\
  * If how is M_DONTWAIT and allocation fails, the original mbuf chain
  * is freed and m is set to NULL.
  */
+#if 0 /* VADIM - always allocate header, m contains data */
 #define	M_PREPEND(m, plen, how)						\
 do {									\
 	if (M_LEADINGSPACE(m) >= (plen)) {				\
@@ -660,6 +661,28 @@ do {									\
 	if ((m) && (m)->m_flags & M_PKTHDR)				\
 		(m)->m_pkthdr.len += (plen);				\
 } while (/* CONSTCOND */ 0)
+#else
+//struct	mbuf *m_gethdr(int a, int b);
+#define	M_PREPEND(m, plen, how)						\
+do {                                                                    \
+	if((how) == M_DONTWAIT) { 					\
+		if (M_LEADINGSPACE(m) >= (plen)) {			\
+			(m)->m_data -= (plen);				\
+			(m)->m_len += (plen);				\
+		}							\
+	} else {							\
+		struct mbuf *mn;					\
+		mn = m_gethdr( 0, MT_HEADER);	                	\
+		if (mn)	{						\
+			mn->m_next = (m);				\
+			mn->m_data += 40; /* reserve for link layer */	\
+			mn->m_len = (plen);				\
+			mn->m_pkthdr.len = (plen);			\
+		}							\
+		(m) = mn;						\
+	}								\
+} while (/* CONSTCOND */ 0)
+#endif
 
 /* change mbuf to new type */
 #define MCHTYPE(m, t)							\

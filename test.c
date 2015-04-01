@@ -38,19 +38,20 @@ int main(int argc,char **argv)
     socket1 = create_udp_socket("127.0.0.1",7777);
     printf("%s %d\n",__FILE__,__LINE__);
     socket2 = create_udp_socket("127.0.0.1",7778);
-    int rc = app_glue_sendto(socket1, "SOME DATA", 10 ,inet_addr("127.0.0.1"),7778);
-    printf("rc=%d\n",rc);
-    int buflen = 1024;
-    void *buf = NULL;
-    unsigned short port;
-    unsigned int ip_addr;
-    rc = app_glue_receivefrom(socket2,&ip_addr, &port,&buf,buflen);
-    printf("rc=%d\n",rc);
-    if(!rc) {
-	int i;
-	char *p = (char *)buf;
-
-	printf("%s\n",(char *)p);
+    unsigned i = 0,iterations_count = 1000000;
+    while(i < iterations_count) {
+	    int rc = app_glue_sendto(socket1, "SOME DATA", 10 ,inet_addr("127.0.0.1"),7778);
+	    printf("rc=%d i=%d\n",rc,i);
+	    int buflen = 20;
+	    char buf[20];
+	    unsigned short port;
+	    unsigned int ip_addr;
+	    rc = app_glue_receivefrom(socket2,&ip_addr, &port,buf,buflen);
+	    printf("rc=%d\n",rc);
+	    if(!rc) {
+		printf("%s\n",(char *)buf);
+	    }
+	    i++;
     }
     if(socket1) {
         app_glue_close_socket(socket1);
