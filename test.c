@@ -50,9 +50,7 @@ int main(int argc,char **argv)
 	int i;
 	char *p = (char *)buf;
 
-	for(i = 0;i < 20;i++) {
-	        printf("%x\n",(char *)p[i]);
-	}
+	printf("%s\n",(char *)p);
     }
     if(socket1) {
         app_glue_close_socket(socket1);

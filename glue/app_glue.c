@@ -857,8 +857,15 @@ int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short
     int flags = 0,rc;
     rc = soreceive( so, &paddr,&mp0, &controlp, &flags);
     if(!rc) {
-	printf("%s %d %p %p %p\n",__FILE__,__LINE__,mp0,mp0->m_dat,mp0->m_data);
-        *buf = mp0->m_dat;
+	struct mbuf *tmp = mp0;
+	while(tmp) {
+		printf("%s %d %p %p %p %d\n",__FILE__,__LINE__,tmp,tmp->m_dat,tmp->m_data,tmp->m_len);
+		if(tmp->m_len > 0) {
+			*buf = tmp->m_data;
+			break;
+		}
+		tmp = tmp->m_next;
+	} 
     }
     return rc;
 }
