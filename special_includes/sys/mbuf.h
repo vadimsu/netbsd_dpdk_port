@@ -644,11 +644,11 @@ do {									\
 #define	M_BUFOFFSET(m)							\
 	(((m)->m_flags & M_PKTHDR) ?					\
 	 offsetof(struct mbuf, m_pktdat) : offsetof(struct mbuf, m_dat))
-#if 1 /* VADIM */
+#if 0 /* VADIM */
 #define m_adj(mp1, req_len) \
 do {									\
         int len = req_len; 						\
-        struct mbuf *m2; 						\
+        struct mbuf *m2,*m2next; 					\
         int count; 							\
 									\
         if ((m2 = mp1) == NULL)						\
@@ -658,15 +658,19 @@ do {									\
                  * Trim from head.					\
                  */							\
                 while (m2 != NULL && len > 0) {				\
+			m2next = m2->m_next;				\
                         if (m2->m_len <= len) {				\
                                 len -= m2->m_len;			\
                                 m2->m_len = 0;				\
-                                m2 = m2->m_next;			\
+                                m2->m_next = NULL;			\
+				m_free(m2);				\
+				mp1 = m2next;				\
                         } else {					\
                                 m2->m_len -= len;			\
                                 m2->m_data += len;			\
                                 len = 0;				\
                         }						\
+			m2 = m2next;					\	
                 }							\
                 m2 = mp1;						\
                 if (mp1->m_flags & M_PKTHDR)				\

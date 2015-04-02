@@ -858,7 +858,7 @@ m_cat(struct mbuf *m, struct mbuf *n)
 		n = m_free(n);
 	}
 }
-#if 0
+#if 1
 void
 m_adj(struct mbuf *mp, int req_len)
 {
