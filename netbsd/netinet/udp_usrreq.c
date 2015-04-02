@@ -454,8 +454,9 @@ udp_input(struct mbuf *m, ...)
 #endif
 		icmp_error(m, ICMP_UNREACH, ICMP_UNREACH_PORT, 0, 0);
 		m = NULL;
-	}
-
+	}	
+	else /* VADIM */
+		m = NULL;
 bad:
 	if (m)
 		m_freem(m);

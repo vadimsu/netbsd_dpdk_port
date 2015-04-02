@@ -829,7 +829,7 @@ int app_glue_sendto(struct socket *so, void *data,int len,unsigned int ip_addr,u
     struct mbuf *addr,*top;
     struct sockaddr_in *sin;
     int rc;
-
+printf("%s %d\n",__FILE__,__LINE__);
     addr = m_get(M_WAIT, MT_SONAME);
     if (!addr) {
 	printf("cannot create socket %s %d\n",__FILE__,__LINE__);
@@ -846,11 +846,12 @@ int app_glue_sendto(struct socket *so, void *data,int len,unsigned int ip_addr,u
         m_freem(addr);
         return -1;
     }
-    printf("%s %d %p\n",__FILE__,__LINE__,mtod(top, void *));
+    printf("%s %d %p\n",__FILE__,__LINE__,top);
     memcpy(mtod(top, void *),data,len);
     top->m_len = len;
     rc = sosend(so, addr, top,NULL, 0);
     m_freem(addr);
+printf("%s %d\n",__FILE__,__LINE__);
     return rc;
 }
 
@@ -858,13 +859,14 @@ int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short
 {
     struct mbuf *paddr = NULL,*mp0 = NULL,*controlp = NULL;
     int flags = 0,rc;
+printf("%s %d\n",__FILE__,__LINE__);
     rc = soreceive( so, &paddr,&mp0, &controlp, &flags);
     if(!rc) {
 	struct mbuf *tmp = mp0;
 	unsigned copied = 0;
 	char *p = (char *)buf;
 	while(tmp) {
-		printf("%s %d %p %p %p %d\n",__FILE__,__LINE__,tmp,tmp->m_dat,tmp->m_data,tmp->m_len);
+		printf("%s %d %p %d\n",__FILE__,__LINE__,tmp,tmp->m_len);
 		if(tmp->m_len > 0) {
 			if((copied + tmp->m_len) > buflen) {
 				printf("%s %d\n",__FILE__,__LINE__);
@@ -874,11 +876,12 @@ int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short
 			copied += tmp->m_len;
 		}
 		tmp = tmp->m_next;
-	} 
+	}
 	m_freem(mp0);
 	if(paddr) {
 		m_freem(paddr);
 	}
     }
+printf("%s %d\n",__FILE__,__LINE__);
     return rc;
 }

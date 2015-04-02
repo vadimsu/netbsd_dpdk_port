@@ -550,6 +550,7 @@ do {									\
           if ((m)->m_flags & M_PKTHDR)                                    \
                   m_tag_delete_chain((m), NULL);                          \
           (n) = (m)->m_next;                                              \
+	printf("%s %d %p\n",__FILE__,__LINE__,(m)); \
           pool_cache_put(mb_cache, (m));                          \
 /*
  * Copy mbuf pkthdr from `from' to `to'.
@@ -643,7 +644,79 @@ do {									\
 #define	M_BUFOFFSET(m)							\
 	(((m)->m_flags & M_PKTHDR) ?					\
 	 offsetof(struct mbuf, m_pktdat) : offsetof(struct mbuf, m_dat))
-
+#if 1 /* VADIM */
+#define m_adj(mp1, req_len) \
+do {									\
+        int len = req_len; 						\
+        struct mbuf *m2; 						\
+        int count; 							\
+									\
+        if ((m2 = mp1) == NULL)						\
+                break;							\
+        if (len >= 0) {							\
+                /*							\
+                 * Trim from head.					\
+                 */							\
+                while (m2 != NULL && len > 0) {				\
+                        if (m2->m_len <= len) {				\
+                                len -= m2->m_len;			\
+                                m2->m_len = 0;				\
+                                m2 = m2->m_next;			\
+                        } else {					\
+                                m2->m_len -= len;			\
+                                m2->m_data += len;			\
+                                len = 0;				\
+                        }						\
+                }							\
+                m2 = mp1;						\
+                if (mp1->m_flags & M_PKTHDR)				\
+                        m2->m_pkthdr.len -= (req_len - len);		\
+        } else {							\
+                /*							\
+                 * Trim from tail.  Scan the mbuf chain,		\
+                 * calculating its length and finding the last mbuf.	\
+                 * If the adjustment only affects this mbuf, then just	\
+                 * adjust and return.  Otherwise, rescan and truncate	\
+                 * after the remaining size.				\
+                 */							\
+                len = -len;						\
+                count = 0;						\
+                for (;;) {						\
+                        count += m2->m_len;				\
+                        if (m2->m_next == (struct mbuf *)0)		\
+                                break;					\
+                        m2 = m2->m_next;				\
+                }							\
+                if (m2->m_len >= len) {					\
+                        m2->m_len -= len;				\
+                        if (mp1->m_flags & M_PKTHDR)			\
+                                mp1->m_pkthdr.len -= len;		\
+                        break;						\
+                }							\
+                count -= len;						\
+                if (count < 0)						\
+                        count = 0;					\
+                /*							\
+                 * Correct length for chain is "count".			\
+                 * Find the mbuf with last data, adjust its length,	\
+                 * and toss data from remaining mbufs on chain.		\
+                 */							\
+                m2 = mp1;						\
+                if (m2->m_flags & M_PKTHDR)				\
+                        m2->m_pkthdr.len = count;			\
+                for (; m2; m2 = m2->m_next) {				\
+                        if (m2->m_len >= count) {			\
+                                m2->m_len = count;			\
+                                break;					\
+                        }						\
+                        count -= m2->m_len;				\
+                }							\
+                if (m2)							\
+                        while (m2->m_next)				\
+                                (m2 = m2->m_next)->m_len = 0;		\
+        }								\
+}while(0);
+#endif
 /*
  * Arrange to prepend space of size plen to mbuf m.
  * If a new mbuf must be allocated, how specifies whether to wait.
@@ -842,7 +915,7 @@ struct	mbuf *m_pullup(struct mbuf *, int);
 struct	mbuf *m_copyup(struct mbuf *, int, int);
 struct	mbuf *m_split(struct mbuf *,int, int);
 struct	mbuf *m_getptr(struct mbuf *, int, int *);
-void	m_adj(struct mbuf *, int);
+//void	m_adj(struct mbuf *, int);
 struct	mbuf *m_defrag(struct mbuf *, int);
 int	m_apply(struct mbuf *, int, int,
 		int (*)(void *, void *, unsigned int), void *);

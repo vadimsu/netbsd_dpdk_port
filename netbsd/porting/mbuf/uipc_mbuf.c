@@ -529,7 +529,7 @@ m_get(int nowait, int type)
 	m->m_nextpkt = NULL;
 	m->m_data = m->m_dat = get_mbuf_data(m->m_paddr);
 	m->m_flags = 0;
-printf("%s %d %p %p\n",__FILE__,__LINE__,m->m_dat,m);
+
 	return m;
 }
 
@@ -858,7 +858,7 @@ m_cat(struct mbuf *m, struct mbuf *n)
 		n = m_free(n);
 	}
 }
-
+#if 0
 void
 m_adj(struct mbuf *mp, int req_len)
 {
@@ -931,7 +931,7 @@ m_adj(struct mbuf *mp, int req_len)
 				(m = m->m_next)->m_len = 0;
 	}
 }
-
+#endif
 /*
  * m_ensure_contig: rearrange an mbuf chain that given length of bytes
  * would be contiguous and in the data area of an mbuf (therefore, mtod()
