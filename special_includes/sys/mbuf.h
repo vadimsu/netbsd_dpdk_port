@@ -670,7 +670,7 @@ do {									\
                                 m2->m_data += len;			\
                                 len = 0;				\
                         }						\
-			m2 = m2next;					\	
+			m2 = m2next;					\
                 }							\
                 m2 = mp1;						\
                 if (mp1->m_flags & M_PKTHDR)				\
