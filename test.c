@@ -38,7 +38,7 @@ int main(int argc,char **argv)
     socket1 = create_udp_socket("127.0.0.1",7777);
     printf("%s %d\n",__FILE__,__LINE__);
     socket2 = create_udp_socket("127.0.0.1",7778);
-    unsigned i = 0,iterations_count = 1000000;
+    unsigned i = 0,iterations_count = 100;
     while(i < iterations_count) {
 	    int rc = app_glue_sendto(socket1, "SOME DATA", 10 ,inet_addr("127.0.0.1"),7778);
 	    printf("rc=%d i=%d\n",rc,i);
@@ -59,6 +59,18 @@ int main(int argc,char **argv)
     if(socket2) {
         app_glue_close_socket(socket2);
     }
+    socket1 = create_server_socket("127.0.0.1",7777);
+    if(!socket1) {
+        printf("cannot open server socket\n");
+        return -1;
+    }
+    socket2 = create_client_socket("127.0.0.1",11111,"127.0.0.1",7777);
+    if(!socket2) {
+        printf("cannot open client socket\n");
+        return -1;
+    }
+    //app_glue_close_socket(socket1);
+    //app_glue_close_socket(socket2);
     printf("The END\n");
     return 0;
 }

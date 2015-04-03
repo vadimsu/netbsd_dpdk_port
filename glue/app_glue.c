@@ -15,6 +15,7 @@
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/socketvar.h>
 #include <special_includes/sys/time.h>
+#include <special_includes/sys/poll.h>
 #include <netbsd/netinet/in.h>
 
 TAILQ_HEAD(read_ready_socket_list_head, socket) read_ready_socket_list_head;
@@ -136,6 +137,16 @@ static void app_glue_sock_wakeup(struct sock *sk)
 	sk->sk_error_report = app_glue_sock_error_report; 
 }
 #endif
+void app_glue_so_upcall(struct socket *sock, void *arg, int band, int flag)
+{
+	printf("%s %s %d %p\n",__FILE__,__func__,__LINE__,sock);
+	if(band | POLLIN) {
+		printf("%s %s %d\n",__FILE__,__func__,__LINE__);
+	}
+	if(band | POLLOUT) {
+		printf("%s %s %d\n",__FILE__,__func__,__LINE__);
+	}
+}
 /*
  * This is a wrapper function for RAW socket creation.
  * Paramters: IP address & port (protocol number) to bind
@@ -174,6 +185,7 @@ void *create_raw_socket2(unsigned int ip_addr,unsigned short port)
 		return NULL;
 	}
 	m_freem(m);
+	raw_sock->so_upcall2 = app_glue_so_upcall;
 	return raw_sock;
 }
 void *create_raw_socket(const char *ip_addr,unsigned short port)
@@ -228,6 +240,7 @@ void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
 	}
 #endif
 	m_freem(m);
+	udp_sock->so_upcall2 = app_glue_so_upcall;
 	return udp_sock;
 }
 
@@ -263,6 +276,8 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 	m->m_len = sizeof(struct sockaddr);
 	sin = mtod(m, struct sockaddr_in *);
 	sin->sin_len = sizeof(struct sockaddr_in);
+	sin->sin_family = AF_INET;
+#if 0
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
 
@@ -278,6 +293,7 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 	if(sosetopt(client_sock,&soopt)) {
 		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
+#endif
 	while(1) {
 		sin->sin_family = AF_INET;
 		sin->sin_addr.s_addr = my_ip_addr;
@@ -296,6 +312,7 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 		}
 		break;
 	}
+	printf("%s %s %d %p\n",__FILE__,__func__,__LINE__,client_sock);
 	sin->sin_family = AF_INET;
 	sin->sin_addr.s_addr = peer_ip_addr;
 	sin->sin_port = htons(port);
@@ -304,9 +321,9 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 		client_sock->sk->sk_state_change = app_glue_sock_wakeup;
 	}
 #endif
+	client_sock->so_upcall2 = app_glue_so_upcall;
 	soconnect(client_sock, m);
-
-	m_freem(m);
+	m_freem(m);	
 	return client_sock;
 }
 /*
@@ -342,7 +359,7 @@ void *create_server_socket2(unsigned int my_ip_addr,unsigned short port)
 	m->m_len = sizeof(struct sockaddr);
 	sin = mtod(m, struct sockaddr_in *);
 	sin->sin_len = sizeof(struct sockaddr_in);
-
+#if 0
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
 	soopt.sopt_level = SOL_SOCKET;
@@ -357,6 +374,7 @@ void *create_server_socket2(unsigned int my_ip_addr,unsigned short port)
 	if(sosetopt(server_sock,&soopt)) {
 		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
+#endif
 #if 0
 	bufsize = 0x1000000;
 	soopt.sopt_name = SO_SNDBUF;
@@ -385,12 +403,13 @@ void *create_server_socket2(unsigned int my_ip_addr,unsigned short port)
 		printf("FATAL %s %d\n",__FILE__,__LINE__);exit(0);
 	}
 #endif
+	printf("%s %s %d %p\n",__FILE__,__func__,__LINE__,server_sock);
+	server_sock->so_upcall2 = app_glue_so_upcall;
 	if(solisten(server_sock,32000)) {
 		printf("cannot listen %s %d\n",__FILE__,__LINE__);
 		return NULL;
 	}
-
-	m_freem(m);
+	m_freem(m);	
 	return server_sock;
 }
 /*

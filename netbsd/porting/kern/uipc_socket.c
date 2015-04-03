@@ -249,6 +249,8 @@ socreate(int dom, struct socket **aso, int type, int proto,
 		sofree(so);
 		return error;
 	}
+	so->so_rcv.sb_flags |= SB_NOTIFY;
+	so->so_snd.sb_flags |= SB_NOTIFY;
 	sounlock(so);
 	*aso = so;
 	return 0;

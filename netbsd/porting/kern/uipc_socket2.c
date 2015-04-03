@@ -347,6 +347,9 @@ soget(bool waitok)
 #if 0 /* VADIM */
 	selinit(&so->so_rcv.sb_sel);
 	selinit(&so->so_snd.sb_sel);
+#else
+	so->so_rcv.sb_flags |= SB_NOTIFY;
+	so->so_snd.sb_flags |= SB_NOTIFY;
 #endif
 	so->so_rcv.sb_so = so;
 	so->so_snd.sb_so = so;
@@ -492,16 +495,18 @@ sowakeup(struct socket *so, struct sockbuf *sb, int code)
 		band = POLLIN|POLLRDNORM;
 	else
 		band = POLLOUT|POLLWRNORM;
-	sb->sb_flags &= ~SB_NOTIFY;
 #if 0 /* VADIM */
+	sb->sb_flags &= ~SB_NOTIFY;
+
 	selnotify(&sb->sb_sel, band, NOTE_SUBMIT);
 	cv_broadcast(&sb->sb_cv);
 
 	if (sb->sb_flags & SB_ASYNC)
 		fownsignal(so->so_pgid, SIGIO, code, band, so);
+#endif
+	(*so->so_upcall2)(so, so->so_upcallarg2, band, M_DONTWAIT);
 	if (sb->sb_flags & SB_UPCALL)
 		(*so->so_upcall)(so, so->so_upcallarg, band, M_DONTWAIT);
-#endif
 }
 #if 0
 /*

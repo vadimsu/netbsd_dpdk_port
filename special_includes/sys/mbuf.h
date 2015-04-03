@@ -550,7 +550,6 @@ do {									\
           if ((m)->m_flags & M_PKTHDR)                                    \
                   m_tag_delete_chain((m), NULL);                          \
           (n) = (m)->m_next;                                              \
-	printf("%s %d %p\n",__FILE__,__LINE__,(m)); \
           pool_cache_put(mb_cache, (m));                          \
 /*
  * Copy mbuf pkthdr from `from' to `to'.

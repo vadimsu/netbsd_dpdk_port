@@ -160,7 +160,9 @@ struct socket {
 
 	void		*so_internal;	/* Space for svr4 stream data */
 	void		(*so_upcall) (struct socket *, void *, int, int);
+	void		(*so_upcall2) (struct socket *, void *, int, int);
 	void *		so_upcallarg;	/* Arg for above */
+	void *		so_upcallarg2;	/* Arg for above */
 	int		(*so_send) (struct socket *, struct mbuf *,
 					struct mbuf *,
 					struct mbuf *, int);
