@@ -41,7 +41,7 @@ int main(int argc,char **argv)
     void *socket1,*socket2;
 
     createLoopbackInterface();
-    unsigned i = 0,iterations_count = 100;
+    unsigned i = 0,iterations_count = 100000;
 
     sender_so = create_udp_socket("127.0.0.1",7777);
     printf("%s %d\n",__FILE__,__LINE__);

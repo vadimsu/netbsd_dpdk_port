@@ -19,6 +19,20 @@ void *allocate_mbuf(void *pool)
 	return data_buf;
 }
 
+void free_mbuf(void *mbuf)
+{
+	struct rte_mbuf *rte_mbuf = (struct rte_mbuf*)mbuf;
+
+        rte_pktmbuf_free(rte_mbuf);
+}
+
+void increment_refcnt(void *mbuf)
+{
+	struct rte_mbuf *rte_mbuf = (struct rte_mbuf*)mbuf;
+
+        rte_mbuf_refcnt_update(rte_mbuf,1);
+}
+
 char *get_mbuf_data(void *buf)
 {
 	struct rte_mbuf *mbuf = (struct rte_mbuf *)buf;

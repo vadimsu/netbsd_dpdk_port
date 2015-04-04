@@ -458,6 +458,7 @@ mb_ctor(struct rte_mempool *mp,
         void *_m,
         __attribute__((unused)) unsigned i)
 {
+#if 0
 	struct mbuf *m = _m;
         pool_cache_t mb_data_pool = (pool_cache_t)opaque_arg;
         struct rte_mbuf *data_buf;
@@ -476,6 +477,18 @@ mb_ctor(struct rte_mempool *mp,
 	m->m_paddr = data_buf;
 	m->m_dat = get_mbuf_data(data_buf);
 	m->m_data = m->m_dat;
+#else
+	struct mbuf *m = _m;
+	memset(&m->m_pkthdr,0,sizeof(m->m_pkthdr));	
+	m->m_len = 0;
+	m->m_next = NULL;
+	m->m_nextpkt = NULL;
+	m->m_flags = 0;
+	m->m_type = MT_FREE;
+	m->m_paddr = NULL;
+	m->m_dat = NULL;
+	m->m_data = NULL;
+#endif
 	return (0);
 }
 #if 0
@@ -509,10 +522,33 @@ m_reclaim(void *arg, int flags)
  * These are also available as macros
  * for critical paths.
  */
+struct	mbuf *m_get_indirect(int type)
+{
+	struct mbuf *m;
+	
+	KASSERT(type != MT_FREE);
+
+	m = pool_cache_get(mb_cache, PR_WAITOK);
+	if (m == NULL)
+		return NULL;
+
+	mbstat_type_add(type, 1);
+	mowner_init(m, type);
+	m->m_ext_ref = m;
+	m->m_type = type;
+	m->m_next = NULL;
+	m->m_nextpkt = NULL;
+	m->m_paddr = NULL;
+	m->m_data = m->m_dat = NULL;
+	m->m_flags = 0;
+
+	return m;
+}
 struct mbuf *
 m_get(int nowait, int type)
 {
 	struct mbuf *m;
+	struct rte_mbuf *data_buf;
 
 	KASSERT(type != MT_FREE);
 
@@ -527,6 +563,13 @@ m_get(int nowait, int type)
 	m->m_type = type;
 	m->m_next = NULL;
 	m->m_nextpkt = NULL;
+        data_buf = allocate_mbuf(mb_data);
+        if(!data_buf) {
+            printf("FATAL %s %d\n",__FILE__,__LINE__);
+            exit(0);
+        }
+
+	m->m_paddr = data_buf;
 	m->m_data = m->m_dat = get_mbuf_data(m->m_paddr);
 	m->m_flags = 0;
 
@@ -690,7 +733,7 @@ m_copym0(struct mbuf *m, int off0, int len, int wait, int deep)
 				    len);
 			break;
 		}
-		MGET(n, wait, m->m_type);
+		n = m_get_indirect(m->m_type);
 		*np = n;
 		if (n == 0)
 			goto nospace;
@@ -721,9 +764,16 @@ m_copym0(struct mbuf *m, int off0, int len, int wait, int deep)
 				memcpy(mtod(n, void *), mtod(m, char *) + off,
 				    (unsigned)n->m_len);
 			}
-		} else
+		} else {
+#if 0 /* VADIM */
 			memcpy(mtod(n, void *), mtod(m, char *) + off,
 			    (unsigned)n->m_len);
+#else
+			n->m_data = mtod(m, char *) + off;
+			n->m_paddr = m->m_paddr;
+			increment_refcnt(n->m_paddr);
+#endif
+		}
 		if (len != M_COPYALL)
 			len -= n->m_len;
 		off += n->m_len;

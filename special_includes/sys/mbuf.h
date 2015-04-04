@@ -550,6 +550,8 @@ do {									\
           if ((m)->m_flags & M_PKTHDR)                                    \
                   m_tag_delete_chain((m), NULL);                          \
           (n) = (m)->m_next;                                              \
+	  if(m->m_paddr)						  \
+ 	  	free_mbuf(m->m_paddr);			 		\
           pool_cache_put(mb_cache, (m));                          \
 /*
  * Copy mbuf pkthdr from `from' to `to'.
@@ -626,9 +628,12 @@ do {									\
 	((m)->m_flags & M_EXT ? (m)->m_ext.ext_buf + (m)->m_ext.ext_size - \
 	 ((m)->m_data + (m)->m_len) :					\
 	 &(m)->m_dat[MLEN] - ((m)->m_data + (m)->m_len))
-
+#if 0 /* VADIM */
 #define	M_TRAILINGSPACE(m)						\
 	(M_READONLY((m)) ? 0 : _M_TRAILINGSPACE((m)))
+#else
+#define	M_TRAILINGSPACE(m) 0
+#endif
 
 /*
  * Compute the address of an mbuf's data area.
@@ -910,6 +915,7 @@ struct	mbuf *m_devget(char *, int, int, struct ifnet *,
 struct	mbuf *m_dup(struct mbuf *, int, int, int);
 struct	mbuf *m_free(struct mbuf *);
 struct	mbuf *m_get(int, int);
+struct	mbuf *m_get_indirect(int);
 struct	mbuf *m_getclr(int, int);
 struct	mbuf *m_gethdr(int, int);
 struct	mbuf *m_prepend(struct mbuf *,int, int);
