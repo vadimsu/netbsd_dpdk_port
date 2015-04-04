@@ -59,6 +59,10 @@ void softint_schedule(void *arg)
 }
 
 void schednetisr(int isr)
+{	
+}
+
+void softint_run()
 {
 	ipintr();
 }

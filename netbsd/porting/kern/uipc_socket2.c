@@ -504,7 +504,8 @@ sowakeup(struct socket *so, struct sockbuf *sb, int code)
 	if (sb->sb_flags & SB_ASYNC)
 		fownsignal(so->so_pgid, SIGIO, code, band, so);
 #endif
-	(*so->so_upcall2)(so, so->so_upcallarg2, band, M_DONTWAIT);
+	if(so->so_upcall2)
+		(*so->so_upcall2)(so, so->so_upcallarg2, band, M_DONTWAIT);
 	if (sb->sb_flags & SB_UPCALL)
 		(*so->so_upcall)(so, so->so_upcallarg, band, M_DONTWAIT);
 }

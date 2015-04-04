@@ -42,6 +42,7 @@ int main(int argc,char **argv)
     while(i < iterations_count) {
 	    int rc = app_glue_sendto(socket1, "SOME DATA", 10 ,inet_addr("127.0.0.1"),7778);
 	    printf("rc=%d i=%d\n",rc,i);
+	    softint_run();
 	    int buflen = 20;
 	    char buf[20];
 	    unsigned short port;
@@ -69,6 +70,9 @@ int main(int argc,char **argv)
         printf("cannot open client socket\n");
         return -1;
     }
+    softint_run();
+    softint_run();
+    softint_run();
     //app_glue_close_socket(socket1);
     //app_glue_close_socket(socket2);
     printf("The END\n");
