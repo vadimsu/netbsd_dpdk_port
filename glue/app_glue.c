@@ -6,10 +6,11 @@
  *  Contains API functions for building applications
  *  on the top of Linux TCP/IP ported to userland and integrated with DPDK 1.6
  */
-#include <stdint.h>
-#include <special_includes/sys/types.h>
+//#include <stdint.h>
+//#include <special_includes/sys/types.h>
 #include <special_includes/sys/param.h>
 #include <special_includes/sys/malloc.h>
+#include <lib/libkern/libkern.h>
 #include <special_includes/sys/mbuf.h>
 #include <special_includes/sys/queue.h>
 #include <special_includes/sys/socket.h>
@@ -17,6 +18,45 @@
 #include <special_includes/sys/time.h>
 #include <special_includes/sys/poll.h>
 #include <netbsd/netinet/in.h>
+
+#include <netbsd/net/if.h>
+#include <netbsd/net/route.h>
+#include <netbsd/net/if_types.h>
+
+#include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_systm.h>
+#include <netbsd/netinet/ip.h>
+#include <netbsd/netinet/in_pcb.h>
+#include <netbsd/netinet/in_var.h>
+#include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/in_offload.h>
+
+#ifdef INET6
+#ifndef INET
+#include <netbsd/netinet/in.h>
+#endif
+#include <netbsd/netinet/ip6.h>
+#include <netbsd/netinet6/ip6_var.h>
+#include <netbsd/netinet6/in6_pcb.h>
+#include <netinet6/ip6_var.h>
+#include <netinet6/in6_var.h>
+#include <netbsd/netinet/icmp6.h>
+#include <netbsd/netinet6/nd6.h>
+#ifdef TCP_SIGNATURE
+#include <netbsd/netinet6/scope6_var.h>
+#endif
+#endif
+
+#ifndef INET6
+/* always need ip6.h for IP6_EXTHDR_GET */
+#include <netbsd/netinet/ip6.h>
+#endif
+
+#include <netbsd/netinet/tcp.h>
+#include <netbsd/netinet/tcp_fsm.h>
+#include <netbsd/netinet/tcp_seq.h>
+#include <netbsd/netinet/tcp_timer.h>
+#include <netbsd/netinet/tcp_var.h>
 
 TAILQ_HEAD(read_ready_socket_list_head, socket) read_ready_socket_list_head;
 uint64_t read_sockets_queue_len = 0;
@@ -36,23 +76,28 @@ uint64_t total_prev = 0;
  * Returns: void
  *
  */
-#if 0
-static void app_glue_sock_readable(struct sock *sk, int len)
-{
-	const struct tcp_sock *tp = tcp_sk(sk);
-	int target = sock_rcvlowat(sk, 0, INT_MAX);
 
-	if((sk->sk_state != TCP_ESTABLISHED)&&(sk->sk_socket->type == SOCK_STREAM)) {
+static inline void app_glue_sock_readable(struct socket *so)
+{
+	if(so->so_type == SOCK_STREAM) {
+		struct tcpcb *tp = sototcpcb(so);
+
+		if(tp->t_state != TCPS_ESTABLISHED) {
+			if(tp->t_state == TCPS_LISTEN) {
+				if(so->accept_queue_present) {
+					return;
+				}
+				so->accept_queue_present = 1;
+				TAILQ_INSERT_TAIL(&accept_ready_socket_list_head,so,accept_queue_entry);
+			}
+			return;
+		}
+	}
+	if(so->read_queue_present) {
 		return;
 	}
-	if(!sk->sk_socket) {
-		return;
-	}
-	if(sk->sk_socket->read_queue_present) {
-		return;
-	}
-	sk->sk_socket->read_queue_present = 1;
-	TAILQ_INSERT_TAIL(&read_ready_socket_list_head,sk->sk_socket,read_queue_entry);
+	so->read_queue_present = 1;
+	TAILQ_INSERT_TAIL(&read_ready_socket_list_head,so,read_queue_entry);
         read_sockets_queue_len++;
 }
 /*
@@ -63,21 +108,25 @@ static void app_glue_sock_readable(struct sock *sk, int len)
  * Returns: void
  *
  */
-static void app_glue_sock_write_space(struct sock *sk)
+static void app_glue_sock_write_space(struct socket *so)
 {
-	if((sk->sk_state != TCP_ESTABLISHED)&&(sk->sk_socket->type == SOCK_STREAM)) {
-		return;
-	}
-	if (sk_stream_is_writeable(sk) && sk->sk_socket) {
-		clear_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
-		if(sk->sk_socket->write_queue_present) {
+	if(so->so_type == SOCK_STREAM) {
+		struct tcpcb *tp = sototcpcb(so);
+
+		if(tp->t_state != TCPS_ESTABLISHED) {
 			return;
 		}
-		sk->sk_socket->write_queue_present = 1;
-		TAILQ_INSERT_TAIL(&write_ready_socket_list_head,sk->sk_socket,write_queue_entry);
+	}
+	if (sowritable(so)) {
+		if(so->write_queue_present) {
+			return;
+		}
+		so->write_queue_present = 1;
+		TAILQ_INSERT_TAIL(&write_ready_socket_list_head,so,write_queue_entry);
                 write_sockets_queue_len++;
 	}
 }
+#if 0
 /*
  * This callback function is invoked when an error occurs on socket.
  * It inserts the socket into a list of closable sockets
@@ -139,12 +188,11 @@ static void app_glue_sock_wakeup(struct sock *sk)
 #endif
 void app_glue_so_upcall(struct socket *sock, void *arg, int band, int flag)
 {
-	printf("%s %s %d %p\n",__FILE__,__func__,__LINE__,sock);
 	if(band | POLLIN) {
-		printf("%s %s %d\n",__FILE__,__func__,__LINE__);
+		app_glue_sock_readable(sock);
 	}
 	if(band | POLLOUT) {
-		printf("%s %s %d\n",__FILE__,__func__,__LINE__);
+		app_glue_sock_write_space(sock);
 	}
 }
 /*
@@ -478,7 +526,7 @@ static inline void process_rx_ready_sockets()
 	while(!TAILQ_EMPTY(&accept_ready_socket_list_head)) {
 
 		sock = TAILQ_FIRST(&accept_ready_socket_list_head);
-//		user_on_accept(sock);
+		user_on_accept(sock);
 		sock->accept_queue_present = 0;
 		TAILQ_REMOVE(&accept_ready_socket_list_head,sock,accept_queue_entry);
 	}
@@ -488,7 +536,7 @@ static inline void process_rx_ready_sockets()
 		sock = TAILQ_FIRST(&read_ready_socket_list_head);
                 sock->read_queue_present = 0;
 		TAILQ_REMOVE(&read_ready_socket_list_head,sock,read_queue_entry);
-//                user_data_available_cbk(sock);
+                user_data_available_cbk(sock);
                 read_sockets_queue_len--;
                 idx++;	
 	}
@@ -511,7 +559,7 @@ static inline void process_tx_ready_sockets()
 		sock = TAILQ_FIRST(&write_ready_socket_list_head);
 		TAILQ_REMOVE(&write_ready_socket_list_head,sock,write_queue_entry);
                 sock->write_queue_present = 0;
-//		user_on_transmission_opportunity(sock);
+		user_on_transmission_opportunity(sock);
 //                set_bit(SOCK_NOSPACE, &sock->flags);
                 write_sockets_queue_len--;
 	        idx++;
@@ -575,7 +623,7 @@ inline void app_glue_periodic(int call_flush_queues,uint8_t *ports_to_poll,int p
     uint8_t port_idx;
 
 	app_glue_periodic_called++;
-//	ts = rte_rdtsc();
+//	ts = rte_rdtsc();	
 	if((ts - app_glue_drv_last_poll_ts) >= app_glue_drv_poll_interval) {
 //		ts4 = rte_rdtsc();
 		for(port_idx = 0;port_idx < ports_to_poll_count;port_idx++)
@@ -583,14 +631,15 @@ inline void app_glue_periodic(int call_flush_queues,uint8_t *ports_to_poll,int p
 		app_glue_drv_last_poll_ts = ts;
 //		working_cycles_stat += rte_rdtsc() - ts4;
 	}
-
+	ts = (app_glue_timer_last_poll_ts + app_glue_timer_poll_interval) + 1;
 	if((ts - app_glue_timer_last_poll_ts) >= app_glue_timer_poll_interval) {
 //		ts3 = rte_rdtsc();
-//		rte_timer_manage();
+		rte_timer_manage();
 		app_glue_timer_last_poll_ts = ts;
 //		working_cycles_stat += rte_rdtsc() - ts3;
 	}
 	if(call_flush_queues) {
+		ts =  (app_glue_tx_ready_sockets_last_poll_ts + app_glue_tx_ready_sockets_poll_interval) + 1;
 		if((ts - app_glue_tx_ready_sockets_last_poll_ts) >= app_glue_tx_ready_sockets_poll_interval) {
 //			ts2 = rte_rdtsc();
 			app_glue_tx_queues_process++;
@@ -598,6 +647,7 @@ inline void app_glue_periodic(int call_flush_queues,uint8_t *ports_to_poll,int p
 //			working_cycles_stat += rte_rdtsc() - ts2;
 			app_glue_tx_ready_sockets_last_poll_ts = ts;
 		}
+		ts =  (app_glue_rx_ready_sockets_last_poll_ts + app_glue_rx_ready_sockets_poll_interval) + 1;
 		if((ts - app_glue_rx_ready_sockets_last_poll_ts) >= app_glue_rx_ready_sockets_poll_interval) {
 //			ts2 = rte_rdtsc();
 			app_glue_rx_queues_process++;
@@ -848,7 +898,7 @@ int app_glue_sendto(struct socket *so, void *data,int len,unsigned int ip_addr,u
     struct mbuf *addr,*top;
     struct sockaddr_in *sin;
     int rc;
-printf("%s %d\n",__FILE__,__LINE__);
+
     addr = m_get(M_WAIT, MT_SONAME);
     if (!addr) {
 	printf("cannot create socket %s %d\n",__FILE__,__LINE__);
@@ -865,12 +915,10 @@ printf("%s %d\n",__FILE__,__LINE__);
         m_freem(addr);
         return -1;
     }
-    printf("%s %d %p\n",__FILE__,__LINE__,top);
     memcpy(mtod(top, void *),data,len);
     top->m_len = len;
     rc = sosend(so, addr, top,NULL, 0);
     m_freem(addr);
-printf("%s %d\n",__FILE__,__LINE__);
     return rc;
 }
 
@@ -878,7 +926,7 @@ int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short
 {
     struct mbuf *paddr = NULL,*mp0 = NULL,*controlp = NULL;
     int flags = 0,rc;
-printf("%s %d\n",__FILE__,__LINE__);
+
     rc = soreceive( so, &paddr,&mp0, &controlp, &flags);
     if(!rc) {
 	struct mbuf *tmp = mp0;
@@ -901,6 +949,114 @@ printf("%s %d\n",__FILE__,__LINE__);
 		m_freem(paddr);
 	}
     }
-printf("%s %d\n",__FILE__,__LINE__);
     return rc;
+}
+
+int app_glue_send(struct socket *so, void *data,int len)
+{
+    struct mbuf *top;
+    int rc;
+
+    top = m_get(M_WAIT, MT_DATA);
+    if(!top) {
+        return -1;
+    }
+    memcpy(mtod(top, void *),data,len);
+    top->m_len = len;
+    rc = sosend(so, NULL, top,NULL, 0);
+    return rc;
+}
+
+int app_glue_receive(struct socket *so,void *buf,int buflen)
+{
+    struct mbuf *mp0 = NULL,*controlp = NULL;
+    int flags = 0,rc;
+
+    rc = soreceive( so, NULL,&mp0, &controlp, &flags);
+    if(!rc) {
+	struct mbuf *tmp = mp0;
+	unsigned copied = 0;
+	char *p = (char *)buf;
+	while(tmp) {
+		printf("%s %d %p %d\n",__FILE__,__LINE__,tmp,tmp->m_len);
+		if(tmp->m_len > 0) {
+			if((copied + tmp->m_len) > buflen) {
+				printf("%s %d\n",__FILE__,__LINE__);
+				break;
+			}
+			memcpy(&p[copied],tmp->m_data,tmp->m_len);
+			copied += tmp->m_len;
+		}
+		tmp = tmp->m_next;
+	}
+	m_freem(mp0);
+    }
+    return rc;
+}
+
+struct socket *sender_so = NULL;
+struct socket *receiver_so = NULL;
+
+void user_on_transmission_opportunity(struct socket *so)
+{
+	int rc;
+
+	if(so != sender_so) {
+		return;	
+	}
+	switch(so->so_type) {
+		case SOCK_STREAM:
+			rc = app_glue_send(so, "SOME DATA", 10);
+			printf("sent rc=%d\n",rc);
+			break;
+		case SOCK_DGRAM:
+			rc = app_glue_sendto(so, "SOME DATA", 10 ,inet_addr("127.0.0.1"),7778);
+			printf("sent rc=%d\n",rc);
+			break;
+	}
+}
+
+void user_data_available_cbk(struct socket *so)
+{
+	int buflen = 20,rc;
+	char buf[20];
+	unsigned short port;
+	unsigned int ip_addr;
+
+	if(so != receiver_so)
+		return;
+
+	switch(so->so_type) {
+		case SOCK_STREAM:
+			do {
+				rc = app_glue_receive(so,buf,buflen);
+				if(rc == 0)
+					printf("STREAM received %s\n",buf);
+			}while(rc == 0);
+			break;
+		case SOCK_DGRAM:
+			rc = app_glue_receivefrom(so,&ip_addr, &port,buf,buflen);
+			printf("received rc=%d\n",rc);
+			if(!rc) {
+				printf("%s\n",(char *)buf);	  
+			}
+			break;
+	}	
+}
+
+void user_on_accept(struct socket *so)
+{
+    while(so->so_qlen) {
+    	struct socket *so2 = TAILQ_FIRST(&so->so_q);
+	struct mbuf *addr = m_get(M_WAIT, MT_SONAME);
+	
+    	if (soqremque(so2, 1) == 0) {
+		printf("user_on_accept\n");
+		exit(1);
+	}
+    	soaccept(so2,addr);
+	receiver_so = so2;
+	so2->so_upcall2 = app_glue_so_upcall;
+	user_data_available_cbk(so2);
+    }
 }
