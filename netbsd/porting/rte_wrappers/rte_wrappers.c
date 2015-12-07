@@ -6,6 +6,7 @@
 #include <rte_lcore.h>
 #include <rte_malloc.h>
 #include <rte_memcpy.h>
+#include <rte_ethdev.h>
 
 typedef int malloc_type;
 void *allocate_mbuf(void *pool)
@@ -62,4 +63,121 @@ void internal_memcpy(void *d,const void *s, size_t sz)
 void internal_memset(void *d, int v, size_t sz)
 {
     memset(d, v, sz);
+}
+
+static struct rte_eth_conf port_conf = {
+        .rxmode = {
+                .split_hdr_size = 0,
+                .header_split   = 0, /**< Header Split disabled */
+                .hw_ip_checksum = 0, /**< IP checksum offload disabled */
+                .hw_vlan_filter = 0, /**< VLAN filtering disabled */
+                .jumbo_frame    = 0, /**< Jumbo Frame Support disabled */
+                .hw_strip_crc   = 0, /**< CRC stripped by hardware */
+                .mq_mode = ETH_MQ_RX_NONE/*ETH_MQ_RX_RSS*/,
+        },
+        .txmode = {
+                .mq_mode = ETH_MQ_TX_NONE/*ETH_MQ_TX_VMDQ_ONLY*/,
+        },
+};
+#define MAX_PKT_BURST 1
+#define RX_PTHRESH 8
+#define RX_HTHRESH 8
+#define RX_WTHRESH 0
+static const struct rte_eth_rxconf rx_conf = {
+        .rx_thresh = {
+                .pthresh = RX_PTHRESH,
+                .hthresh = RX_HTHRESH,
+                .wthresh = RX_WTHRESH,
+        },
+        .rx_free_thresh = MAX_PKT_BURST/*0*/,
+        .rx_drop_en = 0,
+};
+
+#define TX_PTHRESH 32
+#define TX_HTHRESH 0
+#define TX_WTHRESH 0
+
+static struct rte_eth_txconf tx_conf = {
+        .tx_thresh = {
+                .pthresh = TX_PTHRESH,
+                .hthresh = TX_HTHRESH,
+                .wthresh = TX_WTHRESH,
+        },
+        .tx_free_thresh = /*0*/MAX_PKT_BURST, /* Use PMD default values */
+        .tx_rs_thresh = /*0*/MAX_PKT_BURST, /* Use PMD default values */
+        .txq_flags = ((uint32_t)/*ETH_TXQ_FLAGS_NOMULTSEGS | \*/
+                            ETH_TXQ_FLAGS_NOOFFLOADS),
+};
+
+#define MBUF_SIZE 2048
+#define MBUFS_PER_RX_QUEUE 8192
+
+static struct rte_mempool **init_rx_queue_mempools(int queue_count)
+{
+	uint16_t queue_id;
+	char pool_name[1024];
+	struct rte_mempool **pools;
+
+	pools = rte_malloc("", sizeof(struct rte_mempool *)*queue_count, 0);
+
+	for(queue_id = 0;queue_id < queue_count;queue_id++) {
+                sprintf(pool_name,"rx_pool_%d",queue_id);
+                pools[queue_id] =
+                                rte_mempool_create(pool_name, MBUFS_PER_RX_QUEUE,
+                                                   MBUF_SIZE, 0,
+                                                   sizeof(struct rte_pktmbuf_pool_private),
+                                                   rte_pktmbuf_pool_init, NULL,
+                                                   rte_pktmbuf_init, NULL,
+                                                   rte_socket_id(), 0);
+                 if (pools[queue_id] == NULL)
+                        rte_panic("Cannot init direct mbuf pool\n");
+        }
+	return pools;
+}
+
+static void setup_rx_queues(int portid, int queue_count, int nb_rxd)
+{
+	uint16_t queue_id;
+	struct rte_mempool **pools = init_rx_queue_mempools(queue_count);
+
+	for (queue_id = 0; queue_id < queue_count; queue_id++) {
+		rte_eth_rx_queue_setup(portid, queue_id, nb_rxd, rte_eth_dev_socket_id(portid),
+					&rx_conf, pools[queue_id]);
+	}
+}
+
+static void setup_tx_queues(int portid, int queue_count, int nb_txd)
+{
+	uint16_t queue_id;
+	int ret;
+
+	for(queue_id = 0;queue_id < queue_count;queue_id++) {
+		ret = rte_eth_tx_queue_setup(portid, queue_id, nb_txd,
+                                        rte_eth_dev_socket_id(portid), &tx_conf);
+		if (ret < 0)
+			rte_exit(EXIT_FAILURE, "rte_eth_tx_queue_setup:err=%d, port=%u\n",
+				ret, (unsigned) portid);
+	}
+}
+
+int init_device(int portid, int queue_count)
+{
+	struct rte_eth_dev_info dev_info;
+	rte_eth_dev_info_get(portid, &dev_info);
+	int nb_txd, nb_rxd;
+	int ret = rte_eth_dev_configure(portid, queue_count, queue_count, &port_conf);
+	if (ret < 0)
+		goto error_ret;
+	if (!dev_info.tx_offload_capa) {
+		nb_rxd = nb_txd = 256;
+		tx_conf.txq_flags = ETH_TXQ_FLAGS_NOOFFLOADS;
+	} else {
+		nb_rxd = nb_txd = 4096;
+		tx_conf.txq_flags = 0;
+	}
+	setup_rx_queues(portid, queue_count, nb_rxd);
+	setup_tx_queues(portid, queue_count, nb_txd);
+	ret = rte_eth_dev_start(portid);
+error_ret:
+	return ret;
 }

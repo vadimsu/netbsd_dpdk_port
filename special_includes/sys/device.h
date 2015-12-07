@@ -87,7 +87,7 @@
 #include <special_includes/sys/pmf.h>
 #endif
 
-#include <prop/proplib.h>
+//#include <prop/proplib.h>
 
 /*
  * Minimal device structures.

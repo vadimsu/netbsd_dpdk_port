@@ -472,9 +472,11 @@ etherip_ioctl(struct ifnet *ifp, u_long cmd, void *data)
 #endif
 	case SIOCSIFMEDIA:
 	case SIOCGIFMEDIA:
+#if 0 /* VADIM */
 		s = splnet();
 		error = ifmedia_ioctl(ifp, ifr, &sc->sc_im, cmd);
 		splx(s);
+#endif
 		break;
 
 	default:

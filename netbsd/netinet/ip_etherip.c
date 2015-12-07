@@ -61,18 +61,19 @@
 __KERNEL_RCSID(0, "$NetBSD: ip_etherip.c,v 1.14 2011/07/17 20:54:53 joerg Exp $");
 
 #include "opt_inet.h"
-
+#include "missing_types.h"
 #include <special_includes/sys/param.h>
 #include <special_includes/sys/systm.h>
 #include <special_includes/sys/socket.h>
 #include <special_includes/sys/sockio.h>
+#include <special_includes/sys/malloc.h>
 #include <special_includes/sys/mbuf.h>
-#include <special_includes/sys/device.h>
+//#include <special_includes/sys/device.h>
 #include <special_includes/sys/errno.h>
 #include <special_includes/sys/ioctl.h>
 #include <special_includes/sys/syslog.h>
 #include <special_includes/sys/protosw.h>
-#include <special_includes/sys/kernel.h>
+//#include <special_includes/sys/kernel.h>
 
 #include <net/if.h>
 #include <net/route.h>
