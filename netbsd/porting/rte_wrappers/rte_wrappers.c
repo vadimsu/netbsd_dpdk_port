@@ -181,3 +181,11 @@ int init_device(int portid, int queue_count)
 error_ret:
 	return ret;
 }
+
+void poll_rx(void *ifp, int portid, int queue_id)
+{
+	struct rte_mbuf *mbufs[MAX_PKT_BURST];
+	int received = rte_eth_rx_burst(portid, queue_id, mbufs, MAX_PKT_BURST);
+	if (received <= 0)
+		return;
+}

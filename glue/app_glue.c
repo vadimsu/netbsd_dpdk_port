@@ -1071,6 +1071,7 @@ void *create_client_socket(const char *my_ip_addr,unsigned short my_port,
 		                   const char *peer_ip_addr,unsigned short port);
 void *create_server_socket(const char *my_ip_addr,unsigned short port);
 int init_device(int portid, int queue_count);
+void poll_rx(void *ifp, int portid, int queue_id);
 int main(int argc,char **argv)
 {
     int ret;
@@ -1148,6 +1149,7 @@ printf("%s %d\n",__FILE__,__LINE__);
 #else
     while(1)
 	    softint_run();
+	    poll_rx(ifp,0,0)
 #endif
     app_glue_close_socket(socket1);
     app_glue_close_socket(socket2);
