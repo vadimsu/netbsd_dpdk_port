@@ -19,7 +19,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <pthread.h>
-#include "../../log.h"
+#include "../../service_log.h"
 #include <sched.h>
 
 local_socket_descriptor_t local_socket_descriptors[SERVICE_CONNECTION_POOL_SIZE];
