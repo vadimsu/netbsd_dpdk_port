@@ -314,6 +314,15 @@ int app_glue_v4_listen(void *so)
 	}
 	return 0;
 }
+
+static void *port_2_ifp[10] = { 0 };
+
+static void app_glue_set_port_ifp(int portnum, void *ifp)
+{
+	if (portnum >= 10)
+		return;
+	port_2_ifp[portnum] = ifp;
+}
 /*
  * This function polls the driver for the received packets.Called from app_glue_periodic
  * Paramters: ethernet port number.
@@ -322,15 +331,9 @@ int app_glue_v4_listen(void *so)
  */
 static inline void app_glue_poll(int port_num)
 {
-#if 0
-	struct net_device *netdev = (struct net_device *)get_dpdk_dev_by_port_num(port_num);
-
-	if(!netdev) {
-		printf("Cannot get netdev %s %d\n",__FILE__,__LINE__);
+	if (port_num >= 10)
 		return;
-	}
-	netdev->netdev_ops->ndo_poll_controller(netdev);
-#endif
+	poll_rx(port_2_ifp[port_num],port_num,0);
 }
 
 /*
@@ -504,6 +507,7 @@ void app_glue_periodic(int call_flush_queues,uint8_t *ports_to_poll,int ports_to
 		app_glue_rx_ready_sockets_last_poll_ts = ts;
 	}
 //	total_cycles_stat += rte_rdtsc() - ts;
+	softint_run();
 }
 /*
  * This function may be called to attach user's data to the socket.
@@ -823,6 +827,7 @@ int main(int argc,char **argv)
     app_glue_init();
     rte_timer_subsystem_init();
     ifp = createInterface(0);
+    app_glue_set_port_ifp(0, ifp);
     printf("%s %d %p\n",__FILE__,__LINE__,ifp);
     configure_if_addr(ifp, inet_addr("192.168.150.63"), inet_addr("255.255.255.0"));
     printf("%s %d\n",__FILE__,__LINE__);
@@ -875,10 +880,8 @@ printf("%s %d\n",__FILE__,__LINE__);
             i++;
     }
 #else
-    while(1) {
-	    softint_run();
-	    rte_timer_manage();
-	    poll_rx(ifp,0,0);
+    while(1) { 
+	    service_main_loop();
     }
 #endif
     app_glue_close_socket(socket1);

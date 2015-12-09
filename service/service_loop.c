@@ -503,7 +503,6 @@ static inline void process_commands()
 
 void service_main_loop()
 {
-    struct rte_mbuf *mbuf;
     uint8_t ports_to_poll[1] = { 0 };
     int drv_poll_interval = get_max_drv_poll_interval_in_micros(0);
     app_glue_init_poll_intervals(drv_poll_interval/(2*32/*MAX_PKT_BURST*/),
