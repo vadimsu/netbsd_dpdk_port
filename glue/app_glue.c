@@ -57,6 +57,7 @@
 #include <netbsd/netinet/tcp_seq.h>
 #include <netbsd/netinet/tcp_timer.h>
 #include <netbsd/netinet/tcp_var.h>
+#include <service_log.h>
 
 TAILQ_HEAD(read_ready_socket_list_head, socket) read_ready_socket_list_head;
 uint64_t read_sockets_queue_len = 0;
@@ -195,163 +196,92 @@ void app_glue_so_upcall(struct socket *sock, void *arg, int band, int flag)
 		app_glue_sock_write_space(sock);
 	}
 }
-/*
- * This is a wrapper function for RAW socket creation.
- * Paramters: IP address & port (protocol number) to bind
- * Returns: a pointer to socket structure (handle)
- * or NULL if failed
- *
- */
-void *create_raw_socket2(unsigned int ip_addr,unsigned short port)
-{
-	struct sockaddr_in *sin;
-	struct timeval tv;
-	struct socket *raw_sock = NULL;
-	struct mbuf *m;
 
-	if(socreate(AF_INET,&raw_sock,SOCK_RAW,port,NULL)) {
+void *app_glue_create_socket(int family,int type)
+{
+	struct timeval tv;
+	struct socket *sock = NULL;
+
+	if(socreate(family, &sock, type, 0/*port*/, NULL)) {
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
+	}	
+	tv.tv_sec = -1;
+	tv.tv_usec = 0;
+	if (app_glue_setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, sizeof(tv), (char *)&tv)) {
+		service_log(SERVICE_LOG_ERR,"%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
+	tv.tv_sec = -1;
+	tv.tv_usec = 0;
+	if (app_glue_setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, sizeof(tv), (char *)&tv)) {
+		service_log(SERVICE_LOG_ERR,"%s %d cannot set notimeout option\n",__FILE__,__LINE__);
+	}	
+	sock->so_upcall2 = app_glue_so_upcall;
+#if 0
+	if(type != SOCK_STREAM) {
+		if(sock->sk) {
+            		sock_reset_flag(sock->sk,SOCK_USE_WRITE_QUEUE);
+            		sock->sk->sk_data_ready = app_glue_sock_readable;
+            		sock->sk->sk_write_space = app_glue_sock_write_space;
+            		app_glue_sock_write_space(sock->sk);
+		}
+	}
+#endif
+	return sock;
+}
 
+int app_glue_v4_bind(void *so,unsigned int ipaddr, unsigned short port)
+{
+	struct socket *sock = (struct socket *)so;
+	struct mbuf *m;
+	struct sockaddr_in *sin;
+		
 	m = m_get(M_WAIT, MT_SONAME);
 	if (!m) {
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
-		return NULL;
+		return -1;
 	}
 	m->m_len = sizeof(struct sockaddr);
 	sin = mtod(m, struct sockaddr_in *);
 	sin->sin_len = sizeof(struct sockaddr_in);
-
 	sin->sin_family = AF_INET;
-	sin->sin_addr.s_addr = ip_addr;
+
+	sin->sin_addr.s_addr = ipaddr;
 	sin->sin_port = htons(port);
 
-	if(sobind(raw_sock,m)) {
+	if(sobind(sock,m)) {
 		printf("cannot bind %s %d\n",__FILE__,__LINE__);
-		m_freem(m);
-		return NULL;
+		return -1;
 	}
 	m_freem(m);
-	raw_sock->so_upcall2 = app_glue_so_upcall;
-	return raw_sock;
+	return 0;
 }
-void *create_raw_socket(const char *ip_addr,unsigned short port)
+
+int app_glue_v4_connect(void *so,unsigned int ipaddr,unsigned short port)
 {
-    return create_raw_socket(inet_addr(ip_addr),port);
-}
-/*
- * This is a wrapper function for UDP socket creation.
- * Paramters: IP address & port to bind
- * Returns: a pointer to socket structure (handle)
- * or NULL if failed
- *
- */
-void *create_udp_socket2(unsigned int ip_addr,unsigned short port)
-{
-	struct sockaddr_in *sin;
-	struct timeval tv;
-	struct socket *udp_sock = NULL;
+	struct socket *sock = (struct socket *)so;
 	struct mbuf *m;
-	int rc;
-
-	if(socreate(AF_INET,&udp_sock,SOCK_DGRAM,0,NULL)) {
-		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
-		return NULL;
-	}
-
+	struct sockaddr_in *sin;
+	unsigned short my_port;
+		
 	m = m_get(M_WAIT, MT_SONAME);
 	if (!m) {
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
-		return NULL;
+		return -1;
 	}
 	m->m_len = sizeof(struct sockaddr);
 	sin = mtod(m, struct sockaddr_in *);
 	sin->sin_len = sizeof(struct sockaddr_in);
 	sin->sin_family = AF_INET;
-	sin->sin_addr.s_addr = ip_addr;
-	sin->sin_port = htons(port);
-
-	rc = sobind(udp_sock,m);
-	if(rc) {
-		printf("cannot bind %s %d %d\n",__FILE__,__LINE__,rc);	
-		m_freem(m);
-		return NULL;
-	}
-
-#if 0
-	if(udp_sock->sk) {
-            sock_reset_flag(udp_sock->sk,SOCK_USE_WRITE_QUEUE);
-            udp_sock->sk->sk_data_ready = app_glue_sock_readable;
-            udp_sock->sk->sk_write_space = app_glue_sock_write_space;
-            app_glue_sock_write_space(udp_sock->sk);
-	}
-#endif
-	m_freem(m);
-	udp_sock->so_upcall2 = app_glue_so_upcall;
-	return udp_sock;
-}
-
-void *create_udp_socket(const char *ip_addr,unsigned short port)
-{
-    return create_udp_socket2(inet_addr(ip_addr),port);
-}
-/*
- * This is a wrapper function for TCP connecting socket creation.
- * Paramters: IP address & port to bind, IP address & port to connect
- * Returns: a pointer to socket structure (handle)
- * or NULL if failed
- *
- */
-void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
-		            unsigned int peer_ip_addr,unsigned short port)
-{
-	struct sockaddr_in *sin;
-	struct timeval tv;
-	struct socket *client_sock = NULL;
-	struct mbuf *m;
-	struct sockopt soopt;
-	
-	if(socreate(AF_INET,&client_sock,SOCK_STREAM,0,NULL)) {
-		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
-		return NULL;
-	}
-	m = m_get(M_WAIT, MT_SONAME);
-	if (!m) {
-		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
-		return NULL;
-	}
-	m->m_len = sizeof(struct sockaddr);
-	sin = mtod(m, struct sockaddr_in *);
-	sin->sin_len = sizeof(struct sockaddr_in);
-	sin->sin_family = AF_INET;
-#if 0
-	tv.tv_sec = -1;
-	tv.tv_usec = 0;
-
-	soopt.sopt_level = SOL_SOCKET;
-	soopt.sopt_name = SO_RCVTIMEO;
-	soopt.sopt_data = &tv;
-	if(sosetopt(client_sock,&soopt)) {
-		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
-	}
-	tv.tv_sec = -1;
-	tv.tv_usec = 0;
-	soopt.sopt_name = SO_SNDTIMEO;
-	if(sosetopt(client_sock,&soopt)) {
-		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
-	}
-#endif
 	while(1) {
-		sin->sin_family = AF_INET;
-		sin->sin_addr.s_addr = my_ip_addr;
+		sin->sin_addr.s_addr = 0 /*my_ip_addr*/;
 		if(my_port) {
 			sin->sin_port = htons(my_port);
 		}
 		else {
 			sin->sin_port = htons(rand() & 0xffff);
 		}
-		if(sobind(client_sock,m)) {
+		if(sobind(sock,m)) {
 			printf("cannot bind %s %d\n",__FILE__,__LINE__);
 			if(my_port) {
 				break;
@@ -360,116 +290,29 @@ void *create_client_socket2(unsigned int my_ip_addr,unsigned short my_port,
 		}
 		break;
 	}
-	printf("%s %s %d %p\n",__FILE__,__func__,__LINE__,client_sock);
+	printf("%s %s %d %p\n",__FILE__,__func__,__LINE__,sock);
 	sin->sin_family = AF_INET;
-	sin->sin_addr.s_addr = peer_ip_addr;
+	sin->sin_addr.s_addr = ipaddr;
 	sin->sin_port = htons(port);
 #if 0
 	if(client_sock->sk) {
 		client_sock->sk->sk_state_change = app_glue_sock_wakeup;
 	}
-#endif
-	client_sock->so_upcall2 = app_glue_so_upcall;
-	soconnect(client_sock, m);
+#endif	
+	soconnect(sock, m);
 	m_freem(m);	
-	return client_sock;
+	return 0;
 }
-/*
- * This is a wrapper function for TCP connecting socket creation.
- * Paramters: IP address & port to bind, IP address & port to connect
- * Returns: a pointer to socket structure (handle)
- * or NULL if failed
- *
- */
-void *create_client_socket(const char *my_ip_addr,unsigned short my_port,
-		                   const char *peer_ip_addr,unsigned short port)
-{
-    return create_client_socket2(inet_addr(my_ip_addr),my_port,inet_addr(peer_ip_addr),port);
-}
-void *create_server_socket2(unsigned int my_ip_addr,unsigned short port)
-{
-	struct sockaddr_in *sin;
-	struct timeval tv;
-	struct socket *server_sock = NULL;
-	uint32_t bufsize;
-	struct mbuf *m;
-	struct sockopt soopt;
 
-	if(socreate(AF_INET,&server_sock,SOCK_STREAM,0,NULL)) {
-		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
-		return NULL;
-	}
-	m = m_get(M_WAIT, MT_SONAME);
-	if (!m) {
-		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
-		return NULL;
-	}
-	m->m_len = sizeof(struct sockaddr);
-	sin = mtod(m, struct sockaddr_in *);
-	sin->sin_len = sizeof(struct sockaddr_in);
-#if 0
-	tv.tv_sec = -1;
-	tv.tv_usec = 0;
-	soopt.sopt_level = SOL_SOCKET;
-	soopt.sopt_name = SO_RCVTIMEO;
-	soopt.sopt_data = &tv;
-	if(sosetopt(server_sock,&soopt)) {
-		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
-	}
-	tv.tv_sec = -1;
-	tv.tv_usec = 0;
-	soopt.sopt_name = SO_SNDTIMEO;
-	if(sosetopt(server_sock,&soopt)) {
-		printf("%s %d cannot set notimeout option\n",__FILE__,__LINE__);
-	}
-#endif
-#if 0
-	bufsize = 0x1000000;
-	soopt.sopt_name = SO_SNDBUF;
-	soopt.sopt_data = &bufsize;
-	if(sosetopt(server_sock,&soopt)) {
-		printf("%s %d cannot set bufsize\n",__FILE__,__LINE__);
-	}
-	soopt.sopt_name = SO_SNDBUF;
-	if(sosetopt(server_sock,&soopt)) {
-		printf("%s %d cannot set bufsize\n",__FILE__,__LINE__);
-	}
-#endif
-	sin->sin_family = AF_INET;
-	sin->sin_addr.s_addr = my_ip_addr;
-	sin->sin_port = htons(port);
-
-	if(sobind(server_sock,m)) {
-		printf("cannot bind %s %d\n",__FILE__,__LINE__);
-		return NULL;
-	}
-#if 0
-	if(server_sock->sk) {
-		server_sock->sk->sk_state_change = app_glue_sock_wakeup;
-	}
-	else {
-		printf("FATAL %s %d\n",__FILE__,__LINE__);exit(0);
-	}
-#endif
-	printf("%s %s %d %p\n",__FILE__,__func__,__LINE__,server_sock);
-	server_sock->so_upcall2 = app_glue_so_upcall;
-	if(solisten(server_sock,32000)) {
+int app_glue_v4_listen(void *so)
+{
+	struct socket *sock = (struct socket *)so;
+	sock->so_upcall2 = app_glue_so_upcall;
+	if(solisten(sock,32000)) {
 		printf("cannot listen %s %d\n",__FILE__,__LINE__);
-		return NULL;
+		return -1;
 	}
-	m_freem(m);	
-	return server_sock;
-}
-/*
- * This is a wrapper function for TCP listening socket creation.
- * Paramters: IP address & port to bind
- * Returns: a pointer to socket structure (handle)
- * or NULL if failed
- *
- */
-void *create_server_socket(const char *my_ip_addr,unsigned short port)
-{
-    return create_server_socket2(inet_addr(my_ip_addr),port);
+	return 0;
 }
 /*
  * This function polls the driver for the received packets.Called from app_glue_periodic
@@ -536,7 +379,7 @@ static inline void process_rx_ready_sockets()
 		sock = TAILQ_FIRST(&read_ready_socket_list_head);
                 sock->read_queue_present = 0;
 		TAILQ_REMOVE(&read_ready_socket_list_head,sock,read_queue_entry);
-                user_data_available_cbk(sock);
+                user_data_available_cbk(sock, sock->glueing_block);
                 read_sockets_queue_len--;
                 idx++;	
 	}
@@ -559,7 +402,7 @@ static inline void process_tx_ready_sockets()
 		sock = TAILQ_FIRST(&write_ready_socket_list_head);
 		TAILQ_REMOVE(&write_ready_socket_list_head,sock,write_queue_entry);
                 sock->write_queue_present = 0;
-		user_on_transmission_opportunity(sock);
+		service_on_transmission_opportunity(sock, sock->glueing_block);
 //                set_bit(SOCK_NOSPACE, &sock->flags);
                 write_sockets_queue_len--;
 	        idx++;
@@ -617,7 +460,7 @@ uint64_t app_glue_rx_queues_process = 0;
  * Returns: None
  *
  */
-inline void app_glue_periodic(int call_flush_queues,uint8_t *ports_to_poll,int ports_to_poll_count)
+void app_glue_periodic(int call_flush_queues,uint8_t *ports_to_poll,int ports_to_poll_count)
 {
 	uint64_t ts,ts2,ts3,ts4;
     uint8_t port_idx;
@@ -669,19 +512,14 @@ inline void app_glue_periodic(int call_flush_queues,uint8_t *ports_to_poll,int p
  * Returns: None
  *
  */
-void app_glue_set_user_data(void *socket,void *data)
+void app_glue_set_glueing_block(void *socket,void *data)
 {
-#if 0
-	struct socket *sock = (struct socket *)socket;
+	struct socket *sock = socket;
 
-	if(!sock) {
-		printf("PANIC: socket NULL %s %d \n",__FILE__,__LINE__);while(1);
-	}
-//	if(sock->sk)
-		sock->sk->sk_user_data = data;
-//	else
-//		printf("PANIC: socket->sk is NULL\n");while(1);
-#endif
+	if (sock == NULL)
+		return;
+
+	sock->glueing_block = data;
 }
 /*
  * This function may be called to get attached to the socket user's data .
@@ -689,111 +527,16 @@ void app_glue_set_user_data(void *socket,void *data)
  * Returns: pointer to data to be attached to the socket
  *
  */
-inline void *app_glue_get_user_data(void *socket)
+void *app_glue_get_glueing_block(void *socket)
 {
-#if 0
-	struct socket *sock = (struct socket *)socket;
-	if(!sock) {
-		printf("PANIC: socket NULL %s %d\n",__FILE__,__LINE__);while(1);
-	}
-	if(!sock->sk) {
-		printf("PANIC: socket->sk NULL\n");while(1);
-	}
-printf("%s %d\n",__FILE__,__LINE__);
-	return sock->sk->sk_user_data;
-#else
-	return NULL;
-#endif
-}
-/*
- * This function may be called to get next closable socket .
- * Paramters: None
- * Returns: pointer to socket to be closed
- *
- */
-void *app_glue_get_next_closed()
-{
-	struct socket *sock;
-	void *user_data;
-	if(!TAILQ_EMPTY(&closed_socket_list_head)) {
-		sock = TAILQ_FIRST(&closed_socket_list_head);
-		sock->closed_queue_present = 0;
-		TAILQ_REMOVE(&closed_socket_list_head,sock,closed_queue_entry);
-#if 0
-		if(sock->sk)
-			user_data = sock->sk->sk_user_data;
-			//kernel_close(sock);
-		return user_data;
-#endif
-	}
-	return NULL;
-}
-/*
- * This function may be called to get next writable socket .
- * Paramters: None
- * Returns: pointer to socket to be written
- *
- */
-void *app_glue_get_next_writer()
-{
-	struct socket *sock;
+	struct socket *sock = socket;
 
-	if(!TAILQ_EMPTY(&write_ready_socket_list_head)) {
-		sock = TAILQ_FIRST(&write_ready_socket_list_head);
-		sock->write_queue_present = 0;
-		TAILQ_REMOVE(&write_ready_socket_list_head,sock,write_queue_entry);
-#if 0
-		if(sock->sk)
-		    return sock->sk->sk_user_data;
-#endif
-  	    printf("PANIC: socket->sk is NULL\n");
-	}
-	return NULL;
-}
-/*
- * This function may be called to get next readable socket .
- * Paramters: None
- * Returns: pointer to socket to be read
- *
- */
-void *app_glue_get_next_reader()
-{
-	struct socket *sock;
-	if(!TAILQ_EMPTY(&read_ready_socket_list_head)) {
-		sock = TAILQ_FIRST(&read_ready_socket_list_head);
-		sock->read_queue_present = 0;
-		TAILQ_REMOVE(&read_ready_socket_list_head,sock,read_queue_entry);
-#if 0
-		if(sock->sk)
-		    return sock->sk->sk_user_data;
-#endif
-	    printf("PANIC: socket->sk is NULL\n");
-	}
-	return NULL;
-}
-/*
- * This function may be called to get next acceptable socket .
- * Paramters: None
- * Returns: pointer to socket on which to accept a new connection
- *
- */
-void *app_glue_get_next_listener()
-{
-	struct socket *sock;
-	if(!TAILQ_EMPTY(&accept_ready_socket_list_head))
-	{
-		sock = TAILQ_FIRST(&accept_ready_socket_list_head);
-		sock->accept_queue_present = 0;
-		TAILQ_REMOVE(&accept_ready_socket_list_head,sock,accept_queue_entry);
-#if 0
-		if(sock->sk)
-	        return sock->sk->sk_user_data;
-#endif
-	    printf("PANIC: socket->sk is NULL\n");
+	if (sock == NULL)
 		return NULL;
-	}
-	return NULL;
+
+	return sock->glueing_block;
 }
+
 /*
  * This function may be called to close socket .
  * Paramters: a pointer to socket structure
@@ -893,57 +636,53 @@ void app_glue_print_stats()
 #endif
 }
 
-int app_glue_sendto(struct socket *so, void *data,int len,unsigned int ip_addr,unsigned short port)
+int app_glue_get_socket_type(struct socket *so)
+{
+	return so->so_type;
+}
+
+int app_glue_sendto(struct socket *so, void *data,int len, void *desc)
 {
     struct mbuf *addr,*top;
-    struct sockaddr_in *sin;
+    char *p;
     int rc;
+    struct sockaddr_in *p_addr;
 
     addr = m_get(M_WAIT, MT_SONAME);
     if (!addr) {
 	printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 	return NULL;
     }
+    
+    p = (char *)data;
+    p -= sizeof(struct sockaddr_in);
+    p_addr = (struct sockaddr_in *)p;
     addr->m_len = sizeof(struct sockaddr_in);
-    sin = mtod(addr, struct sockaddr_in *);
+    p = mtod(addr, char *);
 
-    sin->sin_family = AF_INET;
-    sin->sin_addr.s_addr = ip_addr;
-    sin->sin_port = htons(port);
-    top = m_get(M_WAIT, MT_DATA);
+    memcpy(p, p_addr, sizeof(*p_addr));
+    top = m_devget(data, len, 0, NULL, desc);
     if(!top) {
-        m_freem(addr);
+	m_freem(addr);
         return -1;
     }
-    memcpy(mtod(top, void *),data,len);
-    top->m_len = len;
-    rc = sosend(so, addr, top,NULL, 0);
+    rc = sosend(so, addr, top, NULL, 0);
     m_freem(addr);
     return rc;
 }
 
-int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short *port,void *buf,int buflen)
+int app_glue_receivefrom(struct socket *so, void **buf)
 {
     struct mbuf *paddr = NULL,*mp0 = NULL,*controlp = NULL;
     int flags = 0,rc;
+    char *p;
 
     rc = soreceive( so, &paddr,&mp0, &controlp, &flags);
     if(!rc) {
-	struct mbuf *tmp = mp0;
-	unsigned copied = 0;
-	char *p = (char *)buf;
-	while(tmp) {
-		printf("%s %d %p %d\n",__FILE__,__LINE__,tmp,tmp->m_len);
-		if(tmp->m_len > 0) {
-			if((copied + tmp->m_len) > buflen) {
-				printf("%s %d\n",__FILE__,__LINE__);
-				break;
-			}
-			memcpy(&p[copied],tmp->m_data,tmp->m_len);
-			copied += tmp->m_len;
-		}
-		tmp = tmp->m_next;
-	}
+	*buf = mp0->m_paddr;
+	p = mtod(mp0, char *);
+	mp0->m_paddr = NULL;
+	memcpy(p - sizeof(struct sockaddr_in), mtod(paddr, char *), sizeof(struct sockaddr_in));
 	m_freem(mp0);
 	if(paddr) {
 		m_freem(paddr);
@@ -952,97 +691,85 @@ int app_glue_receivefrom(struct socket *so,unsigned int *ip_addr, unsigned short
     return rc;
 }
 
-int app_glue_send(struct socket *so, void *data,int len)
+int app_glue_send(struct socket *so, void *data,int len, void *desc)
 {
     struct mbuf *top;
     int rc;
 
-    top = m_get(M_WAIT, MT_DATA);
+    top = m_devget(data, len, 0, NULL, desc);
     if(!top) {
         return -1;
     }
-    memcpy(mtod(top, void *),data,len);
-    top->m_len = len;
     rc = sosend(so, NULL, top,NULL, 0);
     return rc;
 }
 
-int app_glue_receive(struct socket *so,void *buf,int buflen)
+int app_glue_receive(struct socket *so,void **buf)
 {
     struct mbuf *mp0 = NULL,*controlp = NULL;
     int flags = 0,rc;
 
     rc = soreceive( so, NULL,&mp0, &controlp, &flags);
     if(!rc) {
-	struct mbuf *tmp = mp0;
-	unsigned copied = 0;
-	char *p = (char *)buf;
-	while(tmp) {
-		printf("%s %d %p %d\n",__FILE__,__LINE__,tmp,tmp->m_len);
-		if(tmp->m_len > 0) {
-			if((copied + tmp->m_len) > buflen) {
-				printf("%s %d\n",__FILE__,__LINE__);
-				break;
-			}
-			memcpy(&p[copied],tmp->m_data,tmp->m_len);
-			copied += tmp->m_len;
-		}
-		tmp = tmp->m_next;
-	}
+	*buf = mp0->m_paddr;
+	mp0->m_paddr = NULL;	
 	m_freem(mp0);
     }
     return rc;
 }
 
+int app_glue_setsockopt(void *so, int level, int name, size_t size, void *data)
+{
+	struct socket *sock = (struct socket *)so;
+	struct sockopt sockoption;
+
+	sockoption.sopt_level = level;
+	sockoption.sopt_name = name;
+	sockoption.sopt_size = size;
+	sockoption.sopt_data = data;
+	return sosetopt(so, &sockoption);
+}
+
+TAILQ_HEAD(buffers_available_notification_socket_list_head, socket) buffers_available_notification_socket_list_head;
+void app_glue_process_tx_empty(void *so)
+{
+	struct socket *sock = (struct socket *)so;
+	if(sock) {
+               if(!sock->buffers_available_notification_queue_present) {
+                   TAILQ_INSERT_TAIL(&buffers_available_notification_socket_list_head, sock, buffers_available_notification_queue_entry);
+                   sock->buffers_available_notification_queue_present = 1;
+		   if(sock->so_type == SOCK_DGRAM)
+//		   	user_set_socket_tx_space(&g_service_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk));
+			;
+               }
+           }
+}
+
+int app_glue_is_buffers_available_waiters_empty()
+{
+	return TAILQ_EMPTY(&buffers_available_notification_socket_list_head);
+}
+
+void *app_glue_get_first_buffers_available_waiter()
+{
+	struct socket *sock = TAILQ_FIRST(&buffers_available_notification_socket_list_head);
+	return sock->glueing_block;
+}
+
+void app_glue_remove_first_buffer_available_waiter(void *so)
+{
+	struct socket *sock = (struct socket *)so;
+	sock->buffers_available_notification_queue_present = 0;
+        TAILQ_REMOVE(&buffers_available_notification_socket_list_head,sock,buffers_available_notification_queue_entry);
+}
+
+void app_glue_init_buffers_available_waiters()
+{
+	TAILQ_INIT(&buffers_available_notification_socket_list_head);
+}
+
 struct socket *sender_so = NULL;
 struct socket *receiver_so = NULL;
-
-void user_on_transmission_opportunity(struct socket *so)
-{
-	int rc;
-
-	if(so != sender_so) {
-		return;	
-	}
-	switch(so->so_type) {
-		case SOCK_STREAM:
-			rc = app_glue_send(so, "SOME DATA", 10);
-			printf("sent rc=%d\n",rc);
-			break;
-		case SOCK_DGRAM:
-			rc = app_glue_sendto(so, "SOME DATA", 10 ,inet_addr("127.0.0.1"),7778);
-			printf("sent rc=%d\n",rc);
-			break;
-	}
-}
-
-void user_data_available_cbk(struct socket *so)
-{
-	int buflen = 20,rc;
-	char buf[20];
-	unsigned short port;
-	unsigned int ip_addr;
-
-	if(so != receiver_so)
-		return;
-
-	switch(so->so_type) {
-		case SOCK_STREAM:
-			do {
-				rc = app_glue_receive(so,buf,buflen);
-				if(rc == 0)
-					printf("STREAM received %s\n",buf);
-			}while(rc == 0);
-			break;
-		case SOCK_DGRAM:
-			rc = app_glue_receivefrom(so,&ip_addr, &port,buf,buflen);
-			printf("received rc=%d\n",rc);
-			if(!rc) {
-				printf("%s\n",(char *)buf);	  
-			}
-			break;
-	}	
-}
 
 void user_on_accept(struct socket *so)
 {

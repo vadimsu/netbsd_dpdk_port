@@ -219,3 +219,44 @@ void get_port_mac_addr(int portid, char *mac_addr)
 	rte_eth_macaddr_get(portid,&macaddr);
 	memcpy(mac_addr, macaddr.addr_bytes, 6);
 }
+
+int get_max_drv_poll_interval_in_micros(int port_num)
+{
+	struct rte_eth_link rte_eth_link;
+	float bytes_in_sec,bursts_in_sec,bytes_in_burst;
+
+	rte_eth_link_get(port_num,&rte_eth_link);
+	switch(rte_eth_link.link_speed) {
+	case ETH_LINK_SPEED_10:
+		bytes_in_sec = 10/8;
+		break;
+	case ETH_LINK_SPEED_100:
+		bytes_in_sec = 100/8;
+		break;
+	case ETH_LINK_SPEED_1000:
+		bytes_in_sec = 1000/8;
+		break;
+	case ETH_LINK_SPEED_10000:
+		bytes_in_sec = 10000/8;
+		break;
+	default:
+		bytes_in_sec = 10000/8;
+	}
+	if(rte_eth_link.link_duplex == ETH_LINK_HALF_DUPLEX)
+		bytes_in_sec /= 2;
+	bytes_in_sec *= 1024*1024;/* x1M*/
+	/*MTU*BURST_SIZE*/
+	bytes_in_burst = 1448*MAX_PKT_BURST;
+	bursts_in_sec = bytes_in_sec / bytes_in_burst;
+	/* micros in sec div burst in sec = max poll interval in micros */
+	return (int)(1000000/bursts_in_sec)/2/*safe side*/; /* casted to int, is not so large */
+}
+
+int get_buffer_count()
+{
+#if 0
+	return rte_mempool_count(mbufs_mempool);
+#else
+	return 0;
+#endif
+}

@@ -282,11 +282,15 @@ sonewconn(struct socket *head, int connstatus)
 	so->so_state = head->so_state | SS_NOFDREF;
 	so->so_proto = head->so_proto;
 	so->so_timeo = head->so_timeo;
+#if 0 /* VADIM */
 	so->so_pgid = head->so_pgid;
 	so->so_send = head->so_send;
 	so->so_receive = head->so_receive;
 	so->so_uidinfo = head->so_uidinfo;
 	so->so_cpid = head->so_cpid;
+#else
+	so->glueing_block = NULL;
+#endif
 #ifdef MBUFTRACE
 	so->so_mowner = head->so_mowner;
 	so->so_rcv.sb_mowner = head->so_rcv.sb_mowner;

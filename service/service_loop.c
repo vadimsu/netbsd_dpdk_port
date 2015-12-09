@@ -1,15 +1,16 @@
-#include <string.h>
+//#include <string.h>
 #include <rte_config.h>
 #include <rte_common.h>
 #include <rte_cycles.h>
 #include <rte_timer.h>
 #include <rte_ring.h>
-#include <api.h>
-#include <porting/libinit.h>
+#include <rte_mbuf.h>
+//#include <api.h>
+//#include <porting/libinit.h>
 #include <rte_atomic.h>
-#include "service/service_common.h"
-#include "service/service_server_side.h"
-#include "user_callbacks.h"
+#include <service/service_common.h>
+#include <service/service_server_side.h>
+//#include "user_callbacks.h"
 #include <service_log.h>
 
 uint64_t user_on_tx_opportunity_cycles = 0;
@@ -49,8 +50,9 @@ service_socket_t *g_service_sockets = NULL;
 service_selector_t *g_service_selectors = NULL;
 //unsigned long app_pid = 0;
 
+#if 0 /* VADIM - moved */
 TAILQ_HEAD(buffers_available_notification_socket_list_head, socket) buffers_available_notification_socket_list_head;
-
+#endif
 struct service_clients service_clients[SERVICE_CLIENTS_POOL_SIZE];
 TAILQ_HEAD(service_clients_list_head, service_clients) service_clients_list_head;
 
@@ -66,9 +68,9 @@ void on_new_addr(char *iface_name,unsigned int ipaddr,unsigned int mask)
 {
 }
 
-void user_on_closure(struct socket *sock)
+void user_on_closure(void *data)
 {
-	socket_satelite_data_t *socket_satelite_data = get_user_data(sock);
+	socket_satelite_data_t *socket_satelite_data = data;
 	if (!socket_satelite_data) {
 		return;
 	}
@@ -77,6 +79,7 @@ void user_on_closure(struct socket *sock)
 
 static void on_client_connect(int client_idx)
 {
+#if 0
 	struct rte_mbuf *buffer = get_buffer();
 	if(!buffer) {
 		return;
@@ -102,34 +105,186 @@ static void on_client_connect(int client_idx)
 	data = rte_pktmbuf_mtod(buffer, unsigned char *);
 	*data = SERVICE_END_OF_RECORD;
 	rte_ring_enqueue(service_clients[client_idx].client_ring,(void *)buffer);
+#endif
 }
 
 void user_transmitted_callback(struct rte_mbuf *mbuf,struct socket *sock)
 {
 	int last = /*(rte_mbuf_refcnt_read(mbuf) == 1)*/1;
         if((sock)&&(last)) {
-               socket_satelite_data_t *socket_satelite_data = get_user_data(sock);
+               socket_satelite_data_t *socket_satelite_data = app_glue_get_glueing_block(sock);
                if(socket_satelite_data) {
-//printf("%s %d %p %d %d %d\n",__FILE__,__LINE__,&g_ipaugenblick_sockets[socket_satelite_data->ringset_idx],socket_satelite_data->ringset_idx, rte_pktmbuf_data_len(mbuf),rte_mbuf_refcnt_read(mbuf));
-                       user_increment_socket_tx_space(&g_service_sockets[socket_satelite_data->ringset_idx].tx_space,rte_pktmbuf_data_len(mbuf));
+//                       user_increment_socket_tx_space(&g_service_sockets[socket_satelite_data->ringset_idx].tx_space,rte_pktmbuf_data_len(mbuf));
                }
         }
         rte_pktmbuf_free_seg(mbuf);
 }
 
+void service_on_transmission_opportunity(void *so, void *glueing_block)
+{
+	int rc;
+	socket_satelite_data_t *socket_satelite_data = (socket_satelite_data_t *)glueing_block;
+	int i = 0, dequeued;
+        uint32_t to_send_this_time;
+        uint64_t ring_entries;
+
+        user_on_tx_opportunity_called++;
+
+        if(unlikely(!so)) {
+            return;
+        }
+
+        if(unlikely(!socket_satelite_data)) {
+            return;
+        }
+
+	switch(app_glue_get_socket_type(so)) {
+		case 1 /* SOCK_STREAM */:
+		do {
+			ring_entries = service_tx_buf_count(socket_satelite_data);
+			if(ring_entries == 0) {
+				service_mark_writable(socket_satelite_data);
+		                user_on_tx_opportunity_api_nothing_to_tx++;
+                		return;
+			}
+			struct rte_mbuf *mbuf[ring_entries];
+			dequeued = service_dequeue_tx_buf_burst(socket_satelite_data,mbuf,ring_entries);
+	                for(i = 0;i < dequeued;i++) {
+                        	rte_prefetch0(rte_pktmbuf_mtod(mbuf[i],void *));
+			}
+			for(i = 0;i < dequeued;i++) {
+				rc = app_glue_send(so, rte_pktmbuf_mtod(mbuf[i], char *),rte_pktmbuf_pkt_len(mbuf[i]), mbuf[i]);
+				printf("sent rc=%d\n",rc);
+				if(rc <= 0) {
+	                            user_on_tx_opportunity_api_failed += dequeued - i;
+        	                    for(;i < dequeued;i++)
+                	                rte_pktmbuf_free(mbuf[i]);
+				    return;
+                            	}
+                        }
+		} while(1);
+		break;
+		case 2 /*SOCK_DGRAM*/:
+		do {
+			ring_entries = service_tx_buf_count(socket_satelite_data);
+			if(ring_entries == 0) {
+				service_mark_writable(socket_satelite_data);
+		                user_on_tx_opportunity_api_nothing_to_tx++;
+                		return;
+			}
+			struct rte_mbuf *mbuf[ring_entries];
+			dequeued = service_dequeue_tx_buf_burst(socket_satelite_data,mbuf,ring_entries);
+	                for(i = 0;i < dequeued;i++) {
+                        	rte_prefetch0(rte_pktmbuf_mtod(mbuf[i],void *));
+			}
+			for(i = 0;i < dequeued;i++) {	
+				rc = app_glue_sendto(so, rte_pktmbuf_mtod(mbuf[i], char *),rte_pktmbuf_pkt_len(mbuf[i]), mbuf[i]);
+				printf("sent rc=%d\n",rc);
+				if(rc <= 0) {
+	                            user_on_tx_opportunity_api_failed += dequeued - i;
+        	                    for(;i < dequeued;i++)
+                	                rte_pktmbuf_free(mbuf[i]);
+				    return;
+                            	}
+                        }
+		} while(1);
+		break;
+	}
+}
+
+void user_data_available_cbk(void *so, void *glueing_block)
+{
+	int buflen = 20,rc;
+	char buf[20];
+	unsigned short port;
+	unsigned int ip_addr;
+	struct rte_mbuf *mbuf;
+	int ring_free,exhausted = 0;
+    	void *socket_satelite_data = glueing_block;
+	unsigned int ringset_idx;
+
+
+	switch(app_glue_get_socket_type(so)) {
+		case 1 /*SOCK_STREAM*/:
+		{
+			ring_free = service_rx_buf_free_count(socket_satelite_data);
+			while (ring_free > 0) {
+				rc = app_glue_receive(so, &mbuf);
+				if(rc) {
+					exhausted = 1;
+					break;
+				}
+				ring_free--;
+#if 0 /* not yet */
+        			{
+			            char *p_addr = rte_pktmbuf_mtod(mbuf, char *);
+			            p_addr -= msg.msg_namelen;
+			            memcpy(p_addr,msg.msg_name,msg.msg_namelen);
+			        }
+#endif
+				int mbufs = mbuf->nb_segs;
+			        if(service_submit_rx_buf(mbuf,socket_satelite_data)) {
+			            service_log(SERVICE_LOG_ERR,"%s %d\n",__FILE__,__LINE__);//shoud not happen!!!
+			            rte_pktmbuf_free(mbuf);
+			            break;
+        			}
+			        else {
+			            user_rx_mbufs+=mbufs;
+			        }		
+			}	
+		}
+		break;
+		case 2 /*SOCK_DGRAM*/:
+		{
+			ring_free = service_rx_buf_free_count(socket_satelite_data);
+			while (ring_free > 0) {
+				rc = app_glue_receivefrom(so, &mbuf);
+				if(rc) {
+					exhausted = 1;
+					break;
+				}
+				ring_free--;
+#if 0 /* not yet */
+        			{
+			            char *p_addr = rte_pktmbuf_mtod(mbuf, char *);
+			            p_addr -= msg.msg_namelen;
+			            memcpy(p_addr,msg.msg_name,msg.msg_namelen);
+			        }
+#endif
+				int mbufs = mbuf->nb_segs;
+			        if(service_submit_rx_buf(mbuf,socket_satelite_data)) {
+			            service_log(SERVICE_LOG_ERR,"%s %d\n",__FILE__,__LINE__);//shoud not happen!!!
+			            rte_pktmbuf_free(mbuf);
+			            break;
+        			}
+			        else {
+			            user_rx_mbufs+=mbufs;
+			        }		
+			}	
+		}
+		break;
+	}
+	user_on_rx_opportunity_called_exhausted += exhausted; 
+	if((!exhausted)&&(!ring_free)) { 
+        	service_mark_readable(socket_satelite_data);
+	}
+}
+
 static inline void process_commands()
 {
     int ringset_idx;
-    cmd_t *cmd;
+    service_cmd_t *cmd;
     struct rte_mbuf *mbuf;
     struct socket *sock;
     char *p;
+#if 0 /* VADIM - not yet*/
     struct sockaddr_in addr;
     struct sockaddr_in *p_sockaddr;
     struct rtentry rtentry;
+#endif
     int len;
 
-    cmd = dequeue_command_buf();
+    cmd = service_dequeue_command_buf();
     if(!cmd)
         return;
     switch(cmd->cmd) {
@@ -141,10 +296,10 @@ static inline void process_commands()
                socket_satelite_data[cmd->ringset_idx].ringset_idx = cmd->ringset_idx;
                socket_satelite_data[cmd->ringset_idx].parent_idx = cmd->parent_idx;
                socket_satelite_data[cmd->ringset_idx].apppid = cmd->u.open_sock.pid;
-               app_glue_set_user_data(sock,(void *)&socket_satelite_data[cmd->ringset_idx]);
+               app_glue_set_glueing_block(sock,(void *)&socket_satelite_data[cmd->ringset_idx]);
                socket_satelite_data[cmd->ringset_idx].socket = sock;
-               service_log(SERVICE_LOG_DEBUG,"%d setting tx_space %d\n",__LINE__,sk_stream_wspace(sock->sk));
-	       user_set_socket_tx_space(&g_ipaugenblick_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(sock->sk));
+            //   service_log(SERVICE_LOG_DEBUG,"%d setting tx_space %d\n",__LINE__,sk_stream_wspace(sock->sk));
+	      // user_set_socket_tx_space(&g_ipaugenblick_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(sock->sk));
            }
            service_log(SERVICE_LOG_DEBUG,"Done\n");
            break;
@@ -159,10 +314,12 @@ static inline void process_commands()
         	       }
                	   else {
                    	   service_log(SERVICE_LOG_DEBUG,"socket connected\n");
+#if 0 /* VADIM - not yet */
                    	   len = sizeof(addr);
                    	   inet_getname(socket_satelite_data[cmd->ringset_idx].socket,&addr,&len,0);
-                   	   g_ipaugenblick_sockets[cmd->ringset_idx].local_ipaddr = addr.sin_addr.s_addr;
-                   	   g_ipaugenblick_sockets[cmd->ringset_idx].local_port = addr.sin_port;
+                   	   g_service_sockets[cmd->ringset_idx].local_ipaddr = addr.sin_addr.s_addr;
+                   	   g_service_sockets[cmd->ringset_idx].local_port = addr.sin_port;
+#endif
                	   }
 	       }
 	       else {
@@ -192,7 +349,7 @@ static inline void process_commands()
                socket_satelite_data[cmd->ringset_idx].socket = NULL;
                socket_satelite_data[cmd->ringset_idx].ringset_idx = -1;
                socket_satelite_data[cmd->ringset_idx].parent_idx = -1;
-               ipaugenblick_free_socket(cmd->ringset_idx);
+               service_free_socket(cmd->ringset_idx);
 	       user_sockets_closed++;
            }
            break;
@@ -200,13 +357,14 @@ static inline void process_commands()
            if(socket_satelite_data[cmd->ringset_idx].socket) {
                user_kick_tx++;
     //           user_data_available_cbk(socket_satelite_data[cmd->ringset_idx].socket);
-               user_on_transmission_opportunity(socket_satelite_data[cmd->ringset_idx].socket);
+               service_on_transmission_opportunity(socket_satelite_data[cmd->ringset_idx].socket,
+		app_glue_get_glueing_block(socket_satelite_data[cmd->ringset_idx].socket));
            }
            break;
         case SERVICE_SOCKET_RX_KICK_COMMAND:
            if(socket_satelite_data[cmd->ringset_idx].socket) {
                user_kick_rx++;
-               user_data_available_cbk(socket_satelite_data[cmd->ringset_idx].socket);
+               user_data_available_cbk(socket_satelite_data[cmd->ringset_idx].socket, &socket_satelite_data[cmd->ringset_idx]);
       //         user_on_transmission_opportunity(socket_satelite_data[cmd->ringset_idx].socket);
            }
            break;
@@ -216,34 +374,37 @@ static inline void process_commands()
 	   if(cmd->parent_idx != -1)
 	           socket_satelite_data[cmd->ringset_idx].parent_idx = cmd->parent_idx;
 	   socket_satelite_data[cmd->ringset_idx].apppid = cmd->u.set_socket_ring.pid;
-           app_glue_set_user_data(cmd->u.set_socket_ring.socket_descr,&socket_satelite_data[cmd->ringset_idx]);
+           app_glue_set_glueing_block(cmd->u.set_socket_ring.socket_descr,&socket_satelite_data[cmd->ringset_idx]);
            socket_satelite_data[cmd->ringset_idx].socket = cmd->u.set_socket_ring.socket_descr; 
-	   //service_log(SERVICE_LOG_DEBUG,"setting tx space: %d connidx %d\n",sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk),g_ipaugenblick_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].connection_idx);
-	   user_set_socket_tx_space(&g_ipaugenblick_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk));
-//           user_on_transmission_opportunity(socket_satelite_data[cmd->ringset_idx].socket);
-           user_data_available_cbk(socket_satelite_data[cmd->ringset_idx].socket);
-	   ipaugenblick_mark_writable(&socket_satelite_data[cmd->ringset_idx]);
-	   ipaugenblick_mark_readable(&socket_satelite_data[cmd->ringset_idx]);
+//	   user_set_socket_tx_space(&g_ipaugenblick_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk));
+           user_data_available_cbk(socket_satelite_data[cmd->ringset_idx].socket, &socket_satelite_data[cmd->ringset_idx]);
+	   service_mark_writable(&socket_satelite_data[cmd->ringset_idx]);
+	   service_mark_readable(&socket_satelite_data[cmd->ringset_idx]);
 	   user_client_app_accepted++;
            break;
         case SERVICE_SET_SOCKET_SELECT_COMMAND:
 //           service_log(SERVICE_LOG_DEBUG,"setting selector %d for socket %d\n",cmd->u.set_socket_select.socket_select,cmd->ringset_idx);
            socket_satelite_data[cmd->ringset_idx].parent_idx = cmd->u.set_socket_select.socket_select;
 	   socket_satelite_data[cmd->ringset_idx].apppid = cmd->u.set_socket_select.pid;
-	   user_data_available_cbk(socket_satelite_data[cmd->ringset_idx].socket);
-           ipaugenblick_mark_writable(&socket_satelite_data[cmd->ringset_idx]);
-	   ipaugenblick_mark_readable(&socket_satelite_data[cmd->ringset_idx]);
+	   user_data_available_cbk(socket_satelite_data[cmd->ringset_idx].socket, &socket_satelite_data[cmd->ringset_idx]);
+           service_mark_writable(&socket_satelite_data[cmd->ringset_idx]);
+	   service_mark_readable(&socket_satelite_data[cmd->ringset_idx]);
            break;
         case SERVICE_SOCKET_TX_POOL_EMPTY_COMMAND:
+#if 0 /* VADIM - moved */
            if(socket_satelite_data[cmd->ringset_idx].socket) {
                if(!socket_satelite_data[cmd->ringset_idx].socket->buffers_available_notification_queue_present) {
-                   TAILQ_INSERT_TAIL(&buffers_available_notification_socket_list_head,socket_satelite_data[cmd->ringset_idx].socket,buffers_available_notification_queue_entry);
+                   TAILQ_INSERT_TAIL(&buffers_available_notification_socket_list_head, socket_satelite_data[cmd->ringset_idx].socket, buffers_available_notification_queue_entry);
                    socket_satelite_data[cmd->ringset_idx].socket->buffers_available_notification_queue_present = 1;
 		   if(socket_satelite_data[cmd->ringset_idx].socket->type == SOCK_DGRAM)
-		   	user_set_socket_tx_space(&g_ipaugenblick_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk));
+//		   	user_set_socket_tx_space(&g_service_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk));
                }
            }
+#else
+	   app_glue_process_tx_empty(socket_satelite_data[cmd->ringset_idx].socket);
+#endif
            break;
+#if 0 /* VADIM - not yet*/
 	case SERVICE_ROUTE_ADD_COMMAND:
    	   memset((void *)&rtentry,0,sizeof(rtentry));
 	   rtentry.rt_metric = cmd->u.route.metric;
@@ -294,13 +455,14 @@ static inline void process_commands()
 			((struct sockaddr_in *)&rtentry.rt_genmask)->sin_addr.s_addr);
 	   }
 	   break;
+#endif
 	case SERVICE_CONNECT_CLIENT:
 	   if(cmd->ringset_idx >= SERVICE_CLIENTS_POOL_SIZE) {
 		break;
 	   }
-	   if(!ipaugenblick_clients[cmd->ringset_idx].is_busy) {
-	   	TAILQ_INSERT_TAIL(&ipaugenblick_clients_list_head,&ipaugenblick_clients[cmd->ringset_idx],queue_entry);
-		ipaugenblick_clients[cmd->ringset_idx].is_busy = 1;
+	   if(!service_clients[cmd->ringset_idx].is_busy) {
+	   	TAILQ_INSERT_TAIL(&service_clients_list_head,&service_clients[cmd->ringset_idx],queue_entry);
+		service_clients[cmd->ringset_idx].is_busy = 1;
 		on_client_connect(cmd->ringset_idx);
 	   }
 	   break;
@@ -308,19 +470,23 @@ static inline void process_commands()
 	   if(cmd->ringset_idx >= SERVICE_CLIENTS_POOL_SIZE) {
 		break;
 	   }
-	   if(ipaugenblick_clients[cmd->ringset_idx].is_busy) {
-	   	TAILQ_REMOVE(&ipaugenblick_clients_list_head,&ipaugenblick_clients[cmd->ringset_idx],queue_entry);
-		ipaugenblick_clients[cmd->ringset_idx].is_busy = 0;
+	   if(service_clients[cmd->ringset_idx].is_busy) {
+	   	TAILQ_REMOVE(&service_clients_list_head,&service_clients[cmd->ringset_idx],queue_entry);
+		service_clients[cmd->ringset_idx].is_busy = 0;
 	   }
 	   break;
 	case SERVICE_SETSOCKOPT_COMMAND:
-	   if(socket_satelite_data[cmd->ringset_idx].socket) { 
-	   	sock_setsockopt(socket_satelite_data[cmd->ringset_idx].socket, cmd->u.setsockopt.level, cmd->u.setsockopt.optname, cmd->u.setsockopt.optval, cmd->u.setsockopt.optlen);
+	   if(socket_satelite_data[cmd->ringset_idx].socket) {
+		app_glue_setsockopt(socket_satelite_data[cmd->ringset_idx].socket,
+				cmd->u.setsockopt.level, cmd->u.setsockopt.optname,
+				cmd->u.setsockopt.optlen,
+				cmd->u.setsockopt.optval);
+				    
 	   }
 	   break;
 	case SERVICE_SOCKET_SHUTDOWN_COMMAND:
 	   if(socket_satelite_data[cmd->ringset_idx].socket) {
-		inet_shutdown(socket_satelite_data[cmd->ringset_idx].socket, cmd->u.socket_shutdown.how);
+		soshutdown(socket_satelite_data[cmd->ringset_idx].socket, cmd->u.socket_shutdown.how);
 		user_sockets_shutdown++;
 	   }
 	   break;
@@ -332,36 +498,34 @@ static inline void process_commands()
            service_log(SERVICE_LOG_ERR,"unknown cmd %d\n",cmd->cmd);
            break;
     }
-    ipaugenblick_free_command_buf(cmd);
+    service_free_command_buf(cmd);
 }
 
-void ipaugenblick_main_loop()
+void service_main_loop()
 {
     struct rte_mbuf *mbuf;
     uint8_t ports_to_poll[1] = { 0 };
     int drv_poll_interval = get_max_drv_poll_interval_in_micros(0);
-    app_glue_init_poll_intervals(drv_poll_interval/(2*MAX_PKT_BURST),
+    app_glue_init_poll_intervals(drv_poll_interval/(2*32/*MAX_PKT_BURST*/),
                                  100 /*timer_poll_interval*/,
-                                 drv_poll_interval/(10*MAX_PKT_BURST),
-                                drv_poll_interval/(60*MAX_PKT_BURST));
+                                 drv_poll_interval/(10*32/*MAX_PKT_BURST*/),
+                                drv_poll_interval/(60*32/*MAX_PKT_BURST*/));
     
     service_api_init(COMMAND_POOL_SIZE,DATA_RINGS_SIZE,DATA_RINGS_SIZE);
-    TAILQ_INIT(&buffers_available_notification_socket_list_head);
-    TAILQ_INIT(&clients_list_head);
+    app_glue_init_buffers_available_waiters();
+    TAILQ_INIT(&service_clients_list_head);
     //init_systick(rte_lcore_id());
     service_log(SERVICE_LOG_INFO,"service initialized\n");
     while(1) {
         process_commands();
         app_glue_periodic(1,ports_to_poll,1);
-        while(!TAILQ_EMPTY(&buffers_available_notification_socket_list_head)) {
+        while(!app_glue_is_buffers_available_waiters_empty()) {
             if(get_buffer_count() > 0) {
-                struct socket *sock = TAILQ_FIRST(&buffers_available_notification_socket_list_head);
-                socket_satelite_data_t *socket_data = get_user_data(sock);
-                if(socket_data->socket->type == SOCK_DGRAM)
-                	user_set_socket_tx_space(&g_ipaugenblick_sockets[socket_data->ringset_idx].tx_space,sk_stream_wspace(socket_data->socket->sk));
+                socket_satelite_data_t *socket_data = app_glue_get_first_buffers_available_waiter();
+//                if(socket_data->socket->type == SOCK_DGRAM)
+  //              	user_set_socket_tx_space(&g_service_sockets[socket_data->ringset_idx].tx_space,sk_stream_wspace(socket_data->socket->sk));
                 if(!service_mark_writable(socket_data)) {
-                    sock->buffers_available_notification_queue_present = 0;
-                    TAILQ_REMOVE(&buffers_available_notification_socket_list_head,sock,buffers_available_notification_queue_entry); 
+                    app_glue_remove_first_buffer_available_waiter(socket_data->socket);
                 }
                 else {
                     break;

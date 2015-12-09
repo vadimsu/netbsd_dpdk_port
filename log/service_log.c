@@ -1,7 +1,8 @@
-#include <service_log.h>
-#include <syslog.h>
+
+//#include <syslog.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <service_log.h>
 
 static int g_service_log_dest = 0; /* 0 - stdio, 1 - syslog */
 static int g_service_log_level = SERVICE_LOG_NONE;
@@ -13,7 +14,7 @@ void service_log_init(int dest)
 		case 0:
 		break;
 		case 1:
-			openlog(NULL, 0, LOG_DAEMON);
+/*			openlog(NULL, 0, LOG_DAEMON)*/;
 		break;
 	}
 }
@@ -36,6 +37,8 @@ void service_log(int level, const char* format, ...)
 			vfprintf(stdout, format, argptr);
     			va_end(argptr);
 		break;
+#if 0
+		case 1:
 			switch(level) {
 				case SERVICE_LOG_DEBUG:
 					syslog(LOG_DEBUG, format, argptr);
@@ -52,7 +55,7 @@ void service_log(int level, const char* format, ...)
 					syslog(LOG_CRIT,format, argptr);
 				break;
 			}
-		case 1:
 		break;
+#endif
 	}
 }

@@ -170,10 +170,14 @@ struct socket {
 					struct mbuf **,
 					struct mbuf **,
 					struct mbuf **, int *);
+#if 0 /*VADIM - need here a pointer for gluing block */
 	struct mowner	*so_mowner;	/* who owns mbufs for this socket */
 	struct uidinfo	*so_uidinfo;	/* who opened the socket */
 	gid_t		so_egid;	/* creator effective gid */
 	pid_t		so_cpid;	/* creator pid */
+#else
+	void *glueing_block;
+#endif
 	struct so_accf {
 		struct accept_filter	*so_accept_filter;
 		void	*so_accept_filter_arg;	/* saved filter args */

@@ -12,7 +12,7 @@ CFLAGS += $(ALL_HEADERS) -DRTE_MAX_LCORE=32 -D_KERNEL -D_NETBSD_SOURCE -D_KERNEL
 LDFLAGS += -L$(CURRENT_DIR)netbsd/build -L$(CURRENT_DIR)netbsd/porting/rte_wrappers/build \
 -L$(CURRENT_DIR)netbsd/porting/callout/build -L$(CURRENT_DIR)netbsd/porting/kmem/build \
 -L$(CURRENT_DIR)netbsd/porting/misc/build -L$(CURRENT_DIR)netbsd/porting/pool/build \
--L$(CURRENT_DIR)service/build \ -L$(CURRENT_DIR)log/build \
+-L$(CURRENT_DIR)service/build -L$(CURRENT_DIR)log/build \
 -lbsdnetinet -lcalloutporting -lkmemporting -lmiscporting -lpoolporting -lrtewrappers -lnetbsddpdkservice -lnetbsddpdklog
 #-DGSO
 #
