@@ -9,6 +9,7 @@
 #include <netbsd/net/bpf.h>
 #include <netbsd/net/if_ether.h>
 #include <netbsd/netinet/in.h>
+#include <netbsd/netinet/in_var.h>
 
 #define IFCAP_TXCSUM (IFCAP_CSUM_IPv4_Tx|IFCAP_CSUM_TCPv4_Tx|IFCAP_CSUM_UDPv4_Tx|IFCAP_CSUM_TCPv6_Tx|IFCAP_CSUM_UDPv6_Tx)
 #define IFCAP_RXCSUM (IFCAP_CSUM_IPv4_Rx|IFCAP_CSUM_TCPv4_Rx|IFCAP_CSUM_UDPv4_Rx|IFCAP_CSUM_TCPv6_Rx|IFCAP_CSUM_UDPv6_Rx)
@@ -40,7 +41,17 @@ void configure_if_addr(struct ifnet *ifp,unsigned int ip_addr,unsigned int mask)
         printf("cannot configure IP Address on interface %d\n",rc);
         return;
     }
-    //ether_ioctl(ifp,SIOCINITIFADDR, &ifr);
+#if 0
+    struct ifaddr ifa;
+    struct sockaddr saddr;
+    ifa.ifa_addr = &saddr;
+    ifa.ifa_addr->sa_family = AF_INET;
+    ifa.ifa_addr->sa_len = sizeof(struct sockaddr_in);
+    struct in_addr *ip;
+    ip = &IA_SIN(&ifa)->sin_addr;
+    ip->s_addr = ip_addr;
+    ether_ioctl(ifp,SIOCINITIFADDR, &ifa);
+#endif
     printf("got IP address %x\n",sin->sin_addr.s_addr);
 }
 
@@ -61,7 +72,6 @@ static int dpdk_ioctl(struct ifnet *ifp, u_long cmd, void *arg)
 
 static void dpdk_if_start(struct ifnet *ifp)
 {
-printf("%s %d\n",__FILE__,__LINE__);
 	struct mbuf *m;
 
 	do {
@@ -109,7 +119,7 @@ struct ifnet *createInterface(int instance)
     ifp->if_stop = dpdk_ifstop;
 //    ifp->if_softc = adapter;
     ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
-    ifp->if_ioctl = dpdk_ioctl;
+    ifp->if_ioctl = /*dpdk_ioctl*/ether_ioctl;
     ifp->if_start = dpdk_if_start;
     ifp->if_output = dpdk_if_output;
 //    ifp->if_transmit = dpdk_mq_start;

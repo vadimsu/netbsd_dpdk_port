@@ -1210,7 +1210,6 @@ m_devget(char *buf, int totlen, int off0, struct ifnet *ifp, void *pdesc)
 	m->m_len = totlen; 
 	m->m_data = buf + off0;
 	m->m_flags = M_PKTHDR;
-printf("%s %d %p %p\n",__func__,__LINE__,ifp,m->m_pkthdr.rcvif);
 	return m;
 #else
 	struct mbuf *m;

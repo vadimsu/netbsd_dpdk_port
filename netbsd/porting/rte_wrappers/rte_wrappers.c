@@ -197,7 +197,6 @@ void poll_rx(void *ifp, int portid, int queue_id)
 	int received = rte_eth_rx_burst(portid, queue_id, mbufs, MAX_PKT_BURST);
 	if (received <= 0)
 		return;
-printf("%s %d %d %p\n",__FILE__,__LINE__,received,ifp);
 
 	for (i = 0;i < received; i++) {
 		m = m_devget(rte_pktmbuf_mtod(mbufs[i], char *), rte_pktmbuf_data_len(mbufs[i]), 0, ifp, mbufs[i]);
@@ -209,7 +208,6 @@ void transmit_mbuf(int portid, int queue_id, void *pdesc)
 {
 	struct rte_mbuf *mbuf = (struct rte_mbuf *)pdesc;
 	int  transmitted= rte_eth_tx_burst(portid, queue_id, &mbuf, 1);
-printf("%s %d %d\n",__FILE__,__LINE__,transmitted);
 	if (transmitted <= 0)
 		return;
 }
