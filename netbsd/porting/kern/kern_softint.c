@@ -15,6 +15,7 @@
 #include <netbsd/netinet/in_proto.h>
 #include <netbsd/netinet/in_var.h>
 #include <netbsd/netinet/ip_var.h>
+#include <netbsd/net/netisr.h>
 
 typedef struct iface_data
 {
@@ -59,7 +60,15 @@ void softint_schedule(void *arg)
 }
 
 void schednetisr(int isr)
-{	
+{
+	switch(isr){
+		case NETISR_ARP:
+			arpintr();
+		break;
+		case NETISR_IP:
+			ipintr();
+		break;
+	}
 }
 
 void softint_run()

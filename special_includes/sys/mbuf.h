@@ -910,8 +910,7 @@ extern struct mowner revoked_mowner;
 
 struct	mbuf *m_copym(struct mbuf *, int, int, int);
 struct	mbuf *m_copypacket(struct mbuf *, int);
-struct	mbuf *m_devget(char *, int, int, struct ifnet *,
-			    void (*copy)(const void *, void *, size_t));
+struct	mbuf *m_devget(char *, int, int, struct ifnet *, void *);
 struct	mbuf *m_dup(struct mbuf *, int, int, int);
 struct	mbuf *m_free(struct mbuf *);
 struct	mbuf *m_get(int, int);

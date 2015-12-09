@@ -40,6 +40,7 @@ void configure_if_addr(struct ifnet *ifp,unsigned int ip_addr,unsigned int mask)
         printf("cannot configure IP Address on interface %d\n",rc);
         return;
     }
+    //ether_ioctl(ifp,SIOCINITIFADDR, &ifr);
     printf("got IP address %x\n",sin->sin_addr.s_addr);
 }
 
@@ -61,11 +62,22 @@ static int dpdk_ioctl(struct ifnet *ifp, u_long cmd, void *arg)
 static void dpdk_if_start(struct ifnet *ifp)
 {
 printf("%s %d\n",__FILE__,__LINE__);
+	struct mbuf *m;
+
+	do {
+
+		IFQ_DEQUEUE(&ifp->if_snd, m);
+		if (!m)
+			break;
+		transmit_mbuf(0, 0, m->m_paddr);
+		m_free(m);
+	} while(1);
 }
 
 static int dpdk_if_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *sa, struct rtentry *re)
 {
 printf("%s %d\n",__FILE__,__LINE__);
+    transmit_mbuf(0, 0, m->m_paddr);
     return 0;
 }
 
@@ -78,7 +90,7 @@ printf("%s %d\n",__FILE__,__LINE__);
 static void dpdk_qflush(struct ifnet *ifp)
 {
 }
-
+extern void get_port_mac_addr(int, char *);
 struct ifnet *createInterface(int instance)
 {
     struct ifnet *ifp = malloc(sizeof(struct ifnet),M_NETADDR,0);
@@ -86,6 +98,8 @@ struct ifnet *createInterface(int instance)
     char macaddr[6];
 
     memset(ifp,0,sizeof(*ifp));
+    get_port_mac_addr(0,macaddr);
+
 
     sprintf(ifname,"dpdk%d",instance);
     strlcpy(ifp->if_xname, ifname, IFNAMSIZ);
@@ -97,7 +111,7 @@ struct ifnet *createInterface(int instance)
     ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
     ifp->if_ioctl = dpdk_ioctl;
     ifp->if_start = dpdk_if_start;
-    //ifp->if_output = dpdk_if_output;
+    ifp->if_output = dpdk_if_output;
 //    ifp->if_transmit = dpdk_mq_start;
 //    ifp->if_qflush = dpdk_qflush;
 //    ifp->if_snd.ifq_maxlen = adapter->num_tx_desc - 2;

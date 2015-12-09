@@ -7,7 +7,14 @@
 #include <rte_malloc.h>
 #include <rte_memcpy.h>
 #include <rte_ethdev.h>
-
+#include <rte_ether.h>
+#if 0
+#include <special_includes/sys/param.h>
+//#include <special_includes/sys/systm.h>
+#include <special_includes/sys/malloc.h>
+#include <lib/libkern/libkern.h>
+#include <special_includes/sys/mbuf.h>
+#endif
 typedef int malloc_type;
 void *allocate_mbuf(void *pool)
 {
@@ -181,11 +188,36 @@ int init_device(int portid, int queue_count)
 error_ret:
 	return ret;
 }
-
+void *m_devget(char *, int, int, void *, void *);
 void poll_rx(void *ifp, int portid, int queue_id)
 {
 	struct rte_mbuf *mbufs[MAX_PKT_BURST];
+	struct mbuf *m;
+	int i;
 	int received = rte_eth_rx_burst(portid, queue_id, mbufs, MAX_PKT_BURST);
 	if (received <= 0)
 		return;
+printf("%s %d %d %p\n",__FILE__,__LINE__,received,ifp);
+
+	for (i = 0;i < received; i++) {
+		m = m_devget(rte_pktmbuf_mtod(mbufs[i], char *), rte_pktmbuf_data_len(mbufs[i]), 0, ifp, mbufs[i]);
+		ether_input(ifp,m);
+	}
+}
+
+void transmit_mbuf(int portid, int queue_id, void *pdesc)
+{
+	struct rte_mbuf *mbuf = (struct rte_mbuf *)pdesc;
+	int  transmitted= rte_eth_tx_burst(portid, queue_id, &mbuf, 1);
+printf("%s %d %d\n",__FILE__,__LINE__,transmitted);
+	if (transmitted <= 0)
+		return;
+}
+
+void get_port_mac_addr(int portid, char *mac_addr)
+{
+	struct ether_addr macaddr;
+
+	rte_eth_macaddr_get(portid,&macaddr);
+	memcpy(mac_addr, macaddr.addr_bytes, 6);
 }

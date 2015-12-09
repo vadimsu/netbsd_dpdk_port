@@ -1094,9 +1094,10 @@ int main(int argc,char **argv)
     soinit();
     mbinit();
     app_glue_init();
+    rte_timer_subsystem_init();
     ifp = createInterface(0);
     printf("%s %d %p\n",__FILE__,__LINE__,ifp);
-    configure_if_addr(ifp,inet_addr("192.168.150.63"),inet_addr("255.255.255.0"));
+    configure_if_addr(ifp, inet_addr("192.168.150.63"), inet_addr("255.255.255.0"));
     printf("%s %d\n",__FILE__,__LINE__);
     void *socket1,*socket2;
 #if 0
@@ -1147,9 +1148,11 @@ printf("%s %d\n",__FILE__,__LINE__);
             i++;
     }
 #else
-    while(1)
+    while(1) {
 	    softint_run();
-	    poll_rx(ifp,0,0)
+	    rte_timer_manage();
+	    poll_rx(ifp,0,0);
+    }
 #endif
     app_glue_close_socket(socket1);
     app_glue_close_socket(socket2);

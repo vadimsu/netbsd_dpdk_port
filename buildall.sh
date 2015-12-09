@@ -1,4 +1,6 @@
 rm -rf ./netbsd/build/
+make -C ./dpdk-2.0.0 config T=x86_64-native-linuxapp-gcc
+make -C ./dpdk-2.0.0 install T=x86_64-native-linuxapp-gcc
 make -C netbsd CURRENT_DIR=$(pwd)/ RTE_SDK=$(pwd)/dpdk-2.0.0
 make -C netbsd/porting/pool CURRENT_DIR=$(pwd)/ 
 make -C netbsd/porting/callout CURRENT_DIR=$(pwd)/

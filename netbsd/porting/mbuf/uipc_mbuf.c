@@ -84,8 +84,8 @@
 pool_cache_t mb_cache;	/* mbuf cache */
 pool_cache_t mcl_cache;	/* mbuf cluster cache */
 pool_cache_t mb_data;
-const   int msize = MSIZE;
-const   int mclbytes = MCLBYTES;
+const   int msize = /*MSIZE*/sizeof(struct mbuf);
+const   int mclbytes = /*MCLBYTES*/sizeof(struct mbuf);
 int     nmbclusters = 0;
 struct mbstat mbstat;
 int	max_linkhdr;
@@ -570,7 +570,7 @@ m_get(int nowait, int type)
         }
 
 	m->m_paddr = data_buf;
-	m->m_data = m->m_dat = get_mbuf_data(m->m_paddr);
+	m->m_data = get_mbuf_data(m->m_paddr);
 	m->m_flags = 0;
 
 	return m;
@@ -1188,9 +1188,31 @@ extpacket:
  * Routine to copy from device local memory into mbufs.
  */
 struct mbuf *
-m_devget(char *buf, int totlen, int off0, struct ifnet *ifp,
-    void (*copy)(const void *from, void *to, size_t len))
+m_devget(char *buf, int totlen, int off0, struct ifnet *ifp, void *pdesc)
 {
+#if 1
+	struct mbuf *m;
+
+	m = pool_cache_get(mb_cache, 0);
+	if (m == NULL)
+		return NULL;
+
+	mbstat_type_add(MT_DATA, 1);
+	mowner_init(m, MT_DATA);
+	m->m_ext_ref = m;
+	m->m_type = MT_DATA;
+	m->m_next = NULL;
+	m->m_nextpkt = NULL;
+
+	m->m_paddr = pdesc;
+	m->m_pkthdr.rcvif = ifp;
+	m->m_pkthdr.len = totlen;
+	m->m_len = totlen; 
+	m->m_data = buf + off0;
+	m->m_flags = M_PKTHDR;
+printf("%s %d %p %p\n",__func__,__LINE__,ifp,m->m_pkthdr.rcvif);
+	return m;
+#else
 	struct mbuf *m;
 	struct mbuf *top = 0, **mp = &top;
 	int off = off0, len;
@@ -1255,6 +1277,7 @@ m_devget(char *buf, int totlen, int off0, struct ifnet *ifp,
 			cp = buf;
 	}
 	return (top);
+#endif
 }
 
 /*
