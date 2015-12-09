@@ -1,0 +1,18 @@
+RTE_SDK=$(CURRENT_DIR)dpdk-2.0.0
+RTE_TARGET ?= x86_64-native-linuxapp-gcc
+include $(RTE_SDK)/mk/rte.vars.mk
+SRC_ROOT=$(CURRENT_DIR)
+SRCS-y := service_loop.c
+#opencrypto/cryptosoft_xform.c
+#porting/kern/uipc_mbuf.c
+#CFLAGS += -Ofast -fno-builtin
+CFLAGS += -g -fno-builtin
+CFLAGS += $(WERROR_FLAGS)
+NETBSD_HEADERS=-I$(SRC_ROOT)/special_includes -I$(SRC_ROOT)/netbsd -I$(SRC_ROOT)
+DPDK_HEADERS=$(SRC_ROOT)/dpdk-2.0.0/x86_64-native-linuxapp-gcc/include
+ALL_HEADERS = $(NETBSD_HEADERS) -I$(DPDK_HEADERS)
+CFLAGS += $(ALL_HEADERS) -D_KERNEL -D__NetBSD__ -DINET -D_NETBSD_SOURCE -DSTACK_MBUFS_COUNT=16384 -DROUTE_ENTRIES_COUNT=10 -DTCP_QENTRIES_COUNT=16384 -DTCP_SYNCACHE_ENTRIES_COUNT=16384 -DTCP_SACK_HOLES_COUNT=16384 -DTCP_CB_COUNT=16384 -DIN_CB_COUNT=16384 -DIP_FLOW_COUNT=8192 -DSOCK_CACHE_SIZE=16384 -DMBUF_SIZE=2048
+#-DGSO
+#-DMSIZE=256
+SHARED = libnetbsddpdkservice.so
+include $(RTE_SDK)/mk/rte.extshared.mk
