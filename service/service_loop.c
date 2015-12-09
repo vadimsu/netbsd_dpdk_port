@@ -10,7 +10,7 @@
 #include <rte_atomic.h>
 #include <service/service_common.h>
 #include <service/service_server_side.h>
-//#include "user_callbacks.h"
+#include <glue/app_glue.h>
 #include <service_log.h>
 
 uint64_t user_on_tx_opportunity_cycles = 0;

@@ -58,6 +58,7 @@
 #include <netbsd/netinet/tcp_timer.h>
 #include <netbsd/netinet/tcp_var.h>
 #include <service_log.h>
+#include <glue/app_glue.h>
 
 TAILQ_HEAD(read_ready_socket_list_head, socket) read_ready_socket_list_head;
 uint64_t read_sockets_queue_len = 0;
