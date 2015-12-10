@@ -140,7 +140,7 @@ typedef struct
     struct rte_ring  *ready_connections;
 }__attribute__((packed))service_selector_t;
 
-#define COMMAND_POOL_SIZE 16384*2
+#define COMMAND_POOL_SIZE 4096*2
 #define DATA_RINGS_SIZE 1024
 #define FREE_CONNECTIONS_POOL_NAME "free_connections_pool"
 #define FREE_CONNECTIONS_RING "free_connections_ring"
@@ -153,7 +153,7 @@ typedef struct
 #define FREE_ACCEPTED_POOL_NAME "free_accepted_pool"
 #define SELECTOR_POOL_NAME "selector_pool"
 #define SELECTOR_RING_NAME "selector_ring"
-#define SERVICE_CONNECTION_POOL_SIZE 512
+#define SERVICE_CONNECTION_POOL_SIZE 16
 #define SERVICE_CLIENTS_POOL_SIZE 64
 #define SERVICE_SELECTOR_POOL_SIZE 64
 #define COMMON_NOTIFICATIONS_POOL_NAME "common_notifications_pool_name"

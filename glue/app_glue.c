@@ -206,7 +206,8 @@ void *app_glue_create_socket(int family,int type)
 	if(socreate(family, &sock, type, 0/*port*/, NULL)) {
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return NULL;
-	}	
+	}
+#if 0
 	tv.tv_sec = -1;
 	tv.tv_usec = 0;
 	if (app_glue_setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, sizeof(tv), (char *)&tv)) {
@@ -216,7 +217,8 @@ void *app_glue_create_socket(int family,int type)
 	tv.tv_usec = 0;
 	if (app_glue_setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, sizeof(tv), (char *)&tv)) {
 		service_log(SERVICE_LOG_ERR,"%s %d cannot set notimeout option\n",__FILE__,__LINE__);
-	}	
+	}
+#endif
 	sock->so_upcall2 = app_glue_so_upcall;
 #if 0
 	if(type != SOCK_STREAM) {
@@ -815,6 +817,7 @@ int main(int argc,char **argv)
         printf("cannot initialize EAL\n");
         exit(0);
     }
+    create_app_mbufs_mempool();
     init_device(0, 1);
     softint_init();
     callout_startup(); 

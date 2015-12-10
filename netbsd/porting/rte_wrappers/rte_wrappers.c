@@ -252,6 +252,8 @@ int get_max_drv_poll_interval_in_micros(int port_num)
 	return (int)(1000000/bursts_in_sec)/2/*safe side*/; /* casted to int, is not so large */
 }
 
+static struct rte_mempool *mbufs_mempool = NULL;
+
 int get_buffer_count()
 {
 #if 0
@@ -259,4 +261,18 @@ int get_buffer_count()
 #else
 	return 0;
 #endif
+}
+
+void create_app_mbufs_mempool()
+{
+	mbufs_mempool = rte_mempool_create("mbufs_mempool", APP_MBUFS_POOL_SIZE,
+				MBUF_SIZE, 0,
+				sizeof(struct rte_pktmbuf_pool_private),
+				rte_pktmbuf_pool_init, NULL,
+				rte_pktmbuf_init, NULL,
+				rte_socket_id(), 0);
+	if (mbufs_mempool == NULL) {
+		printf("%s %d cannot initialize mbufs_pool\n",__func__,__LINE__);
+		exit(0);
+	}
 }

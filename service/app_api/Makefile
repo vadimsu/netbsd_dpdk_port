@@ -2,9 +2,9 @@ RTE_SDK=$(CURRENT_DIR)dpdk-2.0.0
 RTE_TARGET ?= x86_64-native-linuxapp-gcc
 include $(RTE_SDK)/mk/rte.vars.mk
 SRC_ROOT=$(CURRENT_DIR)
-SRCS-y :=  api.c ../../log/service_log.c
-#CFLAGS += -g
-CFLAGS += -Ofast  
+SRCS-y :=  api.c
+CFLAGS += -g
+#CFLAGS += -Ofast  
 CFLAGS += $(WERROR_FLAGS) 
 DPDK_HEADERS=$(SRC_ROOT)x86_64-native-linuxapp-gcc/include
 ALL_HEADERS = -I$(DPDK_HEADERS) -I./ -I$(SRC_ROOT)

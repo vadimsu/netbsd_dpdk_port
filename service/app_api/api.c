@@ -150,7 +150,7 @@ int service_app_init(int argc,char **argv,char *app_unique_id)
     unsigned cpu;
 
     service_log_init(0);
-//    service_set_log_level(0);
+    service_set_log_level(0);
 
     if(rte_eal_init(argc, argv) < 0) {
         service_log(SERVICE_LOG_ERR,"cannot initialize rte_eal");
@@ -202,6 +202,8 @@ int service_app_init(int argc,char **argv,char *app_unique_id)
 	   local_socket_descriptors[i].local_cache = rte_ring_lookup(ringname);
 	   if(!local_socket_descriptors[i].local_cache) {
 		service_log(SERVICE_LOG_ERR,"and cannot find\n");
+printf("%s %d\n",__FILE__,__LINE__);
+sleep(1);
 		exit(0);
 	   } 
         }
@@ -213,6 +215,8 @@ int service_app_init(int argc,char **argv,char *app_unique_id)
         return -1;
     }
     service_log(SERVICE_LOG_INFO,"mbufs pool initialized\n");
+printf("%s %d\n",__FILE__,__LINE__);
+sleep(1);
     free_command_pool = rte_mempool_lookup(FREE_COMMAND_POOL_NAME);
     if(!free_command_pool) {
         service_log(SERVICE_LOG_ERR,"cannot find free command pool\n");
