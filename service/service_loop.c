@@ -108,6 +108,15 @@ static void on_client_connect(int client_idx)
 #endif
 }
 
+static inline void user_increment_socket_tx_space(rte_atomic32_t *tx_space,int count)
+{
+	rte_atomic32_add(tx_space,count);
+}
+static inline void user_set_socket_tx_space(rte_atomic32_t *tx_space,int count)
+{
+	rte_atomic32_set(tx_space,count);
+}
+
 void user_transmitted_callback(struct rte_mbuf *mbuf,struct socket *sock)
 {
 	int last = /*(rte_mbuf_refcnt_read(mbuf) == 1)*/1;
@@ -301,7 +310,8 @@ static inline void process_commands()
                app_glue_set_glueing_block(sock,(void *)&socket_satelite_data[cmd->ringset_idx]);
                socket_satelite_data[cmd->ringset_idx].socket = sock;
             //   service_log(SERVICE_LOG_DEBUG,"%d setting tx_space %d\n",__LINE__,sk_stream_wspace(sock->sk));
-	      // user_set_socket_tx_space(&g_ipaugenblick_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(sock->sk));
+	       user_set_socket_tx_space(&g_service_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,
+			/*sk_stream_wspace(sock->sk)*/100000000);
            }
            service_log(SERVICE_LOG_DEBUG,"Done\n");
            break;
@@ -378,7 +388,8 @@ static inline void process_commands()
 	   socket_satelite_data[cmd->ringset_idx].apppid = cmd->u.set_socket_ring.pid;
            app_glue_set_glueing_block(cmd->u.set_socket_ring.socket_descr,&socket_satelite_data[cmd->ringset_idx]);
            socket_satelite_data[cmd->ringset_idx].socket = cmd->u.set_socket_ring.socket_descr; 
-//	   user_set_socket_tx_space(&g_ipaugenblick_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk));
+	   user_set_socket_tx_space(&g_service_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,
+			/*sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk)*/100000000);
            user_data_available_cbk(socket_satelite_data[cmd->ringset_idx].socket, &socket_satelite_data[cmd->ringset_idx]);
 	   service_mark_writable(&socket_satelite_data[cmd->ringset_idx]);
 	   service_mark_readable(&socket_satelite_data[cmd->ringset_idx]);
@@ -511,7 +522,6 @@ void service_main_loop()
                                  100 /*timer_poll_interval*/,
                                  drv_poll_interval/(10*32/*MAX_PKT_BURST*/),
                                 drv_poll_interval/(60*32/*MAX_PKT_BURST*/));
-    
     service_api_init(COMMAND_POOL_SIZE,DATA_RINGS_SIZE,DATA_RINGS_SIZE);
     app_glue_init_buffers_available_waiters();
     TAILQ_INIT(&service_clients_list_head);
