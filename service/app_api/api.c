@@ -40,7 +40,7 @@ typedef struct
     int queue_length;
 }selector_t;
 
-static selector_t selectors[SERVICE_CONNECTION_POOL_SIZE];
+static selector_t selectors[SERVICE_SELECTOR_POOL_SIZE];
 
 uint64_t service_stats_receive_called = 0;
 uint64_t service_stats_send_called = 0;
@@ -150,7 +150,7 @@ int service_app_init(int argc,char **argv,char *app_unique_id)
     unsigned cpu;
 
     service_log_init(0);
-    service_set_log_level(0);
+//    service_set_log_level(0);
 
     if(rte_eal_init(argc, argv) < 0) {
         service_log(SERVICE_LOG_ERR,"cannot initialize rte_eal");
@@ -195,15 +195,12 @@ int service_app_init(int argc,char **argv,char *app_unique_id)
         local_socket_descriptors[i].select = -1;
         local_socket_descriptors[i].socket = NULL;
         sprintf(ringname,"lrxcache%s_%d",app_unique_id,i);
-        service_log(SERVICE_LOG_DEBUG,"local cache name %s\n",ringname);
         local_socket_descriptors[i].local_cache = rte_ring_create(ringname, 64, rte_socket_id(), RING_F_SC_DEQ|RING_F_SP_ENQ);
         if(!local_socket_descriptors[i].local_cache) {
            service_log(SERVICE_LOG_WARNING,"cannot create local cache\n");
 	   local_socket_descriptors[i].local_cache = rte_ring_lookup(ringname);
 	   if(!local_socket_descriptors[i].local_cache) {
 		service_log(SERVICE_LOG_ERR,"and cannot find\n");
-printf("%s %d\n",__FILE__,__LINE__);
-sleep(1);
 		exit(0);
 	   } 
         }
@@ -215,14 +212,11 @@ sleep(1);
         return -1;
     }
     service_log(SERVICE_LOG_INFO,"mbufs pool initialized\n");
-printf("%s %d\n",__FILE__,__LINE__);
-sleep(1);
     free_command_pool = rte_mempool_lookup(FREE_COMMAND_POOL_NAME);
     if(!free_command_pool) {
         service_log(SERVICE_LOG_ERR,"cannot find free command pool\n");
         return -1;
     }
-    
     command_ring = rte_ring_lookup(COMMAND_RING_NAME);
     if(!command_ring) {
         service_log(SERVICE_LOG_ERR,"cannot find command ring\n");
@@ -234,7 +228,6 @@ sleep(1);
         return -1;
     }
     selectors_ring = rte_ring_lookup(SELECTOR_RING_NAME);
-    
     for(i = 0;i < SERVICE_SELECTOR_POOL_SIZE;i++) {
         sprintf(ringname,"SELECTOR_RING_NAME%d",i);
         selectors[i].ready_connections = rte_ring_lookup(ringname);
@@ -245,7 +238,6 @@ sleep(1);
 	TAILQ_INIT(&selectors[i].local_ready_cache);
 	selectors[i].queue_length = 0;
     }
-    
     signal(SIGHUP, sig_handler);
     signal(SIGINT, sig_handler);
     signal(SIGILL, sig_handler);
@@ -255,7 +247,7 @@ sleep(1);
     signal(SIGSEGV, sig_handler);
     signal(SIGTERM, sig_handler);
     signal(SIGUSR1, sig_handler);
-    
+
     RTE_LCORE_FOREACH(cpu) {
 	if(rte_lcore_is_enabled(cpu)) {
 		CPU_ZERO(&cpuset);
@@ -441,6 +433,7 @@ int service_open_socket(int family,int type,int parent)
         	service_free_command_buf(cmd);
 	        return -3;
     	}
+
 	service_reset_local_descriptor(service_socket->connection_idx);
     	local_socket_descriptors[service_socket->connection_idx].socket = service_socket;
 	if(parent != -1)

@@ -190,7 +190,6 @@ static void app_glue_sock_wakeup(struct sock *sk)
 #endif
 static void app_glue_so_upcall(struct socket *so, void *arg, int events, int waitflag)
 {
-printf("%s %d\n",__FILE__,__LINE__);
 	if(events | POLLIN) {
 		app_glue_sock_readable(so);
 	}
@@ -200,7 +199,6 @@ printf("%s %d\n",__FILE__,__LINE__);
 }
 static void app_glue_so_upcall2(struct socket *sock, void *arg, int band, int flag)
 {
-printf("%s %d\n",__FILE__,__LINE__);
 	if(band | POLLIN) {
 		app_glue_sock_readable(sock);
 	}
@@ -787,23 +785,29 @@ void app_glue_init_buffers_available_waiters()
 	TAILQ_INIT(&buffers_available_notification_socket_list_head);
 }
 
-struct socket *sender_so = NULL;
-struct socket *receiver_so = NULL;
+void notify_app_about_accepted_sock(void *so2, void *parent_descriptor, unsigned int faddr, unsigned short fport);
 
 void user_on_accept(struct socket *so)
 {
-    while(so->so_qlen) {
-    	struct socket *so2 = TAILQ_FIRST(&so->so_q);
-	struct mbuf *addr = m_get(M_WAIT, MT_SONAME);
+	void *parent_descriptor;
+
+	while(so->so_qlen) {
+    		struct socket *so2 = TAILQ_FIRST(&so->so_q);
+		struct mbuf *addr = m_get(M_WAIT, MT_SONAME);
 	
-    	if (soqremque(so2, 1) == 0) {
-		printf("user_on_accept\n");
-		exit(1);
-	}
-    	soaccept(so2,addr);
-	receiver_so = so2;
-	so2->so_upcall2 = app_glue_so_upcall;
-	user_data_available_cbk(so2);
+		if (soqremque(so2, 1) == 0) {
+			printf("user_on_accept\n");
+			exit(1);
+		}
+	    	soaccept(so2,addr);
+		so2->so_upcall = app_glue_so_upcall;
+		so2->so_upcall2 = app_glue_so_upcall2;
+//	user_data_available_cbk(so2);
+		parent_descriptor = app_glue_get_glueing_block(so);
+		notify_app_about_accepted_sock(so2, parent_descriptor, 
+					((struct inpcb *)so2->so_pcb)->inp_faddr.s_addr, 
+					((struct inpcb *)so2->so_pcb)->inp_fport);
+		m_freem(addr);
     }
 }
 

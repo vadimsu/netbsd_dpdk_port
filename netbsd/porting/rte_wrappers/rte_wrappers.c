@@ -10,6 +10,14 @@
 #include <rte_ether.h>
 #include <rte_timer.h>
 #include <rte_cycles.h>
+#include <rte_config.h>
+#include <rte_common.h>
+#include <rte_cycles.h>
+#include <rte_timer.h>
+#include <rte_ring.h>
+#include <rte_atomic.h>
+#include "service/service_common.h"
+#include "service/service_server_side.h"
 #if 0
 #include <special_includes/sys/param.h>
 //#include <special_includes/sys/systm.h>
@@ -308,4 +316,18 @@ void init_systick()
 {
 	rte_timer_init(&systick);
 	rte_timer_reset(&systick,rte_get_timer_hz()/hz,SINGLE,rte_lcore_id(),systick_expiry_cbk,NULL);
+}
+
+void notify_app_about_accepted_sock(void *so2, void *parent_descriptor, unsigned int faddr, unsigned short fport)
+{
+	service_cmd_t *cmd;
+
+	cmd = service_get_free_command_buf();
+	if(cmd) {
+		cmd->cmd = SERVICE_SOCKET_ACCEPTED_COMMAND;
+		cmd->u.accepted_socket.socket_descr = so2;
+		cmd->u.accepted_socket.ipaddr = faddr;
+		cmd->u.accepted_socket.port = fport;
+		service_post_accepted(cmd,parent_descriptor);
+	}
 }
