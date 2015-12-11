@@ -34,7 +34,7 @@ extern void exit_inernal(int);
 #define splvm() 0
 //#define rt_newaddrmsg(a,b,c,d)
 extern unsigned long hz;
-extern unsigned long tick;
+extern volatile unsigned long tick;
 #define ppsratecheck(a,b,c) 1
 #define atomic_inc_uint(c) (*(c))++
 //#define COMPATNAME(name) name

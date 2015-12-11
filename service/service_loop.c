@@ -203,6 +203,8 @@ void user_data_available_cbk(void *so, void *glueing_block)
     	void *socket_satelite_data = glueing_block;
 	unsigned int ringset_idx;
 
+	if (socket_satelite_data == NULL)
+		return;
 
 	switch(app_glue_get_socket_type(so)) {
 		case 1 /*SOCK_STREAM*/:

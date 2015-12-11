@@ -27,7 +27,7 @@ void service_set_log_level(int log_level)
 void service_log(int level, const char* format, ...)
 {
 	va_list argptr;
-printf("%s %d %d %d %d\n",__func__,__LINE__,level,g_service_log_level,g_service_log_dest);
+
 	if (level < g_service_log_level)
 		return;
 

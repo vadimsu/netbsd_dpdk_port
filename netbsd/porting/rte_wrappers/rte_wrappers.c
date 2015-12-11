@@ -8,6 +8,8 @@
 #include <rte_memcpy.h>
 #include <rte_ethdev.h>
 #include <rte_ether.h>
+#include <rte_timer.h>
+#include <rte_cycles.h>
 #if 0
 #include <special_includes/sys/param.h>
 //#include <special_includes/sys/systm.h>
@@ -192,24 +194,39 @@ void *m_devget(char *, int, int, void *, void *);
 void poll_rx(void *ifp, int portid, int queue_id)
 {
 	struct rte_mbuf *mbufs[MAX_PKT_BURST];
-	struct mbuf *m;
+	void *m;
 	int i;
 	int received = rte_eth_rx_burst(portid, queue_id, mbufs, MAX_PKT_BURST);
 	if (received <= 0)
 		return;
 
 	for (i = 0;i < received; i++) {
-		m = m_devget(rte_pktmbuf_mtod(mbufs[i], char *), rte_pktmbuf_data_len(mbufs[i]), 0, ifp, mbufs[i]);
+		m = m_devget(rte_pktmbuf_mtod(mbufs[i], char *), rte_pktmbuf_data_len(mbufs[i]), 0, ifp, mbufs[i]);	
 		ether_input(ifp,m);
 	}
 }
 
-void transmit_mbuf(int portid, int queue_id, void *pdesc)
+void transmit_mbuf(int portid, int queue_id, void *pdesc, int len, void *buf)
 {
 	struct rte_mbuf *mbuf = (struct rte_mbuf *)pdesc;
+
+	if (len == 0) {
+		printf("%s %d\n",__func__,__LINE__);
+		goto free_mbuf;
+	}
+
+	if(rte_pktmbuf_data_len(mbuf) == 0) {
+		rte_pktmbuf_data_len(mbuf) = len;
+		rte_pktmbuf_pkt_len(mbuf) = len;
+		mbuf->data_off += (char *)buf - rte_pktmbuf_mtod(mbuf, char *);
+	}
+
 	int  transmitted= rte_eth_tx_burst(portid, queue_id, &mbuf, 1);
-	if (transmitted <= 0)
+	if (transmitted == 1)
 		return;
+	printf("%s %d\n",__func__,__LINE__);
+free_mbuf:
+	rte_pktmbuf_free(mbuf);
 }
 
 void get_port_mac_addr(int portid, char *mac_addr)
@@ -275,4 +292,20 @@ void create_app_mbufs_mempool()
 		printf("%s %d cannot initialize mbufs_pool\n",__func__,__LINE__);
 		exit(0);
 	}
+}
+
+extern volatile unsigned long tick;
+extern unsigned long hz;
+
+static struct rte_timer systick;
+
+static void systick_expiry_cbk(struct rte_timer *tim,void *arg)
+{
+	tick++;
+	rte_timer_reset(&systick,rte_get_timer_hz()/hz,SINGLE,rte_lcore_id(),systick_expiry_cbk,NULL);
+}
+void init_systick()
+{
+	rte_timer_init(&systick);
+	rte_timer_reset(&systick,rte_get_timer_hz()/hz,SINGLE,rte_lcore_id(),systick_expiry_cbk,NULL);
 }

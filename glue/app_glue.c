@@ -188,8 +188,19 @@ static void app_glue_sock_wakeup(struct sock *sk)
 	sk->sk_error_report = app_glue_sock_error_report; 
 }
 #endif
-void app_glue_so_upcall(struct socket *sock, void *arg, int band, int flag)
+static void app_glue_so_upcall(struct socket *so, void *arg, int events, int waitflag)
 {
+printf("%s %d\n",__FILE__,__LINE__);
+	if(events | POLLIN) {
+		app_glue_sock_readable(so);
+	}
+	if(events | POLLOUT) {
+		app_glue_sock_write_space(so);
+	}
+}
+static void app_glue_so_upcall2(struct socket *sock, void *arg, int band, int flag)
+{
+printf("%s %d\n",__FILE__,__LINE__);
 	if(band | POLLIN) {
 		app_glue_sock_readable(sock);
 	}
@@ -219,7 +230,8 @@ void *app_glue_create_socket(int family,int type)
 		service_log(SERVICE_LOG_ERR,"%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
 #endif
-	sock->so_upcall2 = app_glue_so_upcall;
+	sock->so_upcall = app_glue_so_upcall;
+	sock->so_upcall2 = app_glue_so_upcall2;
 #if 0
 	if(type != SOCK_STREAM) {
 		if(sock->sk) {
@@ -244,8 +256,9 @@ int app_glue_v4_bind(void *so,unsigned int ipaddr, unsigned short port)
 		printf("cannot create socket %s %d\n",__FILE__,__LINE__);
 		return -1;
 	}
-	m->m_len = sizeof(struct sockaddr);
+	m->m_len = sizeof(struct sockaddr_in);
 	sin = mtod(m, struct sockaddr_in *);
+	memset(sin, 0, sizeof(*sin));
 	sin->sin_len = sizeof(struct sockaddr_in);
 	sin->sin_family = AF_INET;
 
@@ -293,7 +306,6 @@ int app_glue_v4_connect(void *so,unsigned int ipaddr,unsigned short port)
 		}
 		break;
 	}
-	printf("%s %s %d %p\n",__FILE__,__func__,__LINE__,sock);
 	sin->sin_family = AF_INET;
 	sin->sin_addr.s_addr = ipaddr;
 	sin->sin_port = htons(port);
@@ -796,8 +808,9 @@ void user_on_accept(struct socket *so)
 }
 
 #define COHERENCY_UNIT 64
-unsigned long hz=0;
-unsigned long tick=0;
+unsigned long hz=1000;
+volatile unsigned long tick = 0;
+
 size_t  coherency_unit = COHERENCY_UNIT;
 void *createInterface(int instance);
 void *create_udp_socket(const char *ip_addr,unsigned short port);
@@ -816,25 +829,22 @@ int main(int argc,char **argv)
         //rte_exit(EXIT_FAILURE, "Invalid EAL arguments\n");
         printf("cannot initialize EAL\n");
         exit(0);
-    }
+    } 
     create_app_mbufs_mempool();
     init_device(0, 1);
     softint_init();
     callout_startup(); 
-    printf("%s %d\n",__FILE__,__LINE__);
     domaininit(1);
-    printf("%s %d\n",__FILE__,__LINE__);
     bpf_setops();
     rt_init();
     soinit();
     mbinit();
     app_glue_init();
     rte_timer_subsystem_init();
+    init_systick();
     ifp = createInterface(0);
     app_glue_set_port_ifp(0, ifp);
-    printf("%s %d %p\n",__FILE__,__LINE__,ifp);
     configure_if_addr(ifp, inet_addr("192.168.150.63"), inet_addr("255.255.255.0"));
-    printf("%s %d\n",__FILE__,__LINE__);
     void *socket1,*socket2;
 #if 0
     createLoopbackInterface();

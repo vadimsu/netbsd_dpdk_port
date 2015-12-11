@@ -75,11 +75,10 @@ static void dpdk_if_start(struct ifnet *ifp)
 	struct mbuf *m;
 
 	do {
-
 		IFQ_DEQUEUE(&ifp->if_snd, m);
 		if (!m)
 			break;
-		transmit_mbuf(0, 0, m->m_paddr);
+		transmit_mbuf(0, 0, m->m_paddr, m->m_len, m->m_data);
 		m_free(m);
 	} while(1);
 }
@@ -132,12 +131,15 @@ struct ifnet *createInterface(int instance)
 //    ether_set_ifflags_cb(ec, ixgbe_ifflags_cb);
 
 //	ifp->if_hdrlen = sizeof(struct ether_vlan_header);
-
+#if 0 /* VADIM - not yet */
     ifp->if_capabilities |= IFCAP_HWCSUM | IFCAP_TSOv4;
+#endif
     ifp->if_capenable = 0;
 
     /* Don't enable LRO by default */
+#if 0 /* VADIM - not yet */
     ifp->if_capabilities |= IFCAP_LRO;	
+#endif
     if_up(ifp);
     ifp->if_flags |= IFF_RUNNING|IFF_MULTICAST;
     return ifp;

@@ -4,9 +4,11 @@
 #include <rte_common.h>
 #include <rte_timer.h>
 #include <rte_lcore.h>
+#include <rte_cycles.h>
 #include <../../../special_includes/sys/callout.h>
 
 typedef unsigned char bool;
+extern int hz;
 
 typedef struct callout_impl {
 	struct rte_timer timer;
@@ -67,7 +69,7 @@ void	callout_reset(callout_t *co, int duration, void (*cbk)(void *), void *arg)
 	impl->c_func = cbk;
 	impl->c_flags &= ~(CALLOUT_FIRED | CALLOUT_INVOKING);
 	impl->c_flags |= CALLOUT_PENDING;
-	rte_timer_reset(&impl->timer, duration, SINGLE, rte_lcore_id(), wrapper_func, impl);
+	rte_timer_reset(&impl->timer, (rte_get_timer_hz()/hz) * duration, SINGLE, rte_lcore_id(), wrapper_func, impl);
 }
 void	callout_schedule(callout_t *co, int duration)
 {
@@ -75,7 +77,7 @@ void	callout_schedule(callout_t *co, int duration)
 
 	impl->c_flags &= ~(CALLOUT_FIRED | CALLOUT_INVOKING);
 	impl->c_flags |= CALLOUT_PENDING;
-	rte_timer_reset(&impl->timer, duration, SINGLE, rte_lcore_id(), wrapper_func, impl);
+	rte_timer_reset(&impl->timer, (rte_get_timer_hz()/hz) * duration, SINGLE, rte_lcore_id(), wrapper_func, impl);
 }
 bool	callout_stop(callout_t *co)
 {

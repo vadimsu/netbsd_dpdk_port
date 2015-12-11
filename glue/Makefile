@@ -9,7 +9,7 @@ DPDK_HEADERS = $(SRC_ROOT)/dpdk-2.0.0/x86_64-native-linuxapp-gcc/include
 NETBSD_HEADERS=-I$(SRC_ROOT)special_includes -I$(SRC_ROOT)netbsd/ -I$(SRC_ROOT)
 ALL_HEADERS = $(NETBSD_HEADERS)
 CFLAGS += $(ALL_HEADERS) -DRTE_MAX_LCORE=32 -D_KERNEL -D_NETBSD_SOURCE -D_KERNEL -DINET
-LDFLAGS +=-L/usr/lib/netbsddpdk -lbsdnetinet -lcalloutporting -lkmemporting -lmiscporting -lpoolporting -lrtewrappers -lnetbsddpdkservice -lnetbsddpdklog
+LDFLAGS +=-L/usr/lib/netbsddpdk -lbsdnetinet -lcalloutporting -lkmemporting -lmiscporting -lpoolporting -lrtewrappers -lnetbsddpdkservice -lnetbsddpdklog -lrte_timer
 #-DGSO
 #
 #-DMSIZE=256
