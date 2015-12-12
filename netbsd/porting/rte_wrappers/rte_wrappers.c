@@ -18,13 +18,11 @@
 #include <rte_atomic.h>
 #include "service/service_common.h"
 #include "service/service_server_side.h"
-#if 0
-#include <special_includes/sys/param.h>
-//#include <special_includes/sys/systm.h>
-#include <special_includes/sys/malloc.h>
-#include <lib/libkern/libkern.h>
-#include <special_includes/sys/mbuf.h>
-#endif
+#define _GNU_SOURCE
+#include <unistd.h>
+#include <sched.h>
+
+
 typedef int malloc_type;
 void *allocate_mbuf(void *pool)
 {
@@ -199,6 +197,7 @@ error_ret:
 	return ret;
 }
 void *m_devget(char *, int, int, void *, void *);
+uint64_t mbufs_allocated_for_rx = 0;
 void poll_rx(void *ifp, int portid, int queue_id)
 {
 	struct rte_mbuf *mbufs[MAX_PKT_BURST];
@@ -209,8 +208,12 @@ void poll_rx(void *ifp, int portid, int queue_id)
 		return;
 
 	for (i = 0;i < received; i++) {
-		m = m_devget(rte_pktmbuf_mtod(mbufs[i], char *), rte_pktmbuf_data_len(mbufs[i]), 0, ifp, mbufs[i]);	
-		ether_input(ifp,m);
+		m = m_devget(rte_pktmbuf_mtod(mbufs[i], char *), rte_pktmbuf_data_len(mbufs[i]), 0, ifp, mbufs[i]);
+		mbufs_allocated_for_rx += (m != NULL);
+		if (m)
+			ether_input(ifp,m);
+		else
+			rte_pktmbuf_free(mbufs[i]);
 	}
 }
 
@@ -343,4 +346,34 @@ void notify_app_about_accepted_sock(void *so2, void *parent_descriptor, unsigned
 		service_post_accepted(cmd,parent_descriptor);
 	}
 }
+void app_glue_print_stats();
+void launch_threads()
+{
+	unsigned cpu;
+	unsigned afinity_reset = 0;
+	rte_cpuset_t cpuset;
 
+	RTE_LCORE_FOREACH(cpu) {
+		if(rte_lcore_is_enabled(cpu)) {
+#if 0
+			if(!afinity_reset) {
+				CPU_ZERO(&cpuset);
+				CPU_SET(cpu,&cpuset);
+				if(!rte_thread_set_affinity(&cpuset)) {
+					afinity_reset = 1;
+				} else {
+					break;
+				}
+			} else {
+				rte_eal_remote_launch(app_glue_print_stats, NULL, cpu);
+				break;
+			}
+#else
+			if (rte_lcore_id() != cpu) {
+				rte_eal_remote_launch(app_glue_print_stats, NULL, cpu);
+				break;
+			}
+#endif
+		}	
+	}
+}

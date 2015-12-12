@@ -318,6 +318,19 @@ percpu_getref(percpu_t *pc)
 #endif
 }
 
+void *
+percpu_getref_cpuid(percpu_t *pc, int cpuid)
+{
+#if 0
+
+	KPREEMPT_DISABLE(curlwp);
+	return percpu_getptr_remote(pc, curcpu());
+#else
+    char *p = (char *)pc->pcc_data;
+    return &p[pc->pcc_size*cpuid];
+#endif
+}
+
 /*
  * percpu_putref:
  *

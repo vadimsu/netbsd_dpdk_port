@@ -57,6 +57,7 @@
 #include <netbsd/netinet/tcp_seq.h>
 #include <netbsd/netinet/tcp_timer.h>
 #include <netbsd/netinet/tcp_var.h>
+#include <netbsd/netinet/tcp_private.h>
 #include <service_log.h>
 #include <glue/app_glue.h>
 
@@ -626,31 +627,78 @@ int app_glue_calc_size_of_data_to_send(void *sock)
 	return 0;
 #endif
 }
-/*
- * This function may be called to allocate rte_mbuf from existing pool.
- * Paramters: None
- * Returns: a pointer to rte_mbuf, if succeeded, NULL if failed
- *
- */
-#if 0
-struct rte_mbuf *app_glue_get_buffer()
-{
-	return get_buffer();
-}
-#endif
+uint64_t mbufs_allocated_for_tx = 0;
+extern uint64_t mbufs_allocated_for_rx;
+extern uint64_t mbufs_freed_for_tx;
+uint64_t mbufs_freed_for_rx = 0;
+int print_stats_thread_cpuid = 0;
 void app_glue_print_stats()
 {
-#if 0
-	float ratio;
-
-	ratio = (float)(total_cycles_stat - total_prev)/(float)(working_cycles_stat - work_prev);
-	total_prev = total_cycles_stat;
-	work_prev = working_cycles_stat;
-	printf("total %"PRIu64" work %"PRIu64" ratio %f\n",total_cycles_stat,working_cycles_stat,ratio);
-	printf("app_glue_periodic_called %"PRIu64"\n",app_glue_periodic_called);
-	printf("app_glue_tx_queues_process %"PRIu64"\n",app_glue_tx_queues_process);
-	printf("app_glue_rx_queues_process %"PRIu64"\n",app_glue_rx_queues_process);
-#endif
+#define PRINT_TCP_STATS(name) printf("%s %lu\n",#name,(uint64_t)(tcp_stat[TCP_STAT_##name]));
+	while(1) {
+		uint64_t *tcp_stat = TCP_STAT_GETREF_CPUID(print_stats_thread_cpuid);
+		PRINT_TCP_STATS(CONNATTEMPT);
+		PRINT_TCP_STATS(ACCEPTS);
+		PRINT_TCP_STATS(CONNECTS);
+		PRINT_TCP_STATS(DROPS);
+		PRINT_TCP_STATS(CONNDROPS);
+		PRINT_TCP_STATS(CLOSED);
+		PRINT_TCP_STATS(SEGSTIMED);
+		PRINT_TCP_STATS(RTTUPDATED);
+		PRINT_TCP_STATS(DELACK);
+		PRINT_TCP_STATS(TIMEOUTDROP);
+		PRINT_TCP_STATS(REXMTTIMEO);
+		PRINT_TCP_STATS(PERSISTTIMEO);
+		PRINT_TCP_STATS(KEEPTIMEO);
+		PRINT_TCP_STATS(KEEPPROBE);
+		PRINT_TCP_STATS(KEEPDROPS);
+		PRINT_TCP_STATS(PERSISTDROPS);
+		PRINT_TCP_STATS(CONNSDRAINED);
+		PRINT_TCP_STATS(PMTUBLACKHOLE);
+		PRINT_TCP_STATS(SNDTOTAL);
+		PRINT_TCP_STATS(SNDPACK);
+		PRINT_TCP_STATS(SNDBYTE);
+		PRINT_TCP_STATS(SNDREXMITPACK);
+		PRINT_TCP_STATS(SNDREXMITBYTE);
+		PRINT_TCP_STATS(SNDACKS);
+		PRINT_TCP_STATS(SNDPROBE);
+		PRINT_TCP_STATS(SNDURG);
+		PRINT_TCP_STATS(SNDWINUP);
+		PRINT_TCP_STATS(SNDCTRL);
+		PRINT_TCP_STATS(RCVTOTAL);
+		PRINT_TCP_STATS(RCVPACK);
+		PRINT_TCP_STATS(RCVBYTE);
+		PRINT_TCP_STATS(RCVBADSUM);
+		PRINT_TCP_STATS(RCVBADOFF);
+		PRINT_TCP_STATS(RCVMEMDROP);
+		PRINT_TCP_STATS(RCVSHORT);
+		PRINT_TCP_STATS(RCVDUPPACK);
+		PRINT_TCP_STATS(RCVDUPBYTE);
+		PRINT_TCP_STATS(RCVPARTDUPPACK);
+		PRINT_TCP_STATS(RCVPARTDUPBYTE);
+		PRINT_TCP_STATS(RCVOOPACK);
+		PRINT_TCP_STATS(RCVOOBYTE);
+		PRINT_TCP_STATS(RCVPACKAFTERWIN);
+		PRINT_TCP_STATS(RCVBYTEAFTERWIN);
+		PRINT_TCP_STATS(RCVAFTERCLOSE);
+		PRINT_TCP_STATS(RCVWINPROBE);
+		PRINT_TCP_STATS(RCVDUPACK);
+		PRINT_TCP_STATS(RCVACKTOOMUCH);
+		PRINT_TCP_STATS(RCVACKPACK);
+		PRINT_TCP_STATS(RCVACKBYTE);
+		PRINT_TCP_STATS(RCVWINUPD);
+		PRINT_TCP_STATS(PAWSDROP);
+		PRINT_TCP_STATS(PREDACK);
+		PRINT_TCP_STATS(PREDDAT);
+		PRINT_TCP_STATS(PCBHASHMISS);
+		PRINT_TCP_STATS(NOPORT);
+		PRINT_TCP_STATS(BADSYN);
+		printf("mbufs_allocated_for_tx %lu\n",mbufs_allocated_for_tx);
+		printf("mbufs_allocated_for_rx %lu\n",mbufs_allocated_for_rx);
+		printf("mbufs_freed_for_tx %lu\n",mbufs_freed_for_tx);
+		printf("mbufs_freed_for_rx %lu\n",mbufs_freed_for_rx);
+		sleep(1);
+	}
 }
 
 int app_glue_get_socket_type(struct socket *so)
@@ -683,6 +731,7 @@ int app_glue_sendto(struct socket *so, void *data,int len, void *desc)
 	m_freem(addr);
         return -1;
     }
+    mbufs_allocated_for_tx++;
     rc = sosend(so, addr, top, NULL, 0);
     m_freem(addr);
     return rc;
@@ -700,6 +749,7 @@ int app_glue_receivefrom(struct socket *so, void **buf)
 	p = mtod(mp0, char *);
 	mp0->m_paddr = NULL;
 	memcpy(p - sizeof(struct sockaddr_in), mtod(paddr, char *), sizeof(struct sockaddr_in));
+	mbufs_freed_for_rx++;
 	m_freem(mp0);
 	if(paddr) {
 		m_freem(paddr);
@@ -717,6 +767,7 @@ int app_glue_send(struct socket *so, void *data,int len, void *desc)
     if(!top) {
         return -1;
     }
+    mbufs_allocated_for_tx++;
     rc = sosend(so, NULL, top,NULL, 0);
     return rc;
 }
@@ -729,8 +780,9 @@ int app_glue_receive(struct socket *so,void **buf)
     rc = soreceive( so, NULL,&mp0, &controlp, &flags);
     if(!rc) {
 	*buf = mp0->m_paddr;
-	mp0->m_paddr = NULL;	
-	m_freem(mp0);
+	mp0->m_paddr = NULL;
+	mbufs_freed_for_rx++;	
+	m_free(mp0);
     }
     return rc;
 }
@@ -853,61 +905,14 @@ int main(int argc,char **argv)
     ifp = createInterface(0);
     app_glue_set_port_ifp(0, ifp);
     configure_if_addr(ifp, inet_addr("192.168.150.63"), inet_addr("255.255.255.0"));
-    void *socket1,*socket2;
 #if 0
     createLoopbackInterface();
-    unsigned i = 0,iterations_count = 100000;
-
-    sender_so = create_udp_socket("127.0.0.1",7777);
-    printf("%s %d\n",__FILE__,__LINE__);
-    receiver_so = create_udp_socket("127.0.0.1",7778);
-    user_on_transmission_opportunity(sender_so); 
-    while(i < iterations_count) {
-	    user_on_transmission_opportunity(sender_so);
-	    softint_run();
-	    app_glue_periodic(1,NULL,0);
-	    i++;
-    }
-printf("%s %d\n",__FILE__,__LINE__);
-    if(sender_so) {
-        app_glue_close_socket(sender_so);
-    }
-    if(receiver_so) {
-        app_glue_close_socket(receiver_so);
-    }
-
-printf("%s %d\n",__FILE__,__LINE__);
-    receiver_so = create_server_socket("127.0.0.1",7777);
-     if(!receiver_so) {
-        printf("cannot open server socket\n");
-        return -1;
-    }
-    sender_so = create_client_socket("127.0.0.1",11111,"127.0.0.1",7777);
-    if(!sender_so) {
-        printf("cannot open client socket\n");
-        return -1;
-    }
 #endif
-#if 0
-    softint_run();
-    softint_run();
-    softint_run();
-    i = 0;
-    while(i < iterations_count) {
-            user_on_transmission_opportunity(sender_so);
-            softint_run();
-            softint_run();
-            softint_run();
-            app_glue_periodic(1,NULL,0);
-            i++;
-    }
-#else
+    print_stats_thread_cpuid = get_current_cpu();
+    launch_threads();
     while(1) { 
 	    service_main_loop();
     }
-#endif
-    app_glue_close_socket(socket1);
-    app_glue_close_socket(socket2);
     printf("The END\n");
     return 0;
 }

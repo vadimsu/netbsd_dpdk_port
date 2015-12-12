@@ -70,7 +70,7 @@ static int dpdk_ioctl(struct ifnet *ifp, u_long cmd, void *arg)
 {
 	return 0;
 }
-
+uint64_t mbufs_freed_for_tx = 0;
 static void dpdk_if_start(struct ifnet *ifp)
 {
 	struct mbuf *m, *tmp;
@@ -87,6 +87,7 @@ static void dpdk_if_start(struct ifnet *ifp)
 		transmit_mbuf(0, 0, m->m_paddr);
 		m->m_paddr = NULL;
 		m_free(m);
+		mbufs_freed_for_tx++;
 	} while(1);
 }
 

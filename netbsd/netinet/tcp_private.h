@@ -38,6 +38,7 @@
 extern	percpu_t *tcpstat_percpu;
 
 #define	TCP_STAT_GETREF()	_NET_STAT_GETREF(tcpstat_percpu)
+#define TCP_STAT_GETREF_CPUID(cpuid) _NET_STAT_GETREF_CPUID(tcpstat_percpu, cpuid)
 #define	TCP_STAT_PUTREF()	_NET_STAT_PUTREF(tcpstat_percpu)
 
 #define	TCP_STATINC(x)		_NET_STATINC(tcpstat_percpu, x)

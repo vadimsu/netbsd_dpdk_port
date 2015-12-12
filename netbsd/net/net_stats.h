@@ -34,6 +34,10 @@
 
 #ifdef _KERNEL
 #include <special_includes/sys/percpu.h>
+void *
+percpu_getref_cpuid(percpu_t *pc, int cpuid);
+
+#define _NET_STAT_GETREF_CPUID(stat, cpuid) percpu_getref_cpuid((stat),(cpuid))
 
 #define	_NET_STAT_GETREF(stat)	percpu_getref((stat))
 #define	_NET_STAT_PUTREF(stat)	percpu_putref((stat))
