@@ -630,11 +630,14 @@ int app_glue_calc_size_of_data_to_send(void *sock)
 uint64_t mbufs_allocated_for_tx = 0;
 extern uint64_t mbufs_allocated_for_rx;
 extern uint64_t mbufs_freed_for_tx;
+extern uint64_t get_mbuf_called;
+extern uint64_t get_mbuf_failed;
+extern  uint64_t mbuf_free_called;
 uint64_t mbufs_freed_for_rx = 0;
 int print_stats_thread_cpuid = 0;
 void app_glue_print_stats()
 {
-#define PRINT_TCP_STATS(name) printf("%s %lu\n",#name,(uint64_t)(tcp_stat[TCP_STAT_##name]));
+#define PRINT_TCP_STATS(name) service_log(SERVICE_LOG_INFO,"%s %lu\n",#name,(uint64_t)(tcp_stat[TCP_STAT_##name]));
 	while(1) {
 		uint64_t *tcp_stat = TCP_STAT_GETREF_CPUID(print_stats_thread_cpuid);
 		PRINT_TCP_STATS(CONNATTEMPT);
@@ -693,10 +696,14 @@ void app_glue_print_stats()
 		PRINT_TCP_STATS(PCBHASHMISS);
 		PRINT_TCP_STATS(NOPORT);
 		PRINT_TCP_STATS(BADSYN);
-		printf("mbufs_allocated_for_tx %lu\n",mbufs_allocated_for_tx);
-		printf("mbufs_allocated_for_rx %lu\n",mbufs_allocated_for_rx);
-		printf("mbufs_freed_for_tx %lu\n",mbufs_freed_for_tx);
-		printf("mbufs_freed_for_rx %lu\n",mbufs_freed_for_rx);
+		service_log(SERVICE_LOG_INFO,"mbufs_allocated_for_tx %lu\n",mbufs_allocated_for_tx);
+		service_log(SERVICE_LOG_INFO,"mbufs_allocated_for_rx %lu\n",mbufs_allocated_for_rx);
+		service_log(SERVICE_LOG_INFO,"mbufs_freed_for_tx %lu\n",mbufs_freed_for_tx);
+		service_log(SERVICE_LOG_INFO,"mbufs_freed_for_rx %lu\n",mbufs_freed_for_rx);
+		print_user_stats();
+		service_log(SERVICE_LOG_INFO,"get_mbuf_called %lu\n",get_mbuf_called);
+		service_log(SERVICE_LOG_INFO,"get_mbuf_failed %lu\n",get_mbuf_failed);
+		service_log(SERVICE_LOG_INFO,"mbuf_free_called %lu \n", mbuf_free_called);
 		sleep(1);
 	}
 }
@@ -766,9 +773,9 @@ int app_glue_send(struct socket *so, void *data,int len, void *desc)
     top = m_devget(data, len, 0, NULL, desc);
     if(!top) {
         return -1;
-    }
-    mbufs_allocated_for_tx++;
+    } 
     rc = sosend(so, NULL, top,NULL, 0);
+    mbufs_allocated_for_tx += (rc == 0);
     return rc;
 }
 
@@ -813,7 +820,8 @@ void app_glue_process_tx_empty(void *so)
                if(!sock->buffers_available_notification_queue_present) {
                    TAILQ_INSERT_TAIL(&buffers_available_notification_socket_list_head, sock, buffers_available_notification_queue_entry);
                    sock->buffers_available_notification_queue_present = 1;
-	   	    user_set_socket_tx_space(app_glue_get_glueing_block(sock),sbspace(&sock->so_snd));
+		   if (app_glue_get_socket_type(sock) == 2)
+	   	   	user_set_socket_tx_space(app_glue_get_glueing_block(sock),sbspace(&sock->so_snd));
 		}
            }
 }
@@ -909,6 +917,7 @@ int main(int argc,char **argv)
     createLoopbackInterface();
 #endif
     print_stats_thread_cpuid = get_current_cpu();
+    service_set_log_level(0);
     launch_threads();
     while(1) { 
 	    service_main_loop();

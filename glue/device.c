@@ -86,7 +86,7 @@ static void dpdk_if_start(struct ifnet *ifp)
 		}	
 		transmit_mbuf(0, 0, m->m_paddr);
 		m->m_paddr = NULL;
-		m_free(m);
+		m_freem(m);
 		mbufs_freed_for_tx++;
 	} while(1);
 }

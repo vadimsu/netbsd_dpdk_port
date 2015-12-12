@@ -615,7 +615,11 @@ inline int service_send(int sock,void *pdesc,int offset,int length)
     rte_atomic16_set(&(local_socket_descriptors[sock & SOCKET_READY_MASK].socket->write_ready_to_app),0);
     rc = service_enqueue_tx_buf(sock,mbuf);
     if(rc == 0)
+#if 0
         rte_atomic32_sub(&(local_socket_descriptors[sock & SOCKET_READY_MASK].socket->tx_space),length);
+#else
+	;
+#endif
 #ifdef USE_LOCAL_READY_CACHE
     else
 	SERVICE_UPDATE_LOCAL_READY_CACHE(local_socket_descriptors[sock].select,&local_socket_descriptors[sock],SOCKET_WRITABLE_BIT);
@@ -641,7 +645,11 @@ inline int service_send_bulk(int sock,struct data_and_descriptor *bufs_and_desc,
     rc = service_enqueue_tx_bufs_bulk(sock,mbufs,buffer_count);
 
     if(rc == 0)
+#if 0
 	rte_atomic32_sub(&(local_socket_descriptors[sock].socket->tx_space),total_length);
+#else
+	;
+#endif
 #ifdef USE_LOCAL_READY_CACHE
     else
 	SERVICE_UPDATE_LOCAL_READY_CACHE(local_socket_descriptors[sock].select,&local_socket_descriptors[sock],SOCKET_WRITABLE_BIT);

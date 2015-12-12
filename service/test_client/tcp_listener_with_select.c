@@ -12,7 +12,7 @@
 #include <string.h>
 #include <getopt.h>
 
-#define USE_TX 1
+#define USE_TX 0
 #define USE_RX 1
 #define LISTENERS_COUNT 1
 #define LISTENERS_BASE 7777
@@ -144,7 +144,7 @@ int main(int argc,char **argv)
 	                service_set_socket_select(newsock,selector);
 			if (rxtxmask & 0x1)
 				service_fdset (newsock, &readfdset);
-			if (rxtxmask & 0x3)
+			if (rxtxmask & 0x2)
 				service_fdset (newsock, &writefdset);
 			service_fdset (newsock, &excfdset);
             	    }

@@ -15,12 +15,8 @@
 
 uint64_t user_on_tx_opportunity_cycles = 0;
 uint64_t user_on_tx_opportunity_called = 0;
-uint64_t user_on_tx_opportunity_getbuff_called = 0;
 uint64_t user_on_tx_opportunity_api_nothing_to_tx = 0;
 uint64_t user_on_tx_opportunity_api_failed = 0;
-uint64_t user_on_tx_opportunity_api_mbufs_sent = 0;
-uint64_t user_on_tx_opportunity_socket_full = 0;
-uint64_t user_on_tx_opportunity_cannot_get_buff = 0;
 uint64_t user_on_rx_opportunity_called = 0;
 uint64_t user_on_rx_opportunity_called_exhausted = 0;
 uint64_t user_rx_mbufs = 0;
@@ -28,9 +24,8 @@ uint64_t user_kick_tx = 0;
 uint64_t user_kick_rx = 0;
 uint64_t user_kick_select_rx = 0;
 uint64_t user_kick_select_tx = 0;
-uint64_t user_on_tx_opportunity_cannot_send = 0;
+uint64_t user_on_tx_opportunity_mbufs_sent = 0;
 uint64_t user_rx_ring_full = 0;
-uint64_t user_on_tx_opportunity_socket_send_error = 0;
 uint64_t user_client_app_accepted = 0;
 uint64_t user_pending_accept = 0;
 uint64_t user_sockets_closed = 0;
@@ -110,25 +105,17 @@ static void on_client_connect(int client_idx)
 #endif
 }
 
-static inline void user_increment_socket_tx_space(rte_atomic32_t *tx_space,int count)
-{
-	rte_atomic32_add(tx_space,count);
-}
 void user_set_socket_tx_space(socket_satelite_data_t *socket_satelite_data, int count)
 {
 	rte_atomic32_set(&g_service_sockets[socket_satelite_data->ringset_idx].tx_space, count);
 }
 
-void user_transmitted_callback(struct rte_mbuf *mbuf,struct socket *sock)
+void service_reflect_tx_socket_buf(struct socket *sock, int count)
 {
-	int last = /*(rte_mbuf_refcnt_read(mbuf) == 1)*/1;
-        if((sock)&&(last)) {
-               socket_satelite_data_t *socket_satelite_data = app_glue_get_glueing_block(sock);
-               if(socket_satelite_data) {
-//                       user_increment_socket_tx_space(&g_service_sockets[socket_satelite_data->ringset_idx].tx_space,rte_pktmbuf_data_len(mbuf));
-               }
-        }
-        rte_pktmbuf_free_seg(mbuf);
+	socket_satelite_data_t *socket_satelite_data = app_glue_get_glueing_block(sock);
+	if(socket_satelite_data) {
+		rte_atomic32_add(&g_service_sockets[socket_satelite_data->ringset_idx].tx_space, count);
+	}
 }
 
 void service_on_transmission_opportunity(void *so, void *glueing_block)
@@ -165,12 +152,8 @@ void service_on_transmission_opportunity(void *so, void *glueing_block)
 			}
 			for(i = 0;i < dequeued;i++) {
 				rc = app_glue_send(so, rte_pktmbuf_mtod(mbuf[i], char *),rte_pktmbuf_data_len(mbuf[i]), mbuf[i]);
-				if(rc < 0) {
-	                            user_on_tx_opportunity_api_failed += dequeued - i;
-        	                    for(;i < dequeued;i++)
-                	                rte_pktmbuf_free(mbuf[i]);
-				    return;
-                            	}
+				user_on_tx_opportunity_api_failed += (rc != 0);
+				user_on_tx_opportunity_mbufs_sent += (rc == 0);	
                         }
 		} while(1);
 		break;
@@ -195,6 +178,7 @@ void service_on_transmission_opportunity(void *so, void *glueing_block)
                 	                rte_pktmbuf_free(mbuf[i]);
 				    return;
                             	}
+				user_on_tx_opportunity_mbufs_sent++;
                         }
 		} while(1);
 		break;
@@ -533,8 +517,8 @@ void service_main_loop()
         while(!app_glue_is_buffers_available_waiters_empty()) {
             if(get_buffer_count() > 0) {
                 socket_satelite_data_t *socket_data = app_glue_get_first_buffers_available_waiter();
-//                if(socket_data->socket->type == SOCK_DGRAM)
-              	user_set_socket_tx_space(socket_data, app_glue_get_sock_snd_buf_space(socket_data->socket));
+		if(app_glue_get_socket_type(socket_data->socket) == 2)
+              		user_set_socket_tx_space(socket_data, app_glue_get_sock_snd_buf_space(socket_data->socket));
                 if(!service_mark_writable(socket_data)) {
                     app_glue_remove_first_buffer_available_waiter(socket_data->socket);
                 }
@@ -552,19 +536,14 @@ void service_main_loop()
 void print_user_stats()
 {
 	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_called %"PRIu64"\n",user_on_tx_opportunity_called);
-	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_api_nothing_to_tx %"PRIu64"user_on_tx_opportunity_socket_full %"PRIu64" \n",
-                user_on_tx_opportunity_api_nothing_to_tx,user_on_tx_opportunity_socket_full);
+	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_api_nothing_to_tx %"PRIu64" \n", user_on_tx_opportunity_api_nothing_to_tx);
 	service_log(SERVICE_LOG_INFO,"user_kick_tx %"PRIu64" user_kick_rx %"PRIu64" user_kick_select_tx %"PRIu64" user_kick_select_rx %"PRIu64"\n",
                 user_kick_tx,user_kick_rx,user_kick_select_tx,user_kick_select_rx);
-	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_cannot_send %"PRIu64"\n",user_on_tx_opportunity_cannot_send);
-	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_socket_send_error %"PRIu64"\n",user_on_tx_opportunity_socket_send_error);
-	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_cannot_get_buff %"PRIu64"\n",user_on_tx_opportunity_cannot_get_buff);
-	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_getbuff_called %"PRIu64"\n",user_on_tx_opportunity_getbuff_called);
+	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_mbufs_sent %"PRIu64"\n", user_on_tx_opportunity_mbufs_sent);
 	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_api_failed %"PRIu64"\n",	user_on_tx_opportunity_api_failed);
 	service_log(SERVICE_LOG_INFO,"user_on_rx_opportunity_called %"PRIu64"\n",user_on_rx_opportunity_called);
 	service_log(SERVICE_LOG_INFO,"user_on_rx_opportunity_called_exhausted %"PRIu64"\n",user_on_rx_opportunity_called_exhausted);
 	service_log(SERVICE_LOG_INFO,"user_rx_mbufs %"PRIu64" user_rx_ring_full %"PRIu64"\n",user_rx_mbufs,user_rx_ring_full);
-	service_log(SERVICE_LOG_INFO,"user_on_tx_opportunity_api_mbufs_sent %"PRIu64"\n",user_on_tx_opportunity_api_mbufs_sent);
 	service_log(SERVICE_LOG_INFO,"user_client_app_accepted %"PRIu64" user_pending_accept %"PRIu64"\n",user_client_app_accepted, user_pending_accept);
 	service_log(SERVICE_LOG_INFO,"user_sockets_closed %"PRIu64" user_sockets_shutdown %"PRIu64"\n",
 	user_sockets_closed, user_sockets_shutdown);

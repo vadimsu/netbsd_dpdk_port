@@ -522,15 +522,20 @@ m_reclaim(void *arg, int flags)
  * These are also available as macros
  * for critical paths.
  */
+uint64_t get_mbuf_called = 0;
+uint64_t get_mbuf_failed = 0;
+uint64_t mbuf_free_called = 0;
 struct	mbuf *m_get_indirect(int type)
 {
 	struct mbuf *m;
-	
+	get_mbuf_called++;
 	KASSERT(type != MT_FREE);
 
 	m = pool_cache_get(mb_cache, PR_WAITOK);
-	if (m == NULL)
+	if (m == NULL) {
+		get_mbuf_failed++;
 		return NULL;
+	}
 
 	mbstat_type_add(type, 1);
 	mowner_init(m, type);
@@ -549,13 +554,15 @@ m_get(int nowait, int type)
 {
 	struct mbuf *m;
 	struct rte_mbuf *data_buf;
-
+	get_mbuf_called++;
 	KASSERT(type != MT_FREE);
 
 	m = pool_cache_get(mb_cache,
 	    nowait == M_WAIT ? PR_WAITOK|PR_LIMITFAIL : 0);
-	if (m == NULL)
+	if (m == NULL) {
+		get_mbuf_failed++;
 		return NULL;
+	}
 
 	mbstat_type_add(type, 1);
 	mowner_init(m, type);
@@ -580,10 +587,12 @@ struct mbuf *
 m_gethdr(int nowait, int type)
 {
 	struct mbuf *m;
-
+	get_mbuf_called++;
 	m = m_get(nowait, type);
-	if (m == NULL)
+	if (m == NULL) {
+		get_mbuf_failed++;
 		return NULL;
+	}
 
 	m->m_pktdat = m->m_data; 
 	m->m_flags = M_PKTHDR;
@@ -1192,10 +1201,12 @@ m_devget(char *buf, int totlen, int off0, struct ifnet *ifp, void *pdesc)
 {
 #if 1
 	struct mbuf *m;
-
+	get_mbuf_called++;
 	m = pool_cache_get(mb_cache, 0);
-	if (m == NULL)
+	if (m == NULL) {
+		get_mbuf_failed++;
 		return NULL;
+	}
 
 	mbstat_type_add(MT_DATA, 1);
 	mowner_init(m, MT_DATA);

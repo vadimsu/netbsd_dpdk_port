@@ -546,12 +546,16 @@ do {									\
  * Free a single mbuf and associated external storage.
  * Place the successor, if any, in n.
  */
+extern uint64_t mbuf_free_called;
 #define MFREE(m, n)                                                     \
           if ((m)->m_flags & M_PKTHDR)                                    \
                   m_tag_delete_chain((m), NULL);                          \
           (n) = (m)->m_next;                                              \
-	  if(m->m_paddr)						  \
+	  if(m->m_paddr) {						  \
  	  	free_mbuf(m->m_paddr);			 		\
+		m->m_paddr = NULL;					\
+	  }								\
+	  mbuf_free_called++;						\
           pool_cache_put(mb_cache, (m));                          \
 /*
  * Copy mbuf pkthdr from `from' to `to'.

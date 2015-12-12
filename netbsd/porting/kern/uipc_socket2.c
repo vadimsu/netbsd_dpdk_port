@@ -817,7 +817,7 @@ sbappendstream(struct sockbuf *sb, struct mbuf *m)
 #ifdef MBUFTRACE
 	m_claimm(m, sb->sb_mowner);
 #endif
-
+	service_reflect_tx_socket_buf(sb->sb_so, m->m_len);		
 	sbcompress(sb, m, sb->sb_mbtail);
 
 	sb->sb_lastrecord = sb->sb_mb;
@@ -1287,9 +1287,11 @@ sbdrop(struct sockbuf *sb, int len)
 			m->m_len -= len;
 			m->m_data += len;
 			sb->sb_cc -= len;
+			service_reflect_tx_socket_buf(sb->sb_so, len);
 			break;
 		}
 		len -= m->m_len;
+		service_reflect_tx_socket_buf(sb->sb_so, m->m_len);
 		sbfree(sb, m);
 		MFREE(m, mn);
 		m = mn;
