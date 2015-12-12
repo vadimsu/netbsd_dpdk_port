@@ -15,6 +15,7 @@
 #define IFCAP_RXCSUM (IFCAP_CSUM_IPv4_Rx|IFCAP_CSUM_TCPv4_Rx|IFCAP_CSUM_UDPv4_Rx|IFCAP_CSUM_TCPv6_Rx|IFCAP_CSUM_UDPv6_Rx)
 #define IFCAP_HWCSUM (IFCAP_TXCSUM|IFCAP_RXCSUM)
 #define IFCAP_LRO 0
+#define MAX_SEGMENTS (65535/1448 + ((65535%1448) != 0))
 
 void configure_if_addr(struct ifnet *ifp,unsigned int ip_addr,unsigned int mask)
 {
@@ -72,13 +73,19 @@ static int dpdk_ioctl(struct ifnet *ifp, u_long cmd, void *arg)
 
 static void dpdk_if_start(struct ifnet *ifp)
 {
-	struct mbuf *m;
-
+	struct mbuf *m, *tmp;
+	void *prev;
+	
 	do {
 		IFQ_DEQUEUE(&ifp->if_snd, m);
 		if (!m)
 			break;
-		transmit_mbuf(0, 0, m->m_paddr, m->m_len, m->m_data);
+
+		for (tmp = m, prev = NULL; tmp; prev = tmp->m_paddr, tmp = tmp->m_next) {
+			prepare_buffer_for_transmit(m->m_paddr, prev, tmp->m_paddr, tmp->m_data, tmp->m_len);
+		}	
+		transmit_mbuf(0, 0, m->m_paddr);
+		m->m_paddr = NULL;
 		m_free(m);
 	} while(1);
 }
@@ -86,7 +93,7 @@ static void dpdk_if_start(struct ifnet *ifp)
 static int dpdk_if_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *sa, struct rtentry *re)
 {
 printf("%s %d\n",__FILE__,__LINE__);
-    transmit_mbuf(0, 0, m->m_paddr);
+//    transmit_mbuf(0, 0, m->m_paddr);
     return 0;
 }
 

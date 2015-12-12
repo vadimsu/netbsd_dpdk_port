@@ -747,6 +747,12 @@ int app_glue_setsockopt(void *so, int level, int name, size_t size, void *data)
 	return sosetopt(so, &sockoption);
 }
 
+int app_glue_get_sock_snd_buf_space(void *so)
+{
+	struct socket *sock = (struct socket *)so;
+	return sbspace(&sock->so_snd);
+}
+
 TAILQ_HEAD(buffers_available_notification_socket_list_head, socket) buffers_available_notification_socket_list_head;
 void app_glue_process_tx_empty(void *so)
 {
@@ -755,10 +761,8 @@ void app_glue_process_tx_empty(void *so)
                if(!sock->buffers_available_notification_queue_present) {
                    TAILQ_INSERT_TAIL(&buffers_available_notification_socket_list_head, sock, buffers_available_notification_queue_entry);
                    sock->buffers_available_notification_queue_present = 1;
-		   if(sock->so_type == SOCK_DGRAM)
-//		   	user_set_socket_tx_space(&g_service_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk));
-			;
-               }
+	   	    user_set_socket_tx_space(app_glue_get_glueing_block(sock),sbspace(&sock->so_snd));
+		}
            }
 }
 

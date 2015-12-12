@@ -214,20 +214,36 @@ void poll_rx(void *ifp, int portid, int queue_id)
 	}
 }
 
-void transmit_mbuf(int portid, int queue_id, void *pdesc, int len, void *buf)
+void prepare_buffer_for_transmit(void *p_header_desc, void *pprev, void *pdesc, void *buf, int length)
 {
-	struct rte_mbuf *mbuf = (struct rte_mbuf *)pdesc;
-
-	if (len == 0) {
-		printf("%s %d\n",__func__,__LINE__);
-		goto free_mbuf;
-	}
+	struct rte_mbuf *head = (struct rte_mbuf *)p_header_desc, *prev = (struct rte_mbuf *)pprev, *mbuf = (struct rte_mbuf *)pdesc;
 
 	if(rte_pktmbuf_data_len(mbuf) == 0) {
-		rte_pktmbuf_data_len(mbuf) = len;
-		rte_pktmbuf_pkt_len(mbuf) = len;
+		rte_pktmbuf_data_len(mbuf) = length;
+		if (pprev == NULL) {
+			head->pkt_len = length;
+			head->nb_segs = 1;
+		} else {
+			head->pkt_len += length;
+			prev->next = mbuf;
+			head->nb_segs++;
+		}
 		mbuf->data_off += (char *)buf - rte_pktmbuf_mtod(mbuf, char *);
+	} else {
+		if (pprev == NULL) {
+			head->pkt_len = length;
+			head->nb_segs = 1;
+		} else {
+			head->pkt_len += rte_pktmbuf_data_len(mbuf);
+			prev->next = mbuf;
+			head->nb_segs++;
+		}
 	}
+}
+
+void transmit_mbuf(int portid, int queue_id, void *pdesc)
+{
+	struct rte_mbuf *mbuf = (struct rte_mbuf *)pdesc;
 
 	int  transmitted= rte_eth_tx_burst(portid, queue_id, &mbuf, 1);
 	if (transmitted == 1)
@@ -281,11 +297,7 @@ static struct rte_mempool *mbufs_mempool = NULL;
 
 int get_buffer_count()
 {
-#if 0
 	return rte_mempool_count(mbufs_mempool);
-#else
-	return 0;
-#endif
 }
 
 void create_app_mbufs_mempool()
@@ -331,3 +343,4 @@ void notify_app_about_accepted_sock(void *so2, void *parent_descriptor, unsigned
 		service_post_accepted(cmd,parent_descriptor);
 	}
 }
+

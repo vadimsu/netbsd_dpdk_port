@@ -56,6 +56,8 @@ TAILQ_HEAD(buffers_available_notification_socket_list_head, socket) buffers_avai
 struct service_clients service_clients[SERVICE_CLIENTS_POOL_SIZE];
 TAILQ_HEAD(service_clients_list_head, service_clients) service_clients_list_head;
 
+int app_glue_get_sock_snd_buf_space(void *);
+
 int get_all_devices(unsigned char *buf);
 
 int get_all_addresses(unsigned char *buf);
@@ -112,9 +114,9 @@ static inline void user_increment_socket_tx_space(rte_atomic32_t *tx_space,int c
 {
 	rte_atomic32_add(tx_space,count);
 }
-static inline void user_set_socket_tx_space(rte_atomic32_t *tx_space,int count)
+void user_set_socket_tx_space(socket_satelite_data_t *socket_satelite_data, int count)
 {
-	rte_atomic32_set(tx_space,count);
+	rte_atomic32_set(&g_service_sockets[socket_satelite_data->ringset_idx].tx_space, count);
 }
 
 void user_transmitted_callback(struct rte_mbuf *mbuf,struct socket *sock)
@@ -162,9 +164,8 @@ void service_on_transmission_opportunity(void *so, void *glueing_block)
                         	rte_prefetch0(rte_pktmbuf_mtod(mbuf[i],void *));
 			}
 			for(i = 0;i < dequeued;i++) {
-				rc = app_glue_send(so, rte_pktmbuf_mtod(mbuf[i], char *),rte_pktmbuf_pkt_len(mbuf[i]), mbuf[i]);
-				printf("sent rc=%d\n",rc);
-				if(rc <= 0) {
+				rc = app_glue_send(so, rte_pktmbuf_mtod(mbuf[i], char *),rte_pktmbuf_data_len(mbuf[i]), mbuf[i]);
+				if(rc < 0) {
 	                            user_on_tx_opportunity_api_failed += dequeued - i;
         	                    for(;i < dequeued;i++)
                 	                rte_pktmbuf_free(mbuf[i]);
@@ -187,9 +188,8 @@ void service_on_transmission_opportunity(void *so, void *glueing_block)
                         	rte_prefetch0(rte_pktmbuf_mtod(mbuf[i],void *));
 			}
 			for(i = 0;i < dequeued;i++) {	
-				rc = app_glue_sendto(so, rte_pktmbuf_mtod(mbuf[i], char *),rte_pktmbuf_pkt_len(mbuf[i]), mbuf[i]);
-				printf("sent rc=%d\n",rc);
-				if(rc <= 0) {
+				rc = app_glue_sendto(so, rte_pktmbuf_mtod(mbuf[i], char *),rte_pktmbuf_data_len(mbuf[i]), mbuf[i]);
+				if(rc < 0) {
 	                            user_on_tx_opportunity_api_failed += dequeued - i;
         	                    for(;i < dequeued;i++)
                 	                rte_pktmbuf_free(mbuf[i]);
@@ -310,8 +310,8 @@ static inline void process_commands()
                app_glue_set_glueing_block(sock,(void *)&socket_satelite_data[cmd->ringset_idx]);
                socket_satelite_data[cmd->ringset_idx].socket = sock;
             //   service_log(SERVICE_LOG_DEBUG,"%d setting tx_space %d\n",__LINE__,sk_stream_wspace(sock->sk));
-	       user_set_socket_tx_space(&g_service_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,
-			/*sk_stream_wspace(sock->sk)*/100000000);
+	       user_set_socket_tx_space(&socket_satelite_data[cmd->ringset_idx],
+			app_glue_get_sock_snd_buf_space(socket_satelite_data[cmd->ringset_idx].socket));
            }
            service_log(SERVICE_LOG_DEBUG,"Done\n");
            break;
@@ -388,8 +388,8 @@ static inline void process_commands()
 	   socket_satelite_data[cmd->ringset_idx].apppid = cmd->u.set_socket_ring.pid;
            app_glue_set_glueing_block(cmd->u.set_socket_ring.socket_descr,&socket_satelite_data[cmd->ringset_idx]);
            socket_satelite_data[cmd->ringset_idx].socket = cmd->u.set_socket_ring.socket_descr; 
-	   user_set_socket_tx_space(&g_service_sockets[socket_satelite_data[cmd->ringset_idx].ringset_idx].tx_space,
-			/*sk_stream_wspace(socket_satelite_data[cmd->ringset_idx].socket->sk)*/100000000);
+	   user_set_socket_tx_space(&socket_satelite_data[cmd->ringset_idx],
+			app_glue_get_sock_snd_buf_space(socket_satelite_data[cmd->ringset_idx].socket));
            user_data_available_cbk(socket_satelite_data[cmd->ringset_idx].socket, &socket_satelite_data[cmd->ringset_idx]);
 	   service_mark_writable(&socket_satelite_data[cmd->ringset_idx]);
 	   service_mark_readable(&socket_satelite_data[cmd->ringset_idx]);
@@ -534,7 +534,7 @@ void service_main_loop()
             if(get_buffer_count() > 0) {
                 socket_satelite_data_t *socket_data = app_glue_get_first_buffers_available_waiter();
 //                if(socket_data->socket->type == SOCK_DGRAM)
-  //              	user_set_socket_tx_space(&g_service_sockets[socket_data->ringset_idx].tx_space,sk_stream_wspace(socket_data->socket->sk));
+              	user_set_socket_tx_space(socket_data, app_glue_get_sock_snd_buf_space(socket_data->socket));
                 if(!service_mark_writable(socket_data)) {
                     app_glue_remove_first_buffer_available_waiter(socket_data->socket);
                 }
