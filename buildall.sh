@@ -1,14 +1,14 @@
 rm -rf ./netbsd/build/
 make -C ./dpdk-2.0.0 config T=x86_64-native-linuxapp-gcc
 make -C ./dpdk-2.0.0 install T=x86_64-native-linuxapp-gcc
-make -C log CURRENT_DIR=$(pwd)/ 
-make -C service CURRENT_DIR=$(pwd)/ RTE_SDK=$(pwd)/dpdk-2.0.0
-make -C netbsd CURRENT_DIR=$(pwd)/ RTE_SDK=$(pwd)/dpdk-2.0.0
-make -C netbsd/porting/pool CURRENT_DIR=$(pwd)/ 
-make -C netbsd/porting/callout CURRENT_DIR=$(pwd)/
-make -C netbsd/porting/kmem CURRENT_DIR=$(pwd)/
-make -C netbsd/porting/rte_wrappers CURRENT_DIR=$(pwd)/
-make -C netbsd/porting/misc CURRENT_DIR=$(pwd)/ 
+make -C log CURRENT_DIR=$(pwd)/ OPTIMIZATION=$OPT
+make -C service CURRENT_DIR=$(pwd)/ RTE_SDK=$(pwd)/dpdk-2.0.0 OPTIMIZATION=-g
+make -C netbsd CURRENT_DIR=$(pwd)/ RTE_SDK=$(pwd)/dpdk-2.0.0 OPTIMIZATION=-g
+make -C netbsd/porting/pool CURRENT_DIR=$(pwd)/ OPTIMIZATION=-g
+make -C netbsd/porting/callout CURRENT_DIR=$(pwd)/ OPTIMIZATION=-g
+make -C netbsd/porting/kmem CURRENT_DIR=$(pwd)/ OPTIMIZATION=-g
+make -C netbsd/porting/rte_wrappers CURRENT_DIR=$(pwd)/ OPTIMIZATION=-g
+make -C netbsd/porting/misc CURRENT_DIR=$(pwd)/ OPTIMIZATION=-g
 sudo mkdir -p /usr/lib/netbsddpdk
 sudo cp netbsd/build/libbsdnetinet.so /usr/lib/netbsddpdk/.
 sudo cp netbsd/porting/callout/build/libcalloutporting.so /usr/lib/netbsddpdk/.
@@ -19,8 +19,8 @@ sudo cp netbsd/porting/rte_wrappers/build/librtewrappers.so /usr/lib/netbsddpdk/
 sudo cp service/build/libnetbsddpdkservice.so /usr/lib/netbsddpdk/.
 sudo cp log/build/libnetbsddpdklog.so /usr/lib/netbsddpdk/.
 sudo cp ./dpdk-2.0.0/x86_64-native-linuxapp-gcc/lib/* /usr/lib/netbsddpdk/.
-make -C glue CURRENT_DIR=$(pwd)/ RTE_SDK=$(pwd)/dpdk-2.0.0
-make -C service/app_api CURRENT_DIR=$(pwd)/ RTE_SDK=$(pwd)/dpdk-2.0.0
+make -C glue CURRENT_DIR=$(pwd)/ RTE_SDK=$(pwd)/dpdk-2.0.0 OPTIMIZATION=-g
+make -C service/app_api CURRENT_DIR=$(pwd)/ RTE_SDK=$(pwd)/dpdk-2.0.0 OPTIMIZATION=-g
 sudo mkdir -p /usr/include/netbsddpdk
 sudo cp service/app_api/api.h /usr/include/netbsddpdk/.
 sudo cp service/app_api/build/libnetbsddpdkapi.so /usr/lib/netbsddpdk/.

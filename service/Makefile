@@ -5,7 +5,7 @@ SRC_ROOT=$(CURRENT_DIR)
 SRCS-y := service_loop.c
 #opencrypto/cryptosoft_xform.c
 #porting/kern/uipc_mbuf.c
-CFLAGS += -Ofast
+CFLAGS += $(OPTIMIZATION)
 #CFLAGS += -g
 CFLAGS += $(WERROR_FLAGS)
 NETBSD_HEADERS=-I$(SRC_ROOT)/special_includes -I$(SRC_ROOT)/netbsd -I$(SRC_ROOT)

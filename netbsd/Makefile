@@ -16,8 +16,8 @@ porting/kern/uipc_domain.c porting/kern/kern_softint.c netinet/ip_etherip.c
 #opencrypto/cryptosoft_xform.c
 #porting/kern/uipc_mbuf.c
 #CFLAGS += -Ofast -fno-builtin
-CFLAGS += -fno-builtin
-CFLAGS += $(WERROR_FLAGS)
+CFLAGS += -fno-builtin 
+CFLAGS += $(WERROR_FLAGS) $(OPTIMIZATION)
 NETBSD_HEADERS=-I$(SRC_ROOT)/special_includes -I$(SRC_ROOT)/netbsd -I$(SRC_ROOT)
 DPDK_HEADERS=$(SRC_ROOT)/dpdk-2.0.0/x86_64-native-linuxapp-gcc/include
 ALL_HEADERS = $(NETBSD_HEADERS) -I$(DPDK_HEADERS)

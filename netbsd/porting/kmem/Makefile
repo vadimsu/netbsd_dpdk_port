@@ -3,7 +3,7 @@ RTE_TARGET ?= x86_64-native-linuxapp-gcc
 include $(RTE_SDK)/mk/rte.vars.mk
 SRC_ROOT=$(CURRENT_DIR)
 SRCS-y := subr_kmem.c 
-CFLAGS += -Ofast
+CFLAGS += $(OPTIMIZATION)
 CFLAGS += $(WERROR_FLAGS)
 DPDK_HEADERS = $(SRC_ROOT)/dpdk-2.0.0/x86_64-native-linuxapp-gcc/include
 ALL_HEADERS = -I$(DPDK_HEADERS) 

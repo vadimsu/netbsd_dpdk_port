@@ -3,7 +3,7 @@ RTE_TARGET ?= x86_64-native-linuxapp-gcc
 include $(RTE_SDK)/mk/rte.vars.mk
 SRC_ROOT=$(CURRENT_DIR)
 SRCS-y := rte_wrappers.c
-CFLAGS += -Ofast
+CFLAGS += $(OPTIMIZATION)
 #CFLAGS += -g
 CFLAGS += $(WERROR_FLAGS)
 DPDK_HEADERS = $(SRC_ROOT)/dpdk-2.0.0/x86_64-native-linuxapp-gcc/include
