@@ -398,7 +398,6 @@ static inline void process_rx_ready_sockets()
 		user_on_closure(app_glue_get_glueing_block(sock));
 		sock->closed_queue_present = 0;
 		TAILQ_REMOVE(&closed_socket_list_head,sock,closed_queue_entry);
-		soclose(sock);
 	}
 	while(!TAILQ_EMPTY(&accept_ready_socket_list_head)) {
 
@@ -591,12 +590,17 @@ void app_glue_close_socket(void *sk)
 		sock->write_queue_present = 0;
 	}
 	if(sock->accept_queue_present) {
-                struct socket *newsock = NULL;
-#if 0
-	        while(kernel_accept(sock, &newsock, 0) == 0) {
-                    soclose(newsock);
-                }
-#endif
+		while(sock->so_qlen) {
+	    		struct socket *so2 = TAILQ_FIRST(&sock->so_q);
+			struct mbuf *addr = m_get(M_WAIT, MT_SONAME);
+	
+			if (soqremque(so2, 1) == 0) {
+				break;
+			}
+		    	soaccept(so2,addr);
+			m_freem(addr);
+    		}
+
 		TAILQ_REMOVE(&accept_ready_socket_list_head,sock,accept_queue_entry);
 		sock->accept_queue_present = 0;
 	}
@@ -937,7 +941,7 @@ int main(int argc,char **argv)
     createLoopbackInterface();
 #endif
     print_stats_thread_cpuid = get_current_cpu();
-    //service_set_log_level(0);
+    service_set_log_level(0);
     launch_threads();
     while(1) { 
 	    service_main_loop();
