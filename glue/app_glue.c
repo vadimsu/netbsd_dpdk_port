@@ -82,10 +82,18 @@ uint64_t total_prev = 0;
 
 static inline void app_glue_sock_readable(struct socket *so)
 {
+	if (so->so_state & SS_ISDISCONNECTED) {
+		if(so->closed_queue_present) {
+			return;
+		}
+		so->closed_queue_present = 1;
+		TAILQ_INSERT_TAIL(&closed_socket_list_head,so,closed_queue_entry);
+		return;
+	}
 	if(so->so_type == SOCK_STREAM) {
 		struct tcpcb *tp = sototcpcb(so);
 
-		if(tp->t_state != TCPS_ESTABLISHED) {
+		if(tp && (tp->t_state != TCPS_ESTABLISHED)) {
 			if(tp->t_state == TCPS_LISTEN) {
 				if(so->accept_queue_present) {
 					return;
@@ -113,10 +121,18 @@ static inline void app_glue_sock_readable(struct socket *so)
  */
 static void app_glue_sock_write_space(struct socket *so)
 {
+	if (so->so_state & SS_ISDISCONNECTED) {
+		if(so->closed_queue_present) {
+			return;
+		}
+		so->closed_queue_present = 1;
+		TAILQ_INSERT_TAIL(&closed_socket_list_head,so,closed_queue_entry);
+		return;
+	}
 	if(so->so_type == SOCK_STREAM) {
 		struct tcpcb *tp = sototcpcb(so);
 
-		if(tp->t_state != TCPS_ESTABLISHED) {
+		if(tp && (tp->t_state != TCPS_ESTABLISHED)) {
 			return;
 		}
 	}
@@ -229,7 +245,7 @@ void *app_glue_create_socket(int family,int type)
 		service_log(SERVICE_LOG_ERR,"%s %d cannot set notimeout option\n",__FILE__,__LINE__);
 	}
 #endif
-	sock->so_upcall = app_glue_so_upcall;
+//	sock->so_upcall = app_glue_so_upcall;
 	sock->so_upcall2 = app_glue_so_upcall2;
 #if 0
 	if(type != SOCK_STREAM) {
@@ -321,7 +337,7 @@ int app_glue_v4_connect(void *so,unsigned int ipaddr,unsigned short port)
 int app_glue_v4_listen(void *so)
 {
 	struct socket *sock = (struct socket *)so;
-	sock->so_upcall2 = app_glue_so_upcall;
+//	sock->so_upcall2 = app_glue_so_upcall;
 	if(solisten(sock,32000)) {
 		printf("cannot listen %s %d\n",__FILE__,__LINE__);
 		return -1;
@@ -868,9 +884,8 @@ void user_on_accept(struct socket *so)
 			exit(1);
 		}
 	    	soaccept(so2,addr);
-		so2->so_upcall = app_glue_so_upcall;
+//		so2->so_upcall = app_glue_so_upcall;
 		so2->so_upcall2 = app_glue_so_upcall2;
-//	user_data_available_cbk(so2);
 		parent_descriptor = app_glue_get_glueing_block(so);
 		notify_app_about_accepted_sock(so2, parent_descriptor, 
 					((struct inpcb *)so2->so_pcb)->inp_faddr.s_addr, 

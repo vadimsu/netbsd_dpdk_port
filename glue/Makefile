@@ -3,8 +3,8 @@ RTE_TARGET ?= x86_64-native-linuxapp-gcc
 include $(RTE_SDK)/mk/rte.vars.mk
 SRC_ROOT=$(CURRENT_DIR)
 SRCS-y := app_glue.c device.c
-CFLAGS += -Ofast
-CFLAGS += $(WERROR_FLAGS)
+#CFLAGS += -Ofast
+CFLAGS += $(WERROR_FLAGS) $(OPTIMIZATION)
 DPDK_HEADERS = $(SRC_ROOT)/dpdk-2.0.0/x86_64-native-linuxapp-gcc/include
 NETBSD_HEADERS=-I$(SRC_ROOT)special_includes -I$(SRC_ROOT)netbsd/ -I$(SRC_ROOT)
 ALL_HEADERS = $(NETBSD_HEADERS)
