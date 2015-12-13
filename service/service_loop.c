@@ -114,7 +114,11 @@ void service_reflect_tx_socket_buf(struct socket *sock, int count)
 {
 	socket_satelite_data_t *socket_satelite_data = app_glue_get_glueing_block(sock);
 	if(socket_satelite_data) {
+		int before = rte_atomic32_read(&g_service_sockets[socket_satelite_data->ringset_idx].tx_space);	
 		rte_atomic32_add(&g_service_sockets[socket_satelite_data->ringset_idx].tx_space, count);
+		if ((before == 0) && (count > 0)) {
+			service_mark_writable(socket_satelite_data);
+		}
 	}
 }
 

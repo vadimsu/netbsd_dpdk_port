@@ -395,6 +395,7 @@ static inline void process_rx_ready_sockets()
 	while(!TAILQ_EMPTY(&closed_socket_list_head)) {
 		sock = TAILQ_FIRST(&closed_socket_list_head);
 //		user_on_socket_fatal(sock);
+		user_on_closure(app_glue_get_glueing_block(sock));
 		sock->closed_queue_present = 0;
 		TAILQ_REMOVE(&closed_socket_list_head,sock,closed_queue_entry);
 		soclose(sock);
