@@ -633,6 +633,8 @@ extern uint64_t mbufs_freed_for_tx;
 extern uint64_t get_mbuf_called;
 extern uint64_t get_mbuf_failed;
 extern  uint64_t mbuf_free_called;
+extern uint64_t pmd_received;
+extern uint64_t pmd_transmitted;
 uint64_t mbufs_freed_for_rx = 0;
 int print_stats_thread_cpuid = 0;
 void app_glue_print_stats()
@@ -704,6 +706,8 @@ void app_glue_print_stats()
 		service_log(SERVICE_LOG_INFO,"get_mbuf_called %lu\n",get_mbuf_called);
 		service_log(SERVICE_LOG_INFO,"get_mbuf_failed %lu\n",get_mbuf_failed);
 		service_log(SERVICE_LOG_INFO,"mbuf_free_called %lu \n", mbuf_free_called);
+		service_log(SERVICE_LOG_INFO,"md_received %lu\n",pmd_received);
+		service_log(SERVICE_LOG_INFO,"pmd_transmitted %lu\n", pmd_transmitted);
 		sleep(1);
 	}
 }
@@ -917,7 +921,7 @@ int main(int argc,char **argv)
     createLoopbackInterface();
 #endif
     print_stats_thread_cpuid = get_current_cpu();
-    service_set_log_level(0);
+    //service_set_log_level(0);
     launch_threads();
     while(1) { 
 	    service_main_loop();

@@ -198,6 +198,7 @@ error_ret:
 }
 void *m_devget(char *, int, int, void *, void *);
 uint64_t mbufs_allocated_for_rx = 0;
+uint64_t pmd_received = 0;
 void poll_rx(void *ifp, int portid, int queue_id)
 {
 	struct rte_mbuf *mbufs[MAX_PKT_BURST];
@@ -210,8 +211,10 @@ void poll_rx(void *ifp, int portid, int queue_id)
 	for (i = 0;i < received; i++) {
 		m = m_devget(rte_pktmbuf_mtod(mbufs[i], char *), rte_pktmbuf_data_len(mbufs[i]), 0, ifp, mbufs[i]);
 		mbufs_allocated_for_rx += (m != NULL);
-		if (m)
+		if (m) {
 			ether_input(ifp,m);
+			pmd_received++;
+		}
 		else
 			rte_pktmbuf_free(mbufs[i]);
 	}
@@ -221,36 +224,27 @@ void prepare_buffer_for_transmit(void *p_header_desc, void *pprev, void *pdesc, 
 {
 	struct rte_mbuf *head = (struct rte_mbuf *)p_header_desc, *prev = (struct rte_mbuf *)pprev, *mbuf = (struct rte_mbuf *)pdesc;
 
-	if(rte_pktmbuf_data_len(mbuf) == 0) {
-		rte_pktmbuf_data_len(mbuf) = length;
-		if (pprev == NULL) {
-			head->pkt_len = length;
-			head->nb_segs = 1;
-		} else {
-			head->pkt_len += length;
-			prev->next = mbuf;
-			head->nb_segs++;
-		}
-		mbuf->data_off += (char *)buf - rte_pktmbuf_mtod(mbuf, char *);
+	rte_pktmbuf_data_len(mbuf) = length;
+	if (pprev == NULL) {
+		head->pkt_len = length;
+		head->nb_segs = 1;
 	} else {
-		if (pprev == NULL) {
-			head->pkt_len = length;
-			head->nb_segs = 1;
-		} else {
-			head->pkt_len += rte_pktmbuf_data_len(mbuf);
-			prev->next = mbuf;
-			head->nb_segs++;
-		}
+		head->pkt_len += length;
+		prev->next = mbuf;
+		head->nb_segs++;
 	}
+	mbuf->data_off += (char *)buf - rte_pktmbuf_mtod(mbuf, char *);
 }
-
+uint64_t pmd_transmitted = 0;
 void transmit_mbuf(int portid, int queue_id, void *pdesc)
 {
 	struct rte_mbuf *mbuf = (struct rte_mbuf *)pdesc;
 
 	int  transmitted= rte_eth_tx_burst(portid, queue_id, &mbuf, 1);
-	if (transmitted == 1)
+	if (transmitted == 1) {
+		pmd_transmitted++;
 		return;
+	}
 	printf("%s %d\n",__func__,__LINE__);
 free_mbuf:
 	rte_pktmbuf_free(mbuf);
