@@ -39,14 +39,21 @@ void free_mbuf(void *mbuf)
 {
 	struct rte_mbuf *rte_mbuf = (struct rte_mbuf*)mbuf;
 
-        rte_pktmbuf_free(rte_mbuf);
+        rte_pktmbuf_free_seg(rte_mbuf);
 }
 
-void increment_refcnt(void *mbuf)
+void increment_refcnt(void *m)
 {
-	struct rte_mbuf *rte_mbuf = (struct rte_mbuf*)mbuf;
+	struct rte_mbuf *mbuf = (struct rte_mbuf*)m;
 
-        rte_mbuf_refcnt_update(rte_mbuf,1);
+        rte_mbuf_refcnt_update(mbuf,1);
+
+}
+
+int read_refcnt(void *m)
+{
+	struct rte_mbuf *mbuf = (struct rte_mbuf*)m;
+	return rte_mbuf_refcnt_read(mbuf);
 }
 
 char *get_mbuf_data(void *buf)
@@ -233,14 +240,46 @@ void prepare_buffer_for_transmit(void *p_header_desc, void *pprev, void *pdesc, 
 		prev->next = mbuf;
 		head->nb_segs++;
 	}
+	mbuf->next = NULL;
 	mbuf->data_off += (char *)buf - rte_pktmbuf_mtod(mbuf, char *);
 }
 uint64_t pmd_transmitted = 0;
 void transmit_mbuf(int portid, int queue_id, void *pdesc)
 {
-	struct rte_mbuf *mbuf = (struct rte_mbuf *)pdesc;
+	struct rte_mbuf *mbuf = (struct rte_mbuf *)pdesc, *tmp;
+#if 0
+{
+	int i;
+	struct rte_mbuf *tmp;
+	char *p = rte_pktmbuf_mtod(mbuf, char *);
 
+	printf("\n pkt %d nbsegs %d\n",rte_pktmbuf_pkt_len(mbuf),mbuf->nb_segs);
+	for (i = 0, tmp = mbuf; i < mbuf->nb_segs && tmp;i++,tmp = tmp->next)
+		printf("ptr %p data len %d refcnt %d\n",tmp,rte_pktmbuf_data_len(tmp),rte_mbuf_refcnt_read(tmp));
+
+	for (i = 0; i < 40;i++) {
+		if(!(i%8))
+			printf("\n");
+		printf("  %x",p[i]);
+	}
+	i = 0;
+	tmp = mbuf;
+	int debug_itr=0;
+	while(tmp) {
+		debug_itr++;
+		i += rte_pktmbuf_data_len(tmp);
+		tmp = tmp->next;
+	}
+	if (i != rte_pktmbuf_pkt_len(mbuf)) {
+		printf("%s %d %d %d\n",__func__,__LINE__,i,rte_pktmbuf_pkt_len(mbuf));
+//		exit(0);
+		abort();
+		rte_pktmbuf_free(mbuf);
+	}
+}
+#endif
 	int  transmitted= rte_eth_tx_burst(portid, queue_id, &mbuf, 1);
+
 	if (transmitted == 1) {
 		pmd_transmitted++;
 		return;

@@ -74,18 +74,19 @@ uint64_t mbufs_freed_for_tx = 0;
 static void dpdk_if_start(struct ifnet *ifp)
 {
 	struct mbuf *m, *tmp;
-	void *prev;
+	void *prev, *head;
 	
 	do {
 		IFQ_DEQUEUE(&ifp->if_snd, m);
 		if (!m)
 			break;
-
-		for (tmp = m, prev = NULL; tmp; prev = tmp->m_paddr, tmp = tmp->m_next) {
-			prepare_buffer_for_transmit(m->m_paddr, prev, tmp->m_paddr, tmp->m_data, tmp->m_len);
+		head = m->m_paddr;
+		for (tmp = m, prev = NULL; tmp; tmp = tmp->m_next) {
+			prepare_buffer_for_transmit(head, prev, tmp->m_paddr, tmp->m_data, tmp->m_len);
+			prev = tmp->m_paddr;
+			tmp->m_paddr = NULL;
 		}	
-		transmit_mbuf(0, 0, m->m_paddr);
-		m->m_paddr = NULL;
+		transmit_mbuf(0, 0, head);
 		m_freem(m);
 		mbufs_freed_for_tx++;
 	} while(1);
