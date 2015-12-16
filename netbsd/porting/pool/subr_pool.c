@@ -312,8 +312,17 @@ pool_cache_sethardlimit(pool_cache_t pc, int n, const char *warnmess, int rateca
 
 void *pool_data_mbuf_create(const char *name,int size,int count)
 {
-    return rte_mempool_create(name,count,size,0,sizeof(struct rte_pktmbuf_pool_private),
+#if 0
+    return rte_pktmbuf_pool_create(name, count, 0, 0, size, rte_socket_id());
+#else
+    return rte_mempool_create(name,count,sizeof(struct rte_mbuf) + size,0,sizeof(struct rte_pktmbuf_pool_private),
                                      rte_pktmbuf_pool_init, NULL,
                                      rte_pktmbuf_init, NULL,
                                      rte_socket_id(), 0);
+#endif
+}
+
+void *pool_data_mbuf_clone(void *mempool, void *to_clone)
+{
+	return rte_pktmbuf_clone(to_clone, mempool);
 }

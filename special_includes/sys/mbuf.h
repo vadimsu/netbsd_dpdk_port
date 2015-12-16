@@ -918,7 +918,7 @@ struct	mbuf *m_devget(char *, int, int, struct ifnet *, void *);
 struct	mbuf *m_dup(struct mbuf *, int, int, int);
 struct	mbuf *m_free(struct mbuf *);
 struct	mbuf *m_get(int, int);
-struct	mbuf *m_get_indirect(int);
+struct	mbuf *m_get_indirect(void *, int);
 struct	mbuf *m_getclr(int, int);
 struct	mbuf *m_gethdr(int, int);
 struct	mbuf *m_prepend(struct mbuf *,int, int);

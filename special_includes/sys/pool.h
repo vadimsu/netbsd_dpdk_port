@@ -90,6 +90,7 @@ pool_cache_t	pool_cache_init(size_t, u_int, u_int, u_int, const char *,
 		    void (*)(void *, void *), void *);
 void		pool_cache_destroy(pool_cache_t);
 void		*pool_cache_get(pool_cache_t, int);
+void 		*pool_data_mbuf_clone(void *mempool, void *to_clone);
 void		pool_cache_put(pool_cache_t, void *);
 void		pool_cache_destruct_object(pool_cache_t, void *);
 void		pool_cache_invalidate(pool_cache_t);

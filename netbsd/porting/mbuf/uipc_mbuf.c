@@ -189,8 +189,7 @@ mbinit(void)
 	    NULL, IPL_VM, mb_ctor, NULL, mb_data);
 	KASSERT(mb_cache != NULL);
 
-	mcl_cache = pool_cache_init(mclbytes, STACK_MBUFS_COUNT, 0, 0, "mclpl", NULL,
-	    IPL_VM, NULL, NULL, NULL);
+	mcl_cache = pool_data_mbuf_create("INDIRECT_MBUF", 0 ,STACK_MBUFS_COUNT);
 	KASSERT(mcl_cache != NULL);
 
 //	pool_cache_set_drain_hook(mb_cache, m_reclaim, NULL);
@@ -525,7 +524,7 @@ m_reclaim(void *arg, int flags)
 uint64_t get_mbuf_called = 0;
 uint64_t get_mbuf_failed = 0;
 uint64_t mbuf_free_called = 0;
-struct	mbuf *m_get_indirect(int type)
+struct	mbuf *m_get_indirect(void *to_clone, int type)
 {
 	struct mbuf *m;
 	get_mbuf_called++;
@@ -543,7 +542,7 @@ struct	mbuf *m_get_indirect(int type)
 	m->m_type = type;
 	m->m_next = NULL;
 	m->m_nextpkt = NULL;
-	m->m_paddr = NULL;
+	m->m_paddr = pool_data_mbuf_clone(mcl_cache, to_clone);
 	m->m_data = m->m_dat = NULL;
 	m->m_flags = 0;
 
@@ -742,11 +741,12 @@ m_copym0(struct mbuf *m, int off0, int len, int wait, int deep)
 				    len);
 			break;
 		}
-		n = m_get_indirect(m->m_type);
+		n = m_get_indirect(m->m_paddr, m->m_type);
 		*np = n;
 		if (n == 0)
 			goto nospace;
 		MCLAIM(n, m->m_owner);
+#if 0
 		if (copyhdr) {
 			M_COPY_PKTHDR(n, m);
 			if (len == M_COPYALL)
@@ -755,8 +755,10 @@ m_copym0(struct mbuf *m, int off0, int len, int wait, int deep)
 				n->m_pkthdr.len = len;
 			copyhdr = 0;
 		}
+#endif
 		n->m_len = min(len, m->m_len - off);
 		if (m->m_flags & M_EXT) {
+			abort();
 			if (!deep) {
 				n->m_data = m->m_data + off;
 				MCLADDREFERENCE(m, n);
@@ -779,8 +781,6 @@ m_copym0(struct mbuf *m, int off0, int len, int wait, int deep)
 			    (unsigned)n->m_len);
 #else
 			n->m_data = mtod(m, char *) + off;
-			n->m_paddr = m->m_paddr;
-			increment_refcnt(n->m_paddr);
 #endif
 		}
 		if (len != M_COPYALL)
