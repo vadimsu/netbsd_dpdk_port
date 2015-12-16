@@ -359,8 +359,9 @@ static void app_glue_set_port_ifp(int portnum, void *ifp)
  * Returns: None
  *
  */
-static inline void app_glue_poll(int port_num)
+void app_glue_poll(int port_num)
 {
+	softint_run();
 	if (port_num >= 10)
 		return;
 	poll_rx(port_2_ifp[port_num],port_num,0);

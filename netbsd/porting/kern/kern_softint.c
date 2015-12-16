@@ -15,6 +15,7 @@
 #include <netbsd/netinet/in_proto.h>
 #include <netbsd/netinet/in_var.h>
 #include <netbsd/netinet/ip_var.h>
+#include <netbsd/netinet/if_inarp.h>
 #include <netbsd/net/netisr.h>
 
 typedef struct iface_data
@@ -30,6 +31,15 @@ typedef struct
 {
    struct ifaces_list iflist; 
 }softcpu_t;
+
+typedef struct netisrs
+{
+	TAILQ_ENTRY(netisrs) node;
+	void (*cbk)(void);
+	int scheduled;
+}netisrs_t;
+static netisrs_t netisr_cb[NETISR_MAX];
+static TAILQ_HEAD(netisrs_list_t,netisrs) netisrs_list;
 
 softcpu_t softcpu[1];
 
@@ -49,7 +59,13 @@ void *softint_establish(u_int flags, void (*func)(void *), void *arg)
 
 void softint_init()
 {
+	int idx;
+
 	TAILQ_INIT(&softcpu[0].iflist);
+	TAILQ_INIT(&netisrs_list);
+	memset(netisr_cb, 0, sizeof(netisr_cb));
+	netisr_cb[NETISR_ARP].cbk = &arpintr;
+	netisr_cb[NETISR_IP].cbk = &ipintr;
 }
 
 void softint_schedule(void *arg)
@@ -61,17 +77,21 @@ void softint_schedule(void *arg)
 
 void schednetisr(int isr)
 {
-	switch(isr){
-		case NETISR_ARP:
-			arpintr();
-		break;
-		case NETISR_IP:
-			ipintr();
-		break;
-	}
+	if (netisr_cb[isr].scheduled)
+		return;
+	TAILQ_INSERT_TAIL(&netisrs_list,&netisr_cb[isr],node);
+	netisr_cb[isr].scheduled = 1;
 }
 
 void softint_run()
 {
-	ipintr();
+	netisrs_t *p_netisr = TAILQ_FIRST(&netisrs_list);
+	while(p_netisr) {
+		TAILQ_REMOVE(&netisrs_list,
+			     p_netisr,
+			     node);
+		p_netisr->scheduled = 0;
+		p_netisr->cbk();
+		p_netisr = TAILQ_FIRST(&netisrs_list);
+	}
 }
