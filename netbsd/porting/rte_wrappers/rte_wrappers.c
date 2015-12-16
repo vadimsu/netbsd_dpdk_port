@@ -132,7 +132,7 @@ static struct rte_eth_txconf tx_conf = {
 };
 
 #define MBUF_SIZE 2048
-#define MBUFS_PER_RX_QUEUE 8192
+#define MBUFS_PER_RX_QUEUE 8192*4
 
 static struct rte_mempool **init_rx_queue_mempools(int queue_count)
 {
