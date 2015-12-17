@@ -1318,7 +1318,7 @@ soreceive(struct socket *so, struct mbuf **paddr,
 	}
         goto release;
     }
-
+    void *head_mbuf = m->m_paddr, *prev_mbuf = NULL;
     nextrecord = m->m_nextpkt;
     if (pr->pr_flags & PR_ADDR) { /* first - if address is present, get it */
 #ifdef DIAGNOSTIC
@@ -1376,7 +1376,12 @@ soreceive(struct socket *so, struct mbuf **paddr,
 	sbfree(&so->so_rcv, m);
 	*mp = m;
 	mp = &m->m_next;
-	so->so_rcv.sb_mb = m = m->m_next;
+	chain_rte_mbufs(head_mbuf, prev_mbuf, m->m_paddr, m->m_data, m->m_len);
+	prev_mbuf = m->m_paddr;
+	so->so_rcv.sb_mb = m->m_next;
+	if (prev_mbuf != head_mbuf) /* because we return it */
+		m_free(m);
+	m = so->so_rcv.sb_mb;
 	*mp = NULL;
 	/*
 	 * If m != NULL, we also know that
@@ -1390,7 +1395,7 @@ soreceive(struct socket *so, struct mbuf **paddr,
 	} else {
 		so->so_rcv.sb_mb = nextrecord;
 		SB_EMPTY_FIXUP(&so->so_rcv);
-	}
+	}	
 	SBLASTRECORDCHK(&so->so_rcv, "soreceive 3");
 	SBLASTMBUFCHK(&so->so_rcv, "soreceive 3");
 

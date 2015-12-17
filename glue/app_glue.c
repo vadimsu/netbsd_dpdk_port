@@ -67,10 +67,7 @@ TAILQ_HEAD(closed_socket_list_head, socket) closed_socket_list_head;
 TAILQ_HEAD(write_ready_socket_list_head, socket) write_ready_socket_list_head;
 uint64_t write_sockets_queue_len = 0;
 TAILQ_HEAD(accept_ready_socket_list_head, socket) accept_ready_socket_list_head;
-uint64_t working_cycles_stat = 0;
-uint64_t total_cycles_stat = 0;
-uint64_t work_prev = 0;
-uint64_t total_prev = 0;
+
 /*
  * This callback function is invoked when data arrives to socket.
  * It inserts the socket into a list of readable sockets
@@ -388,7 +385,7 @@ void app_glue_init()
  * Returns: None
  *
  */
-static inline void process_rx_ready_sockets()
+void process_rx_ready_sockets()
 {
 	struct socket *sock;
         uint64_t idx,limit;
@@ -425,7 +422,7 @@ static inline void process_rx_ready_sockets()
  * Returns: None
  *
  */
-static inline void process_tx_ready_sockets()
+void process_tx_ready_sockets()
 {
 	struct socket *sock;
         uint64_t idx,limit;
@@ -442,104 +439,7 @@ static inline void process_tx_ready_sockets()
 	        idx++;
 	}
 }
-/* These are in translation of micros to cycles */
-static uint64_t app_glue_drv_poll_interval = 0;
-static uint64_t app_glue_timer_poll_interval = 0;
-static uint64_t app_glue_tx_ready_sockets_poll_interval = 0;
-static uint64_t app_glue_rx_ready_sockets_poll_interval = 0;
 
-static uint64_t app_glue_drv_last_poll_ts = 0;
-static uint64_t app_glue_timer_last_poll_ts = 0;
-static uint64_t app_glue_tx_ready_sockets_last_poll_ts = 0;
-static uint64_t app_glue_rx_ready_sockets_last_poll_ts = 0;
-
-/*
- * This function must be called by application to initialize.
- * the rate of polling for driver, timer, readable & writable socket lists
- * Paramters: drv_poll_interval,timer_poll_interval,tx_ready_sockets_poll_interval,
- * rx_ready_sockets_poll_interval - all in micros
- * Returns: None
- *
- */
-void app_glue_init_poll_intervals(int drv_poll_interval,
-		                          int timer_poll_interval,
-		                          int tx_ready_sockets_poll_interval,
-		                          int rx_ready_sockets_poll_interval)
-{
-#if 0
-	printf("%s %d %d %d %d %d\n",__func__,__LINE__,
-			drv_poll_interval,timer_poll_interval,tx_ready_sockets_poll_interval,
-			rx_ready_sockets_poll_interval);
-	float cycles_in_micro = rte_get_tsc_hz()/1000000;
-	app_glue_drv_poll_interval = cycles_in_micro*(float)drv_poll_interval;
-	app_glue_timer_poll_interval = cycles_in_micro*(float)timer_poll_interval;
-	app_glue_tx_ready_sockets_poll_interval = cycles_in_micro*(float)tx_ready_sockets_poll_interval;
-	app_glue_rx_ready_sockets_poll_interval = cycles_in_micro*(float)rx_ready_sockets_poll_interval;
-	printf("%s %d %"PRIu64" %"PRIu64" %"PRIu64" %"PRIu64"\n",__func__,__LINE__,
-			app_glue_drv_poll_interval,app_glue_timer_poll_interval,
-			app_glue_tx_ready_sockets_poll_interval,app_glue_rx_ready_sockets_poll_interval);
-#endif
-}
-uint64_t app_glue_periodic_called = 0;
-uint64_t app_glue_tx_queues_process = 0;
-uint64_t app_glue_rx_queues_process = 0;
-/*
- * This function must be called by application periodically.
- * This is the heart of the system, it performs all the driver/IP stack work
- * and timers
- * Paramters: call_flush_queues - if non-zero, the readable, closable and writable queues
- * are processed and user's functions are called.
- * Alternatively, call_flush_queues can be 0 and the application may call
- * app_glue_get_next* functions to get readable, acceptable, closable and writable sockets
- * Returns: None
- *
- */
-void app_glue_periodic(int call_flush_queues,uint8_t *ports_to_poll,int ports_to_poll_count)
-{
-	uint64_t ts,ts2,ts3,ts4;
-    uint8_t port_idx;
-
-	app_glue_periodic_called++;
-//	ts = rte_rdtsc();	
-	if((ts - app_glue_drv_last_poll_ts) >= app_glue_drv_poll_interval) {
-//		ts4 = rte_rdtsc();
-		for(port_idx = 0;port_idx < ports_to_poll_count;port_idx++)
-		    app_glue_poll(ports_to_poll[port_idx]);
-		app_glue_drv_last_poll_ts = ts;
-//		working_cycles_stat += rte_rdtsc() - ts4;
-	}
-	ts = (app_glue_timer_last_poll_ts + app_glue_timer_poll_interval) + 1;
-	if((ts - app_glue_timer_last_poll_ts) >= app_glue_timer_poll_interval) {
-//		ts3 = rte_rdtsc();
-		rte_timer_manage();
-		app_glue_timer_last_poll_ts = ts;
-//		working_cycles_stat += rte_rdtsc() - ts3;
-	}
-	if(call_flush_queues) {
-		ts =  (app_glue_tx_ready_sockets_last_poll_ts + app_glue_tx_ready_sockets_poll_interval) + 1;
-		if((ts - app_glue_tx_ready_sockets_last_poll_ts) >= app_glue_tx_ready_sockets_poll_interval) {
-//			ts2 = rte_rdtsc();
-			app_glue_tx_queues_process++;
-			process_tx_ready_sockets();
-//			working_cycles_stat += rte_rdtsc() - ts2;
-			app_glue_tx_ready_sockets_last_poll_ts = ts;
-		}
-		ts =  (app_glue_rx_ready_sockets_last_poll_ts + app_glue_rx_ready_sockets_poll_interval) + 1;
-		if((ts - app_glue_rx_ready_sockets_last_poll_ts) >= app_glue_rx_ready_sockets_poll_interval) {
-//			ts2 = rte_rdtsc();
-			app_glue_rx_queues_process++;
-			process_rx_ready_sockets();
-//			working_cycles_stat += rte_rdtsc() - ts2;
-//			app_glue_rx_ready_sockets_last_poll_ts = ts;
-		}
-	}
-	else {
-		app_glue_tx_ready_sockets_last_poll_ts = ts;
-		app_glue_rx_ready_sockets_last_poll_ts = ts;
-	}
-//	total_cycles_stat += rte_rdtsc() - ts;
-	softint_run();
-}
 /*
  * This function may be called to attach user's data to the socket.
  * Paramters: a pointer  to socket (returned, for example, by create_*_socket)

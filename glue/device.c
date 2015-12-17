@@ -75,14 +75,14 @@ static void dpdk_if_start(struct ifnet *ifp)
 {
 	struct mbuf *m, *tmp;
 	void *prev, *head;
-	
+
 	do {
 		IFQ_DEQUEUE(&ifp->if_snd, m);
 		if (!m)
 			break;
 		head = m->m_paddr;
 		for (tmp = m, prev = NULL; tmp; tmp = tmp->m_next) {
-			prepare_buffer_for_transmit(head, prev, tmp->m_paddr, tmp->m_data, tmp->m_len);
+			chain_rte_mbufs(head, prev, tmp->m_paddr, tmp->m_data, tmp->m_len);
 			prev = tmp->m_paddr;
 			tmp->m_paddr = NULL;
 		}	

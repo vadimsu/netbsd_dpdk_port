@@ -508,8 +508,8 @@ void service_main_loop()
     int drv_poll_interval = get_max_drv_poll_interval_in_micros(0);
     app_glue_init_poll_intervals(drv_poll_interval/(2*32/*MAX_PKT_BURST*/),
                                  100 /*timer_poll_interval*/,
-                                 drv_poll_interval/(10*32/*MAX_PKT_BURST*/),
-                                drv_poll_interval/(60*32/*MAX_PKT_BURST*/));
+                                  drv_poll_interval/(10*32/*MAX_PKT_BURST*/,
+                                  drv_poll_interval/(60*32/*MAX_PKT_BURST*/);
     service_api_init(COMMAND_POOL_SIZE,DATA_RINGS_SIZE,DATA_RINGS_SIZE);
     app_glue_init_buffers_available_waiters();
     TAILQ_INIT(&service_clients_list_head);
