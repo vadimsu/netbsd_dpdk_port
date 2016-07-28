@@ -261,6 +261,7 @@ struct _m_ext {
  * Definition of "struct mbuf".
  * Don't change this without understanding how MHLEN/MLEN are defined.
  */
+ #if 0
 #define	MBUF_DEFINE(name, mhlen, mlen)					\
 	struct name {							\
 		struct	m_hdr m_hdr;					\
@@ -275,6 +276,21 @@ struct _m_ext {
 			char *M_databuf;				\
 		} M_dat;						\
 	}
+#endif
+struct mbuf {
+    struct  m_hdr m_hdr; 
+    union { 
+        struct {
+            struct  pkthdr MH_pkthdr;
+            union {
+                struct  _m_ext MH_ext;
+                char *MH_databuf;
+            } MH_dat;
+        } MH; 
+        char *M_databuf;
+    } M_dat;
+};
+
 #define	m_next		m_hdr.mh_next
 #define	m_len		m_hdr.mh_len
 #define	m_data		m_hdr.mh_data
@@ -293,12 +309,14 @@ struct _m_ext {
  * Dummy mbuf structure to calculate the right values for MLEN/MHLEN, taking
  * into account inter-structure padding.
  */
-MBUF_DEFINE(_mbuf_dummy, 1, 1);
-#if 0
+#if 1
+//MBUF_DEFINE(_mbuf_dummy, 1, 1);
 /* normal data len */
-#define	MLEN		(MSIZE - offsetof(struct _mbuf_dummy, m_dat))
+//#define	MLEN		(MSIZE - offsetof(struct _mbuf_dummy, m_dat))
+#define	MLEN		(MSIZE - offsetof(struct mbuf, m_dat))
 /* data len w/pkthdr */
-#define	MHLEN		(MSIZE - offsetof(struct _mbuf_dummy, m_pktdat))
+//#define	MHLEN		(MSIZE - offsetof(struct _mbuf_dummy, m_pktdat))
+#define	MHLEN		(MSIZE - offsetof(struct mbuf, m_pktdat))
 #else
 /* normal data len */
 #define	MLEN		(MSIZE)
@@ -311,7 +329,7 @@ MBUF_DEFINE(_mbuf_dummy, 1, 1);
 /*
  * The *real* struct mbuf
  */
-MBUF_DEFINE(mbuf, MHLEN, MLEN);
+//MBUF_DEFINE(mbuf, MHLEN, MLEN);
 
 /* mbuf flags */
 #define	M_EXT		0x00001	/* has associated external storage */

@@ -69,7 +69,8 @@
  * clusters (MAPPED_MBUFS), MCLBYTES must also be an integral multiple
  * of the hardware page size.
  */
-#define	MSIZE		2048		/* size of an mbuf */
+//#define	MSIZE		2048		/* size of an mbuf */
+#define	MSIZE		256		/* size of an mbuf, chiron fix invalid write */
 
 #ifndef MCLSHIFT
 #define	MCLSHIFT	11		/* convert bytes to m_buf clusters */

@@ -1,6 +1,7 @@
 #define _GNU_SOURCE
 #include <sys/errno.h>
 #include <stdlib.h>
+#include <endian.h> /*chiron add for transfer sockaddr's byte order*/
 #include <rte_atomic.h>
 #include <rte_config.h>
 #include <rte_common.h>
@@ -21,6 +22,15 @@
 #include <pthread.h>
 #include "../../service_log.h"
 #include <sched.h>
+
+/*chiron add for transfer sockaddr's byte order*/
+#if __BYTE_ORDER == __LITTLE_ENDIAN
+#define SWAP_LEN_FAMILY(addr)  *(uint16_t*)addr = htons(*(uint16_t*)addr)
+#elif __BYTE_ORDER == __BIG_ENDIAN
+#define SWAP_LEN_FAMILY(addr) 
+#else
+#error "Unknown byte order"
+#endif
 
 local_socket_descriptor_t local_socket_descriptors[SERVICE_CONNECTION_POOL_SIZE];
 struct rte_mempool *free_connections_pool = NULL;
@@ -670,6 +680,7 @@ int service_sendto(int sock,void *pdesc,int offset,int length, struct sockaddr *
     p_addr -= sizeof(struct sockaddr_in);
     p_addr_in = (struct sockaddr_in *)p_addr;
     *p_addr_in = *in_addr;
+    SWAP_LEN_FAMILY(p_addr_in);
     rte_atomic16_set(&(local_socket_descriptors[sock & SOCKET_READY_MASK].socket->write_ready_to_app),0);
     rc = service_enqueue_tx_buf(sock,mbuf);
     if(rc == 0)
@@ -702,6 +713,7 @@ inline int service_sendto_bulk(int sock,struct data_and_descriptor *bufs_and_des
         p_addr_in = (struct sockaddr_in *)p_addr;
 	in_addr = (struct sockaddr_in *)addr;
 	*p_addr_in = *in_addr;
+	SWAP_LEN_FAMILY(p_addr_in); 
 	addr++;
     }
     service_stats_send_called++;
@@ -885,6 +897,7 @@ int service_receivefrom(int sock,void **buffer,int *len,struct sockaddr *addr,__
     p_addr -= sizeof(struct sockaddr_in);
     struct sockaddr_in *p_addr_in = (struct sockaddr_in *)p_addr;
     *in_addr = *p_addr_in;
+    SWAP_LEN_FAMILY(in_addr);
     return 0;
 }
 
@@ -1028,7 +1041,7 @@ local_socket_descriptors[service_socket->connection_idx].local_port);
     local_socket_descriptors[service_socket->connection_idx].socket = service_socket;
     cmd->cmd = SERVICE_SET_SOCKET_RING_COMMAND;
     cmd->ringset_idx = service_socket->connection_idx;
-    cmd->parent_idx = -1;
+    cmd->parent_idx = -1;  // set selector by app after accept
     cmd->u.set_socket_ring.socket_descr = accepted_socket;
     cmd->u.set_socket_ring.pid = getpid();
     if(service_enqueue_command_buf(cmd)) {
